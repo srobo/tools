@@ -1,0 +1,52 @@
+#!/bin/env python
+"""This is the Student Robotics development tool wrapper script.
+It provides an interface to a number of different CLI tools used by
+the SR project.
+
+The idea is that this script searches for executable files in the
+subdirectories of /tools/ in subversion and allows one to run them
+like so:
+ sr SCRIPT
+
+Where SCRIPT is the name of an executable file with the path
+/tools/*/SCRIPT in subversion.
+
+This script *must* be checked out along with the rest of /tools.
+See http://trac.srobo.org/wiki/DevScripts for more details."""
+import sys, os
+
+TOOLS = os.path.join( sys.path[0], "../" )
+
+cmds = {}
+
+# Find the executable files in the subdirectories
+for d in os.listdir( TOOLS ):
+    if d in ["wrapper", ".svn"]:
+        continue
+
+    path = os.path.join( TOOLS, d )
+
+    if os.path.isdir( path ):
+        
+        # Go through the files in this subdir 
+        for f in os.listdir(path):
+            fp = os.path.join( path, f )
+            
+            if os.path.isfile(fp) and os.access( fp, os.X_OK ):
+                cmds[f] = fp
+
+if len(sys.argv) == 1:
+    print "sr: The Student Robotics devtool wrapper script"
+    print "Usage: sr COMMAND"
+    print "Available commands:"
+    for cmd,path in cmds.iteritems():
+        print "\t%s" % cmd
+    sys.exit(1)
+
+cmd = sys.argv[1]
+if cmd not in cmds.keys():
+    print "Invalid command '%s'" % cmd
+
+args = [cmd]
+args += sys.argv[2:]
+os.execv( cmds[cmd], args ) 

@@ -1,5 +1,5 @@
 #!/bin/env python
-import pycurl, StringIO
+import pycurl, StringIO, urllib
 import json, hashlib, types
 import os,sys, datetime
 
@@ -104,6 +104,7 @@ if __name__ == "__main__":
         print "\tstate DEV VERSION - Show the state of firmware VERSION."
         print "\tlog DEV VERSION - Show the log for the given firmware VERSION."
         print "\tlistdev - List the devices the server manages"
+        print "\tdownload DEV VERSION FILE - Download firmware image into FILE "
         print "Common args:"
         print " - DEV: The device name."
         sys.exit(0)
@@ -173,3 +174,22 @@ if __name__ == "__main__":
             print entry["message"]
             print "-" * 80
         
+    elif cmd == "download":
+        if len(sys.argv) < 5:
+            print "Usage: fwman download DEV VERSION FILE"
+            sys.exit(1)
+        device, version, file = sys.argv[2:5]
+
+        args = { "device" : device,
+                 "version": version }
+
+        u = urllib.urlopen( "%s/get" % BASE,
+                            data = urllib.urlencode( [(x,args[x]) for x in args.keys()] ) )
+
+        f = open( file, "w" )
+
+        while True:
+            d = u.read(4096)
+            if not d:
+                break
+            f.write(d)

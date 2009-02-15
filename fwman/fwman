@@ -1,5 +1,6 @@
 #!/bin/env python
-import json, urllib, hashlib
+import pycurl, StringIO
+import json, hashlib, types
 import os,sys, datetime
 
 BASE = "http://localhost:8080/fw"
@@ -7,10 +8,32 @@ BASE = "http://localhost:8080/fw"
 class FwHandler:
     def __getattr__(self,name):
         def fn(**args):
-            u = urllib.urlopen( "%s/%s" % (BASE, name),
-                                data = urllib.urlencode( [(x,args[x]) for x in args.keys()] ) )
+            c = pycurl.Curl()
 
-            r = json.read( u.read() )
+            c.setopt( pycurl.URL, "%s/%s" % (BASE, name) )
+
+            # POST data
+            data = []
+            for varname, val in args.iteritems():
+
+                if type(val) == types.TupleType and val[0] == "file":
+                    """It's a filename, so tell pycurl"""
+                    print "FILE"
+                    f = [pycurl.FORM_FILE, val[1]]
+
+                    data.append( (varname, tuple(f) ) )
+                else:
+                    data.append( (varname, val) )
+
+            c.setopt( pycurl.HTTPPOST, data )
+
+            out = StringIO.StringIO()
+            c.setopt(pycurl.WRITEFUNCTION, out.write)
+
+            c.perform()
+            c.close()
+
+            r = json.read( out.getvalue() )
             return r
 
         return fn
@@ -33,19 +56,24 @@ class FwClient:
 
         return r["version"]
 
-    def upload(self,device,version,fd):
-        data = fd.read()
-
+    def upload(self,device,version,fname):
         r = self.h.upload( device = device,
                            version = version,
-                           firmware = data )
+                           firmware = ("file", fname) )
 
         if r.has_key( "ERROR" ):
             print "Failure: %s" % r["ERROR"]
             return False
 
         h = hashlib.sha1()
-        h.update( data )
+        f = open(fname,"r")
+        while True:
+            "Hash the file"
+            d = f.read(4096)
+            if not d:
+                break
+            h.update( d )
+
         if r["sha1"] != h.hexdigest():
             print "ERROR: Hashes don't match"
 
@@ -104,8 +132,7 @@ if __name__ == "__main__":
         device, version, fname = sys.argv[2:5]
         print "TODO: Poke around in the binary for the version number"
         
-        f = open( fname, "r" )
-        client.upload( device, version, f )
+        client.upload( device, version, fname )
 
     elif cmd == "state":
         if len(sys.argv) < 4:

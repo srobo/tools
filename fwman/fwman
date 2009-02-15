@@ -18,7 +18,6 @@ class FwHandler:
 
                 if type(val) == types.TupleType and val[0] == "file":
                     """It's a filename, so tell pycurl"""
-                    print "FILE"
                     f = [pycurl.FORM_FILE, val[1]]
 
                     data.append( (varname, tuple(f) ) )

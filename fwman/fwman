@@ -76,7 +76,7 @@ class FwClient:
         if r["sha1"] != h.hexdigest():
             print "ERROR: Hashes don't match"
 
-    def state(self,device,version):
+    def info(self,device,version):
         r = self.h.info( device = device,
                          version = version )
         
@@ -84,11 +84,11 @@ class FwClient:
             print "Failure: %s" % r["ERROR"]
             return False
 
-        return r["state"]
+        return r
 
-    def info(self, device, version):
-        r = self.h.info( device = device,
-                         version = version )
+    def images(self, device):
+        r = self.h.images( device = device )
+
         if r.has_key( "ERROR" ):
             print "Failure: %s" % r["ERROR"]
             return False
@@ -97,16 +97,21 @@ class FwClient:
     
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print "Usage: fwman COMMAND [ARGS]"
+        print "fwman: The Student Robotics firmware management CLI"
+        print "Usage: fwman COMMAND ..."
         print "Where COMMAND can be:"
         print "\treq_version DEV - Request a new version number to build with."
         print "\tupload DEV VERSION FILE - Upload the given "
-        print "\tstate DEV VERSION - Show the state of firmware VERSION."
+        print "\tdownload DEV VERSION FILE - Download firmware image into FILE"
+        print
         print "\tlog DEV VERSION - Show the log for the given firmware VERSION."
         print "\tlistdev - List the devices the server manages"
-        print "\tdownload DEV VERSION FILE - Download firmware image into FILE "
+        print
+        print "\tstate DEV [VERSION]"
         print "Common args:"
         print " - DEV: The device name."
+        print " - VERSION: A firmware version number."
+        print " - FILE: A file path."
         sys.exit(0)
 
     cmd = sys.argv[1]
@@ -121,7 +126,7 @@ if __name__ == "__main__":
             sys.exit(1)
         device = sys.argv[2]
 
-        print "TODO: launch editor"
+        #TODO: launch editor
         v = client.req_version( device, "jamjamjam", "svn:3" )
         print v
 
@@ -130,17 +135,26 @@ if __name__ == "__main__":
             print "Usage: fwman upload DEV VERSION FNAME"
             sys.exit(1)
         device, version, fname = sys.argv[2:5]
-        print "TODO: Poke around in the binary for the version number"
+        #TODO: Poke around in the binary for the version number
         
         client.upload( device, version, fname )
 
     elif cmd == "state":
-        if len(sys.argv) < 4:
-            print "Usage: fwman state DEV VERSION"
-            sys.exit(1)
-        device, version = sys.argv[2:4]
+        if len(sys.argv) == 3:
+            device = sys.argv[2]
 
-        print client.state( device, version )
+            for state, images in client.images(device).iteritems():
+                if "tg_flash" not in state:
+                    if len(images) is not 0:
+                        print "%s: %s" % (state, ", ".join([str(x) for x in images]))
+
+        elif len(sys.argv) == 4:
+            device, version = sys.argv[2:5]
+
+            print client.info( device, version )["state"]
+        else:
+            print "Usage: fwman state DEV [VERSION]"
+            sys.exit(1)
 
     elif cmd == "info":
         if len(sys.argv) < 4:

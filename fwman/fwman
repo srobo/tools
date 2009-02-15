@@ -3,7 +3,15 @@ import pycurl, StringIO, urllib
 import json, hashlib, types
 import os,sys, datetime
 
-BASE = "http://localhost:8080/fw"
+BASE = "http://ide.srobo.org/fw"
+
+fdev = os.path.expanduser ("~/.sr/fwman-dev" )
+if os.path.exists( fdev ):
+    f = open(fdev, "r")
+    BASE = f.read().strip()
+    f.close()
+    # Display this warning to try and reduce fail
+    print "WARNING: Running in debug mode."
 
 class FwHandler:
     def __getattr__(self,name):

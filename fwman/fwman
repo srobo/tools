@@ -1,0 +1,149 @@
+#!/bin/env python
+import json, urllib, hashlib
+import os,sys, datetime
+
+BASE = "http://localhost:8080/fw"
+
+class FwHandler:
+    def __getattr__(self,name):
+        def fn(**args):
+            u = urllib.urlopen( "%s/%s" % (BASE, name),
+                                data = urllib.urlencode( [(x,args[x]) for x in args.keys()] ) )
+
+            r = json.read( u.read() )
+            return r
+
+        return fn
+
+class FwClient:
+    def __init__(self):
+        self.h = FwHandler()
+
+    def get_devices(self):
+        return self.h.devices()["devices"]
+
+    def req_version(self,device, desc, revision):
+        r = self.h.req_version( device = device,
+                                desc = desc,
+                                revision = revision )
+
+        if r.has_key( "ERROR" ):
+            print "Failure: %s" % r["ERROR"]
+            return False
+
+        return r["version"]
+
+    def upload(self,device,version,fd):
+        data = fd.read()
+
+        r = self.h.upload( device = device,
+                           version = version,
+                           firmware = data )
+
+        if r.has_key( "ERROR" ):
+            print "Failure: %s" % r["ERROR"]
+            return False
+
+        h = hashlib.sha1()
+        h.update( data )
+        if r["sha1"] != h.hexdigest():
+            print "ERROR: Hashes don't match"
+
+    def state(self,device,version):
+        r = self.h.info( device = device,
+                         version = version )
+        
+        if r.has_key( "ERROR" ):
+            print "Failure: %s" % r["ERROR"]
+            return False
+
+        return r["state"]
+
+    def info(self, device, version):
+        r = self.h.info( device = device,
+                         version = version )
+        if r.has_key( "ERROR" ):
+            print "Failure: %s" % r["ERROR"]
+            return False
+
+        return r
+    
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print "Usage: fwman COMMAND [ARGS]"
+        print "Where COMMAND can be:"
+        print "\treq_version DEV - Request a new version number to build with."
+        print "\tupload DEV VERSION FILE - Upload the given "
+        print "\tstate DEV VERSION - Show the state of firmware VERSION."
+        print "\tlog DEV VERSION - Show the log for the given firmware VERSION."
+        print "\tlistdev - List the devices the server manages"
+        print "Common args:"
+        print " - DEV: The device name."
+        sys.exit(0)
+
+    cmd = sys.argv[1]
+    client = FwClient()
+
+    if cmd == "listdev":
+        for d in client.get_devices():
+            print d
+    elif cmd == "req_version":
+        if len(sys.argv) < 3:
+            print "Usage: fwman req_version DEV"
+            sys.exit(1)
+        device = sys.argv[2]
+
+        print "TODO: launch editor"
+        v = client.req_version( device, "jamjamjam", "svn:3" )
+        print v
+
+    elif cmd == "upload":
+        if len(sys.argv) < 5:
+            print "Usage: fwman upload DEV VERSION FNAME"
+            sys.exit(1)
+        device, version, fname = sys.argv[2:5]
+        print "TODO: Poke around in the binary for the version number"
+        
+        f = open( fname, "r" )
+        client.upload( device, version, f )
+
+    elif cmd == "state":
+        if len(sys.argv) < 4:
+            print "Usage: fwman state DEV VERSION"
+            sys.exit(1)
+        device, version = sys.argv[2:4]
+
+        print client.state( device, version )
+
+    elif cmd == "info":
+        if len(sys.argv) < 4:
+            print "Usage: fwman info DEV VERSION"
+            sys.exit(1)
+        device, version = sys.argv[2:4]
+
+        r = client.info( device, version )
+        
+        print "State: %s" % r["state"]
+
+        if r.has_key("size"):
+            print "Size: %i" % r["size"]
+            print "SHA1: %s" % r["sha1"]
+
+        print
+        print "%s" % r["desc"]
+
+    elif cmd == "log":
+        if len(sys.argv) < 4:
+            print "Usage: fwman log DEV VERSION"
+            sys.exit(1)
+        device, version = sys.argv[2:4]
+
+        r = client.info( device, version )
+
+        for entry in r["log"]:
+            print "Date: %s" % datetime.datetime.fromtimestamp(entry["time"])
+            print "State: %s" % entry["state"]
+            print
+            print entry["message"]
+            print "-" * 80
+        

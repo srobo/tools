@@ -11,7 +11,10 @@ if os.path.exists( fdev ):
     BASE = f.read().strip()
     f.close()
     # Display this warning to try and reduce fail
-    print "WARNING: Running in debug mode."
+    sys.stderr.write("*" * 40 + "\n")
+    sys.stderr.write("   WARNING: Running in debug mode.\n")
+    sys.stderr.write("*" * 40 + "\n")
+
 
 class FwHandler:
     def __getattr__(self,name):

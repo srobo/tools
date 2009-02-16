@@ -12,7 +12,8 @@ if os.path.exists( fdev ):
     f.close()
     # Display this warning to try and reduce fail
     sys.stderr.write("*" * 40 + "\n")
-    sys.stderr.write("   WARNING: Running in debug mode.\n")
+    sys.stderr.write("   WARNING: fwman running in debug mode.\n")
+    sys.stderr.write("   WARNING: fwman is using %s as base URL.\n" % BASE)
     sys.stderr.write("*" * 40 + "\n")
 
 

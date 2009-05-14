@@ -5,6 +5,8 @@ import string, sgmllib, sys
 def getData(partNumber):
 	page = urlopen('http://xgoat.com/p/farnell/'+str(partNumber)).read()
 	start = string.find(page, '<div class="availability">')
+	if start == -1:
+		return False
 	info = page[start:]
 	start = string.find(info, '<div class="availability">', 30)
 	end = string.find(info, '</div>', start)
@@ -68,24 +70,37 @@ class MyParser(sgmllib.SGMLParser):
 		self.last_data = data
 
 	def get_info(self):
-		"Return a list of descriptions."
+		"Return a dict of the info garnered."
 		return dict(qty=self.qty_range, price=self.cost, num_for_price=self.price_for, min_order=self.min_order, multiple=self.multi)
+
+	def print_info(self):
+		"Print a the info garnered in a nice way."
+		print ' Price For:',self.price_for
+		print ' Minimum Order Quantity:',self.min_order
+		print ' Order Multiple:',self.multi
+		print ' Pricing:'
+		for i in range(0, len(self.qty_range)):
+			print ' ',self.qty_range[i],'  \t',self.cost[i]
 
 
 if len(sys.argv) > 1:
 	id = sys.argv[1]
+	print 'Checking part number',id
+
+	myHTML = getData(id)
+	#print myHTML
+
+	# Try and process the page.
+	# The class should have been defined first, remember.
+	if myHTML != False:
+		myparser = MyParser()
+		myparser.parse(myHTML)
+
+		# Show the info.
+		myparser.print_info()
+	else:
+		print 'Part number',id,"either doesn't exist or isn't unique"
+
 else:
-	id = 1172235
-
-myHTML = getData(id)
-#print myHTML
-
-# Try and process the page.
-# The class should have been defined first, remember.
-myparser = MyParser()
-myparser.parse(myHTML)
-
-# Get the info.
-print myparser.get_info()
-
+	print 'You must specify a part number!'
 

@@ -67,7 +67,10 @@ class MyParser(sgmllib.SGMLParser):
 			elif self.last_data == 'Order Multiple:':
 				self.multi = int(data)
 			elif self.last_data == 'Availability:':
-				self.avail = int(data)
+				if data.isdigit():
+					self.avail = int(data)
+				else:
+					self.avail = str(data)
 
 		self.last_data = data
 

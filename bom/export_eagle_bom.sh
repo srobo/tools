@@ -27,7 +27,7 @@ scr=`mktemp`
 echo "export partlist $2;" > $scr
 
 EAGLE=eagle
-if [[ `./eagle_ver.py $1 | cut -d . -f 1` == "5" ]]
+if [[ `./eagle_ver $1 | cut -d . -f 1` == "5" ]]
     then
     EAGLE=eagle5
 fi

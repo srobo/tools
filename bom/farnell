@@ -4,13 +4,22 @@ import string, sgmllib, sys
 
 def getData(partNumber):
 	page = urlopen('http://xgoat.com/p/farnell/'+str(partNumber)).read()
-	start = string.find(page, '<div class="availability">')
+
+	start = string.find(page, '<div id="availability">')
 	if start == -1:
 		return False
 	info = page[start:]
-	start = string.find(info, '<div class="availability">', 30)
-	end = string.find(info, '</div>', start)
-	return info[:end]
+	end = string.find(info, '</div>')
+	availInfo = info[:end]
+
+	start = string.find(page, '<div id="price">')
+	if start == -1:
+		return False
+	info = page[start:]
+	end = string.find(info, '</div>')
+	priceInfo = info[:end]
+
+	return availInfo+priceInfo
 
 class MyParser(sgmllib.SGMLParser):
 	"A simple parser class."
@@ -28,6 +37,7 @@ class MyParser(sgmllib.SGMLParser):
 		self.cost = []
 		self.inside_td_element = 0
 		self.inside_p_element = 0
+		self.inside_b_element = 0
 		self.last_data = ''
 		self.qty = True
 
@@ -47,32 +57,47 @@ class MyParser(sgmllib.SGMLParser):
 		"Record the end of a paragraph."
 		self.inside_p_element -= 1
 
+	def start_b(self, attributes):
+		"Process a bold."
+		self.inside_b_element += 1
+
+	def end_b(self):
+		"Record the end of a bold."
+		self.inside_b_element -= 1
+
 	def handle_data(self, data):
 		"Handle the textual 'data'."
 
-		data = data.replace('\n', '')
+		data = data.replace('\n', '').replace(':', '')
+		if data == '':
+			return
 
 		if self.inside_td_element > 0:
+		#	print 'td:"'+data+'"'
 			if self.qty:
 				self.qty_range.append(data)
 				self.qty = False
 			else:
 				self.cost.append(data[2:])
 				self.qty = True
+
+		elif self.inside_b_element > 0:
+		#	print 'b:"'+data+'"'
+			self.last_data = data
+
 		elif self.inside_p_element > 0:
-			if self.last_data == 'Price For:':
+		#	print 'p:"'+data+'"'
+			if self.last_data == 'Price For':
 				self.price_for = data
-			elif self.last_data == 'Minimum Order Quantity:':
+			elif self.last_data == 'Minimum Order Quantity':
 				self.min_order = int(data)
-			elif self.last_data == 'Order Multiple:':
+			elif self.last_data == 'Order Multiple':
 				self.multi = int(data)
-			elif self.last_data == 'Availability:':
+			elif self.last_data == 'Availability':
 				if data.isdigit():
 					self.avail = int(data)
 				else:
 					self.avail = str(data)
-
-		self.last_data = data
 
 	def get_info(self):
 		"Return a dict of the info garnered."
@@ -91,22 +116,24 @@ class MyParser(sgmllib.SGMLParser):
 
 if len(sys.argv) > 1:
 	id = sys.argv[1]
-	print 'Checking part number',id
-
-	myHTML = getData(id)
-	#print myHTML
-
-	# Try and process the page.
-	# The class should have been defined first, remember.
-	if myHTML != False:
-		myparser = MyParser()
-		myparser.parse(myHTML)
-
-		# Show the info.
-		myparser.print_info()
-	else:
-		print 'Part number',id,"either doesn't exist or isn't unique"
-
 else:
-	print 'You must specify a part number!'
+	print 'Note: you can also specify a part number as a command line argument.'
+	id = ''
+	while id == '':
+		id = raw_input('Enter part number: ')
 
+print 'Checking part number',id
+
+myHTML = getData(id)
+#print myHTML
+
+# Try and process the page.
+# The class should have been defined first, remember.
+if myHTML != False:
+	myparser = MyParser()
+	myparser.parse(myHTML)
+
+	# Show the info.
+	myparser.print_info()
+else:
+	print 'Part number',id,"either doesn't exist or isn't unique"

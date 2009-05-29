@@ -4,7 +4,9 @@ import sys, os, subprocess
 gits = { 
     "gedashield": { "url": "git://gitorious.org/gedashield/mainline.git",
                     "commit": "fca3559c7998cdff4d53980529b478d585a87264",
-                    "commands" : ["ods2trag/ods2trag.py", "pcbfoot/dil_ic.py"] }
+                    "commands" : [ "ods2trag/ods2trag.py", 
+                                   "pcbfoot/dil_ic.py",
+                                   "pcbfoot/smd-ic.py" ] }
     }
 
 class GitRepo:

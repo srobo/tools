@@ -3,7 +3,7 @@ import sys, os, subprocess
 
 gits = { 
     "gedashield": { "url": "git://gitorious.org/gedashield/mainline.git",
-                    "commit": "fca3559c7998cdff4d53980529b478d585a87264",
+                    "commit": "414f1d775129ca339b895de30c99a81d99982ab6",
                     "commands" : [ "ods2trag/ods2trag.py", 
                                    "pcbfoot/dil_ic.py",
                                    "pcbfoot/smd-ic.py" ] }

@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python
 from urllib import urlopen
 import string, sgmllib, sys
 

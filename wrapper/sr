@@ -52,17 +52,19 @@ for name, git in git_repos.gits.iteritems():
         path = os.path.join( TOOLS, "git", name, cmd )
         cmds[ os.path.basename( path ) ] = path
 
-if len(sys.argv) == 1:
-    print "sr: The Student Robotics devtool wrapper script"
+#if no argument was passed or the command passed doesn't exist
+if len(sys.argv) == 1 or (len(sys.argv) > 1 and sys.argv[1] not in cmds.keys()):
+    if len(sys.argv) > 1:
+        print "Invalid command '%s'" % sys.argv[1]
+    else:
+        print "sr: The Student Robotics devtool wrapper script"
     print "Usage: sr COMMAND"
     print "Available commands:"
     for cmd,path in cmds.iteritems():
         print "\t%s" % cmd
     sys.exit(1)
-
-cmd = sys.argv[1]
-if cmd not in cmds.keys():
-    print "Invalid command '%s'" % cmd
+else:
+    cmd = sys.argv[1]
 
 args = [cmd]
 args += sys.argv[2:]

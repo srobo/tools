@@ -4,8 +4,8 @@
 
 # Resistors:
 sr-r-10k,10k 0603 chip resistor,,farnell
-sr-r-100k,100k 0603 chip resistor,,farnell
-sr-r-1k,1k 0603 chip resistor,,farnell
+sr-r-100k,100k 0603 chip resistor,1117236,farnell, 5000
+sr-r-1k,1k 0603 chip resistor,1117234,farnell, 5000
 sr-r-30k,30k 0603 chip resistor,,farnell
 sr-r-2k7,2k7 0603 chip resistor,,farnell
 

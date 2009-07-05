@@ -54,6 +54,9 @@ class GitRepo:
 
     def update(self):
         """Updates the given repo to the given commit"""
+        if self.__cmp_hash():
+            return
+
         self.__state_push("fetching")
 
         # Fetch the latest changes
@@ -86,8 +89,12 @@ class GitRepo:
 
         return h.strip()
 
+    def __cmp_hash(self):
+        """Returns True if we already have the required version checked out"""
+        return self.__get_hash() == self.desc["commit"]
+
     def check(self):
-        if self.__get_hash() != self.desc["commit"]:
+        if not self.__cmp_hash():
             self.update()
 
 def update_all( TOOLS_DIR ):

@@ -39,8 +39,7 @@ sr-d-112cwq04fntrpbf, schottky diode 12A D-PAK,1298442,farnell,d-pak
 sr-d-3a-smc,schottky diode 3a smc,1463231,farnell
 
 # ICs
-sr-ic-max4069, MAX4069 - current sense amplifier,,maxim
-sr-ic-max4069,MAX4069,,maxim
+sr-ic-max4069,MAX4069 - current sense amplifier,,maxim
 sr-ic-max1626,MAX1626ESA+,,maxim
 sr-ic-msp430f169,msp430f169 16bit mcu,,digikey?,tssop 
 sr-ic-msp430f2234, MSP430F2234 16bit mcu suffix: IDA,1649419,farnell,tssop

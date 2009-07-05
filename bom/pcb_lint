@@ -29,16 +29,29 @@ bom = {}
 error = 0
 found = 0
 
+# Erroneous parts (key is type)
+err_parts = {}
+
 for id in parts.keys():
     if not lib.has_key( parts[id] ):
-        print "Error (%s): '%s' not in SR component database, please re-align your mind" % (id, parts[id])
+        if not err_parts.has_key(parts[id]):
+            err_parts[parts[id]] = []
+
+        err_parts[parts[id]].append(id)
+
         error = error + 1
     else:
         found = found + 1
 
-print found,"parts checked in",PARTS_DB
-if error > 0:
-    print "Fail:", error, "parts not identified"
+print "%i correct parts found." % found
+
+if len(err_parts) > 0:
+    print "The following %i parts are not in the SR parts database:" % error
+
+    for name, components in err_parts.iteritems():
+        print "\t'%s': %s" % (name, " ".join(components))
+
     sys.exit(2)
+
 
 

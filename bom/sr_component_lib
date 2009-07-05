@@ -16,6 +16,7 @@ sr-c-10u-0805,10u capacitor 0805,1463377,farnell
 sr-c-68u,68u capacitor smt CPOL-EUE,9694390,farnell
 sr-c-220u,220u capacitor smt CPOL-EUE,1580568,farnell
 sr-c-100n,100n capacitor 0603,1288255,farnell
+sr-c-1u,1u electrolytic capacitor,1236655,farnell
 
 # Inductors
 sr-l-18u,18u?? inductor,1463496,farnell

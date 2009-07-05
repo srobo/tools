@@ -34,6 +34,7 @@ sr-cn-header8-keyed-7pin,8 way keyed ELCO header modded to have 7 pins,636563,fa
 sr-cn-idcsocket16, 16Way IDC socket with wings,1099027,farnell,1
 sr-cn-cageclamp,1 way 2.54mm horizontal cage clamp,1791826,farnell
 sr-cn-cageclamp-end,1 way 2.54mm horizontal cage clamp with endcap,3105295,farnell
+sr-cn-socket10-2mm,10 way 2mm pitch SIL socket,1109732,farnell
 
 # LEDs
 sr-led-red,LED 0603 RED,1465988,farnell, 10
@@ -66,3 +67,5 @@ sr-sw-button,Tactile Button (dont press),3801305,farnell
 # Crystals
 sr-xtal-32k, 32kHz Crystal, 9712887,farnell,1
 
+# Assemblies
+sr-asm-xbee,2(sr-cn-socket10-2mm). XBee connector assembly,,

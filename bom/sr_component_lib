@@ -1,32 +1,50 @@
-sr-code,description,order-number,supplier
-# hash is comment
-#sr command format sr-r-2k7
-#must start sr-
-#next field is component type
-#final field is the value 
+# sr-code,description,order-number,supplier[,package]
+# Use the package field for ICs,diodes and fets only
+##########
+
+# Resistors:
 sr-r-10k,10k 0603 chip resistor,,farnell
 sr-r-100k,100k 0603 chip resistor,,farnell
 sr-r-1k,1k 0603 chip resistor,,farnell
 sr-r-30k,30k 0603 chip resistor,,farnell
 sr-r-2k7,2k7 0603 chip resistor,,farnell
+
+# Capacitors
 sr-c-470n,0.47u capacitor 0603,1414037,farnell
-sr-c-10u,10u capacitor 0805,1463377,farnell
+sr-c-10u-0805,10u capacitor 0805,1463377,farnell
 sr-c-68u,68u capacitor smt CPOL-EUE,9694390,farnell
 sr-c-220u,220u capacitor smt CPOL-EUE,1580568,farnell
 sr-c-100n,100n capacitor 0603,1288255,farnell
+
+# Inductors
 sr-l-18u,18u?? inductor,1463496,farnell
+
+# Connectors
 sr-cn-camcon2w,CTB9550/2 — CAMDEN ELECTRONICS — Miscellaneous,3882391,farnell
 sr-cn-camcon3w,
 sr-cn-rj11,RJ11 4p4c pcb socket,3938335,farnell
 sr-cn-pjack,LUMBERG 2.1MM powerjack,1217037,farnell
-sr-op-ledr,LED 0603 RED,1465988
-sr-pc-bdgp,pcb blue wire pad- not a component,,
-sr-fu-20gf,20mm glass fuse holder,1162740,farnell
-sr-pu-12cw,12cwr04fntrpbf-diode/FFB20UP20DN-DIODE,1298442,farnell
-sr-pu-smc,DIODE-SMC,1463231,farnell
-sr-u-max4069,MAX4069,,maxim
-sr-r-max1626,MAX1626ESA+,,maxim
-sr-u-FDS4435,FDS4435 - P-MOSFET-SO8,9846204
-sr-u-430F169,msp430f169 16bit mcu,,digikey?
+sr-cn-fuse-20mm,20mm glass fuse holder,1162740,farnell
+
+# LEDs
+sr-led-red,LED 0603 RED,1465988
+
+# Special nothing
+sr-nothing,nothing,,
+
+# Diodes
+sr-d-112cwq04fntrpbf, schottky diode 12A D-PAK,1298442,farnell,d-pak
+sr-d-3a-smc,schottky diode 3a smc,1463231,farnell
+
+# ICs
+sr-ic-max4069, MAX4069 - current sense amplifier,,maxim
+sr-ic-max4069,MAX4069,,maxim
+sr-ic-max1626,MAX1626ESA+,,maxim
+sr-ic-msp430f169,msp430f169 16bit mcu,,digikey?,tssop
+
+# FETs
+sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell
+
+# Switches
 sr-sw-4dip,4way dipswitch,9471600,farnell
-sr-sw-butn,Tactile Button (dont press),3801305,farnell
+sr-sw-button,Tactile Button (dont press),3801305,farnell

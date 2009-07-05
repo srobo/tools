@@ -29,6 +29,7 @@ sr-cn-pjack,LUMBERG 2.1MM powerjack,1217037,farnell
 sr-cn-fuse-20mm,20mm glass fuse holder,1162740,farnell
 sr-cn-header3, 3Way header 1 row header,3418297,farnell
 sr-cn-header4, 4Way header 1 row programming,3418303,farnell
+sr-cn-idcsocket16, 16Way IDC socket with wings,1099027,farnell,1
 
 # LEDs
 sr-led-red,LED 0603 RED,1465988,farnell, 10

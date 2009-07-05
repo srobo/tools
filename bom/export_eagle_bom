@@ -32,7 +32,7 @@ if [[ `sr eagle_ver $1 | cut -d . -f 1` == "5" ]]
     EAGLE=eagle5
 fi
 
-echo Running $EAGLE
+echo Running $EAGLE to generate BOM
 $EAGLE $1 -S $scr &
 
 while [ ! -f $2 ]

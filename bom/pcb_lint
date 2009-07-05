@@ -1,16 +1,28 @@
 #!/usr/bin/env python
-import os, sys, parts_db, parts_parser
+import os, sys, parts_db, parts_parser, bom, tempfile
 
-if len(sys.argv) < 3:
-    print "Usage:",os.path.basename(sys.argv[0]),"PARTSLIST SR_DB"
-    print "Check all components in a parts list exist."
+if len(sys.argv) < 2:
+    print "Usage: %s SCHEMATIC" % os.path.basename(sys.argv[0])
+    print "Checks that all the parts in a PCB's schematic are in the SR database"
     sys.exit(1)
 
-inpath = sys.argv[1]
-srpath = sys.argv[2]
+PARTS_DB = os.path.expanduser("~/.sr/tools/bom/sr_component_lib")
+if not os.path.exists( PARTS_DB ):
+    print "Parts DB not found at \"%s\"" % PARTS_DB
+    sys.exit(1)
 
-lib = parts_db.Db(srpath)
-parts = parts_parser.EagleParts(inpath)
+SCHEMATIC = sys.argv[1]
+
+# Generate the BOM from the given schematic
+bom_tup = tempfile.mkstemp()
+os.close(bom_tup[0])
+BOM_FNAME = bom_tup[1]
+
+# TODO: move more into bom.py
+bom.export_bom( SCHEMATIC, BOM_FNAME )
+
+lib = parts_db.Db(PARTS_DB)
+parts = parts_parser.EagleParts(BOM_FNAME)
 
 bom = {}
 
@@ -24,7 +36,7 @@ for id in parts.keys():
     else:
         found = found + 1
 
-print found,"parts checked in",srpath
+print found,"parts checked in",PARTS_DB
 if error > 0:
     print "Fail:", error, "parts not identified"
     sys.exit(2)

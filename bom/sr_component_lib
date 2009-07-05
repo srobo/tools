@@ -26,6 +26,7 @@ sr-cn-camcon3w,
 sr-cn-rj11,RJ11 4p4c pcb socket,3938335,farnell
 sr-cn-pjack,LUMBERG 2.1MM powerjack,1217037,farnell
 sr-cn-fuse-20mm,20mm glass fuse holder,1162740,farnell
+sr-cn-header3, 3Way header 1 row header,3418297,farnell
 
 # LEDs
 sr-led-red,LED 0603 RED,1465988,farnell, 10
@@ -44,6 +45,7 @@ sr-ic-max1626,MAX1626ESA+,,maxim
 sr-ic-msp430f169,msp430f169 16bit mcu,,digikey?,tssop 
 sr-ic-msp430f2234, MSP430F2234 16bit mcu suffix: IDA,1649419,farnell,tssop
 sr-ic-74act04d, 74ACT04D HEX INVERTER SMD 74ACT04,9590323,farnell,soic14
+
 # FETs
 sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell
 

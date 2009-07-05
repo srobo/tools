@@ -8,9 +8,10 @@ sr-r-100k,100k 0603 chip resistor,1117236,farnell,5000
 sr-r-1k,1k 0603 chip resistor,1117234,farnell,5000
 sr-r-30k,30k 0603 chip resistor,,farnell
 sr-r-2k7,2k7 0603 chip resistor,,farnell
-sr-r-560,560 0603 chip resistor,9233342,50
-sr-r-3k3,3k3 0603 chip resistor,9238549,50
-sr-r-3m5-2512,3m5 2512 chip resistor,1292479,5
+sr-r-560,560 0603 chip resistor,9233342,farnell,50
+sr-r-3k3,3k3 0603 chip resistor,9238549,farnell,50
+sr-r-3m5-2512,3m5 2512 chip resistor,1292479,farnell,5
+sr-r-40m-2512,40m 2512 chip resistor,1100347,farnell,5
 
 # Capacitors
 sr-c-470n,0.47u capacitor 0603,1414037,farnell

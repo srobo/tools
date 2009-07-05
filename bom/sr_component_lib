@@ -49,6 +49,7 @@ sr-ic-max4069,MAX4069 - current sense amplifier,,maxim
 sr-ic-max1626,MAX1626ESA+,,maxim
 sr-ic-msp430f169,msp430f169 16bit mcu,,digikey?,tssop 
 sr-ic-msp430f2234, MSP430F2234 16bit mcu suffix: IDA,1649419,farnell,tssop
+sr-ic-msp430f2254, MSP430F2254 16bit mcu suffix: IDA,1649422,farnell,tssop
 sr-ic-74act04d, 74ACT04D HEX INVERTER SMD 74ACT04,9590323,farnell,soic14
 
 # FETs

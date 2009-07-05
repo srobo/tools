@@ -46,8 +46,8 @@ sr-d-bat754s,schottky diode dual,1081206,farnell,5,sot23
 sr-d-bzx384c3v3, zener diode 3.3V 5%,8735646,farnell,10,sod323
 # ICs
 sr-ic-max4069,MAX4069 - current sense amplifier,,maxim
-sr-ic-max1626,MAX1626ESA+,,maxim
-sr-ic-msp430f169,MSP430F169IPM 16bit mcu,296-16842-ND,digikey,tssop 
+sr-ic-max1626,MAX1626ESA+ 5/3.3v switchmode controller,9725342,farnell,soic8
+sr-ic-msp430f169,MSP430F169IPM 16bit mcu,296-16842-ND,digikey,tssop
 sr-ic-msp430f2234, MSP430F2234 16bit mcu suffix: IDA,1649419,farnell,tssop
 sr-ic-msp430f2254, MSP430F2254 16bit mcu suffix: IDA,1649422,farnell,tssop
 sr-ic-74act04d, 74ACT04D HEX INVERTER SMD 74ACT04,9590323,farnell,soic14

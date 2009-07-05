@@ -71,3 +71,6 @@ sr-xtal-32k, 32kHz Crystal, 9712887,farnell,1
 
 # Assemblies
 sr-asm-xbee,2(sr-cn-socket10-2mm). XBee connector assembly,,
+
+# Relays
+sr-relay-5v,5V relay 10A max,1094018,farnell

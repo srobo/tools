@@ -54,3 +54,7 @@ sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell
 # Switches
 sr-sw-4dip,4way dipswitch,9471600,farnell
 sr-sw-button,Tactile Button (dont press),3801305,farnell
+
+# Crystals
+sr-xtal-32k, 32kHz Crystal, 9712887,farnell,1
+

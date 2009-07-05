@@ -1,4 +1,4 @@
-# sr-code,description,order-number,supplier[,package]
+sr-code,description,order-number,supplier,package
 # Use the package field for ICs,diodes and fets only
 ##########
 

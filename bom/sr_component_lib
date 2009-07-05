@@ -59,7 +59,7 @@ sr-ic-msp430f2254, MSP430F2254 16bit mcu suffix: IDA,1649422,farnell,tssop
 sr-ic-74act04d, 74ACT04D HEX INVERTER SMD 74ACT04,9590323,farnell,soic14
 
 # FETs
-sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell
+sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,soic-8
 sr-fet-n-bss123,BSS123 n-channel mosfet,9845321,farnell,sot-23
 sr-fet-p-bss84lt1g,BSS84LT1G p-channel mosfet,1431318,farnell,sot-23
 

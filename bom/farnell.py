@@ -25,7 +25,7 @@ class Item(sgmllib.SGMLParser):
 
         start = string.find(page, '<div id="availability">')
         if start == -1:
-            raise "Part number doesn't exist"
+            raise Exception( """Part number "%s" doesn't exist""" % str(partNumber) )
 
         info = page[start:]
         end = string.find(info, '</div>')
@@ -33,7 +33,7 @@ class Item(sgmllib.SGMLParser):
 
         start = string.find(page, '<div id="price">')
         if start == -1:
-            raise "Part number doesn't exist"
+            raise Exception( """Part number "%s" doesn't exist""" % str(partNumber) )
 
         info = page[start:]
         end = string.find(info, '</div>')

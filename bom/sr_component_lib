@@ -58,6 +58,7 @@ sr-ic-msp430f169,MSP430F169IPM 16bit mcu,296-16842-ND,digikey,tssop
 sr-ic-msp430f2234, MSP430F2234 16bit mcu suffix: IDA,1649419,farnell,tssop
 sr-ic-msp430f2254, MSP430F2254 16bit mcu suffix: IDA,1649422,farnell,tssop
 sr-ic-74act04d, 74ACT04D HEX INVERTER SMD 74ACT04,9590323,farnell,soic14
+sr-ic-74153,74153 bus multiplexer,1236217,farnell,soic-16
 
 # FETs
 sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,soic-8

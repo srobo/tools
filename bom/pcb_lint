@@ -24,6 +24,9 @@ bom.export_bom( SCHEMATIC, BOM_FNAME )
 lib = parts_db.Db(PARTS_DB)
 parts = parts_parser.EagleParts(BOM_FNAME)
 
+# Remove temporary BOM
+os.remove(BOM_FNAME)
+
 bom = {}
 
 error = 0

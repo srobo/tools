@@ -69,7 +69,7 @@ class Item(sgmllib.SGMLParser):
         "Handle the textual 'data'."
 
         data = data.replace('\n', '').replace(':', '')
-        if data == '':
+        if data.replace(' ', '') == '':
             return
 
         if self.inside_td_element > 0:
@@ -87,17 +87,23 @@ class Item(sgmllib.SGMLParser):
 
         elif self.inside_p_element > 0:
             #	print 'p:"'+data+'"'
-            if self.last_data == 'Price For':
+            #kill off the last_data, but store it just in case
+            tmp_last_data = self.last_data
+            self.last_data = ''
+            #test for a match to last_data
+            if tmp_last_data == 'Price For':
                 self.price_for = data
-            elif self.last_data == 'Minimum Order Quantity':
+            elif tmp_last_data == 'Minimum Order Quantity':
                 self.min_order = int(data)
-            elif self.last_data == 'Order Multiple':
+            elif tmp_last_data == 'Order Multiple':
                 self.multi = int(data)
-            elif self.last_data == 'Availability':
+            elif tmp_last_data == 'Availability':
                 if data.isdigit():
                     self.avail = int(data)
                 else:
                     self.avail = str(data)
+            else:	#not this time around
+                self.last_data = tmp_last_data
 
     def get_info(self):
         "Return a dict of the info garnered."

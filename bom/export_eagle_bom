@@ -41,14 +41,18 @@ if [[ `sr eagle_ver $1 | cut -d . -f 1` == "5" ]]
     EAGLE=eagle5
 fi
 
-echo Running $EAGLE to generate BOM
+echo -n Generating bom...
 $EAGLE $1 -S $scr &
+eagle_pid=$!
 
 while [ ! -f $tmpf ]
 do
     sleep 0.1
 done
-kill -9 $EAGLE_JOB
+
+disown $EAGLE_JOB
+kill -9 $eagle_pid
+echo " done."
 
 rm -f $tmpf
 rm $scr

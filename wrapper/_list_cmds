@@ -1,0 +1,8 @@
+#!/usr/bin/env python
+import os, sys
+import sr_commands
+TOOLS = os.path.join( sys.path[0], "../" )
+
+for cmd, path in sr_commands.get_dict(TOOLS).iteritems():
+    if cmd[0] != "_":
+        print cmd

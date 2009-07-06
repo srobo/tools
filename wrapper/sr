@@ -13,30 +13,11 @@ Where SCRIPT is the name of an executable file with the path
 
 This script *must* be checked out along with the rest of /tools.
 See http://trac.srobo.org/wiki/DevScripts for more details."""
-import sys, os, git_repos, subprocess
+import sys, os, git_repos, subprocess, sr_commands
 
 TOOLS = os.path.join( sys.path[0], "../" )
 
-cmds = {}
-
-# Find the executable files in the subdirectories
-for d in os.listdir( TOOLS ):
-    if d in [".svn"]:
-        continue
-
-    path = os.path.join( TOOLS, d )
-
-    if os.path.isdir( path ):
-        
-        # Go through the files in this subdir 
-        for f in os.listdir(path):
-            if f == "sr":
-                continue
-
-            fp = os.path.join( path, f )
-            
-            if os.path.isfile(fp) and os.access( fp, os.X_OK ):
-                cmds[f] = fp
+cmds = sr_commands.get_dict(TOOLS)
 
 # Check the git stuff has been checked out
 if not os.path.exists( os.path.join( TOOLS, "git" ) ):
@@ -45,12 +26,6 @@ if not os.path.exists( os.path.join( TOOLS, "git" ) ):
     git_repos.update_all( TOOLS )
 else:
     git_repos.check_all( TOOLS )
-
-# Get the commands from the git repos:
-for name, git in git_repos.gits.iteritems():
-    for cmd in git["commands"]:
-        path = os.path.join( TOOLS, "git", name, cmd )
-        cmds[ os.path.basename( path ) ] = path
 
 #if no argument was passed or the command passed doesn't exist
 if len(sys.argv) == 1 or (len(sys.argv) > 1 and sys.argv[1] not in cmds.keys()):
@@ -61,7 +36,8 @@ if len(sys.argv) == 1 or (len(sys.argv) > 1 and sys.argv[1] not in cmds.keys()):
     print "Usage: sr COMMAND"
     print "Available commands:"
     for cmd,path in cmds.iteritems():
-        print "\t%s" % cmd
+        if cmd[0] != "_":
+            print "\t%s" % cmd
     sys.exit(1)
 else:
     cmd = sys.argv[1]

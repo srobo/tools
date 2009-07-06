@@ -65,6 +65,7 @@ sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,soic-8
 sr-fet-n-bss123,BSS123 n-channel mosfet,9845321,farnell,sot-23
 sr-fet-p-bss84lt1g,BSS84LT1G p-channel mosfet,1431318,farnell,sot-23
 sr-fet-n-fdd8586,FDD8586 n-channel mosfet,1324786,farnell,d-pak
+sr-fet-p-nds8435a,NDS8435A p-channel mosfet,9846263,farnell,soic-8
 
 # Switches
 sr-sw-4dip,4way dipswitch,9471600,farnell

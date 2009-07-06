@@ -22,7 +22,7 @@ def html_footer(f):
     f.write("""</body>
 </html>""")
 
-if len(sys.argv) < 2:
+if len(sys.argv) < 3:
     print "Usage: %s SCHEMATIC OUTFILE" % (os.path.basename(sys.argv[0]))
     print "Where:"
     print "	- SCHEMATIC is the schematic to read from"

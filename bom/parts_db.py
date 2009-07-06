@@ -14,6 +14,10 @@ class Db(dict):
             # Remove the code from the dictionary
             del line["sr-code"]
 
+            for k in line.keys():
+                if isinstance(line[k], str):
+                    line[k] = line[k].strip()
+
             self[c] = line
 
 

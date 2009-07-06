@@ -24,7 +24,16 @@ then
 fi
 
 scr=`mktemp`
+tmpf=`mktemp`
+# Eagle refuses to write over an existing file
+rm $tmpf
+
+# Get eagle to output partslist into two files
+# We kill eagle after the second file has been created
+# This avoids the race condition in which we kill eagle when it's halfway through 
+# filling the BOM file.
 echo "export partlist $2;" > $scr
+echo "export partlist $tmpf;" >> $scr
 
 EAGLE=eagle
 if [[ `sr eagle_ver $1 | cut -d . -f 1` == "5" ]]
@@ -35,12 +44,13 @@ fi
 echo Running $EAGLE to generate BOM
 $EAGLE $1 -S $scr &
 
-while [ ! -f $2 ]
+while [ ! -f $tmpf ]
 do
     sleep 0.1
 done
 kill -9 $EAGLE_JOB
 
+rm -f $tmpf
 rm $scr
 
 # Kill the X server

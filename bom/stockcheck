@@ -1,0 +1,80 @@
+#!/usr/bin/env python
+import sys, os, threading, Queue
+import bom, farnell, parts_db
+NUM_THREADS = 3
+
+if len(sys.argv) < 2:
+    print "Usage: %s SCHEMATIC" % os.path.basename(sys.argv[0])
+    sys.exit(1)
+
+schem = bom.open_schem(sys.argv[1])
+db = parts_db.Db( bom.PARTS_DB )
+
+def worker():
+    while True:
+        n,srcode = q.get()
+        x = db[srcode]
+
+        available = None
+
+        if x["supplier"] == "farnell":
+            i = farnell.Item(x["order-number"])
+            # TODO: Extend to support checking the stock level is sufficient (and not just nonzero)
+            available = i.avail > 0
+
+        resq.put( (srcode, available) )
+
+        q.task_done()
+
+def res_worker(nlines):
+    num = 0
+    while True:
+        n = resq.get()
+        num = num + 1
+
+        sys.stdout.write( "\rWorking: %i/%i" % (num,nlines) )
+        sys.stdout.flush()
+        if num == nlines:
+            print
+
+        if not results.has_key(n[1]):
+            results[n[1]] = []
+        results[n[1]].append( n[0] )
+
+        resq.task_done()        
+
+# Job Queue
+q = Queue.Queue()
+# Queue for results to return from workers 
+resq = Queue.Queue()
+results = {}
+
+for i in range(NUM_THREADS):
+    t = threading.Thread(target=worker)
+    t.daemon = True
+    t.start()
+
+lines = set(schem.values())
+
+t = threading.Thread(target=res_worker, args=[len(lines)])
+t.daemon = True
+t.start()
+
+n = 0
+for srcode in lines:
+    q.put((n,srcode))
+    n = n + 1
+
+q.join()
+resq.join()
+
+if results.has_key(False):
+    print "The following parts are unavailable:"
+    for x in results[False]:
+        print "\t-", x
+else:
+    print "All checkable parts are available."
+
+if results.has_key(None):
+    print "Warning: cannot check suppliers for these parts:", " ".join(results[None])
+

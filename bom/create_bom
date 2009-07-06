@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os, sys, time, parts_db, parts_parser
+import os, sys, time, parts_db, bom
 
 def html_header(f):
     f.write("""<html>
@@ -22,19 +22,18 @@ def html_footer(f):
     f.write("""</body>
 </html>""")
 
-if len(sys.argv) < 3:
-    print "Usage: %s PARTS_LIST PARTS_DB OUTFILE" % (os.path.basename(sys.argv[0]))
+if len(sys.argv) < 2:
+    print "Usage: %s SCHEMATIC OUTFILE" % (os.path.basename(sys.argv[0]))
     print "Where:"
-    print "	- PARTS_LIST is the EAGLE parts list"
-    print "	- PARTS_DB is the SR parts database"
+    print "	- SCHEMATIC is the schematic to read from"
     print "	- OUTFILE is the output HTML file"
     sys.exit(1)
 
-[parts_fname, db_fname, out_fname] = sys.argv[1:4]
+[SCHEMATIC, OUTFILE] = sys.argv[1:3]
 
-parts = parts_parser.EagleParts(parts_fname)
-lib = parts_db.Db(db_fname)
-outf = open( out_fname, "w" )
+parts = bom.open_schem(SCHEMATIC)
+lib = parts_db.Db(bom.PARTS_DB)
+outf = open( OUTFILE, "w" )
 
 html_header(outf)
 for id in parts.keys():

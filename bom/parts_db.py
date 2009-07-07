@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """Student Robotics parts database access library"""
-import csv
+import csv, farnell
 
 class Part(dict):
     """Represents a part"""
@@ -14,6 +14,25 @@ class Part(dict):
 
         for k,v in d.iteritems():
             self[k] = v
+
+        self.loaded = False
+
+    def stockcheck(self):
+        """Return how many of the product are in stock."""
+        if not self.loaded:
+            self.__load_data()
+
+        return self.stock
+
+    def __load_data(self):
+        if self["supplier"] == "farnell":
+            f = farnell.Item( self["order-number"] )
+            self.stock = f.avail
+        else:
+            self.stock = None
+            return
+
+        self.loaded = True
 
 class Db(dict):
     def __init__(self, fname):

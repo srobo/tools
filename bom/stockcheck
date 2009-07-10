@@ -8,7 +8,7 @@ if len(sys.argv) < 2:
     sys.exit(1)
 
 db = parts_db.Db( bom.PARTS_DB )
-board = bom.Bom( db, sys.argv[1], os.path.basename( sys.argv[1] ) )
+board = bom.BoardBom( db, sys.argv[1], os.path.basename( sys.argv[1] ) )
 stock = {}
 n = 0
 

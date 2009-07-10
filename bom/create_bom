@@ -41,7 +41,7 @@ if len(sys.argv) < 3:
 schem_name = os.path.basename( SCHEMATIC )
 
 lib = parts_db.Db(bom.PARTS_DB)
-parts = bom.Bom(lib, SCHEMATIC, schem_name)
+parts = bom.BoardBom(lib, SCHEMATIC, schem_name)
 outf = open( OUTFILE, "w" )
 
 html_header(outf)

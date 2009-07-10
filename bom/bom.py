@@ -32,7 +32,7 @@ class PartGroup(list):
             return False
         return True
 
-class Bom(dict):
+class BoardBom(dict):
     """BOM object.
     Groups parts with the same srcode into PartGroups.
     Dictionary keys are sr codes."""

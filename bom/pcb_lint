@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os, sys, parts_db, bom
+import os, sys, parts_db, bom, schem
 
 if len(sys.argv) < 2:
     print "Usage: %s SCHEMATIC" % os.path.basename(sys.argv[0])
@@ -9,7 +9,7 @@ if len(sys.argv) < 2:
 SCHEMATIC = sys.argv[1]
 
 lib = parts_db.Db(bom.PARTS_DB)
-parts = bom.EagleSchem(SCHEMATIC)
+parts = schem.open_schem(SCHEMATIC)
 
 bom = {}
 

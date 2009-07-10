@@ -5,7 +5,7 @@ import csv, farnell
 class Part(dict):
     """Represents a part"""
     def __init__(self, d):
-        """Initialise from a dict from the DB"""
+        """Initialise with a dict from the DB"""
         c = d["sr-code"].lower()
 
         for k in d.keys():
@@ -23,6 +23,12 @@ class Part(dict):
             self.__load_data()
 
         return self.stock
+
+    def get_price(self):
+        if not self.loaded:
+            self.__load_data()
+
+        return 
 
     def __load_data(self):
         if self["supplier"] == "farnell":

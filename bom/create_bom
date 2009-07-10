@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os, sys, time, parts_db, bom
+import os, sys, time, parts_db, bom, schem
 
 def html_header(f):
     f.write("""<html>
@@ -31,7 +31,7 @@ if len(sys.argv) < 3:
 
 [SCHEMATIC, OUTFILE] = sys.argv[1:3]
 
-parts = bom.open_schem(SCHEMATIC)
+parts = schem.open_schem(SCHEMATIC)
 lib = parts_db.Db(bom.PARTS_DB)
 outf = open( OUTFILE, "w" )
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os, sys, time, parts_db, bom, schem
+import os, sys, time, parts_db, bom
 
 def html_header(f):
     f.write("""<html>
@@ -15,7 +15,14 @@ td {
 <body>
 <p>Generated on %s with %s.</p>
 <table style="border-style:none;border-spacing:0;">
-<tr><th>Identifier</th><th>Description</th><th>Distributer</th><th>Distributor Order Number</th></tr>
+<tr>
+<th>srcode</th>
+<th>Description</th>
+<th>Distributer</th>
+<th>Distributor Order Number</th>
+<th>Quantity</th>
+<th>Designators</th>
+</tr>
 """ % (time.asctime(), os.path.basename(sys.argv[0])) )
 
 def html_footer(f):
@@ -31,20 +38,27 @@ if len(sys.argv) < 3:
 
 [SCHEMATIC, OUTFILE] = sys.argv[1:3]
 
-parts = schem.open_schem(SCHEMATIC)
+schem_name = os.path.basename( SCHEMATIC )
+
 lib = parts_db.Db(bom.PARTS_DB)
+parts = bom.Bom(lib, SCHEMATIC, schem_name)
 outf = open( OUTFILE, "w" )
 
 html_header(outf)
-for id in parts.keys():
-    sr_id = parts[id]
 
-    if not lib.has_key(sr_id):
-        continue
-
+for line in parts.values():
     outf.write("<tr>")
-    for x in [ id, lib[sr_id]["description"], lib[sr_id]["supplier"], lib[sr_id]["order-number"] ]:
+    p = line.part
+
+    for x in [ p["sr-code"],
+               p["description"],
+               p["supplier"],
+               p["order-number"],
+               len(line),
+               ", ".join([x[1] for x in line])
+               ]:
         outf.write("<td>%s</td>" % x)
+
     outf.write("</tr>")
 
 html_footer(outf)

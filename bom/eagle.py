@@ -12,6 +12,15 @@ def file_is_eagle(f):
         return True
     return False
 
+def file_version(fname):
+    """Get the eagle version of the given file.
+    Returns a tuple containing the major and minor versions."""
+    f = open(fname, "r")
+
+    f.seek(8)
+    b = f.read(2)
+    return (ord(b[0]), ord(b[1]))
+
 class EagleSchem(dict):
     """Reads in EAGLE file.
     Parts in file can be accessed like dictionary."""

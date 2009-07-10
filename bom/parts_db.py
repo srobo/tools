@@ -6,8 +6,6 @@ class Part(dict):
     """Represents a part"""
     def __init__(self, d):
         """Initialise with a dict from the DB"""
-        c = d["sr-code"].lower()
-
         for k in d.keys():
             if isinstance(d[k], str):
                 d[k] = d[k].strip()

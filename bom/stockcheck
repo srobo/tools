@@ -7,78 +7,33 @@ if len(sys.argv) < 2:
     print "Usage: %s SCHEMATIC" % os.path.basename(sys.argv[0])
     sys.exit(1)
 
-schem = schem.open_schem(sys.argv[1])
 db = parts_db.Db( bom.PARTS_DB )
-
-def worker():
-    while True:
-        n,srcode = q.get()
-        part = db[srcode]
-
-        stock = part.stockcheck()
-
-        if stock == 0:
-            available = False
-        elif stock == None:
-            available = None
-        else:
-            # TODO: Extend to support checking the stock level is sufficient
-            # (and not just nonzero)
-            available = True
-
-        resq.put( (srcode, available) )
-
-        q.task_done()
-
-def res_worker(nlines):
-    num = 0
-    while True:
-        n = resq.get()
-        num = num + 1
-
-        sys.stdout.write( "\rWorking: %i/%i" % (num,nlines) )
-        sys.stdout.flush()
-        if num == nlines:
-            print
-
-        if not results.has_key(n[1]):
-            results[n[1]] = []
-        results[n[1]].append( n[0] )
-
-        resq.task_done()        
-
-# Job Queue
-q = Queue.Queue()
-# Queue for results to return from workers 
-resq = Queue.Queue()
-results = {}
-
-for i in range(NUM_THREADS):
-    t = threading.Thread(target=worker)
-    t.daemon = True
-    t.start()
-
-lines = set(schem.values())
-
-t = threading.Thread(target=res_worker, args=[len(lines)])
-t.daemon = True
-t.start()
-
+board = bom.Bom( db, sys.argv[1], os.path.basename( sys.argv[1] ) )
+stock = {}
 n = 0
-for srcode in lines:
-    q.put((n,srcode))
+
+for x in board.stockcheck():
+    if not stock.has_key(x[0]):
+        stock[x[0]] = []
+
+    stock[ x[0] ].append(x[1])
+
+    # Show stock checking progress:
     n = n + 1
+    sys.stdout.write( "\rChecking: %i/%i" % (n, len(board)) )
+    sys.stdout.flush()
+print
 
-q.join()
-resq.join()
+if stock.has_key( bom.STOCK_UNKNOWN ):
+    print "Warning: Cannot check suppliers for these parts:"
+    for part in stock[bom.STOCK_UNKNOWN]:
+        print "\t- %s %s(%s)" % ( part["sr-code"], part["supplier"], part["order-number"] )
 
-if results.has_key(False):
-    print "The following parts are unavailable:"
-    for x in results[False]:
-        print "\t-", x
-else:
-    print "All checkable parts are available."
+if stock.has_key( bom.STOCK_OUT ):
+    print "Out of stock:"
+    for part in stock[bom.STOCK_OUT]:
+        print "\t- %s %s(%s)" % ( part["sr-code"], part["supplier"], part["order-number"] )
+    sys.exit(1)
 
-if results.has_key(None):
-    print "Warning: cannot check suppliers for these parts:", " ".join(results[None])
-
+print "All checkable parts are in stock."
+sys.exit(0)

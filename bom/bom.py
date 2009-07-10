@@ -6,6 +6,10 @@ if not os.path.exists( PARTS_DB ):
     print "Parts DB not found at \"%s\"" % PARTS_DB
     sys.exit(1)
 
+STOCK_OUT = 0
+STOCK_OK = 1
+STOCK_UNKNOWN = 2
+
 class PartGroup(list):
     """A set of parts
     One might call this a "BOM line" """
@@ -50,17 +54,13 @@ class Bom(dict):
     def stockcheck(self):
         """Check that all items in the schematic are in stock.
         Returns list of things that aren't in stock."""
-        # Things that aren't in stock
-        ns = []
-        # Things that can't be determined:
-        unk = []
+
         for pg in self.values():
             a = pg.stockcheck()
 
             if a == None:
-                unk.append(pg.part)
+                yield (STOCK_UNKNOWN, pg.part)
             elif not a:
-                ns.append(pg.part)
-
-        return (ns,unk)
-
+                yield (STOCK_OUT, pg.part)
+            else:
+                yield (STOCK_OK, pg.part)

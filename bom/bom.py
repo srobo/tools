@@ -1,5 +1,6 @@
 # Routines for extracting BOMs from schematics
 import subprocess, tempfile, os, sys, parts_db, schem
+from decimal import Decimal
 
 PARTS_DB = os.path.expanduser("~/.sr/tools/bom/sr_component_lib")
 if not os.path.exists( PARTS_DB ):
@@ -64,6 +65,17 @@ class PartGroup(list):
 
         return n
 
+    def get_price(self):
+        """Returns the price"""
+        n = self.order_num()
+
+        p = self.part.get_price( n )
+        if p == None:
+            print "Warning: couldn't get price"
+            return Decimal(0)
+
+        return p * n
+
 class Bom(dict):
     def stockcheck(self):
         """Check that all items in the schematic are in stock.
@@ -79,6 +91,11 @@ class Bom(dict):
             else:
                 yield (STOCK_OK, pg.part)
 
+    def get_price(self):
+        tot = Decimal(0)
+        for pg in self.values():
+            tot = tot + pg.get_price()
+        return tot
 
 class BoardBom(Bom):
     """BOM object.

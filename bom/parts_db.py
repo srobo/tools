@@ -22,11 +22,21 @@ class Part(dict):
 
         return self.stock
 
-    def get_price(self):
+    def get_price(self, num):
+        "Get the unit price when buying num distributor units"
         if not self.loaded:
             self.__load_data()
 
-        return 
+        if self.stock == None:
+            return None
+
+        price = None
+        for threshold, p in self.prices:
+            if threshold >= num:
+                return p
+            price = p
+
+        return price
 
     def get_dist_units(self):
         """Number of components per distributor unit"""
@@ -60,6 +70,9 @@ class Part(dict):
             self.dist_unit = f.price_for
             # Smallest quantity increment
             self.increments = f.multi
+
+            # List of prices -- contains 2-entry tuples
+            self.prices = f.prices
         else:
             self.stock = None
             return

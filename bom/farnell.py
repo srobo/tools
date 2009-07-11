@@ -1,6 +1,7 @@
 """Routines for scraping data about parts from Farnell"""
 from urllib import urlopen
 import string, sgmllib, sys, re
+from decimal import Decimal
 
 class Item(sgmllib.SGMLParser):
     "Represents a Farnell item"
@@ -16,6 +17,9 @@ class Item(sgmllib.SGMLParser):
         self.inside_b_element = 0
         self.last_data = ''
         self.qty = True
+
+        self.last_qty = None
+        self.prices = []
 
         self.feed(self.__getData(partNumber))
         self.close()
@@ -75,9 +79,14 @@ class Item(sgmllib.SGMLParser):
         if self.inside_td_element > 0:
             #	print 'td:"'+data+'"'
             if self.qty:
+                self.last_qty = data
+
                 self.qty_range.append(data)
                 self.qty = False
             else:
+                self._add_price_range( self.last_qty, data[2:] )
+                self.last_qty = None
+
                 self.cost.append(data[2:])
                 self.qty = True
 
@@ -122,6 +131,42 @@ class Item(sgmllib.SGMLParser):
             return int(n)
 
         print """Warning: Farnell script can't parse price_for field "%s".""" % s
+
+    def _add_price_range(self, qty, cost):
+        q = self._parse_qty(qty)
+        c = self._parse_cost(cost)
+
+        if q == None:
+            return
+
+        self.prices.append( (q,c) )
+
+    def _parse_qty(self, qty):
+        r = re.compile( "([0-9,]+)\s*-\s*([0-9,]+)" )
+        m = r.search(qty)
+        if m != None:
+            # Strip commas
+            t = int(m.group(2).replace(",",""))
+
+            # Only use the higher end of the range
+            return t
+
+        r = re.compile( "([0-9]{1}[0-9,.]*)" )
+        m = r.search(qty)
+        if m != None:
+            # Strip commas
+            t = int(m.group(1).replace(",",""))
+            return t
+
+        print """Warning: Farnell script can't parse quantity field: "%s".""" % qty
+
+    def _parse_cost(self, cost):
+        r = re.compile( "([0-9]{1}[0-9,.]*)" )
+        m = r.search(cost)
+        if m != None:
+            # Strip commas
+            t = m.group(1).replace(",","")
+            return Decimal(t)
 
     def get_info(self):
         "Return a dict of the info garnered."

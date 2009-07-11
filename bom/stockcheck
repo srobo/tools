@@ -12,7 +12,7 @@ boards = bom.MultiBoardBom(db)
 
 for fname in sys.argv[1:]:
     board = bom.BoardBom( db, fname, os.path.basename( fname ) )
-    boards.add_boards(board, 100000)
+    boards.add_boards(board, 1)
 
 stock = {}
 n = 0

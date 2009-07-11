@@ -5,13 +5,12 @@ from decimal import Decimal
 
 # Number of seconds for the cache to last for
 CACHE_LIFE = 3600
-CACHE_DIR = os.path.expanduser( "~/.sr/cache" )
 
 def grab_url_cached(url):
-    cache_dir = os.path.expanduser( "~/.sr/cache" )
+    cache_dir = os.path.expanduser( "~/.sr/cache/farnell" )
 
     if not os.path.exists( cache_dir ):
-        os.mkdir( cache_dir )
+        os.makedirs( cache_dir )
 
     h = hashlib.sha1()
     h.update(url)

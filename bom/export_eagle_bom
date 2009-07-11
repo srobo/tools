@@ -41,7 +41,7 @@ if [[ `sr eagle_ver $1 | cut -d . -f 1` == "5" ]]
     EAGLE=eagle5
 fi
 
-echo -n Generating bom...
+echo -n "Generating bom (`basename $1`)..."
 $EAGLE $1 -S $scr &
 eagle_pid=$!
 

@@ -4,15 +4,20 @@ import bom, parts_db, schem
 NUM_THREADS = 3
 
 if len(sys.argv) < 2:
-    print "Usage: %s SCHEMATIC" % os.path.basename(sys.argv[0])
+    print "Usage: %s schematics..." % os.path.basename(sys.argv[0])
     sys.exit(1)
 
 db = parts_db.Db( bom.PARTS_DB )
-board = bom.BoardBom( db, sys.argv[1], os.path.basename( sys.argv[1] ) )
+boards = bom.MultiBoardBom(db)
+
+for fname in sys.argv[1:]:
+    board = bom.BoardBom( db, fname, os.path.basename( fname ) )
+    boards.add_boards(board, 100000)
+
 stock = {}
 n = 0
 
-for x in board.stockcheck():
+for x in boards.stockcheck():
     if not stock.has_key(x[0]):
         stock[x[0]] = []
 
@@ -20,7 +25,7 @@ for x in board.stockcheck():
 
     # Show stock checking progress:
     n = n + 1
-    sys.stdout.write( "\rChecking: %i/%i" % (n, len(board)) )
+    sys.stdout.write( "\rChecking: %i/%i" % (n, len(boards)) )
     sys.stdout.flush()
 print
 
@@ -35,5 +40,5 @@ if stock.has_key( bom.STOCK_OUT ):
         print "\t- %s %s(%s)" % ( part["sr-code"], part["supplier"], part["order-number"] )
     sys.exit(1)
 
-print "All checkable parts are in stock."
+print "All checkable parts are sufficiently in stock."
 sys.exit(0)

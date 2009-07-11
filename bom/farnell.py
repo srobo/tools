@@ -1,6 +1,6 @@
 """Routines for scraping data about parts from Farnell"""
 from urllib import urlopen
-import string, sgmllib, sys
+import string, sgmllib, sys, re
 
 class Item(sgmllib.SGMLParser):
     "Represents a Farnell item"
@@ -92,7 +92,7 @@ class Item(sgmllib.SGMLParser):
             self.last_data = ''
             #test for a match to last_data
             if tmp_last_data == 'Price For':
-                self.price_for = data
+                self.price_for = self._parse_price_for(data)
             elif tmp_last_data == 'Minimum Order Quantity':
                 self.min_order = int(data)
             elif tmp_last_data == 'Order Multiple':
@@ -104,6 +104,24 @@ class Item(sgmllib.SGMLParser):
                     self.avail = str(data)
             else:	#not this time around
                 self.last_data = tmp_last_data
+
+    def _parse_price_for(self, s):
+        "Break the 'price for' string up"
+        r = re.compile( "Reel of ([0-9,]+)" )
+        m = r.search( s )
+        if m != None:
+            # Strip commas
+            n = m.group(1).replace(",","")
+            return int(n)
+
+        r = re.compile( "([0-9,]+) Each" )
+        m = r.search( s )
+        if m != None:
+            # Strip commas
+            n = m.group(1).replace(",","")
+            return int(n)
+
+        print """Warning: Farnell script can't parse price_for field "%s".""" % s
 
     def get_info(self):
         "Return a dict of the info garnered."

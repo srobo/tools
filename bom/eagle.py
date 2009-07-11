@@ -8,8 +8,11 @@ def file_is_eagle(f):
     b = f.read(2)
 
     # The first two bytes of eagle files seem either be 0x10 0x80 or 0x10 0x00
-    if ord(b[0]) == 0x10 and (ord(b[1]) == 0x80 or ord(b[1]) == 0x00):
-        return True
+    try:
+        if ord(b[0]) == 0x10 and (ord(b[1]) == 0x80 or ord(b[1]) == 0x00):
+            return True
+    except:
+        pass
     return False
 
 def file_version(fname):

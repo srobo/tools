@@ -40,7 +40,8 @@ class PartGroup(list):
 
         if self.part.stockcheck() == None:
             "Unable to discover details from distributor..."
-            return None
+            # Assume one part per distributor unit
+            return len(self)
 
         n = len(self)
         if n == 0:

@@ -1,7 +1,34 @@
 """Routines for scraping data about parts from Farnell"""
 from urllib import urlopen
-import string, sgmllib, sys, re
+import string, sgmllib, sys, re, os, hashlib, time
 from decimal import Decimal
+
+# Number of seconds for the cache to last for
+CACHE_LIFE = 3600
+CACHE_DIR = os.path.expanduser( "~/.sr/cache" )
+
+def grab_url_cached(url):
+    cache_dir = os.path.expanduser( "~/.sr/cache" )
+
+    if not os.path.exists( cache_dir ):
+        os.mkdir( cache_dir )
+
+    h = hashlib.sha1()
+    h.update(url)
+    
+    F = os.path.join( cache_dir, h.hexdigest() )
+
+    if os.path.exists( F ) and (os.path.getmtime( F ) - time.time()) < CACHE_LIFE:
+        f = open( F, "r" )
+        page = f.read()
+        f.close()
+    else:
+        page = urlopen(url).read()
+        f = open( F, "w" )
+        f.write(page)
+        f.close()
+
+    return page
 
 class Item(sgmllib.SGMLParser):
     "Represents a Farnell item"
@@ -25,7 +52,7 @@ class Item(sgmllib.SGMLParser):
         self.close()
 
     def __getData(self, partNumber):
-        page = urlopen('http://xgoat.com/p/farnell/'+str(partNumber)).read()
+        page = grab_url_cached( 'http://xgoat.com/p/farnell/'+str(partNumber) )
 
         start = string.find(page, '<div id="availability">')
         if start == -1:

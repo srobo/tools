@@ -1,0 +1,74 @@
+#!/usr/bin/env python
+# Export gerber from a board
+import sys, os, ConfigParser, subprocess
+OUTPUT_DIR = "./gerbers"
+
+FORMAT_RS274X = 1
+FORMAT_EXCELLON = 2
+
+class EagleBoard():
+    def __init__(self, fname):
+        self.fname = fname
+
+    def export_gerber(self, out_fname, layers, format = FORMAT_RS274X ):
+        "Export the given list of layers into a gerber file"
+
+        if format == FORMAT_RS274X:
+            fstr = "GERBER_RS274X"
+        elif format == FORMAT_EXCELLON:
+            fstr = "excellon"
+        else:
+            raise Exception("Invalid file format requested")
+
+        cmd = "eagle -X -d%s -o%s %s %s" % ( fstr,
+                                             out_fname,
+                                             self.fname,
+                                             " ".join(layers) )
+        p = subprocess.Popen( cmd,
+                              shell = True,
+                              stdout = open("/dev/null", "w") )
+        p.communicate()
+        p.wait()
+
+        # Remove useless 'gpi' file
+        if format == FORMAT_RS274X:
+            os.remove( "%s.gpi" % out_fname )
+        elif format == FORMAT_EXCELLON:
+            os.remove( "%s.dri" % out_fname )
+
+if len(sys.argv) < 2:
+    print "Usage: %s CONFIG_FILE BOARD"
+    print "Will output gerbers to directory %s" % OUTPUT_DIR
+    sys.exit(1)
+
+CONFIG_FILE = sys.argv[1]
+BOARD = sys.argv[2]
+
+if os.path.exists( OUTPUT_DIR ) and not os.path.isdir( OUTPUT_DIR ):
+    print "%s exists and is not a directory" % OUTPUT_DIR
+    print "Cowardly refusing to remove it!"
+    sys.exit(1)
+
+if not os.path.exists( OUTPUT_DIR ):
+    os.mkdir( OUTPUT_DIR )
+
+board = EagleBoard( BOARD )
+
+conf = ConfigParser.SafeConfigParser()
+conf.read( CONFIG_FILE )
+
+for fname in conf.sections():
+    if conf.has_option( fname, "layers" ):
+        print "Generating gerber: %s" % fname
+        layers = conf.get( fname, "layers" ).split()
+        board.export_gerber( os.path.join( OUTPUT_DIR, fname ), layers )
+
+    elif conf.has_option( fname, "drill_layers" ):
+        print "Generating drill file: %s" % fname
+        layers = conf.get( fname, "drill_layers" ).split()
+        board.export_gerber( os.path.join( OUTPUT_DIR, fname ), layers, format = FORMAT_EXCELLON )
+
+    else:
+        print "Fatal Error: Section '%s' in config file lacks 'layers' or 'drill_layers' option."
+        sys.exit(1)
+

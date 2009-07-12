@@ -28,7 +28,7 @@ sr-l-18u,18u?? inductor,1463496,farnell
 
 # Connectors
 sr-cn-camcon2w,CTB9550/2 — CAMDEN ELECTRONICS — Miscellaneous,3882391,farnell
-sr-cn-camcon3w,
+sr-cn-camcon3w,CTB9550/3 - Camden Electronics 3way,3882408,farnell
 sr-cn-rj11,RJ11 4p4c pcb socket,3938335,farnell
 sr-cn-pjack,LUMBERG 2.1MM powerjack,1217037,farnell
 sr-cn-fuse-20mm,20mm glass fuse holder,1162740,farnell
@@ -53,7 +53,7 @@ sr-d-30bq040trpbf,schottky diode 3a smc,1463231,farnell,smc
 sr-d-bat754s,schottky diode dual,1081206,farnell,5,sot23
 sr-d-bzx384c3v3, zener diode 3.3V 5%,8735646,farnell,10,sod323
 # ICs
-sr-ic-max4069,MAX4069 - current sense amplifier,,maxim
+sr-ic-max4069,MAX4069 - current sense amplifier,MAX4069,maxim
 sr-ic-max1626,MAX1626ESA+ 5/3.3v switchmode controller,9725342,farnell,soic8
 sr-ic-msp430f169,MSP430F169IPM 16bit mcu,296-16842-ND,digikey,tssop
 sr-ic-msp430f2234, MSP430F2234 16bit mcu suffix: IDA,1649419,farnell,tssop

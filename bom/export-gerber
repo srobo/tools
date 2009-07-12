@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Export gerber from a board
-import sys, os, ConfigParser, subprocess
+import sys, os, ConfigParser, subprocess, eagle
 OUTPUT_DIR = "./gerbers"
 
 FORMAT_RS274X = 1
@@ -20,10 +20,16 @@ class EagleBoard():
         else:
             raise Exception("Invalid file format requested")
 
-        cmd = "eagle -X -d%s -o%s %s %s" % ( fstr,
-                                             out_fname,
-                                             self.fname,
-                                             " ".join(layers) )
+        if eagle.file_version( self.fname )[0] == 4:
+            ecmd = "eagle"
+        else:
+            ecmd = "eagle5"
+
+        cmd = "%s -X -d%s -o%s %s %s" % ( ecmd,
+                                          fstr,
+                                          out_fname,
+                                          self.fname,
+                                          " ".join(layers) )
         p = subprocess.Popen( cmd,
                               shell = True,
                               stdout = open("/dev/null", "w") )

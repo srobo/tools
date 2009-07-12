@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+import sys, os
+import bom, parts_db
+
+if len(sys.argv) < 2:
+   print "Usage: %s DIR schematics..."
+   sys.exit(1)
+
+db = parts_db.Db( bom.PARTS_DB )
+
+m = bom.MultiBoardBom(db)
+
+for fname in sys.argv[1:]:
+    board = bom.BoardBom( db, fname, os.path.basename( fname ) )
+    m.add_boards(board, 1)
+
+# Group the parts by distributor:
+# Keys of ths dictionary are the distributor
+dist = {}
+
+for srcode, pg in m.iteritems():
+   if srcode == "sr-nothing":
+      continue
+
+   supplier = pg.part["supplier"]
+
+   if not dist.has_key(supplier):
+      dist[supplier] = []
+
+   dist[supplier].append( pg )
+
+for d, partgroups in dist.iteritems():
+   print "Distributor: %s" % d
+   for pg in partgroups:
+      n = pg.order_num()
+      if n == None:
+         print "FAIL :-("
+      else:
+
+         if d == "farnell":
+            print "%s, %i" % ( pg.part["order-number"], pg.order_num() )
+         else:
+            print " - %i * %s" % ( pg.order_num(), pg.part["order-number"] )
+
+print "Total Price:", m.get_price()

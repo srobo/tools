@@ -1,6 +1,6 @@
 """Routines for extracting information from EAGLE schematics
 You probably always want to import schem instead of this."""
-import os, subprocess, tempfile
+import os, subprocess, hashlib
 
 def file_is_eagle(f):
     """Return true if the file is an EAGLE file"""
@@ -31,17 +31,40 @@ class EagleSchem(dict):
     def __init__(self, fname):
         """Load the given file.  Grab the parts list."""
         self.fname = fname
-        self.__load_bom()
+        self.__load_bom_cached()
 
-    def __load_bom(self):
-        # Export the EAGLE BOM to a temporary file
-        tmpf = tempfile.mkstemp()
-        os.close(tmpf[0])
-        tmpf = tmpf[1]
+    def __load_bom_cached(self):
+        "Load the BOM from cache if possible."
+        cache_dir = os.path.expanduser( "~/.sr/cache/eagle_bom" )
+        if not os.path.exists( cache_dir ):
+            os.makedirs( cache_dir )
 
-        self.__export_bom(tmpf)
+        ab = os.path.abspath( self.fname )
 
-        f = open( tmpf, "r" )
+        # Generate cache filename
+        h = hashlib.sha1()
+        h.update(ab)
+        cfname = os.path.join( cache_dir, h.hexdigest() )
+
+        cache_good = False
+        if os.path.exists( cfname ):
+            # Discover if the cache is still valid
+            schem_t = os.path.getmtime(ab)
+            cache_t = os.path.getmtime(cfname)
+
+            if cache_t > schem_t:
+                "Cache is good"
+                cache_good = True
+
+        if not cache_good:
+            self.__export_bom(cfname)
+        else:
+            print "Using cached BOM for %s." % os.path.basename(self.fname)
+
+        self.__parse_bom_fname( cfname )
+
+    def __parse_bom_fname(self, fname):
+        f = open( fname, "r" )
 
         # Skip and check EAGLE header
         for i in range(8):
@@ -59,7 +82,6 @@ class EagleSchem(dict):
             self[id] = value
 
         f.close()
-        os.remove(tmpf)
 
     def __export_bom(self, out_fname):
         p = subprocess.Popen( """sr export_eagle_bom "%s" "%s" """ % (self.fname, out_fname),

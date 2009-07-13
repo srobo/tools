@@ -46,7 +46,13 @@ outf = open( OUTFILE, "w" )
 
 html_header(outf)
 
-for line in parts.values():
+def srcode_sort(x,y):
+    return cmp(x.part["sr-code"], y.part["sr-code"])
+
+lines = parts.values()
+lines.sort(srcode_sort)
+
+for line in lines:
     outf.write("<tr>")
     p = line.part
 

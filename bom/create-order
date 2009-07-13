@@ -3,16 +3,22 @@ import sys, os
 import bom, parts_db
 
 if len(sys.argv) < 2:
-   print "Usage: %s DIR schematics..." % os.path.basename( sys.argv[0] )
+   print "Usage: %s DIR -N SCHEMATIC1 -M SCHEMATIC2 ..." % os.path.basename( sys.argv[0] )
+   print "Where N and M are multipliers for the number of boards"
    sys.exit(1)
 
 db = parts_db.Db( bom.PARTS_DB )
 
 m = bom.MultiBoardBom(db)
 
+mul = 1
 for fname in sys.argv[1:]:
-    board = bom.BoardBom( db, fname, os.path.basename( fname ) )
-    m.add_boards(board, 1)
+   if fname[0] == '-':
+      mul = int(fname[1:])
+   else:
+      board = bom.BoardBom( db, fname, os.path.basename( fname ) )
+      m.add_boards(board, mul)
+      mul = 1
 
 # Group the parts by distributor:
 # Keys of ths dictionary are the distributor

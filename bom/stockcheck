@@ -4,15 +4,21 @@ import bom, parts_db, schem
 NUM_THREADS = 3
 
 if len(sys.argv) < 2:
-    print "Usage: %s schematics..." % os.path.basename(sys.argv[0])
+    print "Usage: %s DIR -N SCHEMATIC1 -M SCHEMATIC2 ..." % os.path.basename( sys.argv[0] )
+    print "Where N and M are multipliers for the number of boards"
     sys.exit(1)
 
 db = parts_db.Db( bom.PARTS_DB )
 boards = bom.MultiBoardBom(db)
 
+mul = 1
 for fname in sys.argv[1:]:
-    board = bom.BoardBom( db, fname, os.path.basename( fname ) )
-    boards.add_boards(board, 1)
+   if fname[0] == '-':
+      mul = int(fname[1:])
+   else:
+      board = bom.BoardBom( db, fname, os.path.basename( fname ) )
+      boards.add_boards(board, mul)
+      mul = 1
 
 stock = {}
 n = 0

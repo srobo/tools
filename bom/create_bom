@@ -50,6 +50,10 @@ for line in parts.values():
     outf.write("<tr>")
     p = line.part
 
+    if p["sr-code"] == "sr-nothing":
+        "Ignore sr-nothing -- we don't want it in HTML BOMs"
+        continue
+
     for x in [ p["sr-code"],
                p["description"],
                p["supplier"],

@@ -3,7 +3,7 @@ import sys, os
 import bom, parts_db
 
 if len(sys.argv) < 2:
-   print "Usage: %s DIR schematics..."
+   print "Usage: %s DIR schematics..." % os.path.basename( sys.argv[0] )
    sys.exit(1)
 
 db = parts_db.Db( bom.PARTS_DB )

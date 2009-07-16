@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 """Student Robotics parts database access library"""
-import csv, farnell
+import csv, farnell, os, sys
+
+PARTS_DB = os.path.expanduser("~/.sr/tools/bom/sr_component_lib")
+if not os.path.exists( PARTS_DB ):
+    print "Parts DB not found at \"%s\"" % PARTS_DB
+    sys.exit(1)
+
+def get_db():
+    return Db(PARTS_DB)
 
 class Part(dict):
     """Represents a part"""

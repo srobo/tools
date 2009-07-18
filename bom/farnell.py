@@ -136,7 +136,7 @@ class Item(sgmllib.SGMLParser):
                 if data.isdigit():
                     self.avail = int(data)
                 else:
-                    self.avail = str(data)
+                    self.avail = 0
             else:	#not this time around
                 self.last_data = tmp_last_data
 

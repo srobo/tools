@@ -18,7 +18,6 @@ def grab_url_cached(url):
     F = os.path.join( cache_dir, h.hexdigest() )
 
     if os.path.exists( F ) and (time.time() - os.path.getmtime( F )) < CACHE_LIFE:
-        print (time.time() - os.path.getmtime( F ))
         f = open( F, "r" )
         page = f.read()
         f.close()

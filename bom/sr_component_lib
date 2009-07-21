@@ -50,7 +50,7 @@ sr-nothing,nothing,,
 # Diodes
 sr-d-112cwq04fntrpbf, schottky diode 12A D-PAK,1298442,farnell,d-pak
 sr-d-30bq040trpbf,schottky diode 3a smc,1299292,farnell,smc
-sr-d-bat754s,schottky diode dual,1081206,farnell,5,sot23
+sr-d-bat754s,schottky diode dual,1700901,farnell,1,sot23
 sr-d-bzx384c3v3, zener diode 3.3V 5%,8735646,farnell,10,sod323
 # ICs
 sr-ic-max4069,MAX4069 - current sense amplifier,MAX4069,maxim

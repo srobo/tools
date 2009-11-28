@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 """Routines for scraping data about parts from Farnell"""
 from urllib import urlopen
 import string, sgmllib, sys, re, os, hashlib, time
 from decimal import Decimal
 
 # Number of seconds for the cache to last for
-CACHE_LIFE = 3600
+CACHE_LIFE = 36000
 
 def grab_url_cached(url):
     cache_dir = os.path.expanduser( "~/.sr/cache/farnell" )
@@ -43,6 +44,7 @@ class Item(sgmllib.SGMLParser):
         self.inside_b_element = 0
         self.last_data = ''
         self.qty = True
+        self.qty_str = ""
 
         self.last_qty = None
         self.prices = []
@@ -103,25 +105,21 @@ class Item(sgmllib.SGMLParser):
             return
 
         if self.inside_td_element > 0:
-            #	print 'td:"'+data+'"'
-            if self.qty:
-                self.last_qty = data
-
-                self.qty_range.append(data)
-                self.qty = False
+            # print 'td:"'+data+'"'
+            if "£" in data:
+                # print "\tQTY_STR: \"%s\"" % self.qty_str
+                # print "\tPRICE: \"%s\"" % data
+                self._add_price_range( self.qty_str, data[2:] )
+                self.qty_str = ""
             else:
-                self._add_price_range( self.last_qty, data[2:] )
-                self.last_qty = None
-
-                self.cost.append(data[2:])
-                self.qty = True
+                self.qty_str += data
 
         elif self.inside_b_element > 0:
-            #	print 'b:"'+data+'"'
+            # print 'b:"'+data+'"'
             self.last_data = data
 
         elif self.inside_p_element > 0:
-            #	print 'p:"'+data+'"'
+            # print 'p:"'+data+'"'
             #kill off the last_data, but store it just in case
             tmp_last_data = self.last_data
             self.last_data = ''
@@ -159,11 +157,15 @@ class Item(sgmllib.SGMLParser):
         print """Warning: Farnell script can't parse price_for field "%s".""" % s
 
     def _add_price_range(self, qty, cost):
+        # print "_add_price_range( qty = \"%s\", cost = \"%s\" )" % (qty, cost)
         q = self._parse_qty(qty)
         c = self._parse_cost(cost)
 
         if q == None:
             return
+
+        # print "\tq: %i" % q
+        # print "\tc: %s" % c
 
         self.prices.append( (q,c) )
 
@@ -205,5 +207,8 @@ class Item(sgmllib.SGMLParser):
         print ' Minimum Order Quantity:',self.min_order
         print ' Order Multiple:',self.multi
         print ' Pricing:'
-        for i in range(0, len(self.qty_range)):
-            print ' ',self.qty_range[i],'  \t',self.cost[i]
+
+        n = self.min_order
+        for p in self.prices:
+            print "\t%i - %i: \t£%s" % (n, p[0], p[1])
+

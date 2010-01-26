@@ -55,7 +55,7 @@ class Item(sgmllib.SGMLParser):
     def __getData(self, partNumber):
         page = grab_url_cached( 'http://xgoat.com/p/farnell/'+str(partNumber) )
 
-        start = string.find(page, '<div id="availability">')
+        start = string.find(page, '<div class="availability">')
         if start == -1:
             raise Exception( """Part number "%s" doesn't exist""" % str(partNumber) )
 
@@ -63,7 +63,7 @@ class Item(sgmllib.SGMLParser):
         end = string.find(info, '</div>')
         availInfo = info[:end]
 
-        start = string.find(page, '<div id="price">')
+        start = string.find(page, '<div class="price">')
         if start == -1:
             raise Exception( """Part number "%s" doesn't exist""" % str(partNumber) )
 

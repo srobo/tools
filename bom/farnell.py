@@ -147,6 +147,13 @@ class Item(sgmllib.SGMLParser):
             n = m.group(1).replace(",","")
             return int(n)
 
+        r = re.compile( "Pack of ([0-9,]+)" )
+        m = r.search( s )
+        if m != None:
+            # Strip commas
+            n = m.group(1).replace(",","")
+            return int(n)
+
         r = re.compile( "([0-9,]+) Each" )
         m = r.search( s )
         if m != None:

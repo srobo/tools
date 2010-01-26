@@ -217,5 +217,9 @@ class Item(sgmllib.SGMLParser):
 
         n = self.min_order
         for p in self.prices:
-            print "\t%i - %i: \t£%s" % (n, p[0], p[1])
+            if n != p[0]:
+                print "\t%i - %i: \t£%s" % (n, p[0], p[1])
+                n = p[0] + 1
+            else:
+                print "\t%i +: \t£%s" % (n, p[1])
 

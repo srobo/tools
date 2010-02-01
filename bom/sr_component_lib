@@ -13,6 +13,8 @@ sr-r-3k3,3k3 0603 chip resistor,9238549,farnell,50
 sr-r-3m5-2512,3m5 2512 chip resistor,1292479,farnell,5
 sr-r-40m-2512,40m 2512 chip resistor,1107400,farnell,5
 sr-r-15m-1206,15m 1206 chip resistor,1099908,farnell,5
+sr-r-4r7,4r7 0603 chip resistor,9332189,farnell,50
+sr-r-330-1206,330 1206 chip resistor (0.5W),1576622,farnell,50
 
 # Capacitors
 sr-c-470n,0.47u capacitor 0603,1414037,farnell
@@ -23,6 +25,8 @@ sr-c-220u,220u capacitor smt CPOL-EUE,1580568,farnell
 sr-c-100n,100n capacitor 0603,1288255,farnell
 sr-c-1u,1u electrolytic capacitor,1236655,farnell
 sr-c-47u,47u electrolytic capacitor,9451072,farnell,10
+sr-c-1m,1m electrolytic capacitor 16V,9693610,farnell
+sr-c-330n-0805,0.33u capacitor 0805,1759174,farnell
 
 # Inductors
 sr-l-18u,18u?? inductor,1463496,farnell
@@ -41,6 +45,7 @@ sr-cn-idcsocket16, 16Way IDC socket with wings,1099027,farnell,1
 sr-cn-cageclamp,1 way 2.54mm horizontal cage clamp,3041050,farnell
 sr-cn-cageclamp-end,1 way 2.54mm horizontal cage clamp with endcap,3105295,farnell
 sr-cn-socket10-2mm,10 way 2mm pitch SIL socket,1109732,farnell
+sr-cn-8p8c,8P8C pcb socket,1691996,farnell
 
 # LEDs
 sr-led-red,LED 0603 RED,1465988,farnell, 10
@@ -49,11 +54,13 @@ sr-led-red,LED 0603 RED,1465988,farnell, 10
 sr-nothing,nothing,,
 
 # Diodes
+sr-d-ll4448,signal diode 100mA 100V 1N4148 equiv,1621882,farnell,1,sod80
 sr-d-112cwq04fntrpbf, schottky diode 12A D-PAK,1298442,farnell,d-pak
 sr-d-30bq040trpbf,schottky diode 3a smc,1299292,farnell,smc
 sr-d-bat754s,schottky diode dual,1700901,farnell,1,sot23
 sr-d-bzx384c3v3, zener diode 3.3V 5%,8735646,farnell,10,sod323
 sr-d-tvs-16v-smcj16a,16v tvs diode,1470983,farnell,,do-214ab
+sr-d-smaj12ca,12V bidirectional TVS diode,1578951,farnell,1,do-214ac
 
 # ICs
 sr-ic-max4069,MAX4069 - current sense amplifier,MAX4069,maxim
@@ -65,6 +72,13 @@ sr-ic-74act04d, 74ACT04D HEX INVERTER SMD 74ACT04,9590323,farnell,soic14
 sr-ic-74153,74153 bus multiplexer,1236217,farnell,soic-16
 sr-ic-as5030,ADS5030 magnetic rotary sensor,1630797,farnell,tssop16
 sr-ic-ua78l05,UA78L05 5V linear voltage regulator,1236590,farnell,sot-89-3
+sr-ic-ts78l05,ts78l05acy 5V linear voltage reg cheaper than ua78l05,398-524,rs,50,sot-89
+sr-ic-sn65176b,SN65176B RS-485 half duplex transceiver (5V),528-539,rs,10,soic8
+sr-ic-sn75179b,SN75179B RS-485 full duplex transceiver (5V),660-8275,rs,10,soic8
+sr-ic-pic10f200,PIC10F200T-I/OT 8bit mcu,1216921,farnell,1,sot-23-6
+sr-ic-tl494,TL494CD PWM/switchmode controller,528-129,rs,40,soic16
+sr-ic-fan7380,FAN7380 dual MOSFET driver,1241880,farnell,1,soic8
+sr-ic-hcpl-817,HCPL-817-30DE Optoisolator,1244561,farnell,1
 
 # FETs
 sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,soic-8
@@ -72,6 +86,7 @@ sr-fet-n-bss123,BSS123 n-channel mosfet,9845321,farnell,sot-23
 sr-fet-p-bss84lt1g,BSS84LT1G p-channel mosfet,1431318,farnell,sot-23
 sr-fet-n-fdd8586,FDD8586 n-channel mosfet,1324786,farnell,d-pak
 sr-fet-p-nds8435a,NDS8435A p-channel mosfet,9846263,farnell,soic-8
+sr-fet-n-irf8721,IRF8721PbF n-channel mosfet,1551902,farnell,soic8
 
 # Switches
 sr-sw-4dip,4way dipswitch,9471600,farnell

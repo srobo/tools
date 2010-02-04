@@ -15,6 +15,9 @@ sr-r-40m-2512,40m 2512 chip resistor,1107400,farnell,5
 sr-r-15m-1206,15m 1206 chip resistor,1099908,farnell,5
 sr-r-4r7,4r7 0603 chip resistor,9332189,farnell,50
 sr-r-330-1206,330 1206 chip resistor (0.5W),1576622,farnell,50
+sr-r-160k,160k 0603 chip resistor,9330682,farnell,50
+sr-r-9k1,9k1 0603 chip resistor,1469842,farnell,50
+sr-r-2k4,2k4 0603 chip resistor,9330879,farnell,50
 
 # Capacitors
 sr-c-470n,0.47u capacitor 0603,1414037,farnell
@@ -27,6 +30,7 @@ sr-c-1u,1u electrolytic capacitor,1236655,farnell
 sr-c-47u,47u electrolytic capacitor,9451072,farnell,10
 sr-c-1m,1m electrolytic capacitor 16V,9693610,farnell
 sr-c-330n-0805,0.33u capacitor 0805,1759174,farnell
+sr-c-1n,1n capacitor 0603,1759088,farnell
 
 # Inductors
 sr-l-18u,18u?? inductor,1463496,farnell
@@ -79,6 +83,7 @@ sr-ic-pic10f200,PIC10F200T-I/OT 8bit mcu,1216921,farnell,1,sot-23-6
 sr-ic-tl494,TL494CD PWM/switchmode controller,528-129,rs,40,soic16
 sr-ic-fan7380,FAN7380 dual MOSFET driver,1241880,farnell,1,soic8
 sr-ic-hcpl-817,HCPL-817-30DE Optoisolator,1244561,farnell,1
+sr-ic-mcp4018-103,MCP4018-103/LT 7-bit I2C digital pot,1715849,farnell,1,sc70-6
 
 # FETs
 sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,soic-8

@@ -32,6 +32,7 @@ sr-c-1m,1m electrolytic capacitor 16V,9693610,farnell
 sr-c-330n-0805,0.33u capacitor 0805,1759174,farnell
 sr-c-1n,1n capacitor 0603,1759088,farnell
 sr-c-15u-7343,15u tantalum capacitor 25V,1754110,farnell
+sr-c-2u2-0805,2u2 capacitor 0805 16V,1759424,farnell,100
 
 # Inductors
 sr-l-18u,18u?? inductor,1463496,farnell

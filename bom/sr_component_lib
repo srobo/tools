@@ -88,8 +88,10 @@ sr-ic-tl494,TL494CD PWM/switchmode controller,528-129,rs,40,soic16
 sr-ic-fan7380,FAN7380 dual MOSFET driver,1241880,farnell,1,soic8
 sr-ic-hcpl-817,HCPL-817-30DE Optoisolator,1244561,farnell,1
 sr-ic-mcp4018-103,MCP4018-103/LT 7-bit I2C digital pot,1715849,farnell,1,sc70-6
-sr-ic-TLV1117-33,TLV1117-33CDCY 3.3V 800mA linear voltage reg - hefty,1494942,farnell,1,sot223
-sr-ic-TS5205CX533,TS5205CX533 3.3V 150mA linear voltage reg - weedy,398-708,rs,50,sot23-5
+sr-ic-tlv1117-33,TLV1117-33CDCY 3.3V 800mA linear voltage reg - hefty,1494942,farnell,1,sot223
+sr-ic-ts5205cx533,TS5205CX533 3.3V 150mA linear voltage reg - weedy,398-708,rs,50,sot23-5
+sr-ic-sn65lvds1,SN65LVDS1DBVTG4 LVDS driver,526-864,rs,5,sot23-5
+sr-ic-sn65lvds2,SN65LVDS2DBVTG4 LVDS receiver,528-084,rs,5,sot23-5
 
 # FETs
 sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,soic-8

@@ -106,7 +106,7 @@ sr-sw-4dip,4way dipswitch,9471600,farnell
 sr-sw-button,Tactile Button (dont press),3801305,farnell
 
 # Crystals
-sr-xtal-32k, 32kHz Crystal, 9712887,farnell,1
+sr-xtal-32k, 32kHz Crystal,1652573,farnell,1
 
 # Assemblies
 sr-asm-xbee,2(sr-cn-socket10-2mm). XBee connector assembly,,

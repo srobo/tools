@@ -55,7 +55,9 @@ sr-cn-socket10-2mm,10 way 2mm pitch SIL socket,1109732,farnell
 sr-cn-8p8c,8P8C pcb socket,1691996,farnell
 
 # LEDs
-sr-led-red,LED 0603 RED,1465988,farnell, 10
+sr-led-red,LED 0603 RED - Deprecated,1465988,farnell,10
+sr-led-red-plcc2,LED PLCC2 RED,4134321,farnell,5
+sr-led-green-plcc2,LED PLCC2 GREEN,4134436,farnell,5
 
 # Special nothing
 sr-nothing,nothing,,

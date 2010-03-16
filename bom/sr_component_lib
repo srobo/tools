@@ -18,6 +18,7 @@ sr-r-680-1206,680 1206 chip resistor (0.5W),1576626,farnell,50
 sr-r-160k,160k 0603 chip resistor,9330682,farnell,50
 sr-r-9k1,9k1 0603 chip resistor,1469842,farnell,50
 sr-r-2k4,2k4 0603 chip resistor,9330879,farnell,50
+sr-r-100,100 0603 chip resistor (100mW),1469752,farnell,50
 
 # Capacitors
 sr-c-470n,0.47u capacitor 0603,1759021,farnell
@@ -37,6 +38,9 @@ sr-c-2u2-0805,2u2 capacitor 0805 16V,1759424,farnell,100
 # Inductors
 sr-l-18u,18u?? inductor,1463496,farnell
 sr-l-15u,18u 5.5A smt inductor,1704128,farnell
+
+# Ferrite Beads (value is current rating)
+sr-fb-300m,300mA 1k @ 100MHz 0603,1463451,farnell,1
 
 # Connectors
 sr-cn-camcon2w,CTB9550/2 - Camden Electronics 2way,3882391,farnell
@@ -73,6 +77,7 @@ sr-d-bzx384c3v3, zener diode 3.3V 5%,8735646,farnell,10,sod323
 sr-d-tvs-16v-smcj16a,16v tvs diode 1500W,1470983,farnell,,do-214ab
 sr-d-smaj16a,16V unidirectional TVS diode 400W,1578964,farnell,5,do-214ac
 sr-d-smaj16ca,16V bidirectional TVS diode 400W,1578965,farnell,5,do-214ac
+sr-d-gsot12c,12V unidirectional dual TVS diode 312W common anode,1617678,farnell,5,sot23
 
 # ICs
 sr-ic-max4069,MAX4069 - current sense amplifier,MAX4069,maxim

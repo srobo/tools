@@ -2,11 +2,11 @@
 import sys, os, subprocess
 TOOLS_DIR = os.path.join( sys.path[0], "../" )
 
-# Perform the svn up
-print "Updating subversion...",
+# Update git
+print "Updating git...",
 sys.stdout.flush()
 
-p = subprocess.Popen( "svn up -q",
+p = subprocess.Popen( "git pull -q origin master",
                       cwd = TOOLS_DIR,
                       shell = True )
 p.communicate()

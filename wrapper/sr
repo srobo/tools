@@ -13,19 +13,11 @@ Where SCRIPT is the name of an executable file with the path
 
 This script *must* be checked out along with the rest of /tools.
 See http://trac.srobo.org/wiki/DevScripts for more details."""
-import sys, os, git_repos, subprocess, sr_commands
+import sys, os, subprocess, sr_commands
 
 TOOLS = os.path.join( sys.path[0], "../" )
 
 cmds = sr_commands.get_dict(TOOLS)
-
-# Check the git stuff has been checked out
-if not os.path.exists( os.path.join( TOOLS, "git" ) ):
-    print "git tools not yet downloaded -- rectifying:"
-    os.mkdir( os.path.join( TOOLS, "git" ) )
-    git_repos.update_all( TOOLS )
-else:
-    git_repos.check_all( TOOLS )
 
 #if no argument was passed or the command passed doesn't exist
 if len(sys.argv) == 1 or (len(sys.argv) > 1 and sys.argv[1] not in cmds.keys()):

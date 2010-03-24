@@ -6,7 +6,7 @@ def get_dict( TOOLS ):
 
     # Find the executable files in the subdirectories
     for d in os.listdir( TOOLS ):
-        if d in [".svn"]:
+        if d in [".git"]:
             continue
 
         path = os.path.join( TOOLS, d )

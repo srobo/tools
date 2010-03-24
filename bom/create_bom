@@ -60,14 +60,19 @@ for line in lines:
         "Ignore sr-nothing -- we don't want it in HTML BOMs"
         continue
 
-    for x in [ p["sr-code"],
-               p["description"],
-               p["supplier"],
-               p["order-number"],
-               len(line),
-               ", ".join([x[1] for x in line])
-               ]:
-        outf.write("<td>%s</td>" % x)
+    outf.write( """<td>%(sr-code)s</td>
+<td>%(description)s</td>
+<td>%(supplier)s</td>""" % p )
+
+    url = p.get_url()
+    if url == None:
+        outf.write( "<td>%(order-number)s</td>" % p )
+    else:
+        outf.write( """<td><a href="%s">%s</a></td>""" % ( url,
+                                                           p["order-number"] ) )
+
+    outf.write( "<td>%i</td>" % len(line) )
+    outf.write( "<td>%s</td>" % ", ".join([x[1] for x in line]) )
 
     outf.write("</tr>")
 

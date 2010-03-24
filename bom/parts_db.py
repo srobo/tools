@@ -65,6 +65,14 @@ class Part(dict):
         
         return self.increments
 
+    def get_url(self):
+        if self["supplier"] == "farnell":
+            return "http://xgoat.com/p/farnell/%s" % self["order-number"]
+        if self["supplier"] == "rs":
+            return "http://xgoat.com/p/rs/%s" % self["order-number"]
+
+        return None
+
     def __load_data(self):
         if self["supplier"] == "farnell":
             f = farnell.Item( self["order-number"] )

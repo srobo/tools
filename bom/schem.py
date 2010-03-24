@@ -1,8 +1,9 @@
 """Routines for extracting information from schematics"""
-import eagle, parts_db, re
+import eagle, geda, parts_db, re
 
 EAGLE = 0
-UNKNOWN = 1
+GSCHEM = 1
+UNKNOWN = 2
 
 def schem_type(fname):
     """Returns the type of file.
@@ -11,6 +12,8 @@ def schem_type(fname):
 
     if eagle.file_is_eagle(f):
         return EAGLE
+    else:
+        return GSCHEM
 
     return UNKNOWN
 
@@ -18,8 +21,10 @@ def open_schem(fname):
     s = schem_type(fname)
     if s == EAGLE:
         schem = eagle.EagleSchem(fname)
+    elif s == GSCHEM:
+        schem = geda.GSchem(fname)
     else:
-        raise "We don't yet support exporting BOMs from non-EAGLE things"
+        raise "We don't yet support exporting BOMs from non-EAGLE or gschem things"
 
     # New items to add to the schematic
     new_items = {}

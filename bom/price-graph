@@ -33,5 +33,7 @@ xticks( arange(0, len(prices)) + 0.5,
         [x[0] for x in prices],
         rotation = 90 )
 
+subplots_adjust( bottom = 0.35 )
+
 show()
 

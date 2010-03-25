@@ -30,6 +30,16 @@ def html_footer(f):
     f.write("""</body>
 </html>""")
 
+def pcode_extract_num(pcode):
+    for c in range(0, len(pcode)):
+        if pcode[c].isdigit():
+            return int( pcode[c:] )
+
+def pcode_cmp(a, b):
+    "Compare two part codes"
+    return cmp( pcode_extract_num(a),
+                pcode_extract_num(b) )
+
 if len(sys.argv) < 3:
     print "Usage: %s SCHEMATIC(S) OUTFILE" % (os.path.basename(sys.argv[0]))
     print "Where:"
@@ -81,7 +91,10 @@ for line in lines:
                                                            p["order-number"] ) )
 
     outf.write( "<td>%i</td>" % len(line) )
-    outf.write( "<td>%s</td>" % ", ".join([x[1] for x in line]) )
+
+    pcodes = [x[1] for x in line]
+    pcodes.sort(cmp=pcode_cmp)
+    outf.write( "<td>%s</td>" % ", ".join(pcodes) )
 
     outf.write("</tr>")
 

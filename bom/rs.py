@@ -179,11 +179,12 @@ class Item(sgmllib.SGMLParser):
         print ' Order Multiple:',self.multi
         print ' Pricing:'
 
-        n = self.multi
+        n = self.prices[0][0]
+        price = self.prices[0][1]
         for p in self.prices:
-            if n != p[0]:
-                print "\t%i - %i: \t£%s" % (n, p[0], p[1])
-                n = p[0] + 1
-            else:
-                print "\t%i +: \t£%s" % (n, p[1])
+            if p[0] != self.multi:
+                print "\t%i - %i: \t£%s" % (n, p[0] - self.multi, price)
+            n = p[0]
+            price = p[1]
+        print "\t%i +: \t£%s" % (n, price)
 

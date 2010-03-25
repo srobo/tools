@@ -72,7 +72,7 @@ class PartGroup(list):
 
         p = self.part.get_price( n )
         if p == None:
-            print "Warning: couldn't get price"
+            print "Warning: couldn't get price for %s (%s)" % (self.part["sr-code"], self.part["supplier"])
             return Decimal(0)
 
         return p * n

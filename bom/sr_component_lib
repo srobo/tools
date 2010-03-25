@@ -103,6 +103,7 @@ sr-ic-ts5205cx533,TS5205CX533 3.3V 150mA linear voltage reg - weedy,398-708,rs,5
 sr-ic-sn65lvds1,SN65LVDS1DBVTG4 LVDS driver,526-864,rs,5,sot23-5
 sr-ic-sn65lvds2,SN65LVDS2DBVTG4 LVDS receiver,528-084,rs,5,sot23-5
 sr-ic-lm339,LM339PT quad comparator,1750192,farnell,1,tssop14
+sr-ic-ts2431,TS2431ILT 2.5V to 24V programmable voltage reference,1374139,farnell,1,sot23
 
 # FETs
 sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,soic-8

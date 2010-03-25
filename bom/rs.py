@@ -52,10 +52,14 @@ class Item(sgmllib.SGMLParser):
     def __getData(self, partNumber):
         page = grab_url_cached( 'http://xgoat.com/p/rs/'+str(partNumber) )
 
-        if string.find(page, 'id="stockY"') == -1:
-            self.avail = 'Out of stock'
-        else:
+        start = string.find(page, 'id="stockY"')
+        if start != -1:
             self.avail = 'In stock'
+        else:
+            start = string.find(page, 'Temporarily out of stock -')
+            info = page[start:]
+            end = string.find(info, '\n')
+            self.avail = self._parse_availability(info[:end])
 
         start = string.find(page, '<table id="productdatatable"')
         if start == -1:
@@ -103,6 +107,14 @@ class Item(sgmllib.SGMLParser):
         elif self.inside_th_element > 0 and data[9:13] == 'Each':
             # print 'th:"'+data+'"'
             self.multi = self._parse_pack_size(data[9:-1])
+
+    def _parse_availability(self, s):
+        "Figure out how many they've got, if they say"
+        r = re.compile( "despatch ([0-9]{2})\/([0-9]{2})\/([0-9]{4})" )
+        m = r.search( s )
+        if m == None:
+            return 'Unknown, presume out of stock'
+        return 'Out of stock, due '+str(m.group(3))+'-'+str(m.group(2))+'-'+str(m.group(1))
 
     def _parse_pack_size(self, s):
         "Break the 'price for' string up"

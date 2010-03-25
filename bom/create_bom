@@ -52,13 +52,8 @@ lib = parts_db.Db(bom.PARTS_DB)
 outf = open( sys.argv[-1], "w" )
 
 multibom = bom.MultiBoardBom(lib)
-
-for schem_fname in sys.argv[1:-1]:
-    print schem_fname
-    schem_name = os.path.basename( schem_fname )
-
-    board = bom.BoardBom(lib, schem_fname, schem_name)
-    multibom.add_boards( board, 1 )
+multibom.load_boards_args( sys.argv[1:-1],
+                           allow_multipliers = False )
 
 html_header(outf)
 

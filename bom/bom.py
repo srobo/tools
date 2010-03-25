@@ -129,6 +129,17 @@ class MultiBoardBom(Bom):
         # 1: Board
         self.boards = []
 
+    def load_boards_args(self, args, allow_multipliers = True):
+        mul = 1
+
+        for arg in args:
+           if arg[0] == '-' and allow_multipliers:
+              mul = int(arg[1:])
+           else:
+              board = BoardBom( self.db, arg, os.path.basename( arg ) )
+              self.add_boards(board, mul)
+              mul = 1
+
     def add_boards(self, board, num):
         """Add num boards to the collection.
         board must be a BoardBom instance."""

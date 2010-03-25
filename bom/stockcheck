@@ -10,15 +10,7 @@ if len(sys.argv) < 2:
 
 db = parts_db.Db( bom.PARTS_DB )
 boards = bom.MultiBoardBom(db)
-
-mul = 1
-for fname in sys.argv[1:]:
-   if fname[0] == '-':
-      mul = int(fname[1:])
-   else:
-      board = bom.BoardBom( db, fname, os.path.basename( fname ) )
-      boards.add_boards(board, mul)
-      mul = 1
+boards.load_boards_args( sys.argv[1:] )
 
 stock = {}
 n = 0

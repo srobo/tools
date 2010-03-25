@@ -13,7 +13,6 @@ td {
 </style>
 </head>
 <body>
-<p>Generated on %s with %s.</p>
 <table style="border-style:none;border-spacing:0;">
 <tr>
 <th>&nbsp;</th>
@@ -24,11 +23,14 @@ td {
 <th>Quantity</th>
 <th>Designators</th>
 </tr>
-""" % (time.asctime(), os.path.basename(sys.argv[0])) )
+""" )
 
 def html_footer(f):
-    f.write("""</body>
-</html>""")
+    f.write("""
+</table>
+<p>Generated on %s with %s.</p>
+</body>
+</html>""" % (time.asctime(), os.path.basename(sys.argv[0])) )
 
 def pcode_extract_num(pcode):
     for c in range(0, len(pcode)):

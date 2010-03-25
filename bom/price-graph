@@ -29,7 +29,7 @@ prices.sort( cmp = cmp_prices )
 bar( range(0, len(prices)),
      [x[1] for x in prices] )
 
-xticks( arange(0, len(prices)) + 0.5,
+xticks( arange(0, len(prices)) + 0.4 ,
         [x[0] for x in prices],
         rotation = 90 )
 

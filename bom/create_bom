@@ -30,26 +30,30 @@ def html_footer(f):
 </html>""")
 
 if len(sys.argv) < 3:
-    print "Usage: %s SCHEMATIC OUTFILE" % (os.path.basename(sys.argv[0]))
+    print "Usage: %s SCHEMATIC(S) OUTFILE" % (os.path.basename(sys.argv[0]))
     print "Where:"
-    print "	- SCHEMATIC is the schematic to read from"
+    print "	- SCHEMATIC is the schematic to read from (can be more than one)"
     print "	- OUTFILE is the output HTML file"
     sys.exit(1)
 
-[SCHEMATIC, OUTFILE] = sys.argv[1:3]
-
-schem_name = os.path.basename( SCHEMATIC )
-
 lib = parts_db.Db(bom.PARTS_DB)
-parts = bom.BoardBom(lib, SCHEMATIC, schem_name)
-outf = open( OUTFILE, "w" )
+outf = open( sys.argv[-1], "w" )
+
+multibom = bom.MultiBoardBom(lib)
+
+for schem_fname in sys.argv[1:-1]:
+    print schem_fname
+    schem_name = os.path.basename( schem_fname )
+
+    board = bom.BoardBom(lib, schem_fname, schem_name)
+    multibom.add_boards( board, 1 )
 
 html_header(outf)
 
 def srcode_sort(x,y):
     return cmp(x.part["sr-code"], y.part["sr-code"])
 
-lines = parts.values()
+lines = multibom.values()
 lines.sort(srcode_sort)
 
 for line in lines:

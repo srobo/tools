@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """Student Robotics parts database access library"""
-import csv, farnell, os, sys
+import csv, farnell, rs, os, sys
 
 PARTS_DB = os.path.expanduser("~/.sr/tools/bom/sr_component_lib")
 if not os.path.exists( PARTS_DB ):
@@ -89,6 +89,17 @@ class Part(dict):
 
             # List of prices -- contains 2-entry tuples
             self.prices = f.prices
+        elif self["supplier"] == "rs":
+            r = rs.Item( self["order-number"] )
+            if r.avail != None:
+                # RS don't tell us how much they have :(
+                self.stock = 0
+            else:
+                self.stock = None
+            self.min_order = r.min_order
+            self.dist_unit = r.price_for
+            self.increments = r.multi
+            self.prices = r.prices
         else:
             self.stock = None
             return

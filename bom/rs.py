@@ -48,6 +48,7 @@ class Item(sgmllib.SGMLParser):
         self.prices = []
 
         self.feed(self.__getData(partNumber))
+        self.min_order = self.prices[0][0]
         self.close()
 
     def __getData(self, partNumber):
@@ -183,12 +184,13 @@ class Item(sgmllib.SGMLParser):
 
     def get_info(self):
         "Return a dict of the info garnered."
-        return dict(qty=self.qty_range, price=self.cost, num_for_price=self.price_for, multiple=self.multi, availability=self.avail)
+        return dict(qty=self.qty_range, price=self.cost, num_for_price=self.price_for, min_order=self.min_order, multiple=self.multi, availability=self.avail)
 
     def print_info(self):
         "Print a the info garnered in a nice way."
         print ' Availability:',self.avail
         print ' Price For:',self.price_for
+        print ' Minimum Order Quantity:',self.min_order
         print ' Order Multiple:',self.multi
         print ' Pricing:'
 

@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+import os, sys, subprocess
+
+if len(sys.argv) not in [2,3] or sys.argv[1] in ["--help", "-h"]:
+    print "Usage: cog REPONAME [DIR]"
+    print "Clone a Student Robotics git repository"
+    sys.exit(1)
+
+REPONAME = sys.argv[1]
+DIR = None
+if len(sys.argv) == 3:
+    DIR = sys.argv[2]
+
+path_prefix = "srobo.org:/srv/git/"
+
+if REPONAME[:len(path_prefix)] != path_prefix:
+    repodir = path_prefix + REPONAME
+else:
+    repodir = REPONAME
+
+args = ["git", "clone", repodir]
+if DIR != None:
+    args += [DIR]
+
+p = subprocess.Popen( " ".join(args), shell = True )
+p.communicate()
+p.wait()

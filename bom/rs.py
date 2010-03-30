@@ -44,6 +44,7 @@ class Item(sgmllib.SGMLParser):
         self.qty = True
         self.qty_str = ""
 
+        self.last_th_data = ''
         self.prices = []
 
         self.feed(self.__getData(partNumber))
@@ -104,9 +105,11 @@ class Item(sgmllib.SGMLParser):
             else:
                 self.qty_str += data
 
-        elif self.inside_th_element > 0 and data[9:13] == 'Each':
-            # print 'th:"'+data+'"'
-            self.multi = self._parse_pack_size(data[9:-1])
+        elif self.inside_th_element > 0:
+            #print 'th:"'+data+'"'
+            if self.last_th_data == 'Price':
+                (self.price_for, self.multi) = self._parse_pack_size(data[9:-1])
+            self.last_th_data = data
 
     def _parse_availability(self, s):
         "Figure out how many they've got, if they say"
@@ -119,13 +122,22 @@ class Item(sgmllib.SGMLParser):
     def _parse_pack_size(self, s):
         "Break the 'price for' string up"
         if s == 'Each':
-            return 1
+            return (1, 1)
         r = re.compile( "Each \(In a Pack of ([0-9,]+)\)" )
         m = r.search( s )
         if m != None:
             # Strip commas
             n = m.group(1).replace(",","")
-            return int(n)
+            return (1, int(n))
+
+        r = re.compile( "([0-9,]+) Reel of ([0-9,]+)" )
+        m = r.search( s )
+        if m != None:
+            # Strip commas
+            n1 = m.group(1).replace(",","")
+            n2 = m.group(2).replace(",","")
+            #print 'n1',n1,'n2',n2
+            return (int(n2), int(n1))
 
         print """Warning: RS script can't parse price_for field "%s".""" % s
 
@@ -171,11 +183,12 @@ class Item(sgmllib.SGMLParser):
 
     def get_info(self):
         "Return a dict of the info garnered."
-        return dict(qty=self.qty_range, price=self.cost, multiple=self.multi, availability=self.avail)
+        return dict(qty=self.qty_range, price=self.cost, num_for_price=self.price_for, multiple=self.multi, availability=self.avail)
 
     def print_info(self):
         "Print a the info garnered in a nice way."
         print ' Availability:',self.avail
+        print ' Price For:',self.price_for
         print ' Order Multiple:',self.multi
         print ' Pricing:'
 

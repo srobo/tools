@@ -124,14 +124,14 @@ class Item(sgmllib.SGMLParser):
         "Break the 'price for' string up"
         if s == 'Each':
             return (1, 1)
-        r = re.compile( "Each \(In a Pack of ([0-9,]+)\)" )
+        r = re.compile( "Each \(In a \w+ of ([0-9,]+)\)" )
         m = r.search( s )
         if m != None:
             # Strip commas
             n = m.group(1).replace(",","")
             return (1, int(n))
 
-        r = re.compile( "([0-9,]+) Reel of ([0-9,]+)" )
+        r = re.compile( "([0-9,]+) \w+ of ([0-9,]+)" )
         m = r.search( s )
         if m != None:
             # Strip commas

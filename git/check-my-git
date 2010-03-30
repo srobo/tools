@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+import os, sys, subprocess
+
+def git_get_config( name ):
+    p = subprocess.Popen( "git config %s" % name,
+                          shell = True,
+                          stdout = subprocess.PIPE )
+    r = p.communicate()
+    p.wait()
+    return r[0].strip() 
+
+if len(sys.argv) != 1:
+    print "Checks whether you have git configured sanely."
+    sys.exit(1)
+
+if git_get_config( "user.name" ) == "":
+    print "You need to tell git who you are."
+    print "Run `git config --global user.name Your Name`"
+    sys.exit(1)
+
+if git_get_config( "user.email" ) == "":
+    print "You need to tell git your email address."
+    print "Run `git config --global user.email your@email.com`"
+    sys.exit(1)

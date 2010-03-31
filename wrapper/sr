@@ -28,7 +28,7 @@ if len(sys.argv) == 1 or (len(sys.argv) > 1 and sys.argv[1] not in cmds.keys()):
     print "Usage: sr COMMAND"
     print "Available commands:"
     for cmd,path in cmds.iteritems():
-        if cmd[0] != "_":
+        if cmd[0] != "_" and cmd[-1] != "~":
             print "\t%s" % cmd
     sys.exit(1)
 else:

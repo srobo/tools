@@ -9,6 +9,31 @@ _sr()
     if [[ ${COMP_CWORD} == "1" ]] ; then
         COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
         return 0
+    elif [[ ${COMP_CWORD} == "2" ]] ; then
+	# Switch on the command
+	case "$prev" in
+
+	    # Repository listing
+	    cog)
+		REPOLIST_FILE=~/.sr/repolist
+		download=
+		if [ ! -f $REPOLIST_FILE ]
+		    then
+		    download=y
+		elif [ ! "`find $REPOLIST_FILE -mmin -120`" ]
+		    then
+		    download=y
+		fi
+
+		if [ "$download" ]
+		    then
+		    mkdir -p ~/.sr
+		    sr repolist > $REPOLIST_FILE
+		fi
+
+		COMPREPLY=( $(compgen -W "`cat $REPOLIST_FILE`" -- ${cur}) )
+		return 0;;
+	esac
     fi
 }
 

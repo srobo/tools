@@ -1,0 +1,10 @@
+#!/usr/bin/env python
+import urllib
+
+u = urllib.urlopen("https://www.studentrobotics.org/git/repolist")
+
+for l in u.readlines():
+    cpos = l.find(":")
+    path = l[:cpos].strip()
+    desc = l[cpos+1:].strip()
+    print path

@@ -119,7 +119,7 @@ if __name__ == "__main__":
         print "\tlog DEV VERSION - Show the log for the given firmware VERSION."
         print "\tlistdev - List the devices the server manages."
         print
-        print "\tstate DEV [VERSION]"
+        print "\tstate DEV [VERSION] - Show the current state of a device's firmware."
         print "Common args:"
         print " - DEV: The device name."
         print " - VERSION: A firmware version number."

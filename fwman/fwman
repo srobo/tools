@@ -106,9 +106,9 @@ class FwClient:
             return False
 
         return r
-    
+
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 2 or sys.argv[1] not in ['req_version','upload','download','log','listdev','state',]:
         print "fwman: The Student Robotics firmware management CLI"
         print "Usage: fwman COMMAND ..."
         print "Where COMMAND can be:"

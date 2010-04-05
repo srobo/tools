@@ -148,7 +148,7 @@ if __name__ == "__main__":
 
     elif cmd == "upload":
         if len(sys.argv) < 5:
-            print "Usage: fwman upload DEV VERSION FNAME"
+            print "Usage: fwman upload DEV VERSION FILE"
             sys.exit(1)
         device, version, fname = sys.argv[2:5]
         #TODO: Poke around in the binary for the version number

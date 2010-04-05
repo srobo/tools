@@ -130,8 +130,12 @@ if __name__ == "__main__":
     client = FwClient()
 
     if cmd == "listdev":
-        for d in client.get_devices():
-            print d
+        dlist = client.get_devices()
+        if len(dlist) == 0:
+            print "No device's firmware managed"
+        else:
+            for d in dlist:
+                print d
     elif cmd == "req_version":
         if len(sys.argv) < 3:
             print "Usage: fwman req_version DEV"

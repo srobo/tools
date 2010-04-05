@@ -3,7 +3,7 @@ import pycurl, StringIO, urllib
 import json, hashlib, types
 import os,sys, datetime
 
-BASE = "http://ide.srobo.org/fw"
+BASE = "https://www.studentrobotics.org/ide/fw"
 
 fdev = os.path.expanduser ("~/.sr/fwman-dev" )
 if os.path.exists( fdev ):

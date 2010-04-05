@@ -108,7 +108,7 @@ class FwClient:
         return r
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2 or sys.argv[1] not in ['req_version','upload','download','log','listdev','state',]:
+    if len(sys.argv) < 2 or sys.argv[1] not in ['req_version','upload','download','log','listdev','state','info']:
         print "fwman: The Student Robotics firmware management CLI"
         print "Usage: fwman COMMAND ..."
         print "Where COMMAND can be:"
@@ -119,6 +119,7 @@ if __name__ == "__main__":
         print "\tlog DEV VERSION - Show the log for the given firmware VERSION."
         print "\tlistdev - List the devices the server manages."
         print
+        print "\tinfo DEV VERSION - Show more information for a given firmware VERSION."
         print "\tstate DEV [VERSION] - Show the current state of a device's firmware."
         print "Common args:"
         print " - DEV: The device name."

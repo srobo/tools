@@ -2,6 +2,7 @@
 import pycurl, StringIO, urllib
 import json, hashlib, types
 import os,sys, datetime
+import subprocess, tempfile
 
 BASE = "https://www.studentrobotics.org/ide/fw"
 
@@ -123,7 +124,8 @@ if __name__ == "__main__":
         print "fwman: The Student Robotics firmware management CLI"
         print "Usage: fwman COMMAND ..."
         print "Where COMMAND can be:"
-        print "\treq-version DEV - Request a new version number to build with."
+        print "\treq-version DEV REV [-m MESSAGE]"
+        print "\t           - Request a new version number to build with."
         print "\tupload DEV VERSION FILE - Upload the given FILE."
         print "\tdownload DEV VERSION FILE - Download firmware image into FILE."
         print "\tsubmit-for-testing DEV VERSION - Submit a firmware image for testing."
@@ -150,13 +152,28 @@ if __name__ == "__main__":
             for d in dlist:
                 print d
     elif cmd == "req-version":
-        if len(sys.argv) < 3:
-            print "Usage: fwman req-version DEV"
+        if len(sys.argv) < 4:
+            print "Usage: fwman req-version DEV REV [-m MESSAGE]"
             sys.exit(1)
         device = sys.argv[2]
+        revision = sys.argv[3]
+        if len(sys.argv) == 6 and sys.argv[4] == '-m':
+            message = sys.argv[5]
+        else:
+            f = tempfile.NamedTemporaryFile('r', delete=True)
+            p = subprocess.Popen( ["/usr/bin/editor", f.name] )
+            c = p.communicate()
+            rval = p.wait()
 
-        #TODO: launch editor
-        v = client.req_version( device, "jamjamjam", "svn:3" )
+            if rval == 0: # there's a message worth looking at
+                message = f.read()
+            f.close()
+
+            if rval != 0 or message == '': #no message
+                print 'No message given, exiting'
+                sys.exit(1)
+
+        v = client.req_version( device, message, revision )
         print v
 
     elif cmd == "upload":

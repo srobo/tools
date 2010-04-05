@@ -113,11 +113,11 @@ if __name__ == "__main__":
         print "Usage: fwman COMMAND ..."
         print "Where COMMAND can be:"
         print "\treq_version DEV - Request a new version number to build with."
-        print "\tupload DEV VERSION FILE - Upload the given "
-        print "\tdownload DEV VERSION FILE - Download firmware image into FILE"
+        print "\tupload DEV VERSION FILE - Upload the given FILE."
+        print "\tdownload DEV VERSION FILE - Download firmware image into FILE."
         print
         print "\tlog DEV VERSION - Show the log for the given firmware VERSION."
-        print "\tlistdev - List the devices the server manages"
+        print "\tlistdev - List the devices the server manages."
         print
         print "\tstate DEV [VERSION]"
         print "Common args:"

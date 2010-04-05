@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python
 import pycurl, StringIO, urllib
 import json, hashlib, types
 import os,sys, datetime

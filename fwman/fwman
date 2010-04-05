@@ -116,9 +116,9 @@ if __name__ == "__main__":
         print "\tupload DEV VERSION FILE - Upload the given FILE."
         print "\tdownload DEV VERSION FILE - Download firmware image into FILE."
         print
-        print "\tlog DEV VERSION - Show the log for the given firmware VERSION."
         print "\tlistdev - List the devices the server manages."
         print
+        print "\tlog DEV VERSION - Show the log for the given firmware VERSION."
         print "\tinfo DEV VERSION - Show more information for a given firmware VERSION."
         print "\tstate DEV [VERSION] - Show the current state of a device's firmware."
         print "Common args:"

@@ -44,7 +44,7 @@ class FwHandler:
             c.perform()
             c.close()
 
-            r = json.read( out.getvalue() )
+            r = json.loads( out.getvalue() )
             return r
 
         return fn

@@ -294,7 +294,9 @@ if __name__ == "__main__":
                 print 'Successfully submitted %s firmware test result.' % device
                 if r['remaining'] == 0:
                     print 'Firmware version %s now shipping.' % version
-                elif r['remaining'] > 0:
+                elif r['remaining'] == 1:
+                    print 'Firmware has %s test remaining.' % r['remaining']
+                elif r['remaining'] > 1:
                     print 'Firmware has %s tests remaining.' % r['remaining']
             else:
                 print 'Submission failed.'

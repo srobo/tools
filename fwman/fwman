@@ -118,9 +118,22 @@ class FwClient:
 
         return r['success']
 
+    def submitresult(self,device,version,result,message):
+        r = self.h.submitresult( device = device,
+                                 version = version,
+                                 result = result,
+                                 message = message )
+
+        if r.has_key( "ERROR" ):
+            print "Failure: %s" % r["ERROR"]
+            return False
+
+        return r
+
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] not in ['listdev','req-version','upload','state',
-                                                'info','log','download','submit-for-testing']:
+                                                'info','log','download','submit-for-testing',
+                                                'submit-test-result']:
         print "fwman: The Student Robotics firmware management CLI"
         print "Usage: fwman COMMAND ..."
         print "Where COMMAND can be:"
@@ -129,6 +142,8 @@ if __name__ == "__main__":
         print "\tupload DEV VERSION FILE - Upload the given FILE."
         print "\tdownload DEV VERSION FILE - Download firmware image into FILE."
         print "\tsubmit-for-testing DEV VERSION - Submit a firmware image for testing."
+        print "\tsubmit-test-result DEV VERSION RESULT [MESSAGE]"
+        print "\t           - Submit testing retuls for a firmware image."
         print
         print "\tlistdev - List the devices the server manages."
         print
@@ -264,5 +279,27 @@ if __name__ == "__main__":
                 print 'Submission failed.'
         else:
             print "Usage: fwman submit-for-testing DEV VERSION"
+            sys.exit(1)
+
+    elif cmd == "submit-test-result":
+        if len(sys.argv) >= 5:
+            device, version, result = sys.argv[2:5]
+
+            message = ''
+            if len(sys.argv) == 6:
+                message = sys.argv[5]
+
+            r = client.submitresult( device, version, result, message )
+            if r != False:
+                print 'Successfully submitted %s firmware test result.' % device
+                if r['remaining'] == 0:
+                    print 'Firmware version %s now shipping.' % version
+                elif r['remaining'] > 0:
+                    print 'Firmware has %s tests remaining.' % r['remaining']
+            else:
+                print 'Submission failed.'
+
+        else:
+            print "Usage: fwman submit-test-result DEV VERSION RESULT [MESSAGE]"
             sys.exit(1)
 

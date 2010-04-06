@@ -274,7 +274,7 @@ if __name__ == "__main__":
             device, version = sys.argv[2:4]
 
             if client.submit( device, version ):
-                print 'Successfully submitted %s firmware version %s for testing.' % device, version
+                print 'Successfully submitted %s firmware version %s for testing.' % (device, version)
             else:
                 print 'Submission failed.'
         else:

@@ -256,7 +256,7 @@ if __name__ == "__main__":
 
     elif cmd == "submit-for-testing":
         if len(sys.argv) == 4:
-            device, version = sys.argv[2:5]
+            device, version = sys.argv[2:4]
 
             if client.submit( device, version ):
                 print 'Successfully submitted %s firmware version %s for testing.' % device, version

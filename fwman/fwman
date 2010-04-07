@@ -5,6 +5,8 @@ import os,sys, datetime
 import subprocess, tempfile
 
 BASE = "https://www.studentrobotics.org/ide/fw"
+COMMANDS = ['listdev','req-version','upload','state', 'info','log','download',
+            'submit-for-testing', 'submit-test-result']
 
 fdev = os.path.expanduser ("~/.sr/fwman-dev" )
 if os.path.exists( fdev ):
@@ -131,9 +133,10 @@ class FwClient:
         return r
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2 or sys.argv[1] not in ['listdev','req-version','upload','state',
-                                                'info','log','download','submit-for-testing',
-                                                'submit-test-result']:
+    if len(sys.argv) == 2 and sys.argv[1] == "list-commands":
+        for c in COMMANDS:
+            print c
+    elif len(sys.argv) < 2 or sys.argv[1] not in COMMANDS:
         print "fwman: The Student Robotics firmware management CLI"
         print "Usage: fwman COMMAND ..."
         print "Where COMMAND can be:"

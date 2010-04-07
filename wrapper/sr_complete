@@ -33,6 +33,11 @@ _sr()
 
 		COMPREPLY=( $(compgen -W "`cat $REPOLIST_FILE`" -- ${cur}) )
 		return 0;;
+
+	    # Firmware Manager
+	    fwman)
+		COMPREPLY=( $(compgen -W "`sr fwman list-commands`" -- ${cur}) )
+		return 0;;
 	esac
     fi
 }

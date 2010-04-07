@@ -175,7 +175,7 @@ if __name__ == "__main__":
         if len(sys.argv) == 6 and sys.argv[4] == '-m':
             message = sys.argv[5]
         else:
-            f = tempfile.NamedTemporaryFile('r', delete=True)
+            f = tempfile.NamedTemporaryFile('r', delete=True, prefix='fwman.')
             p = subprocess.Popen( ["/usr/bin/editor", f.name] )
             c = p.communicate()
             rval = p.wait()

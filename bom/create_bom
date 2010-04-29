@@ -1,10 +1,15 @@
 #!/usr/bin/env python
 import os, sys, time, parts_db, bom
 
-def html_header(f):
+def html_header(f, names=None):
+    title = ""
+    if names != None:
+        title = " - "
+        title = title + reduce(lambda t, n: t + ', ' + n, names)
+
     f.write("""<html>
 <head>
-<title>Student Robotics Bill of Materials for ...</title>
+<title>Student Robotics Bill of Materials%s</title>
 <style>
 td {
   border-style: solid none none none;
@@ -23,7 +28,7 @@ td {
 <th>Quantity</th>
 <th>Designators</th>
 </tr>
-""" )
+""" % title)
 
 def html_footer(f):
     f.write("""
@@ -55,7 +60,7 @@ multibom = bom.MultiBoardBom(lib)
 multibom.load_boards_args( sys.argv[1:-1],
                            allow_multipliers = False )
 
-html_header(outf)
+html_header(outf, map(lambda n: os.path.basename(n), sys.argv[1:-1]))
 
 def srcode_sort(x,y):
     return cmp(x.part["sr-code"], y.part["sr-code"])

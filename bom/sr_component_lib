@@ -124,7 +124,7 @@ sr-sw-button,Tactile Button (dont press),3801305,farnell
 
 # Crystals
 sr-xtal-32k, 32kHz Crystal,1652573,farnell,1
-sr-xtal-8M,8MHz Crystal,1611765,farnell
+sr-xtal-8m,8MHz Crystal,1611765,farnell
 
 # Assemblies
 sr-asm-xbee,2(sr-cn-socket10-2mm). XBee connector assembly,,

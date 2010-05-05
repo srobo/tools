@@ -86,6 +86,7 @@ sr-d-gsot15,15V unidirectional single TVS diode 230W,1617684,farnell,5,sot23
 # ICs
 sr-ic-max4069,MAX4069 - current sense amplifier,MAX4069,maxim
 sr-ic-max1626,MAX1626ESA+ 5/3.3v switchmode controller,9725342,farnell,soic8
+sr-ic-msp430f167,MSP430F167IPM microcontroller,1471271,farnell
 sr-ic-msp430f169,MSP430F169IPM 16bit mcu,619-5794,rs,tssop
 sr-ic-msp430f2234, MSP430F2234 16bit mcu suffix: IDA,1649419,farnell,tssop
 sr-ic-msp430f2254, MSP430F2254 16bit mcu suffix: IDA,1649422,farnell,tssop

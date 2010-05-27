@@ -1,4 +1,14 @@
-import hashlib, os, subprocess
+import hashlib, os, subprocess, re
+
+def file_is_geda_pcb(f):
+    """Return true if the file is a gEDA PCB file"""
+    f.seek(0)
+
+    # 'PCB[' will occur at the start of one of the first 20 or so lines
+    for i in range(20):
+        if re.search(r"^\s*PCB[ \t]*\[", f.readline()) is not None:
+            return True
+    return False
 
 class GSchem(dict):
     """Reads in gEDA file"""

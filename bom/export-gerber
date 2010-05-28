@@ -58,34 +58,45 @@ if os.path.exists( OUTPUT_DIR ) and not os.path.isdir( OUTPUT_DIR ):
 if not os.path.exists( OUTPUT_DIR ):
     os.mkdir( OUTPUT_DIR )
 
+type = None
 f = open(BOARD, "r")
 if (eagle.file_is_eagle(f)):
+    type = "Eagle"
     board = EagleBoard( BOARD )
 elif (geda.file_is_geda_pcb(f)):
+    type = "gEDA"
     print "gEDA PCB not yet supported"
-    sys.exit(1)
-else:
+f.close()
+
+if (type == None):
     print "PCB layout file not recognized"
     sys.exit(1)
 
-f.close()
+# Unfortunately PCB doesn't have anywhere near the same flexibility
+# as eagle for exporting gerbers, either from the GUI or command
+# line. It will output a gerber for each layer; top/bottom silk,
+# mask & paste; fab drawing containing drill markers and other crap
+# and two drill files (plated and unplated)
 
+if (type == "gEDA"):
+    pass
 
-conf = ConfigParser.SafeConfigParser()
-conf.read( CONFIG_FILE )
+elif (type == "Eagle"):
+    conf = ConfigParser.SafeConfigParser()
+    conf.read( CONFIG_FILE )
 
-for fname in conf.sections():
-    if conf.has_option( fname, "layers" ):
-        print "Generating gerber: %s" % fname
-        layers = conf.get( fname, "layers" ).split()
-        board.export_gerber( os.path.join( OUTPUT_DIR, fname ), layers )
+    for fname in conf.sections():
+        if conf.has_option( fname, "layers" ):
+            print "Generating gerber: %s" % fname
+            layers = conf.get( fname, "layers" ).split()
+            board.export_gerber( os.path.join( OUTPUT_DIR, fname ), layers )
 
-    elif conf.has_option( fname, "drill_layers" ):
-        print "Generating drill file: %s" % fname
-        layers = conf.get( fname, "drill_layers" ).split()
-        board.export_gerber( os.path.join( OUTPUT_DIR, fname ), layers, format = FORMAT_EXCELLON )
+        elif conf.has_option( fname, "drill_layers" ):
+            print "Generating drill file: %s" % fname
+            layers = conf.get( fname, "drill_layers" ).split()
+            board.export_gerber( os.path.join( OUTPUT_DIR, fname ), layers, format = FORMAT_EXCELLON )
 
-    else:
-        print "Fatal Error: Section '%s' in config file lacks 'layers' or 'drill_layers' option."
-        sys.exit(1)
+        else:
+            print "Fatal Error: Section '%s' in config file lacks 'layers' or 'drill_layers' option."
+            sys.exit(1)
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Export gerber from a board
-import sys, os, ConfigParser, subprocess, eagle
+import sys, os, ConfigParser, subprocess, eagle, geda
 OUTPUT_DIR = "./gerbers"
 
 FORMAT_RS274X = 1
@@ -58,7 +58,18 @@ if os.path.exists( OUTPUT_DIR ) and not os.path.isdir( OUTPUT_DIR ):
 if not os.path.exists( OUTPUT_DIR ):
     os.mkdir( OUTPUT_DIR )
 
-board = EagleBoard( BOARD )
+f = open(BOARD, "r")
+if (eagle.file_is_eagle(f)):
+    board = EagleBoard( BOARD )
+elif (geda.file_is_geda_pcb(f)):
+    print "gEDA PCB not yet supported"
+    sys.exit(1)
+else:
+    print "PCB layout file not recognized"
+    sys.exit(1)
+
+f.close()
+
 
 conf = ConfigParser.SafeConfigParser()
 conf.read( CONFIG_FILE )

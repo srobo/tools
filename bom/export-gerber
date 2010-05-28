@@ -80,7 +80,7 @@ if (type == 0):
 # mask & paste; fab drawing containing drill markers and other crap
 # and two drill files (plated and unplated)
 
-if (type == "gEDA"):
+if (type == PCB_FORMAT_GEDA):
     print "Generating gerbers from %s" % BOARD
     # You can't specify the output dir and of the files created some
     # are in the cwd, others are in the same dir as the PCB file :S
@@ -97,7 +97,7 @@ if (type == "gEDA"):
 
     os.remove(BOARD)
 
-elif (type == "Eagle"):
+elif (type == PCB_FORMAT_EAGLE):
     conf = ConfigParser.SafeConfigParser()
     conf.read( CONFIG_FILE )
 

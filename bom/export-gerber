@@ -6,6 +6,9 @@ OUTPUT_DIR = "./gerbers"
 FORMAT_RS274X = 1
 FORMAT_EXCELLON = 2
 
+PCB_FORMAT_EAGLE = 1
+PCB_FORMAT_GEDA = 2
+
 class EagleBoard():
     def __init__(self, fname):
         self.fname = fname
@@ -58,16 +61,16 @@ if os.path.exists( OUTPUT_DIR ) and not os.path.isdir( OUTPUT_DIR ):
 if not os.path.exists( OUTPUT_DIR ):
     os.mkdir( OUTPUT_DIR )
 
-type = None
+type = 0
 f = open(BOARD, "r")
 if (eagle.file_is_eagle(f)):
-    type = "Eagle"
+    type = PCB_FORMAT_EAGLE
     board = EagleBoard( BOARD )
 elif (geda.file_is_geda_pcb(f)):
-    type = "gEDA"
+    type = PCB_FORMAT_GEDA
 f.close()
 
-if (type == None):
+if (type == 0):
     print "PCB layout file not recognized"
     sys.exit(1)
 

@@ -62,7 +62,7 @@ sr-cn-cageclamp,1 way 2.54mm horizontal cage clamp,3041050,farnell
 sr-cn-cageclamp-end,1 way 2.54mm horizontal cage clamp with endcap,3105295,farnell
 sr-cn-socket10-2mm,10 way 2mm pitch SIL socket,1109732,farnell
 sr-cn-8p8c,8P8C pcb socket,1691996,farnell
-sr-cn-fpc40-0.5mm,40 pin FPC connector for PSP screen,1430942,farnell
+sr-cn-fpc40-0.5mm,40 pin FPC connector for PSP screen,1430947,farnell
 
 # LEDs
 sr-led-green-plcc2,LED PLCC2 GREEN,4134436,farnell,5

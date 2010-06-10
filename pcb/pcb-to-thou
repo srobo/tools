@@ -19,6 +19,8 @@ def conv_ht(match):
 
 fcontent = f.read()
 
-print re.sub( """(([0-9.]+)(mm)|".*?")""", conv_ht, fcontent ),
+f.close()
+f = open( PCB_FILE, "w" )
+f.write( re.sub( """(([0-9.]+)(mm)|".*?")""", conv_ht, fcontent ) )
 
     

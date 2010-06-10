@@ -1,0 +1,24 @@
+#!/bin/env python
+import re, sys, os
+from decimal import Decimal
+
+if len(sys.argv) < 2:
+    print "Usage: %s PCB_FILE" % os.path.basename( sys.argv[0] )
+    print "Converts all units suffixed with mm to hundreths of thou."
+    sys.exit(1)
+
+PCB_FILE = sys.argv[1]
+f = open( PCB_FILE, "r" )
+
+def conv_ht(match):
+    if match.groups()[0][0] == '"':
+        return match.groups()[0]
+
+    mm = Decimal( match.groups()[1] )
+    return str( int( mm / Decimal( "0.000254" ) ) )
+
+fcontent = f.read()
+
+print re.sub( """(([0-9.]+)(mm)|".*?")""", conv_ht, fcontent ),
+
+    

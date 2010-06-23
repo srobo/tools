@@ -64,8 +64,8 @@ sr-cn-cageclamp-end,1 way 2.54mm horizontal cage clamp with endcap,3105295,farne
 sr-cn-socket10-2mm,10 way 2mm pitch SIL socket,1109732,farnell
 sr-cn-8p8c,8P8C pcb socket,1691996,farnell
 sr-cn-fpc40-0.5mm-bottom,40 pin bottom-contact FPC connector for PSP TFT,670-2632,rs
-sr-cn-fpc4-0.5mm-top,4 pin top-contact FPC connector for PSP TFT power,673-4790,rs
-sr-cn-fpc4-0.5mm-bottom,4 pin bottom-contact FPC connector for PSP TFT power,673-4759,rs
+sr-cn-fpc4-0.5mm-bottom,4 pin bottom-contact FPC connector for PSP TFT power,673-4790,rs
+sr-cn-fpc4-0.5mm-top,4 pin top-contact FPC connector for PSP TFT power,673-4759,rs
 
 # LEDs
 sr-led-green-plcc2,LED PLCC2 GREEN,4134436,farnell,5

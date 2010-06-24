@@ -44,6 +44,9 @@ sr-l-15u,18u 5.5A smt inductor,1704128,farnell
 # Ferrite Beads (value is current rating)
 sr-fb-300m,300mA 1k @ 100MHz 0603,1463451,farnell,1
 
+# Fuses/Resettable Fuses (Polyfuse, etc). In mA, r prefix for resettable
+sr-fuse-r50-1206,50mA 60V resettable fuse,507-1476-1-ND,digikey
+
 # Connectors
 sr-cn-camcon2w,CTB9550/2 - Camden Electronics 2way,3882391,farnell
 sr-cn-camcon3w,CTB9550/3 - Camden Electronics 3way,3882408,farnell

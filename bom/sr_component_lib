@@ -24,7 +24,7 @@ sr-r-330,330 0603 chip resistor,1469803,farnell,50
 
 # Capacitors
 sr-c-470n,0.47u capacitor 0603,1759021,farnell
-sr-c-10u-0805,10u capacitor 0805,1463377,farnell
+sr-c-10u-0805,10u capacitor 0805 6.3V,1759136,farnell
 sr-c-10u-1210-25v,10u capacitor 1210 25V,1650940,farnell
 sr-c-68u,68u capacitor smt CPOL-EUE,9694390,farnell
 sr-c-220u,220u capacitor smt CPOL-EUE,1580568,farnell

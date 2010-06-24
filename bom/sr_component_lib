@@ -131,6 +131,7 @@ sr-ic-lm339,LM339PT quad comparator,1750192,farnell,1,tssop14
 sr-ic-ts2431,TS2431ILT 2.5V to 24V programmable voltage reference,1374139,farnell,1,sot23
 sr-ic-ft232rl,FT232RL USB to UART,1146032,farnell,1,ssop28
 sr-ic-sn74lvc16t245,SN74LVC16T245DGGR 16-bit level translator,1494928,farnell,1,tssop48
+sr-ic-dg2731dq,DG2731DQ-T1-E3 dual SPDT analogue switch,1414078,farnell,1,msop10
 
 # FETs
 sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,soic-8

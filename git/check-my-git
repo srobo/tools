@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os, sys, subprocess
+import os, sys, subprocess, re
 
 def git_get_config( name ):
     p = subprocess.Popen( "git config %s" % name,
@@ -18,7 +18,12 @@ if git_get_config( "user.name" ) == "":
     print "Run `git config --global user.name Your Name`"
     sys.exit(1)
 
-if git_get_config( "user.email" ) == "":
+ue = git_get_config( "user.email" )
+if ue == "":
     print "You need to tell git your email address."
+    print "Run `git config --global user.email your@email.com`"
+    sys.exit(1)
+elif re.match( "\\S+@\\S+\\.\\S+", ue ) == None:
+    print "user.email doesn't look like an email address."
     print "Run `git config --global user.email your@email.com`"
     sys.exit(1)

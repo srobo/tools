@@ -120,6 +120,7 @@ sr-ic-mcp4018-103,MCP4018-103/LT 7-bit I2C digital pot,1715849,farnell,1,sc70-6
 sr-ic-ld1117s33,LD1117S33CTR 3.3V 800mA linear voltage reg - hefty,686-9388,rs,25,sot223
 sr-ic-ts5205cx533,TS5205CX533 3.3V 150mA linear voltage reg - weedy,398-708,rs,50,sot23-5
 sr-ic-tps73025,TPS73025DBVT 2.5V 200mA linear voltage reg,1135392,farnell,1,sot23-5
+sr-ic-tb62752afug,TB62752AFUG boost convertor for backlight LEDs,TB62752AFUGCT-ND,digikey,1,ssop6
 sr-ic-sn65lvds1,SN65LVDS1DBVTG4 LVDS driver,526-864,rs,5,sot23-5
 sr-ic-sn65lvds2,SN65LVDS2DBVTG4 LVDS receiver,528-084,rs,5,sot23-5
 sr-ic-sn65lvds051,SN65LVDS051PW LVDS dual transceiver,660-9004,rs,1,tssop16

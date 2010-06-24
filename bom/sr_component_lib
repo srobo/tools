@@ -40,6 +40,7 @@ sr-c-2u2-0805,2u2 capacitor 0805 16V,1759424,farnell,100
 # Inductors
 sr-l-18u,18u?? inductor,1463496,farnell
 sr-l-15u,18u 5.5A smt inductor,1704128,farnell
+sr-l-22u,22u 180mA smt inductor,1711902,farnell,10,1008
 
 # Ferrite Beads (value is current rating)
 sr-fb-300m,300mA 1k @ 100MHz 0603,1463451,farnell,1

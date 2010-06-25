@@ -50,6 +50,7 @@ sr-fb-300m,300mA 1k @ 100MHz 0603,1463451,farnell,1
 
 # Fuses/Resettable Fuses (Polyfuse, etc). In mA, r prefix for resettable
 sr-fuse-r50-1206,50mA 60V resettable fuse,507-1476-1-ND,digikey
+sr-fuse-r200-1812,200mA 30V resettable fuse,1800746,farnell,5
 
 # Connectors
 sr-cn-camcon2w,CTB9550/2 - Camden Electronics 2way,3882391,farnell

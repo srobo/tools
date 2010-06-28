@@ -27,7 +27,22 @@ class Item:
         sp_heading = soup.find(text='Standard Package')
         self.multi = int(sp_heading.parent.findNext('td').contents[0].replace(',',''))
 
-
+        # Extract pricing
+        # Get a list of the table rows, the first one is the heading row
+        price_table_trs = soup.find(text='Price Break').parent.parent.parent.findAll('tr')
+        for row in price_table_trs:
+            # Skip first row as it contains headings
+            if row.find('th') != None:
+                continue;
+            # Get top range of quantity from the next row
+            next_row = row.nextSibling.nextSibling
+            if next_row != None:
+                qty = int(next_row.contents[0].string.replace(',',''))-1
+            else:
+                # For the last row just use its own quantity, there is no next row
+                qty = int(row.contents[0].string.replace(',',''))
+            cost = float(row.contents[1].string)
+            self.prices.append( (qty, cost) )
 
     def get_info(self):
         """Return a dict of the info"""

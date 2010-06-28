@@ -41,6 +41,7 @@ sr-c-15u-7343,15u tantalum capacitor 25V,1754110,farnell
 sr-c-2u2-0805,2u2 capacitor 0805 16V,1759424,farnell,100
 
 # Inductors
+sr-l-10u,10u inductor,1711900,farnell,1,1008
 sr-l-18u,18u?? inductor,1463496,farnell
 sr-l-15u,18u 5.5A smt inductor,1704128,farnell
 sr-l-22u,22u 180mA smt inductor,1711902,farnell,10,1008

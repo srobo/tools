@@ -3,26 +3,26 @@ sr-code,description,order-number,supplier,per-reel,package
 ##########
 
 # Resistors:
-sr-r-10k,10k 0603 chip resistor,1469749,farnell,50
-sr-r-100k,100k 0603 chip resistor,1117236,farnell,5000
-sr-r-1k,1k 0603 chip resistor,1117234,farnell,5000
-sr-r-30k,30k 0603 chip resistor,9330984,farnell,50
-sr-r-2k7,2k7 0603 chip resistor,612534,farnell,50
-sr-r-560,560 0603 chip resistor,9233342,farnell,50
-sr-r-3k3,3k3 0603 chip resistor,9238549,farnell,50
 sr-r-3m5-2512,3m5 2512 chip resistor,1292479,farnell,5
-sr-r-40m-2512,40m 2512 chip resistor,1107400,farnell,5
 sr-r-15m-1206,15m 1206 chip resistor,1099908,farnell,5
+sr-r-40m-2512,40m 2512 chip resistor,1107400,farnell,5
 sr-r-4r7,4r7 0603 chip resistor,9332189,farnell,50
-sr-r-680-1206,680 1206 chip resistor (0.5W),1576626,farnell,50
-sr-r-160k,160k 0603 chip resistor,9330682,farnell,50
-sr-r-9k1,9k1 0603 chip resistor,1469842,farnell,50
-sr-r-2k4,2k4 0603 chip resistor,9330879,farnell,50
+sr-r-15,15 0603 chip resistor,9330631,farnell,50
 sr-r-100,100 0603 chip resistor (100mW),1469752,farnell,50
 sr-r-100-1206,100 1206 chip resistor(500mW),1576615,farnell,50
-sr-r-47k,47k 0603 chip resistor,1469811,farnell,50
 sr-r-330,330 0603 chip resistor,1469803,farnell,50
-sr-r-15,15 0603 chip resistor,9330631,farnell,50
+sr-r-560,560 0603 chip resistor,9233342,farnell,50
+sr-r-680-1206,680 1206 chip resistor (0.5W),1576626,farnell,50
+sr-r-1k,1k 0603 chip resistor,1117234,farnell,5000
+sr-r-2k4,2k4 0603 chip resistor,9330879,farnell,50
+sr-r-2k7,2k7 0603 chip resistor,612534,farnell,50
+sr-r-3k3,3k3 0603 chip resistor,9238549,farnell,50
+sr-r-9k1,9k1 0603 chip resistor,1469842,farnell,50
+sr-r-10k,10k 0603 chip resistor,1469749,farnell,50
+sr-r-30k,30k 0603 chip resistor,9330984,farnell,50
+sr-r-47k,47k 0603 chip resistor,1469811,farnell,50
+sr-r-100k,100k 0603 chip resistor,1117236,farnell,5000
+sr-r-160k,160k 0603 chip resistor,9330682,farnell,50
 
 # Capacitors
 sr-c-1n,1n capacitor 0603,1759088,farnell

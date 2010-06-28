@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Routines for scraping data about parts from digikey"""
 from cachedfetch import grab_url_cached
+from BeautifulSoup import BeautifulSoup
 
 class Item:
     """Represents a Digikey item"""
@@ -13,6 +14,10 @@ class Item:
         self.prices = []
         self.cost = []
         self.qty_range = 0
+
+        soup = BeautifulSoup(grab_url_cached('http://xgoat.com/p/digikey/'+str(partNumber)))
+
+
 
     def get_info(self):
         """Return a dict of the info"""

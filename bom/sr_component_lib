@@ -94,6 +94,7 @@ sr-d-ll4448,signal diode 100mA 100V 1N4148 equiv,1621882,farnell,1,sod80
 sr-d-112cwq04fntrpbf, schottky diode 12A D-PAK,1298442,farnell,d-pak
 sr-d-30bq040trpbf,schottky diode 3a smc,1299292,farnell,smc
 sr-d-bat754s,schottky diode dual,1700901,farnell,1,sot23
+sr-d-bat754a,Schottky diode dual,1081204,farnell,1,sot23
 sr-d-bzx384c3v3, zener diode 3.3V 5%,8735646,farnell,10,sod323
 sr-d-tvs-16v-smcj16a,16v tvs diode 1500W,1470983,farnell,,do-214ab
 sr-d-smaj16a,16V unidirectional TVS diode 400W,1578964,farnell,5,do-214ac

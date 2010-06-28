@@ -17,6 +17,11 @@ class Item:
 
         soup = BeautifulSoup(grab_url_cached('http://xgoat.com/p/digikey/'+str(partNumber)))
 
+        # Extract availability
+        qa_heading = soup.find(text='Quantity Available')
+        if qa_heading == None:
+            raise Exception("""Part number "%s" doesn't exist""" % str(partNumber))
+
 
 
     def get_info(self):

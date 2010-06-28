@@ -21,6 +21,7 @@ class Item:
         qa_heading = soup.find(text='Quantity Available')
         if qa_heading == None:
             raise Exception("""Part number "%s" doesn't exist""" % str(partNumber))
+        self.avail = int(qa_heading.findNext('td').contents[0].replace(',',''))
 
 
 

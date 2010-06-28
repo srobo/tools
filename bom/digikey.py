@@ -11,6 +11,12 @@ class Item:
         self.price_for = 1
         self.multi = 1
         self.prices = []
+        self.cost = []
+        self.qty_range = 0
+
+    def get_info(self):
+        """Return a dict of the info"""
+        return dict(qty=self.qty_range, price=self.cost, num_for_price=self.price_for, min_order=self.min_order, multiple=self.multi, number_available=self.avail)
 
     def print_info(self):
         """Print all of the info on the part"""

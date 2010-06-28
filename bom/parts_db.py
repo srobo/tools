@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """Student Robotics parts database access library"""
-import csv, farnell, rs, os, sys
+import csv, farnell, rs, digikey, os, sys
 
 PARTS_DB = os.path.expanduser("~/.sr/tools/bom/sr_component_lib")
 if not os.path.exists( PARTS_DB ):
@@ -70,6 +70,8 @@ class Part(dict):
             return "http://xgoat.com/p/farnell/%s" % self["order-number"]
         if self["supplier"] == "rs":
             return "http://xgoat.com/p/rs/%s" % self["order-number"]
+        if self["supplier"] == "digikey":
+            return "http://xgoat.com/p/digikey/%s" % self["order-number"]
 
         return None
 
@@ -100,6 +102,13 @@ class Part(dict):
             self.dist_unit = r.price_for
             self.increments = r.multi
             self.prices = r.prices
+        elif self["supplier"] == "digikey":
+            d = digikey.Item( self["order-number"] )
+            self.stock = d.avail
+            self.min_order = d.min_order
+            self.dist_unit = d.price_for
+            self.increments = d.multi
+            self.prices = d.prices
         else:
             self.stock = None
             return

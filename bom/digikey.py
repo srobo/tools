@@ -31,12 +31,14 @@ class Item:
         # Get a list of the table rows, the first one is the heading row
         price_table_trs = soup.find(text='Price Break').parent.parent.parent.findAll('tr')
         for row in price_table_trs:
-            # Skip first row as it contains headings
-            if row.find('th') != None:
-                continue;
-            # Get top range of quantity from the next row
             next_row = row.nextSibling.nextSibling
+            # Skip first row as it contains headings, it does however give access
+            # to the minimum quantity value on the next row
+            if row.find('th') != None:
+                self.min_order = int(next_row.contents[0].string.replace(',',''))
+                continue;
             if next_row != None:
+                # Get top range of quantity from the next row
                 qty = int(next_row.contents[0].string.replace(',',''))-1
             else:
                 # For the last row just use its own quantity, there is no next row

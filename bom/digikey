@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+import digikey, sys
+
+if len(sys.argv) > 1:
+	id = sys.argv[1]
+else:
+	print 'Note: you can also specify a part number as a command line argument.'
+	id = ''
+	while id == '':
+		id = raw_input('Enter part number: ')
+
+item = digikey.Item(id)
+item.print_info()

@@ -2,6 +2,7 @@
 """Routines for scraping data about parts from digikey"""
 from cachedfetch import grab_url_cached
 from BeautifulSoup import BeautifulSoup
+from decimal import Decimal
 
 class Item:
     """Represents a Digikey item"""
@@ -43,7 +44,7 @@ class Item:
             else:
                 # For the last row just use its own quantity, there is no next row
                 qty = int(row.contents[0].string.replace(',',''))
-            cost = float(row.contents[1].string)
+            cost = Decimal(row.contents[1].string)
             self.prices.append( (qty, cost) )
 
     def get_info(self):

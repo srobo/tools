@@ -27,7 +27,10 @@ if len(sys.argv) == 1 or (len(sys.argv) > 1 and sys.argv[1] not in cmds.keys()):
         print "sr: The Student Robotics devtool wrapper script"
     print "Usage: sr COMMAND"
     print "Available commands:"
-    for cmd,path in cmds.iteritems():
+
+    k = cmds.keys()
+    k.sort()
+    for cmd in k:
         if cmd[0] != "_" and cmd[-1] != "~":
             print "\t%s" % cmd
     sys.exit(1)

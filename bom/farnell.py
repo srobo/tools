@@ -16,6 +16,8 @@ class Item(sgmllib.SGMLParser):
         self.inside_td_element = 0
         self.inside_p_element = 0
         self.inside_b_element = 0
+        self.inside_a_element = 0
+        self.inside_price_div = 0
         self.last_data = ''
         self.qty = True
         self.qty_str = ""
@@ -34,7 +36,7 @@ class Item(sgmllib.SGMLParser):
             raise Exception( """Part number "%s" doesn't exist""" % str(partNumber) )
 
         info = page[start:]
-        end = string.find(info, '</div>')
+        end = string.find(info, '<div class="price">')
         availInfo = info[:end]
 
         start = string.find(page, '<div class="price">')
@@ -71,14 +73,26 @@ class Item(sgmllib.SGMLParser):
         "Record the end of a bold."
         self.inside_b_element -= 1
 
+    def start_a(self, attributes):
+        "Process an anchor"
+        self.inside_a_element += 1
+
+    def end_a(self):
+        "Record the end of an anchor"
+        self.inside_a_element -= 1
+
+    def start_div(self, attributes):
+        "Check for start of price div"
+        if ('class', 'price') in attributes:
+            self.inside_price_div += 1
+
     def handle_data(self, data):
         "Handle the textual 'data'."
 
         data = data.replace('\n', '').replace(':', '')
         if data.replace(' ', '') == '':
             return
-
-        if self.inside_td_element > 0:
+        if self.inside_td_element > 0 and self.inside_price_div > 0:
             # print 'td:"'+data+'"'
             if "£" in data:
                 # print "\tQTY_STR: \"%s\"" % self.qty_str
@@ -92,7 +106,7 @@ class Item(sgmllib.SGMLParser):
             # print 'b:"'+data+'"'
             self.last_data = data
 
-        elif self.inside_p_element > 0:
+        elif self.inside_p_element > 0 or self.inside_a_element > 0:
             # print 'p:"'+data+'"'
             #kill off the last_data, but store it just in case
             tmp_last_data = self.last_data

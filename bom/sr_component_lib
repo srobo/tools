@@ -168,3 +168,6 @@ sr-asm-xbee,2(sr-cn-socket10-2mm). XBee connector assembly,,
 
 # Relays
 sr-relay-5v,5V relay 10A max,1094018,farnell
+
+# Piezo speakers
+sr-piezo-ps1720p02,Through-hole 17mm piezo buzzer,1669968,farnell

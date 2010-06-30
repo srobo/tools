@@ -21,6 +21,7 @@ class Item(sgmllib.SGMLParser):
         self.last_data = ''
         self.qty = True
         self.qty_str = ""
+        self.avail = 0
 
         self.last_qty = None
         self.prices = []
@@ -121,8 +122,6 @@ class Item(sgmllib.SGMLParser):
             elif tmp_last_data == 'Availability':
                 if data.isdigit():
                     self.avail = int(data)
-                else:
-                    self.avail = 0
             else:	#not this time around
                 self.last_data = tmp_last_data
 

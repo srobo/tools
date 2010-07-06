@@ -55,6 +55,7 @@ sr-l-22u,22u 180mA smt inductor,1711902,farnell,10,1008
 
 # Ferrite Beads (value is current rating)
 sr-fb-300m,300mA 1k @ 100MHz 0603,1463451,farnell,1
+sr-fb-3,3A 100R @ 100MHz 1206,1653393,farnell,1
 
 # Fuses/Resettable Fuses (Polyfuse, etc). In mA, r prefix for resettable
 sr-fuse-r50-1206,50mA 60V resettable fuse,507-1476-1-ND,digikey

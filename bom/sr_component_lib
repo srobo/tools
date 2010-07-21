@@ -127,6 +127,7 @@ sr-ic-ld1117s50,LD1117S50TR 5V linear voltage reg 800mA,686-9379,rs,sot-223
 sr-ic-ld1117s33,LD1117S33CTR 3.3V 800mA linear voltage reg - hefty,686-9388,rs,25,sot223
 sr-ic-ts5205cx533,TS5205CX533 3.3V 150mA linear voltage reg - weedy,398-708,rs,50,sot23-5
 sr-ic-tps73025,TPS73025DBVT 2.5V 200mA linear voltage reg,1135392,farnell,1,sot23-5
+sr-ic-tl5001acd,TL5001ACD 20-500kHz PWM controller,1100958,farnell,1,soic8
 
 # uC
 sr-ic-msp430f167,MSP430F167IPM microcontroller,1471271,farnell

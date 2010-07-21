@@ -153,6 +153,7 @@ sr-ic-ts1935,TS1935 1.6MHz Boost Converter,1476681,farnell,1,sot25
 # FETs
 sr-fet-n-bss123,BSS123 n-channel mosfet,1510764,farnell,sot-23
 sr-fet-n-sn7002w,SN7002W L6433 n-channel mosfet,1471758,farnell,sot323
+sr-fet-n-bsh121,BSH121 n-channel mosfet, very low Vt of 1V,1758072,farnell,sot323
 sr-fet-n-fdd8586,FDD8586 n-channel mosfet,1324786,farnell,d-pak
 sr-fet-n-irf8721,IRF8721PbF n-channel mosfet,495-685,rs,soic8
 sr-fet-p-bss84lt1g,BSS84LT1G p-channel mosfet,1431318,farnell,sot-23

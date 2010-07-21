@@ -144,6 +144,7 @@ sr-ic-sn75179b,SN75179B RS-485 full duplex transceiver (5V),660-8275,rs,10,soic8
 sr-ic-sn65lvds1,SN65LVDS1DBVTG4 LVDS driver,526-864,rs,5,sot23-5
 sr-ic-sn65lvds2,SN65LVDS2DBVTG4 LVDS receiver,528-084,rs,5,sot23-5
 sr-ic-sn65lvds051,SN65LVDS051PW LVDS dual transceiver,660-9004,rs,1,tssop16
+sr-ic-fxlp34,FXLP34P5X 1-bit non-inverting level translator,1652415,farnell,1,sc70-5
 
 # Misc
 sr-ic-fan7380,FAN7380 dual MOSFET driver,1241880,farnell,1,soic8

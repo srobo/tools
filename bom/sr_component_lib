@@ -151,14 +151,14 @@ sr-ic-ts1935,TS1935 1.6MHz Boost Converter,1476681,farnell,1,sot25
 
 
 # FETs
-sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,soic-8
 sr-fet-n-bss123,BSS123 n-channel mosfet,1510764,farnell,sot-23
-sr-fet-p-bss84lt1g,BSS84LT1G p-channel mosfet,1431318,farnell,sot-23
-sr-fet-n-fdd8586,FDD8586 n-channel mosfet,1324786,farnell,d-pak
-sr-fet-p-nds8435a,NDS8435A p-channel mosfet,9846263,farnell,soic-8
-sr-fet-n-irf8721,IRF8721PbF n-channel mosfet,495-685,rs,soic8
 sr-fet-n-sn7002w,SN7002W L6433 n-channel mosfet,1471758,farnell,sot323
+sr-fet-n-fdd8586,FDD8586 n-channel mosfet,1324786,farnell,d-pak
+sr-fet-n-irf8721,IRF8721PbF n-channel mosfet,495-685,rs,soic8
+sr-fet-p-bss84lt1g,BSS84LT1G p-channel mosfet,1431318,farnell,sot-23
 sr-fet-p-si1473dh,SI1473DH-T1-E3 p-channel mostfet,1497603,farnell,sc70-6
+sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,soic-8
+sr-fet-p-nds8435a,NDS8435A p-channel mosfet,9846263,farnell,soic-8
 
 # Switches
 sr-sw-4dip,4way dipswitch,9471600,farnell

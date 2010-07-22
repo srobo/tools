@@ -64,6 +64,7 @@ sr-fuse-r50-1206,50mA 60V resettable fuse,507-1476-1-ND,digikey
 sr-fuse-r100-1210,100mA 30V resettable fuse,1345917,farnell
 sr-fuse-r200-1812,200mA 30V resettable fuse,1800746,farnell,5
 sr-fuse-r250-1206,250mA 16V resettable fuse,1596990,farnell
+sr-fuse-1000-sil,1A PCB mount SIL fuse (5.08mm pitch),1566080,farnell
 sr-fuse-15000-ato,15A ATO automotive fuse (Blue),1586589,farnell
 
 # Connectors
@@ -74,6 +75,7 @@ sr-cn-rj11,RJ11 4p4c pcb socket,3938335,farnell
 sr-cn-pjack,LUMBERG 2.1MM powerjack,1217037,farnell
 sr-cn-fuse-20mm,20mm glass fuse holder,1162740,farnell
 sr-cn-fuse-ato,ATO automotive fuse holder,1586596,farnell
+sr-cn-fuse-sil,SIL fuse holder (5.08mm pitch),1437180,farnell
 sr-cn-header2, 2Way header 1 row header,1248140,farnell
 sr-cn-header3, 3Way header 1 row header,3418297,farnell
 sr-cn-header4, 4Way header 1 row programming,3418303,farnell

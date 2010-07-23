@@ -160,6 +160,7 @@ sr-ic-fan7380,FAN7380 dual MOSFET driver,1241880,farnell,1,soic8
 sr-ic-hcpl-817,HCPL-817-30DE Optoisolator,1244561,farnell,1
 sr-ic-mcp4018-103,MCP4018-103/LT 7-bit I2C digital pot,1715849,farnell,1,sc70-6
 sr-ic-max4069,MAX4069 - current sense amplifier,MAX4069,maxim
+sr-ic-lm2904,LM2904ST dual op-amp,1750144,farnell,1,msop8
 sr-ic-lm339,LM339PT quad comparator,1750192,farnell,1,tssop14
 sr-ic-as5030,ADS5030 magnetic rotary sensor,1630797,farnell,tssop16
 sr-ic-ts2431,TS2431ILT 2.5V to 24V programmable voltage reference,1374139,farnell,1,sot23

@@ -18,7 +18,7 @@ if REPONAME[:len(path_prefix)] != path_prefix:
 else:
     repodir = REPONAME
 
-args = ["git", "clone", repodir]
+args = ["git", "clone", "--recursive", repodir]
 if DIR != None:
     args += [DIR]
 

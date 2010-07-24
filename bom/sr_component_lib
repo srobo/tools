@@ -3,6 +3,7 @@ sr-code,description,order-number,supplier,per-reel,package
 ##########
 
 # Resistors:
+sr-r-1m-2512,1m 2512 chip resistor 3W,1292506,farnell,5
 sr-r-3m5-2512,3m5 2512 chip resistor,1292479,farnell,5
 sr-r-15m-1206,15m 1206 chip resistor,1099908,farnell,5
 sr-r-40m-2512,40m 2512 chip resistor,1107400,farnell,5

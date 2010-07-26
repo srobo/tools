@@ -56,6 +56,7 @@ sr-c-1m,1m electrolytic capacitor 16V,9451129,farnell
 
 # Inductors
 sr-l-10u,10u inductor,1711900,farnell,1,1008
+sr-l-10u-1150mA,10u inductor 1.15A max,1782801,farnell,1,1515
 sr-l-18u,18u?? inductor,1463496,farnell
 sr-l-15u,18u 5.5A smt inductor,1704128,farnell
 sr-l-22u,22u 180mA smt inductor,1711902,farnell,10,1008

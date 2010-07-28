@@ -203,7 +203,7 @@ sr-xtal-8m,8MHz Crystal,1611765,farnell
 
 # Assemblies
 sr-asm-xbee,2(sr-cn-socket10-2mm). XBee connector assembly,,
-sr-asm-beagleboard,2(sr-cn-header2x10-1.27mm) 2(sr-cn-socket2x10-1.27mm). Beagleboard headers,,
+sr-asm-beagleboard,2(sr-cn-header2x10-1.27mm) 2(sr-cn-socket2x10-1.27mm) 2(sr-cn-header2x4) 2(sr-cn-socket2x4). Beagleboard headers,,
 
 # Relays
 sr-relay-5v,5V relay 10A max,1094018,farnell

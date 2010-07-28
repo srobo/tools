@@ -89,6 +89,7 @@ sr-cn-header3, 3Way header 1 row header,3418297,farnell
 sr-cn-header4, 4Way header 1 row programming,3418303,farnell
 sr-cn-header5, 5Way header 1 row pic programming,1187826,farnell
 sr-cn-header8-keyed-7pin,8 way keyed ELCO header modded to have 7 pins,636563,farnell
+sr-cn-header2x4,2x4 through-hole 2.54mm header,1668491,farnell
 sr-cn-header2x7-smt,2x7 surface mount 2.5mm header,9689605,farnell
 sr-cn-header2x7-box,2x7 through-hole 2.5mm boxed header,8395926,farnell
 sr-cn-header2x10-1.27mm,2x10 through-hole 1.27mm header,1577744,farnell,5
@@ -96,6 +97,7 @@ sr-cn-idcsocket16, 16Way IDC socket with wings,1099027,farnell,1
 sr-cn-cageclamp,1 way 2.54mm horizontal cage clamp,3041050,farnell
 sr-cn-cageclamp-end,1 way 2.54mm horizontal cage clamp with endcap,3105295,farnell
 sr-cn-socket10-2mm,10 way 2mm pitch SIL socket,1109732,farnell
+sr-cn-socket2x4,2x4 through-hole 2.54mm header socket,1668094,farnell
 sr-cn-socket2x10-1.27mm,2x10 through-hole 1.27mm header socket,1577754,farnell,5
 sr-cn-8p8c,8P8C pcb socket,1691996,farnell
 sr-cn-fpc40-0.5mm-bottom,40 pin bottom-contact FPC connector for PSP TFT,670-2632,rs

@@ -46,16 +46,17 @@ def open_schem(fname):
                     continue
 
                 r = re.compile("([0-9]+)\(([^)]+)\)")
-                m = r.match(desc)
+                m = r.match(s)
+                if m:
 
-                quantity = int(m.group(1))
-                code = m.group(2)
+                    quantity = int(m.group(1))
+                    code = m.group(2)
 
-                for x in range(quantity):
-                    newdes = "%s.%i" % (des,num)
-                    
-                    new_items[newdes] = code
-                    num = num + 1
+                    for x in range(quantity):
+                        newdes = "%s.%i" % (des,num)
+
+                        new_items[newdes] = code
+                        num = num + 1
 
             rem_keys.append(des)
 

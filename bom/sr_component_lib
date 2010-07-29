@@ -170,6 +170,7 @@ sr-ic-fxlp34,FXLP34P5X 1-bit non-inverting level translator,1652415,farnell,1,sc
 sr-ic-fan7380,FAN7380 dual MOSFET driver,1241880,farnell,1,soic8
 sr-ic-hcpl-817,HCPL-817-30DE Optoisolator,1244561,farnell,1
 sr-ic-mcp4018-103,MCP4018-103/LT 7-bit I2C digital pot,1715849,farnell,1,sc70-6
+sr-ic-at24c01,AT24C01BN-SH 1kbit I2C EEPROM,1362638,farnell,1,soic8
 sr-ic-max4069,MAX4069 - current sense amplifier,MAX4069,maxim
 sr-ic-ina213,INA213AIDCKT current sense amp,1754261,farnell,1,sc70-6
 sr-ic-lm2904,LM2904ST dual op-amp,1750144,farnell,1,msop8

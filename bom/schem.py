@@ -40,7 +40,6 @@ def open_schem(fname):
             db = parts_db.get_db()
 
             desc = db[srcode]["description"]
-            desc = desc[:desc.find(".")]
 
             for s in desc.split():
                 if s == "+":

@@ -150,6 +150,7 @@ sr-ic-lm2704,LM2704 step-up DC/DC converter,8207461,farnell,1,sot25
 # uC
 sr-ic-msp430f167,MSP430F167IPM microcontroller,1471271,farnell
 sr-ic-msp430f169,MSP430F169IPM 16bit mcu,619-5794,rs,tssop
+sr-ic-msp430f247,MSP430F247TPM 16bit mic,595-MSP430F247TPMR,mouser,tqfp64
 sr-ic-msp430f2234, MSP430F2234 16bit mcu suffix: IDA,1649419,farnell,tssop
 sr-ic-msp430f2254, MSP430F2254 16bit mcu suffix: IDA,1649422,farnell,tssop
 sr-ic-pic10f200,PIC10F200T-I/OT 8bit mcu,1216921,farnell,1,sot-23-6

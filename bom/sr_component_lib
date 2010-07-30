@@ -76,36 +76,36 @@ sr-fuse-1000-sil,1A PCB mount SIL fuse (5.08mm pitch),1566080,farnell,5,through_
 sr-fuse-15000-ato,15A ATO automotive fuse (Blue),1586589,farnell,5,N/A
 
 # Connectors
-sr-cn-camcon2w,CTB9550/2 - Camden Electronics 2way,3882391,farnell
-sr-cn-camcon3w,CTB9550/3 - Camden Electronics 3way,3882408,farnell
-sr-cn-battcon,"PC 4/2-G-7,62 - Pheonix Contact 2way 35A",1792928,farnell
-sr-cn-rj11,RJ11 4p4c pcb socket,3938335,farnell
-sr-cn-pjack,LUMBERG 2.1MM powerjack,1217037,farnell
-sr-cn-fuse-20mm,20mm glass fuse holder,1162740,farnell
-sr-cn-fuse-ato,ATO automotive fuse holder,1586596,farnell
-sr-cn-fuse-sil,SIL fuse holder (5.08mm pitch),1437180,farnell
-sr-cn-header2, 2Way header 1 row header,1248140,farnell
-sr-cn-header3, 3Way header 1 row header,3418297,farnell
-sr-cn-header4, 4Way header 1 row programming,3418303,farnell
-sr-cn-header5, 5Way header 1 row pic programming,1187826,farnell
-sr-cn-header8-keyed-7pin,8 way keyed ELCO header modded to have 7 pins,636563,farnell
-sr-cn-header2x4,2x4 through-hole 2.54mm header,1668491,farnell
-sr-cn-header2x7-smt,2x7 surface mount 2.5mm header,9689605,farnell
-sr-cn-header2x7-box,2x7 through-hole 2.5mm boxed header,8395926,farnell
-sr-cn-header2x10-1.27mm,2x10 through-hole 1.27mm header,1577744,farnell,5
-sr-cn-idcsocket16, 16Way IDC socket with wings,1099027,farnell,1
-sr-cn-cageclamp,1 way 2.54mm horizontal cage clamp,3041050,farnell
-sr-cn-cageclamp-end,1 way 2.54mm horizontal cage clamp with endcap,3105295,farnell
-sr-cn-socket10-2mm,10 way 2mm pitch SIL socket,1109732,farnell
-sr-cn-socket2x4,2x4 through-hole 2.54mm header socket,1668094,farnell
-sr-cn-socket2x10-1.27mm,2x10 through-hole 1.27mm header socket,1577754,farnell,5
-sr-cn-8p8c,8P8C pcb socket,1691996,farnell
-sr-cn-fpc40-0.5mm-bottom,40 pin bottom-contact FPC connector for PSP TFT,670-2632,rs
-sr-cn-fpc4-0.5mm-bottom,4 pin bottom-contact FPC connector for PSP TFT power,673-4790,rs
-sr-cn-fpc4-0.5mm-top,4 pin top-contact FPC connector for PSP TFT power -- FCI SFV4R-2STE1LF,609-1847-1-ND,digikey
+sr-cn-camcon2w,CTB9550/2 - Camden Electronics 2way,3882391,farnell,1,through_hole
+sr-cn-camcon3w,CTB9550/3 - Camden Electronics 3way,3882408,farnell,1,through_hole
+sr-cn-battcon,"PC 4/2-G-7,62 - Pheonix Contact 2way 35A",1792928,farnell,1,through_hole
+sr-cn-rj11,RJ11 4p4c pcb socket,3938335,farnell,1,through_hole
+sr-cn-pjack,LUMBERG 2.1MM powerjack,1217037,farnell,1,through_hole
+sr-cn-fuse-20mm,20mm glass fuse holder,1162740,farnell,1,through_hole
+sr-cn-fuse-ato,ATO automotive fuse holder,1586596,farnell,1,through_hole
+sr-cn-fuse-sil,SIL fuse holder (5.08mm pitch),1437180,farnell,10,through_hole
+sr-cn-header2, 2Way header 1 row header,1248140,farnell,10,through_hole
+sr-cn-header3, 3Way header 1 row header,3418297,farnell,1,through_hole
+sr-cn-header4, 4Way header 1 row programming,3418303,farnell,1,through_hole
+sr-cn-header5, 5Way header 1 row pic programming,1187826,farnell,1,through_hole
+sr-cn-header8-keyed-7pin,8 way keyed ELCO header modded to have 7 pins,636563,farnell,1,through_hole
+sr-cn-header2x4,2x4 through-hole 2.54mm header,1668491,farnell,1,through_hole
+sr-cn-header2x7-smt,2x7 surface mount 2.5mm header,9689605,farnell,1,through_hole
+sr-cn-header2x7-box,2x7 through-hole 2.5mm boxed header,8395926,farnell,1,through_hole
+sr-cn-header2x10-1.27mm,2x10 through-hole 1.27mm header,1577744,farnell,5,through_hole
+sr-cn-idcsocket16, 16Way IDC socket with wings,1099027,farnell,1,through_hole
+sr-cn-cageclamp,1 way 2.54mm horizontal cage clamp,3041050,farnell,1,through_hole
+sr-cn-cageclamp-end,1 way 2.54mm horizontal cage clamp with endcap,3105295,farnell,1,through_hole
+sr-cn-socket10-2mm,10 way 2mm pitch SIL socket,1109732,farnell,10,through_hole
+sr-cn-socket2x4,2x4 through-hole 2.54mm header socket,1668094,farnell,1,through_hole
+sr-cn-socket2x10-1.27mm,2x10 through-hole 1.27mm header socket,1577754,farnell,5,through_hole
+sr-cn-8p8c,8P8C pcb socket,1691996,farnell,1,through_hole
+sr-cn-fpc40-0.5mm-bottom,40 pin bottom-contact FPC connector for PSP TFT,670-2632,rs,10,smt_fpc_socket
+sr-cn-fpc4-0.5mm-bottom,4 pin bottom-contact FPC connector for PSP TFT power,673-4790,rs,10,smt_fpc_socket
+sr-cn-fpc4-0.5mm-top,4 pin top-contact FPC connector for PSP TFT power -- FCI SFV4R-2STE1LF,609-1847-1-ND,digikey,1,smt_fpc_socket
 # Alternative source for sr-cn-fpc4-0.5mm-top: RS(673-4759) but RS's stock is incorrect, and they actually
 # have the bottom contact one.
-sr-cn-usb-b,USB type B connector,1308876,farnell
+sr-cn-usb-b,USB type B connector,1308876,farnell,1,through_hole
 
 # LEDs
 sr-led-green-plcc2,LED PLCC2 GREEN,4134436,farnell,5

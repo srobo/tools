@@ -135,12 +135,12 @@ sr-d-gsot15,15V unidirectional single TVS diode 230W,1617684,farnell,5,sot23
 
 # ICs
 # SMPS/Linear Regs
-sr-ic-max1626,MAX1626ESA+ 5/3.3v switchmode controller,9725342,farnell,soic8
+sr-ic-max1626,MAX1626ESA+ 5/3.3v switchmode controller,9725342,farnell,1,soic8
 sr-ic-tl494,TL494CD PWM/switchmode controller,528-129,rs,40,soic16
 sr-ic-tb62752afug,TB62752AFUG boost convertor for backlight LEDs,TB62752AFUGCT-ND,digikey,1,ssop6
 sr-ic-ts1935,TS1935 1.6MHz Boost Converter,1476681,farnell,1,sot25
-sr-ic-ua78l05,UA78L05 5V linear voltage regulator,1236590,farnell,sot-89-3
-sr-ic-ld1117s50,LD1117S50TR 5V linear voltage reg 800mA,686-9379,rs,sot-223
+sr-ic-ua78l05,UA78L05 5V linear voltage regulator,1236590,farnell,1,sot-89-3
+sr-ic-ld1117s50,LD1117S50TR 5V linear voltage reg 800mA,686-9379,rs,25,sot-223
 sr-ic-ld1117s33,LD1117S33CTR 3.3V 800mA linear voltage reg - hefty,686-9388,rs,25,sot223
 sr-ic-ts5205cx533,TS5205CX533 3.3V 150mA linear voltage reg - weedy,398-708,rs,50,sot23-5
 sr-ic-tps73025,TPS73025DBVT 2.5V 200mA linear voltage reg,1135392,farnell,1,sot23-5
@@ -148,17 +148,17 @@ sr-ic-tl5001acd,TL5001ACD 20-500kHz PWM controller,1100958,farnell,1,soic8
 sr-ic-lm2704,LM2704 step-up DC/DC converter,8207461,farnell,1,sot25
 
 # uC
-sr-ic-msp430f167,MSP430F167IPM microcontroller,1471271,farnell
-sr-ic-msp430f169,MSP430F169IPM 16bit mcu,619-5794,rs,tssop
-sr-ic-msp430f247,MSP430F247TPM 16bit mic,595-MSP430F247TPMR,mouser,tqfp64
-sr-ic-msp430f2234, MSP430F2234 16bit mcu suffix: IDA,1649419,farnell,tssop
-sr-ic-msp430f2254, MSP430F2254 16bit mcu suffix: IDA,1649422,farnell,tssop
+sr-ic-msp430f167,MSP430F167IPM microcontroller,1471271,farnell,1,tqfp64
+sr-ic-msp430f169,MSP430F169IPM 16bit mcu,619-5794,rs,1,tqfp64
+sr-ic-msp430f247,MSP430F247TPM 16bit mic,595-MSP430F247TPMR,mouser,1,tqfp64
+sr-ic-msp430f2234, MSP430F2234 16bit mcu suffix: IDA,1649419,farnell,1,tssop38
+sr-ic-msp430f2254, MSP430F2254 16bit mcu suffix: IDA,1649422,farnell,1,tssop38
 sr-ic-pic10f200,PIC10F200T-I/OT 8bit mcu,1216921,farnell,1,sot-23-6
 
 # Logic-y
-sr-ic-74act04d, 74ACT04D HEX INVERTER SMD 74ACT04,9590323,farnell,soic14
-sr-ic-74hct04d,SN74HCT04D HEX INVERTER SMD,9591761,farnell,soic14
-sr-ic-74153,74153 bus multiplexer,1236217,farnell,soic-16
+sr-ic-74act04d, 74ACT04D HEX INVERTER SMD 74ACT04,9590323,farnell,1,soic14
+sr-ic-74hct04d,SN74HCT04D HEX INVERTER SMD,9591761,farnell,1,soic14
+sr-ic-74153,74153 bus multiplexer,1236217,farnell,1,soic-16
 sr-ic-sn74lvc16t245,SN74LVC16T245DGGR 16-bit level translator,1494928,farnell,1,tssop48
 sr-ic-sn65176b,SN65176B RS-485 half duplex transceiver (5V),528-539,rs,10,soic8
 sr-ic-sn75179b,SN75179B RS-485 full duplex transceiver (5V),660-8275,rs,10,soic8
@@ -170,14 +170,14 @@ sr-ic-txs0102,TXS0102DCT 2-bit non-inverting bi-directional level translator,595
 
 # Misc
 sr-ic-fan7380,FAN7380 dual MOSFET driver,1241880,farnell,1,soic8
-sr-ic-hcpl-817,HCPL-817-30DE Optoisolator,1244561,farnell,1
+sr-ic-hcpl-817,HCPL-817-30DE Optoisolator,1244561,farnell,1,smt_optoisolator
 sr-ic-mcp4018-103,MCP4018-103/LT 7-bit I2C digital pot,1715849,farnell,1,sc70-6
 sr-ic-at24c01,AT24C01BN-SH 1kbit I2C EEPROM,1362638,farnell,1,soic8
-sr-ic-max4069,MAX4069 - current sense amplifier,MAX4069,maxim
+sr-ic-max4069,MAX4069 - current sense amplifier,MAX4069,maxim,,
 sr-ic-ina213,INA213AIDCKT current sense amp,1754261,farnell,1,sc70-6
 sr-ic-lm2904,LM2904ST dual op-amp,1750144,farnell,1,msop8
 sr-ic-lm339,LM339PT quad comparator,1750192,farnell,1,tssop14
-sr-ic-as5030,ADS5030 magnetic rotary sensor,1630797,farnell,tssop16
+sr-ic-as5030,ADS5030 magnetic rotary sensor,1630797,farnell,1,tssop16
 sr-ic-ts2431,TS2431ILT 2.5V to 24V programmable voltage reference,1374139,farnell,1,sot23
 sr-ic-ft232rl,FT232RL USB to UART,1146032,farnell,1,ssop28
 sr-ic-dg2731dq,DG2731DQ-T1-E3 dual SPDT analogue switch,1414078,farnell,1,msop10

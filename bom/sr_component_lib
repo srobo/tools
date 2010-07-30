@@ -35,24 +35,24 @@ sr-r-240k,240k 0603 chip resistor,1469786,farnell,50,0603
 sr-r-330k-1pc,330k 0603 1% chip resistor,9331042,farnell,50,0603
 
 # Capacitors
-sr-c-220p-50v,220pF capacitor 0603 50V,1759070,farnell
-sr-c-1n,1n capacitor 0603,1759088,farnell
-sr-c-10n,10n capacitor 0603,1301715,farnell
-sr-c-100n,100n capacitor 0603,1759017,farnell,100
-sr-c-330n-0805,0.33u capacitor 0805,1759174,farnell
-sr-c-470n,0.47u capacitor 0603,1759021,farnell
-sr-c-1u,1u electrolytic capacitor,1236655,farnell
-sr-c-1u-0805,1u ceramic capacitor 0805 50V,1611943,farnell
-sr-c-2u2-0805,2u2 capacitor 0805 16V,1759424,farnell,100
-sr-c-4u7-0805-16v,4.7uF capacitor 0805 16V,1759427,farnell,100
-sr-c-10u-0805,10u capacitor 0805 6.3V,1759136,farnell
-sr-c-10u-1210-25v,10u capacitor 1210 25V,1650940,farnell
-sr-c-15u-7343,15u tantalum capacitor 25V,1754110,farnell
-sr-c-22u-1210,22u ceramic capacitor 1210 16V,1759466,farnell
-sr-c-47u,47u electrolytic capacitor,9451072,farnell,10
-sr-c-68u,68u capacitor smt CPOL-EUE,9694390,farnell
-sr-c-220u,220u capacitor smt CPOL-EUE,1580568,farnell
-sr-c-1m,1m electrolytic capacitor 16V,9451129,farnell
+sr-c-220p-50v,220pF capacitor 0603 50V,1759070,farnell,100,0603
+sr-c-1n,1n capacitor 0603,1759088,farnell,100,0603
+sr-c-10n,10n capacitor 0603,1301715,farnell,5,0603
+sr-c-100n,100n capacitor 0603,1759017,farnell,100,0603
+sr-c-330n-0805,0.33u capacitor 0805,1759174,farnell,100,0805
+sr-c-470n,0.47u capacitor 0603,1759021,farnell,100,0603
+sr-c-1u,1u electrolytic capacitor,1236655,farnell,5,through_hole
+sr-c-1u-0805,1u ceramic capacitor 0805 50V,1611943,farnell,1,0805
+sr-c-2u2-0805,2u2 capacitor 0805 16V,1759424,farnell,100,0805
+sr-c-4u7-0805-16v,4.7uF capacitor 0805 16V,1759427,farnell,100,0805
+sr-c-10u-0805,10u capacitor 0805 6.3V,1759136,farnell,100,0805
+sr-c-10u-1210-25v,10u capacitor 1210 25V,1650940,farnell,1,1210
+sr-c-15u-7343,15u tantalum capacitor 25V,1754110,farnell,5,7343
+sr-c-22u-1210,22u ceramic capacitor 1210 16V,1759466,farnell,10,1210
+sr-c-47u,47u electrolytic capacitor,9451072,farnell,10,through_hole
+sr-c-68u,68u capacitor smt CPOL-EUE,9694390,farnell,10,smt_electrolytic_cap
+sr-c-220u,220u capacitor smt CPOL-EUE,1580568,farnell,5,smt_electrolytic_cap
+sr-c-1m,1m electrolytic capacitor 16V,9451129,farnell,10,through_hole
 
 # Inductors
 sr-l-10u,10u inductor,1711900,farnell,1,1008

@@ -52,7 +52,7 @@ def html_footer(f):
 def pcode_extract_num(pcode):
     for c in range(0, len(pcode)):
         if pcode[c].isdigit():
-            return int( pcode[c:] )
+            return float( pcode[c:] )
 
 def pcode_cmp(a, b):
     "Compare two part codes"

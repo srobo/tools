@@ -19,6 +19,7 @@ td {
 </head>
 <body>
 <table style="border-style:none;border-spacing:0;">
+<thead>
 <tr>
 <th>&nbsp;</th>
 <th>srcode</th>
@@ -29,6 +30,8 @@ td {
 <th>Quantity</th>
 <th>Designators</th>
 </tr>
+</thead>
+<tbody>
 """ % title)
 
 def html_footer(f):
@@ -103,7 +106,7 @@ for line in lines:
 
     outf.write("</tr>")
 
-outf.write( "</table>" )
+outf.write( "</tbody></table>" )
 outf.write( "<p>%i parts in total.</p>" % total_parts )
 
 html_footer(outf)

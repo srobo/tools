@@ -127,6 +127,7 @@ sr-nothing,nothing,,
 sr-d-ll4448,signal diode 100mA 100V 1N4148 equiv,1621882,farnell,1,sod80
 sr-d-112cwq04fntrpbf, schottky diode 12A D-PAK,1298442,farnell,1,d-pak
 sr-d-30bq040trpbf,schottky diode 3a smc,1299292,farnell,1,do-214ab(smc)
+sr-d-15mq040n,schottky diode 3A 40V SMA,1463215,farnell,1,do-214ac(sma)
 sr-d-bat754s,schottky diode dual,1700901,farnell,1,sot23
 sr-d-bat754a,Schottky diode dual,1081204,farnell,1,sot23
 sr-d-bas40h,Schottky diode 120mA 40V,1757749,farnell,1,sod123

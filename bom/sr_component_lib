@@ -57,14 +57,14 @@ sr-c-1m,1m electrolytic capacitor 16V,9451129,farnell,10,through_hole
 # Inductors
 sr-l-10u,10u inductor,1711900,farnell,1,1008
 sr-l-10u-1150ma,10u inductor 1.15A max,1782801,farnell,1,1515
-sr-l-18u,18u?? inductor,1463496,farnell
-sr-l-15u,18u 5.5A smt inductor,1704128,farnell
+#sr-l-18u,18u?? inductor,1463496,farnell NO LONGER STOCKED
+sr-l-15u,18u 5.5A smt inductor,1704128,farnell,1,smt_inductor
 sr-l-22u,22u 180mA smt inductor,1711902,farnell,10,1008
-sr-l-330u,330u 280mA smt inductor,1612678,farnell,1
+sr-l-330u,330u 280mA smt inductor,1612678,farnell,1,smt_inductor
 
 # Ferrite Beads (value is current rating)
-sr-fb-300m,300mA 1k @ 100MHz 0603,1463451,farnell,1
-sr-fb-3,3A 100R @ 100MHz 1206,1653393,farnell,1
+sr-fb-300m,300mA 1k @ 100MHz 0603,1463451,farnell,1,0603
+sr-fb-3,3A 100R @ 100MHz 1206,1653393,farnell,1,1206
 
 # Fuses/Resettable Fuses (Polyfuse, etc). In mA, r prefix for resettable
 sr-fuse-r50-1206,50mA 60V resettable fuse,507-1476-1-ND,digikey

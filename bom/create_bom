@@ -49,15 +49,56 @@ def html_footer(f):
 </body>
 </html>""" % (time.asctime(), os.path.basename(sys.argv[0])) )
 
+def pcode_extract_str(pcode):
+    for c in range(0, len(pcode)):
+        if pcode[c].isdigit():
+            return pcode[:c]
+
 def pcode_extract_num(pcode):
     for c in range(0, len(pcode)):
         if pcode[c].isdigit():
-            return float( pcode[c:] )
+            if "." in pcode[c:]:
+                return float( pcode[c:] )
+            else:
+                return int( pcode[c:] )
 
 def pcode_cmp(a, b):
     "Compare two part codes"
     return cmp( pcode_extract_num(a),
                 pcode_extract_num(b) )
+
+def pcode_find_ranges(pcodes):
+    grouped = []
+    pr = {}
+
+    for pc in pcodes:
+        n = pcode_extract_num(pc)
+        cs = pcode_extract_str(pc)
+
+        if not pr.has_key(cs):
+            pr[cs] = []
+
+        if not isinstance(n, int):
+            grouped.append(pc)
+            continue
+
+        pr[cs].append(n)
+
+    for prefix, nums in pr.iteritems():
+        while len(nums):
+            start = end = min(nums)
+            while end in nums:
+                nums.remove(end)
+                end += 1
+            end -= 1
+
+            if end - start < 2:
+                for n in range(start, end+1):
+                    grouped.append( "%s%i" % (prefix, n) )
+            else:
+                grouped.append( "%s%i-%i" % (prefix, start, end) )
+
+    return grouped
 
 if len(sys.argv) < 3:
     print "Usage: %s SCHEMATIC(S) OUTFILE" % (os.path.basename(sys.argv[0]))
@@ -111,6 +152,7 @@ for line in lines:
 
     pcodes = [x[1] for x in line]
     pcodes.sort(cmp=pcode_cmp)
+    pcodes = pcode_find_ranges(pcodes)
     outf.write( "<td>%s</td>" % ", ".join(pcodes) )
 
     outf.write("</tr>")

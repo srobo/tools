@@ -23,6 +23,7 @@ td {
 <th>&nbsp;</th>
 <th>srcode</th>
 <th>Description</th>
+<th>Package</th>
 <th>Distributer</th>
 <th>Distributor Order Number</th>
 <th>Quantity</th>
@@ -83,6 +84,7 @@ for line in lines:
 
     outf.write( """<td>%(sr-code)s</td>
 <td>%(description)s</td>
+<td>%(package)s</td>
 <td>%(supplier)s</td>""" % p )
 
     url = p.get_url()

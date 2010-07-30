@@ -206,7 +206,7 @@ sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,1,soic-8
 sr-fet-p-nds8435a,NDS8435A p-channel mosfet,9846263,farnell,1,soic-8
 
 # Thyristors
-sr-thy-bt148w-600R,BT148W-600R 600V 1Arms thyristor,1510728,farnell,1,sot223
+sr-thy-bt148w-600r,BT148W-600R 600V 1Arms thyristor,1510728,farnell,1,sot223
 
 # Switches
 sr-sw-4dip,4way dipswitch,9471600,farnell,1,through_hole

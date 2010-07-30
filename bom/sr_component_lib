@@ -197,20 +197,20 @@ sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,1,soic-8
 sr-fet-p-nds8435a,NDS8435A p-channel mosfet,9846263,farnell,1,soic-8
 
 # Switches
-sr-sw-4dip,4way dipswitch,9471600,farnell
-sr-sw-button,Tactile Button (dont press),3801305,farnell
+sr-sw-4dip,4way dipswitch,9471600,farnell,1,through_hole
+sr-sw-button,Tactile Button (dont press),3801305,farnell,25,smt_tactile_switch
 
 # Crystals
-sr-xtal-32k, 32kHz Crystal,1652573,farnell,1
-sr-xtal-8m,8MHz Crystal,1611765,farnell
+sr-xtal-32k, 32kHz Crystal,1652573,farnell,1,through_hole
+sr-xtal-8m,8MHz Crystal,1611765,farnell,1,smt_crystal(hc49)
 
 # Assemblies
 sr-asm-xbee,2(sr-cn-socket10-2mm). XBee connector assembly,,
 sr-asm-beagleboard,2(sr-cn-header2x10-1.27mm) 2(sr-cn-socket2x10-1.27mm) 2(sr-cn-header2x4) 2(sr-cn-socket2x4). Beagleboard headers,,
 
 # Relays
-sr-relay-5v,5V relay 10A max,1094018,farnell
+sr-relay-5v,5V relay 10A max,1094018,farnell,1,through_hole
 
 # Piezo speakers
-sr-piezo-ps1720p02,Through-hole 17mm piezo buzzer,1669968,farnell
-sr-piezo-kmtg1603,SMT 16x16x2.6mm piezo buzzer,1502709,farnell
+sr-piezo-ps1720p02,Through-hole 17mm piezo buzzer,1669968,farnell,1,through_hole
+sr-piezo-kmtg1603,SMT 16x16x2.6mm piezo buzzer,1502709,farnell,1,smt_piezo_buzzer

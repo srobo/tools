@@ -119,15 +119,15 @@ sr-nothing,nothing,,
 
 # Diodes
 sr-d-ll4448,signal diode 100mA 100V 1N4148 equiv,1621882,farnell,1,sod80
-sr-d-112cwq04fntrpbf, schottky diode 12A D-PAK,1298442,farnell,d-pak
-sr-d-30bq040trpbf,schottky diode 3a smc,1299292,farnell,smc
+sr-d-112cwq04fntrpbf, schottky diode 12A D-PAK,1298442,farnell,1,d-pak
+sr-d-30bq040trpbf,schottky diode 3a smc,1299292,farnell,1,do-214ab(smc)
 sr-d-bat754s,schottky diode dual,1700901,farnell,1,sot23
 sr-d-bat754a,Schottky diode dual,1081204,farnell,1,sot23
 sr-d-bas40h,Schottky diode 120mA 40V,1757749,farnell,1,sod123
 sr-d-bzx384c3v3, zener diode 3.3V 5%,8735646,farnell,10,sod323
-sr-d-tvs-16v-smcj16a,16v tvs diode 1500W,1470983,farnell,,do-214ab
-sr-d-smaj16a,16V unidirectional TVS diode 400W,1578964,farnell,5,do-214ac
-sr-d-smaj16ca,16V bidirectional TVS diode 400W,1578965,farnell,5,do-214ac
+sr-d-tvs-16v-smcj16a,16v tvs diode 1500W,1470983,farnell,1,do-214ab(smc)
+sr-d-smaj16a,16V unidirectional TVS diode 400W,1578964,farnell,5,do-214ac(sma)
+sr-d-smaj16ca,16V bidirectional TVS diode 400W,1578965,farnell,5,do-214ac(sma)
 sr-d-gsot12c,12V unidirectional dual TVS diode 312W common anode,1617678,farnell,5,sot23
 sr-d-gsot03c,3.3V unidrectional dual TVS diode 369W common anode,1617669,farnell,5,sot23
 sr-d-mmbz5v6al,3V unidirectional dual TVS diode 40W common anode,MMBZ5V6ALT1GOSCT-ND,digikey,1,sot23

@@ -195,7 +195,7 @@ sr-ic-dg2731dq,DG2731DQ-T1-E3 dual SPDT analogue switch,1414078,farnell,1,msop10
 # FETs
 sr-fet-n-bss123,BSS123 n-channel mosfet,1510764,farnell,5,sot-23
 sr-fet-n-sn7002w,SN7002W L6433 n-channel mosfet,1471758,farnell,1,sot323
-sr-fet-n-bsh121,BSH121 n-channel mosfet, very low Vt of 1V,1758072,farnell,1,sot323
+sr-fet-n-bsh121,BSH121 n-channel mosfet very low Vt of 1V,1758072,farnell,1,sot323
 sr-fet-n-fdd8586,FDD8586 n-channel mosfet,1324786,farnell,1,d-pak
 sr-fet-n-fdd8580,FDD8580 n-channel mosfet 35A,1324785,farnell,1,d-pak
 sr-fet-n-irf8721,IRF8721PbF n-channel mosfet,495-685,rs,10,soic8

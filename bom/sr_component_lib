@@ -108,11 +108,11 @@ sr-cn-fpc4-0.5mm-top,4 pin top-contact FPC connector for PSP TFT power -- FCI SF
 sr-cn-usb-b,USB type B connector,1308876,farnell,1,through_hole
 
 # LEDs
-sr-led-green-plcc2,LED PLCC2 GREEN,4134436,farnell,5
-sr-led-red-0603,LED 0603 RED,1465988,farnell,10
-sr-led-redgreen,Bi-Colour LED Red/Green,5790888,farnell,5
-sr-led-red-plcc2,LED PLCC2 RED,4134321,farnell,5
-sr-led-yellow-plcc2,LED PLCC2 YELLOW,4134424,farnell,5
+sr-led-green-plcc2,LED PLCC2 GREEN,4134436,farnell,5,plcc2
+sr-led-red-0603,LED 0603 RED,1465988,farnell,10,0603
+sr-led-redgreen,Bi-Colour LED Red/Green,5790888,farnell,5,smt_dual_led
+sr-led-red-plcc2,LED PLCC2 RED,4134321,farnell,5,plcc2
+sr-led-yellow-plcc2,LED PLCC2 YELLOW,4134424,farnell,5,plcc2
 
 # Special nothing
 sr-nothing,nothing,,

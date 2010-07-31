@@ -100,6 +100,8 @@ sr-cn-header2x4,2x4 through-hole 2.54mm header,1668491,farnell,1,through_hole
 sr-cn-header2x7-smt,2x7 surface mount 2.5mm header,9689605,farnell,1,through_hole
 sr-cn-header2x7-box,2x7 through-hole 2.5mm boxed header,8395926,farnell,1,through_hole
 sr-cn-header2x10-1.27mm,2x10 through-hole 1.27mm header,1577744,farnell,5,through_hole
+sr-cn-header2-5a-ra,2 way header right angle .156in pitch 5A,589184,farnell,5,through_hole
+sr-cn-plug2-5a,2 way plug for sr-cn-header2-5a-ra,1098453,farnell,5,N/A
 sr-cn-idcsocket16, 16Way IDC socket with wings,1099027,farnell,1,through_hole
 sr-cn-cageclamp,1 way 2.54mm horizontal cage clamp,3041050,farnell,1,through_hole
 sr-cn-cageclamp-end,1 way 2.54mm horizontal cage clamp with endcap,3105295,farnell,1,through_hole

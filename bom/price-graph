@@ -26,14 +26,13 @@ def cmp_prices(a,b):
 
 prices.sort( cmp = cmp_prices )
 
-bar( range(0, len(prices)),
-     [x[1] for x in prices] )
+bar( 0, 0.8, bottom=range(0, len(prices)),
+     width=[x[1] for x in prices], orientation='horizontal' )
 
-xticks( arange(0, len(prices)) + 0.4 ,
-        [x[0] for x in prices],
-        rotation = 90 )
+yticks( arange(0, len(prices)) + 0.4 ,
+        [x[0] for x in prices])
 
-subplots_adjust( bottom = 0.35 )
+subplots_adjust( left = 0.35 )
 
 show()
 

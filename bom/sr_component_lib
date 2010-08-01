@@ -161,7 +161,7 @@ sr-ic-sc4524a,SC5424A step-down DC/DC converter,691-0600,rs,5,soic8
 # uC
 sr-ic-msp430f167,MSP430F167IPM microcontroller,1471271,farnell,1,tqfp64
 sr-ic-msp430f169,MSP430F169IPM 16bit mcu,619-5794,rs,1,tqfp64
-sr-ic-msp430f247,MSP430F247TPM 16bit mic,595-MSP430F247TPMR,mouser,1,tqfp64
+sr-ic-msp430f247,MSP430F247TPM 16bit mic,662-5100,rs,1,tqfp64
 sr-ic-msp430f2234, MSP430F2234 16bit mcu suffix: IDA,1649419,farnell,1,tssop38
 sr-ic-msp430f2254, MSP430F2254 16bit mcu suffix: IDA,1649422,farnell,1,tssop38
 sr-ic-pic10f200,PIC10F200T-I/OT 8bit mcu,1216921,farnell,1,sot-23-6

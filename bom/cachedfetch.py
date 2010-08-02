@@ -22,7 +22,13 @@ def grab_url_cached(url):
         page = f.read()
         f.close()
     else:
-        page = urlopen(url).read()
+        # Try the remote supplier page cache
+        sc = urlopen( "https://www.studentrobotics.org/~rspanton/supcache/%s" % h.hexdigest() )
+        if sc.getcode() == 200:
+            page = sc.read()
+        else:
+            page = urlopen(url).read()
+
         f = open( F, "w" )
         f.write(page)
         f.close()

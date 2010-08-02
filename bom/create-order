@@ -17,6 +17,9 @@ db = parts_db.Db( bom.PARTS_DB )
 m = bom.MultiBoardBom(db)
 m.load_boards_args( sys.argv[1:] )
 
+
+m.prime_cache()
+
 # Group the parts by distributor:
 # Keys of ths dictionary are the distributor
 dist = {}

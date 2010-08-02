@@ -12,6 +12,7 @@ if len(sys.argv) < 2:
 db = parts_db.Db( bom.PARTS_DB )
 m = bom.MultiBoardBom(db)
 m.load_boards_args( sys.argv[1:] )
+m.prime_cache()
 
 prices = []
 

@@ -1,6 +1,7 @@
 # Routines for extracting BOMs from schematics
 import subprocess, tempfile, os, sys, parts_db, schem
 from decimal import Decimal
+from threadpool import ThreadPool
 
 PARTS_DB = os.path.expanduser("~/.sr/tools/bom/sr_component_lib")
 if not os.path.exists( PARTS_DB ):
@@ -10,6 +11,8 @@ if not os.path.exists( PARTS_DB ):
 STOCK_OUT = 0
 STOCK_OK = 1
 STOCK_UNKNOWN = 2
+
+NUM_THREADS = 4
 
 class PartGroup(list):
     """A set of parts
@@ -170,4 +173,17 @@ class MultiBoardBom(Bom):
 
                     self[srcode] += bpg
 
+    def prime_cache(self):
+        """Ensures that the webpage cache is filled in the
+        quickest time possible by making many requests in
+        parallel"""
+
+	print "Getting data for parts from suppliers' websites"
+        pool = ThreadPool(NUM_THREADS)
+
+        for srcode, pg in self.iteritems():
+            print srcode
+            pool.add_task(pg.get_price)
         
+        pool.wait_completion()
+

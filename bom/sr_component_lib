@@ -158,6 +158,7 @@ sr-ic-tps73025,TPS73025DBVT 2.5V 200mA linear voltage reg,1135392,farnell,1,sot2
 sr-ic-tl5001acd,TL5001ACD 20-500kHz PWM controller,1100958,farnell,1,soic8
 sr-ic-lm2704,LM2704 step-up DC/DC converter,8207461,farnell,1,sot25
 sr-ic-sc4524a,SC5424A step-down DC/DC converter,691-0600,rs,5,soic8
+sr-ic-lm3489,LM3489 hysteretic step-down DC/DC controller,1312570,farnell,1,msop8
 
 # uC
 sr-ic-msp430f167,MSP430F167IPM microcontroller,1471271,farnell,1,tqfp64
@@ -206,6 +207,7 @@ sr-fet-n-irlml2030,IRLML2030TRPbF n-channel mosfet,1791568,farnell,1,sot-23
 sr-fet-n-irlr8743,IRLR8743PBF n-channel mosfet 160A,1551908,farnell,1,d-pak
 sr-fet-p-mmbf2202pt1,MMBF2202PT1 p-channel mostfet 20V 300mA,1431300,farnell,1,sot323
 sr-fet-p-bss84lt1g,EQUIV BSH202 p-channel mosfet 30V 520mA,1758074,farnell,1,sot-23
+sr-fet-p-pmv65xp,PMV65XP p-channel mosfet 20V 3.9A,1758119,farnell,1,sot-23
 sr-fet-p-si1473dh,SI1473DH-T1-E3 p-channel mostfet,1497603,farnell,1,sc70-6
 sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,1,soic-8
 sr-fet-p-nds8435a,NDS8435A p-channel mosfet,9846263,farnell,1,soic-8

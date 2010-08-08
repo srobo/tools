@@ -100,6 +100,12 @@ def pcode_find_ranges(pcodes):
 
     return grouped
 
+def wrap_order_number(onum):
+    if len(onum) > 10:
+        return onum[:10] + "<wbr>" + onum[10:]
+    else:
+        return onum
+
 if len(sys.argv) < 3:
     print "Usage: %s SCHEMATIC(S) OUTFILE" % (os.path.basename(sys.argv[0]))
     print "Where:"
@@ -141,11 +147,11 @@ for line in lines:
 <td>%(supplier)s</td>""" % p )
 
     url = p.get_url()
+    order_num = wrap_order_number(p["order-number"])
     if url == None:
-        outf.write( "<td>%(order-number)s</td>" % p )
+        outf.write( "<td>%s</td>" % order_num )
     else:
-        outf.write( """<td><a href="%s">%s</a></td>""" % ( url,
-                                                           p["order-number"] ) )
+        outf.write( """<td><a href="%s">%s</a></td>""" % ( url, order_num ) )
 
     outf.write( "<td>%i</td>" % len(line) )
     total_parts += len(line)

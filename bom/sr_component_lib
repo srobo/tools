@@ -116,6 +116,7 @@ sr-cn-fpc4-0.5mm-top,4 pin top-contact FPC connector for PSP TFT power -- FCI SF
 # Alternative source for sr-cn-fpc4-0.5mm-top: RS(673-4759) but RS's stock is incorrect, and they actually
 # have the bottom contact one.
 sr-cn-usb-a,USB type A connector,1308874,farnell,1,smt_usb_socket
+sr-cn-usb-a-plug,USB type A plug,1696544,farnell,1,through_hole
 sr-cn-usb-b,USB type B connector,1308876,farnell,1,through_hole
 
 # LEDs

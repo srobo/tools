@@ -149,7 +149,7 @@ sr-d-gsot15,15V unidirectional single TVS diode 230W,1617684,farnell,5,sot23
 # SMPS/Linear Regs
 sr-ic-max1626,MAX1626ESA+ 5/3.3v switchmode controller,9725342,farnell,1,soic8
 sr-ic-tl494,TL494CD PWM/switchmode controller,528-129,rs,40,soic16
-sr-ic-tb62752afug,TB62752AFUG boost convertor for backlight LEDs,TB62752AFUGCT-ND,digikey,1,ssop6
+sr-ic-tb62752afug,TB62752BFUG boost convertor for backlight LEDs,TB62752BFUGCT-ND,digikey,1,ssop6
 sr-ic-ts1935,TS1935 1.6MHz Boost Converter,1476681,farnell,1,sot25
 sr-ic-ua78l05,UA78L05 5V linear voltage regulator,1236590,farnell,1,sot-89-3
 sr-ic-ld1117s50,LD1117S50TR 5V linear voltage reg 800mA,686-9379,rs,25,sot-223

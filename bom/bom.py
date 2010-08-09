@@ -141,7 +141,6 @@ class MultiBoardBom(Bom):
            else:
               board = BoardBom( self.db, arg, os.path.basename( arg ) )
               self.add_boards(board, mul)
-              mul = 1
 
     def add_boards(self, board, num):
         """Add num boards to the collection.

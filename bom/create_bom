@@ -114,6 +114,9 @@ if len(sys.argv) < 3:
     sys.exit(1)
 
 lib = parts_db.Db(bom.PARTS_DB)
+if sys.argv[-1].split('.')[-1] == "sch":
+    print "Output file has extension 'sch', aborting as this is almost certainly a mistake"
+    sys.exit(1)
 outf = open( sys.argv[-1], "w" )
 
 multibom = bom.MultiBoardBom(lib)

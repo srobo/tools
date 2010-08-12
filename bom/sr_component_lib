@@ -93,6 +93,7 @@ sr-cn-pjack,LUMBERG 2.1MM powerjack,1217037,farnell,1,through_hole
 sr-cn-fuse-20mm,20mm glass fuse holder,1162740,farnell,1,through_hole
 sr-cn-fuse-ato,ATO automotive fuse holder,1586596,farnell,1,through_hole
 sr-cn-fuse-sil,SIL fuse holder (5.08mm pitch),1437180,farnell,10,through_hole
+sr-cn-header1, 1Way header 1 row header,1756963,farnell,10,through_hole
 sr-cn-header2, 2Way header 1 row header,1248140,farnell,10,through_hole
 sr-cn-header3, 3Way header 1 row header,3418297,farnell,1,through_hole
 sr-cn-header4, 4Way header 1 row programming,3418303,farnell,1,through_hole

@@ -126,6 +126,7 @@ sr-led-red-0603,LED 0603 RED,1465988,farnell,10,0603
 sr-led-redgreen,Bi-Colour LED Red/Green,5790888,farnell,5,smt_dual_led
 sr-led-red-plcc2,LED PLCC2 RED,4134321,farnell,5,plcc2
 sr-led-yellow-plcc2,LED PLCC2 YELLOW,4134424,farnell,5,plcc2
+sr-led-ir-t1,950nm IR LED side or top,1045378,farnell,5,through-hole
 
 # Special nothing
 sr-nothing,nothing,,

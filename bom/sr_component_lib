@@ -200,6 +200,7 @@ sr-ic-ts2431,TS2431ILT 2.5V to 24V programmable voltage reference,1374139,farnel
 sr-ic-ft232rl,FT232RL USB to UART,1146032,farnell,1,ssop28
 sr-ic-dg2731dq,DG2731DQ-T1-E3 dual SPDT analogue switch,1414078,farnell,1,msop10
 sr-ic-tsop2236,IR 36KHz receiver and demodulator,4913061,farnell,1,through-hole
+sr-ic-ts555cd,555 timer 8 pin soic,1737202,farnell,1,soic8
 
 
 # FETs

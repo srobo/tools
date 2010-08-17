@@ -16,6 +16,11 @@ th {
   border-width: 2px;
 }
 </style>
+<script type="text/javascript">
+function highlight(refdes) {
+	console.log(refdes);
+}
+</script>
 </head>
 <body>
 <table style="border-style:none;border-spacing:0;">

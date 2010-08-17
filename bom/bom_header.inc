@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Student Robotics Bill of Materials%s</title>
+<title>Student Robotics Bill of Materials%(title)s</title>
 <style>
 td {
   border-style: solid none none none;

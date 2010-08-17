@@ -12,7 +12,7 @@ def html_header(f, names=None):
         title = " - "
         title = title + reduce(lambda t, n: t + ', ' + n, names)
 
-    f.write(header % title)
+    f.write(header % {'title': title})
 
 def html_footer(f):
     f.write("""

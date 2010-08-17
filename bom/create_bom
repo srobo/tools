@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os, sys, time, parts_db, bom
+import os, sys, time, parts_db, bom, geda
 
 header_file = os.path.dirname(__file__) + "/bom_header.inc"
 
@@ -92,6 +92,7 @@ if sys.argv[-1].split('.')[-1] == "sch":
 
 has_layout = False
 if sys.argv[1][0:9] == "--layout=":
+    pcb = geda.PCB(sys.argv[1][9:])
     has_layout = True
 
 outf = open( sys.argv[-1], "w" )

@@ -78,8 +78,9 @@ def wrap_order_number(onum):
         return onum
 
 if len(sys.argv) < 3:
-    print "Usage: %s SCHEMATIC(S) OUTFILE" % (os.path.basename(sys.argv[0]))
+    print "Usage: %s [--layout=LAYOUT] SCHEMATIC(S) OUTFILE" % (os.path.basename(sys.argv[0]))
     print "Where:"
+    print "	- LAYOUT is the PCB layout for a single design"
     print "	- SCHEMATIC is the schematic to read from (can be more than one)"
     print "	- OUTFILE is the output HTML file"
     sys.exit(1)
@@ -88,10 +89,15 @@ lib = parts_db.Db(bom.PARTS_DB)
 if sys.argv[-1].split('.')[-1] == "sch":
     print "Output file has extension 'sch', aborting as this is almost certainly a mistake"
     sys.exit(1)
+
+has_layout = False
+if sys.argv[1][0:9] == "--layout=":
+    has_layout = True
+
 outf = open( sys.argv[-1], "w" )
 
 multibom = bom.MultiBoardBom(lib)
-multibom.load_boards_args( sys.argv[1:-1],
+multibom.load_boards_args( sys.argv[2 if has_layout else 1:-1],
                            allow_multipliers = False )
 
 html_header(outf, map(lambda n: os.path.basename(n), sys.argv[1:-1]))

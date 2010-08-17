@@ -1,47 +1,18 @@
 #!/usr/bin/env python
 import os, sys, time, parts_db, bom
 
+header_file = os.path.dirname(__file__) + "/bom_header.inc"
+
 def html_header(f, names=None):
+    headerf = open(header_file, "r")
+    header = headerf.read()
+    headerf.close()
     title = ""
     if names != None:
         title = " - "
         title = title + reduce(lambda t, n: t + ', ' + n, names)
 
-    f.write("""<html>
-<head>
-<title>Student Robotics Bill of Materials%s</title>
-<style>
-td {
-  border-style: solid none none none;
-  border-width: 1px;
-  padding: 1px 4px;
-  border-right: 1px solid #eee;
-}
-td:last-child {
-  border-right: none;
-}
-th {
-  border-style: none none solid none;
-  border-width: 2px;
-}
-</style>
-</head>
-<body>
-<table style="border-style:none;border-spacing:0;">
-<thead>
-<tr>
-<th>&nbsp;</th>
-<th>srcode</th>
-<th>Description</th>
-<th>Package</th>
-<th>Distributer</th>
-<th>Distributor Order Number</th>
-<th>Quantity</th>
-<th>Designators</th>
-</tr>
-</thead>
-<tbody>
-""" % title)
+    f.write(header % title)
 
 def html_footer(f):
     f.write("""

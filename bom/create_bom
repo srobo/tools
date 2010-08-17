@@ -139,7 +139,8 @@ for line in lines:
     pcodes = [x[1] for x in line]
     pcodes.sort(cmp=pcode_cmp)
     pcodes = pcode_find_ranges(pcodes)
-    pcodes = ["""<a onclick="highlight('%(x)s');return false" href="#">%(x)s</a>""" %
+    if has_layout:
+        pcodes = ["""<a onclick="highlight('%(x)s');return false" href="#">%(x)s</a>""" %
               {'x': x} for x in pcodes]
     outf.write( "<td>%s</td>" % ", ".join(pcodes) )
 

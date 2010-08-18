@@ -89,7 +89,7 @@ def wrap_order_number(onum):
         return onum
 
 def convert_xy_to_json(xy):
-    parts = []
+    parts = {}
     for line in xy.split("\n"):
         if len(line) == 0 or line[0] == "#":
             continue
@@ -99,8 +99,7 @@ def convert_xy_to_json(xy):
             continue
 	x = int(float(s[3])/1000 * res)
 	y = int(float(s[4])/1000 * res)
-        parts.append({'refdes': s[0], 'value': s[2][1:-1], 'x': x, 'y': y,
-                      'side': s[6][0]})
+        parts[s[0]] = {'value': s[2][1:-1], 'x': x, 'y': y, 'side': s[6][0]}
 
     return json.dumps(parts)
 

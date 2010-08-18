@@ -17,6 +17,7 @@ th {
 }
 </style>
 <script type="text/javascript">
+%(xy)s
 function highlight(refdes) {
 	console.log(refdes);
 }

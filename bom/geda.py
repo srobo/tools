@@ -80,7 +80,7 @@ class PCB:
         self.fname = fname
 
     def __export_image(self, res, ofname):
-        p = subprocess.Popen("""pcb -x png --dpi %s --photo-mode --outfile %s %s""" %
+        p = subprocess.Popen("""pcb -x png --as-shown --layer-stack "outline,component,silk" --dpi %s --outfile %s %s""" %
                              (res, ofname, self.fname), shell=True)
         p.communicate()
         p.wait()

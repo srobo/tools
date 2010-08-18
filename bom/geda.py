@@ -85,6 +85,12 @@ class PCB:
         p.communicate()
         p.wait()
 
+    def __export_xy(self, ofname):
+        p = subprocess.Popen("""pcb -x bom --xyfile %s %s""" %
+                             (ofname, self.fname), shell=True)
+        p.communicate()
+        p.wait()
+
     def get_image(self, res):
         cache_dir = os.path.expanduser("~/.sr/cache/geda_pcbimg")
         if not os.path.exists(cache_dir):
@@ -114,3 +120,33 @@ class PCB:
         img = f.read()
         f.close()
         return img
+
+    def get_xy(self):
+        cache_dir = os.path.expanduser("~/.sr/cache/geda_pcbxy")
+        if not os.path.exists(cache_dir):
+            os.makedirs(cache_dir)
+
+        ab = os.path.abspath(self.fname)
+
+        # Generate cache filename
+        h = hashlib.sha1()
+        h.update(ab)
+        cfname = os.path.join(cache_dir, h.hexdigest())
+
+        cache_good = False
+        if os.path.exists(cfname):
+            xy_t = os.path.getmtime(ab)
+            cache_t = os.path.getmtime(cfname)
+
+            if cache_t > xy_t:
+                cache_good = True
+
+        if not cache_good:
+            self.__export_xy(cfname)
+        else:
+            print "Using cached PCB xy-data for %s" % os.path.basename(self.fname)
+
+        f = open(cfname, "r")
+        xy = f.read()
+        f.close()
+        return xy

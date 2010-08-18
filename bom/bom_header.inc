@@ -23,6 +23,7 @@ function highlight(refdes) {
 </script>
 </head>
 <body>
+%(img_tag)s
 <table style="border-style:none;border-spacing:0;">
 <thead>
 <tr>

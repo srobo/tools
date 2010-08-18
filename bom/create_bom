@@ -1,9 +1,11 @@
 #!/usr/bin/env python
-import os, sys, time, parts_db, bom, geda
+import os, sys, time, base64, parts_db, bom, geda
 
 header_file = os.path.dirname(__file__) + "/bom_header.inc"
+# Image resolution in DPI
+res = 150
 
-def html_header(f, names=None):
+def html_header(f, names=None, image=None):
     headerf = open(header_file, "r")
     header = headerf.read()
     headerf.close()
@@ -12,7 +14,12 @@ def html_header(f, names=None):
         title = " - "
         title = title + reduce(lambda t, n: t + ', ' + n, names)
 
-    f.write(header % {'title': title})
+    img_tag = ""
+    if image != None:
+        img_tag = """<img id="top" src="data:image/png;base64,%s" />""" \
+                  % base64.b64encode(image)
+
+    f.write(header % {'title': title, 'img_tag': img_tag})
 
 def html_footer(f):
     f.write("""
@@ -101,7 +108,11 @@ multibom = bom.MultiBoardBom(lib)
 multibom.load_boards_args( sys.argv[2 if has_layout else 1:-1],
                            allow_multipliers = False )
 
-html_header(outf, map(lambda n: os.path.basename(n), sys.argv[1:-1]))
+pcb_image = None
+if has_layout:
+    pcb_image = pcb.get_image(res)
+
+html_header(outf, map(lambda n: os.path.basename(n), sys.argv[1:-1]), image=pcb_image)
 
 def srcode_sort(x,y):
     return cmp(x.part["sr-code"], y.part["sr-code"])

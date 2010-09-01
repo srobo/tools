@@ -145,7 +145,7 @@ sr-d-smaj16ca,16V bidirectional TVS diode 400W,1578965,farnell,5,do-214ac(sma)
 sr-d-gsot12c,12V unidirectional dual TVS diode 312W common anode,1617678,farnell,5,sot23
 sr-d-gsot03c,3.3V unidrectional dual TVS diode 369W common anode,1617669,farnell,5,sot23
 sr-d-mmbz5v6al,3V unidirectional dual TVS diode 40W common anode,MMBZ5V6ALT1GOSCT-ND,digikey,1,sot23
-sr-d-gsot15,15V unidirectional single TVS diode 230W,1617684,farnell,5,sot23
+sr-d-gsot15,EQUIV. PESD15VS2UAT 15V unidirectional dual TVS diode 160W,8737436,farnell,5,sot23
 
 # ICs
 # SMPS/Linear Regs

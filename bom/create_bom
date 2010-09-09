@@ -15,15 +15,24 @@ def html_header(f, names=None, image=None, xy=None):
         title = title + reduce(lambda t, n: t + ', ' + n, names)
 
     img_tag = ""
+    cross_hair = ""
     if image != None:
         img_tag = """<img id="top" src="data:image/png;base64,%s" />""" \
                   % base64.b64encode(image)
+        cross_hair = """<img id="crosshair" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
+AAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADeSURB
+VFiF7ZW9DYMwEEafE6oUEUUmoWK0jJApKDINVXagT5WCiuhLYQchCrBNkBXJJ50E6Ljvyb4fI4lo
+M+YGgHSNTXGIV/+NZYAMkAGSAxQb/2/TARhzAp7js9RH5ZEU5lAKGsEgkPPBfStD88WIdxPhuXeh
+EKEAzYL415uQnMZ7G9o7fwHHlcg3cPatiWJcqcvWYgtuTRwXU2HMBajXgpPPgeRX4H8CNuHdI/Ie
+NBP+qw13GET+NTA3WxOVe3sEHfvE4neB1LtWI1YctrdhjUev7wmw2TJABsgAyQE+dlzYaD6jZ48A
+AAAASUVORK5CYII=" />"""
+
     xy_array = ""
     if xy != None:
         jsondata = convert_xy_to_json(xy)
         xy_array = """var xy = %s;""" % jsondata
 
-    f.write(header % {'title': title, 'img_tag': img_tag, 'xy': xy_array})
+    f.write(header % {'title': title, 'img_tag': img_tag, 'xy': xy_array, 'cross_hair': cross_hair})
 
 def html_footer(f):
     f.write("""

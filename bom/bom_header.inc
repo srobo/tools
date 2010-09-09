@@ -36,13 +36,7 @@ function highlight(refdes) {
 <body>
 <div id="board_image">
 %(img_tag)s
-<img id="crosshair" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
-AAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADeSURB
-VFiF7ZW9DYMwEEafE6oUEUUmoWK0jJApKDINVXagT5WCiuhLYQchCrBNkBXJJ50E6Ljvyb4fI4lo
-M+YGgHSNTXGIV/+NZYAMkAGSAxQb/2/TARhzAp7js9RH5ZEU5lAKGsEgkPPBfStD88WIdxPhuXeh
-EKEAzYL415uQnMZ7G9o7fwHHlcg3cPatiWJcqcvWYgtuTRwXU2HMBajXgpPPgeRX4H8CNuHdI/Ie
-NBP+qw13GET+NTA3WxOVe3sEHfvE4neB1LtWI1YctrdhjUev7wmw2TJABsgAyQE+dlzYaD6jZ48A
-AAAASUVORK5CYII=" />
+%(cross_hair)s
 </div>
 <table style="border-style:none;border-spacing:0;">
 <thead>

@@ -107,6 +107,7 @@ sr-cn-plug2-5a,2 way plug for sr-cn-header2-5a-ra,1098453,farnell,5,N/A
 sr-cn-idcsocket16, 16Way IDC socket with wings,1099027,farnell,1,through_hole
 sr-cn-cageclamp,1 way 2.54mm horizontal cage clamp,3041050,farnell,1,through_hole
 sr-cn-cageclamp-end,1 way 2.54mm horizontal cage clamp with endcap,3105295,farnell,1,through_hole
+sr-cn-socket4, 4Way turned pin through-hole 2.54mm pitch SIL socket,1668203,farnell,1,through_hole
 sr-cn-socket10-2mm,10 way 2mm pitch SIL socket,1109732,farnell,10,through_hole
 sr-cn-socket2x4,2x4 through-hole 2.54mm header socket,1668094,farnell,1,through_hole
 sr-cn-socket2x10-1.27mm,2x10 through-hole 1.27mm header socket,1577754,farnell,5,through_hole

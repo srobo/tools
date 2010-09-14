@@ -222,6 +222,7 @@ sr-thy-bt148w-600r,BT148W-600R 600V 1Arms thyristor,1510728,farnell,1,sot223
 # Switches
 sr-sw-4dip,4way dipswitch,9471600,farnell,1,through_hole
 sr-sw-button,Tactile Button (dont press),3801305,farnell,25,smt_tactile_switch
+sr-sw-button-12.5mm,Tactile Button with 12.5mm stem,1217772,farnell,1,smt_tactile_switch
 sr-sw-rotary-12mm-pb,12mm 24-det Rotary encoder (6mm D shaft) with push button,1520813,farnell,1,through_hole
 
 # Crystals

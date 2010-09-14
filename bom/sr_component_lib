@@ -87,7 +87,7 @@ sr-fuse-15000-ato,15A ATO automotive fuse (Blue),1586589,farnell,5,N/A
 sr-cn-camcon2w,CTB9550/2 - Camden Electronics 2way,3882391,farnell,1,through_hole
 sr-cn-camcon3w,CTB9550/3 - Camden Electronics 3way,3882408,farnell,1,through_hole
 sr-cn-minicamcon2w,CTB93HE/2 - Camden Electronics 2way 3.81mm pitch,1717071,farnell,1,through_hole
-sr-cn-battcon,"PC 4/2-G-7,62 - Pheonix Contact 2way 35A",1792928,farnell,1,through_hole
+sr-cn-battcon,"PC 4/2-G-7,62 - Pheonix Contact 2way 35A",325-4698,rs,5,through_hole
 sr-cn-rj11,RJ11 4p4c pcb socket,3938335,farnell,1,through_hole
 sr-cn-pjack,LUMBERG 2.1MM powerjack,1217037,farnell,1,through_hole
 sr-cn-fuse-20mm,20mm glass fuse holder,1162740,farnell,1,through_hole

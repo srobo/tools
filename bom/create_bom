@@ -1,47 +1,38 @@
 #!/usr/bin/env python
-import os, sys, time, parts_db, bom
+import os, sys, time, base64, json, parts_db, bom, geda
 
-def html_header(f, names=None):
+header_file = os.path.dirname(__file__) + "/bom_header.inc"
+# Image resolution in DPI
+res = 150
+
+def html_header(f, names=None, image=None, xy=None):
+    headerf = open(header_file, "r")
+    header = headerf.read()
+    headerf.close()
     title = ""
     if names != None:
         title = " - "
         title = title + reduce(lambda t, n: t + ', ' + n, names)
 
-    f.write("""<html>
-<head>
-<title>Student Robotics Bill of Materials%s</title>
-<style>
-td {
-  border-style: solid none none none;
-  border-width: 1px;
-  padding: 1px 4px;
-  border-right: 1px solid #eee;
-}
-td:last-child {
-  border-right: none;
-}
-th {
-  border-style: none none solid none;
-  border-width: 2px;
-}
-</style>
-</head>
-<body>
-<table style="border-style:none;border-spacing:0;">
-<thead>
-<tr>
-<th>&nbsp;</th>
-<th>srcode</th>
-<th>Description</th>
-<th>Package</th>
-<th>Distributer</th>
-<th>Distributor Order Number</th>
-<th>Quantity</th>
-<th>Designators</th>
-</tr>
-</thead>
-<tbody>
-""" % title)
+    img_tag = ""
+    cross_hair = ""
+    if image != None:
+        img_tag = """<img id="top" src="data:image/png;base64,%s" />""" \
+                  % base64.b64encode(image)
+        cross_hair = """<img id="crosshair" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
+AAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADeSURB
+VFiF7ZW9DYMwEEafE6oUEUUmoWK0jJApKDINVXagT5WCiuhLYQchCrBNkBXJJ50E6Ljvyb4fI4lo
+M+YGgHSNTXGIV/+NZYAMkAGSAxQb/2/TARhzAp7js9RH5ZEU5lAKGsEgkPPBfStD88WIdxPhuXeh
+EKEAzYL415uQnMZ7G9o7fwHHlcg3cPatiWJcqcvWYgtuTRwXU2HMBajXgpPPgeRX4H8CNuHdI/Ie
+NBP+qw13GET+NTA3WxOVe3sEHfvE4neB1LtWI1YctrdhjUev7wmw2TJABsgAyQE+dlzYaD6jZ48A
+AAAASUVORK5CYII=" />"""
+
+    xy_array = ""
+    if xy != None:
+        jsondata = convert_xy_to_json(xy)
+        xy_array = """var xy = %s;""" % jsondata
+
+    f.write(header % {'title': title, 'img_tag': img_tag, 'xy': xy_array, 'cross_hair': cross_hair})
 
 def html_footer(f):
     f.write("""
@@ -106,9 +97,25 @@ def wrap_order_number(onum):
     else:
         return onum
 
+def convert_xy_to_json(xy):
+    parts = {}
+    for line in xy.split("\n"):
+        if len(line) == 0 or line[0] == "#":
+            continue
+
+        s = line.split(",")
+        if len(s) != 7:
+            continue
+	x = int(float(s[3])/1000 * res)
+	y = int(float(s[4])/1000 * res)
+        parts[s[0]] = {'value': s[2][1:-1], 'x': x, 'y': y, 'side': s[6][0]}
+
+    return json.dumps(parts)
+
 if len(sys.argv) < 3:
-    print "Usage: %s SCHEMATIC(S) OUTFILE" % (os.path.basename(sys.argv[0]))
+    print "Usage: %s [--layout=LAYOUT] SCHEMATIC(S) OUTFILE" % (os.path.basename(sys.argv[0]))
     print "Where:"
+    print "	- LAYOUT is the PCB layout for a single design"
     print "	- SCHEMATIC is the schematic to read from (can be more than one)"
     print "	- OUTFILE is the output HTML file"
     sys.exit(1)
@@ -117,13 +124,25 @@ lib = parts_db.Db(bom.PARTS_DB)
 if sys.argv[-1].split('.')[-1] == "sch":
     print "Output file has extension 'sch', aborting as this is almost certainly a mistake"
     sys.exit(1)
+
+has_layout = False
+if sys.argv[1][0:9] == "--layout=":
+    pcb = geda.PCB(sys.argv[1][9:])
+    has_layout = True
+
 outf = open( sys.argv[-1], "w" )
 
 multibom = bom.MultiBoardBom(lib)
-multibom.load_boards_args( sys.argv[1:-1],
+multibom.load_boards_args( sys.argv[2 if has_layout else 1:-1],
                            allow_multipliers = False )
 
-html_header(outf, map(lambda n: os.path.basename(n), sys.argv[1:-1]))
+pcb_image = None
+pcb_xy = None
+if has_layout:
+    pcb_image = pcb.get_image(res)
+    pcb_xy = pcb.get_xy()
+
+html_header(outf, map(lambda n: os.path.basename(n), sys.argv[1:-1]), image=pcb_image, xy=pcb_xy)
 
 def srcode_sort(x,y):
     return cmp(x.part["sr-code"], y.part["sr-code"])
@@ -161,7 +180,10 @@ for line in lines:
 
     pcodes = [x[1] for x in line]
     pcodes.sort(cmp=pcode_cmp)
-    pcodes = pcode_find_ranges(pcodes)
+    #pcodes = pcode_find_ranges(pcodes)
+    if has_layout:
+        pcodes = ["""<a onmouseover="highlight('%(x)s');return false" href="#">%(x)s</a>""" %
+              {'x': x} for x in pcodes]
     outf.write( "<td>%s</td>" % ", ".join(pcodes) )
 
     outf.write("</tr>")

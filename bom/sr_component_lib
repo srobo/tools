@@ -12,15 +12,15 @@ sr-r-15,15 0603 chip resistor,9330631,farnell,50,0603
 sr-r-22,22 0603 chip resistor,1576607,farnell,50,0603
 sr-r-100,100 0603 chip resistor (100mW),1469752,farnell,50,0603
 sr-r-100-1206,100 1206 chip resistor(500mW),1576615,farnell,50,1206
-sr-r-330,330 0603 chip resistor,1469803,farnell,50,0603
+sr-r-330,330 0603 chip resistor,1117256,farnell,5000,0603
 sr-r-560,560 0603 chip resistor,9233342,farnell,50,0603
-sr-r-680-1206,680 1206 chip resistor (0.5W),1576626,farnell,50,1206
+sr-r-680-1206,680 1206 chip resistor (0.5W),1739010,farnell,50,1206
 sr-r-1k,1k 0603 chip resistor,1117234,farnell,5000,0603
 sr-r-2k4,2k4 0603 chip resistor,9330879,farnell,50,0603
 sr-r-2k7,2k7 0603 chip resistor,612534,farnell,50,0603
-sr-r-3k3,3k3 0603 chip resistor,9238549,farnell,50,0603
+sr-r-3k3,3k3 0603 chip resistor,9331026,farnell,50,0603
 sr-r-9k1,9k1 0603 chip resistor,1469842,farnell,50,0603
-sr-r-10k,10k 0603 chip resistor,1469749,farnell,50,0603
+sr-r-10k,10k 0603 chip resistor,1117235,farnell,5000,0603
 sr-r-10k5,10.5k 0603 1% chip resistor,1170890,farnell,50,0603
 sr-r-13k3,13k3 0603 1% chip resistor,1170899,farnell,50,0603
 sr-r-15k-0.1,15k 0603 0.1% chip resistor,1612042,farnell,1,0603
@@ -44,13 +44,13 @@ sr-c-10p-50v,10pF capacitor 0603 50V,1759053,farnell,100,0603
 sr-c-220p-50v,220pF capacitor 0603 50V,1759070,farnell,100,0603
 sr-c-1n,1n capacitor 0603,1759088,farnell,100,0603
 sr-c-2n2,2.2nF capacitor 0603,1759093,farnell,100,0603
-sr-c-10n,10n capacitor 0603,1301715,farnell,5,0603
+sr-c-10n,10n capacitor 0603,1759819,farnell,4000,0603
 sr-c-100n,100n capacitor 0603,1759017,farnell,100,0603
 sr-c-330n-0805,0.33u capacitor 0805,1759174,farnell,100,0805
 sr-c-470n,0.47u capacitor 0603,1759021,farnell,100,0603
 sr-c-1u,1u electrolytic capacitor,1236655,farnell,5,through_hole
 sr-c-1u-0805,1u ceramic capacitor 0805 50V,1611943,farnell,1,0805
-sr-c-2u2-0805,2u2 capacitor 0805 16V,1759424,farnell,100,0805
+sr-c-2u2-0805,2u2 capacitor 0805 16V,1759480,farnell,100,0805
 sr-c-4u7-0805-16v,4.7uF capacitor 0805 16V,1759427,farnell,100,0805
 sr-c-10u-0805,10u capacitor 0805 6.3V,1759136,farnell,100,0805
 sr-c-10u-1210-25v,10u capacitor 1210 25V,1650940,farnell,1,1210
@@ -80,7 +80,7 @@ sr-fuse-r50-1206,50mA 60V resettable fuse,507-1476-1-ND,digikey,1,1206
 sr-fuse-r100-1210,100mA 30V resettable fuse,1345917,farnell,5,1210
 sr-fuse-r200-1812,200mA 30V resettable fuse,1800746,farnell,5,1812
 sr-fuse-r250-1206,250mA 16V resettable fuse,1596990,farnell,10,1206
-sr-fuse-r1850-2920,1.85A 33V resettable fuse,1800758,farnell,5,2920
+sr-fuse-r1850-2920,1.85A 33V resettable fuse,1822228,farnell,5,2920
 sr-fuse-1000-sil,1A PCB mount SIL fuse (5.08mm pitch),1566080,farnell,5,through_hole
 sr-fuse-15000-ato,15A ATO automotive fuse (Blue),1586589,farnell,5,N/A
 
@@ -88,7 +88,7 @@ sr-fuse-15000-ato,15A ATO automotive fuse (Blue),1586589,farnell,5,N/A
 sr-cn-camcon2w,CTB9550/2 - Camden Electronics 2way,3882391,farnell,1,through_hole
 sr-cn-camcon3w,CTB9550/3 - Camden Electronics 3way,3882408,farnell,1,through_hole
 sr-cn-minicamcon2w,CTB93HE/2 - Camden Electronics 2way 3.81mm pitch,1717071,farnell,1,through_hole
-sr-cn-battcon,"PC 4/2-G-7,62 - Pheonix Contact 2way 35A",1792928,farnell,1,through_hole
+sr-cn-battcon,"PC 4/2-G-7,62 - Pheonix Contact 2way 35A",325-4698,rs,5,through_hole
 sr-cn-rj11,RJ11 4p4c pcb socket,3938335,farnell,1,through_hole
 sr-cn-pjack,LUMBERG 2.1MM powerjack,1217037,farnell,1,through_hole
 sr-cn-fuse-20mm,20mm glass fuse holder,1162740,farnell,1,through_hole
@@ -98,27 +98,30 @@ sr-cn-header1, 1Way header 1 row header,1756963,farnell,10,through_hole
 sr-cn-header2, 2Way header 1 row header,1248140,farnell,10,through_hole
 sr-cn-header3, 3Way header 1 row header,3418297,farnell,1,through_hole
 sr-cn-header4, 4Way header 1 row programming,3418303,farnell,1,through_hole
+sr-cn-header4tp, 4 Way header 1 row - turned-pin,1668577,farnell,1,through_hole
 sr-cn-header5, 5Way header 1 row pic programming,1187826,farnell,1,through_hole
 sr-cn-header8-keyed-7pin,8 way keyed ELCO header modded to have 7 pins,636563,farnell,1,through_hole
 sr-cn-header2x4,2x4 through-hole 2.54mm header,1668491,farnell,1,through_hole
 sr-cn-header2x7-smt,2x7 surface mount 2.5mm header,9689605,farnell,1,through_hole
 sr-cn-header2x7-box,2x7 through-hole 2.5mm boxed header,8395926,farnell,1,through_hole
-sr-cn-header2x10-1.27mm,2x10 through-hole 1.27mm header,1577744,farnell,5,through_hole
+sr-cn-header2x10-1.27mm,2x10 through-hole 1.27mm header,1022306,farnell,5,through_hole
 sr-cn-header2-5a-ra,2 way header right angle .156in pitch 5A,589184,farnell,5,through_hole
 sr-cn-plug2-5a,2 way plug for sr-cn-header2-5a-ra,1098453,farnell,5,N/A
 sr-cn-idcsocket16, 16Way IDC socket with wings,1099027,farnell,1,through_hole
 sr-cn-cageclamp,1 way 2.54mm horizontal cage clamp,3041050,farnell,1,through_hole
 sr-cn-cageclamp-end,1 way 2.54mm horizontal cage clamp with endcap,3105295,farnell,1,through_hole
+sr-cn-socket4, 4Way turned pin through-hole 2.54mm pitch SIL socket,1668203,farnell,1,through_hole
 sr-cn-socket10-2mm,10 way 2mm pitch SIL socket,1109732,farnell,10,through_hole
 sr-cn-socket2x4,2x4 through-hole 2.54mm header socket,1668094,farnell,1,through_hole
 sr-cn-socket2x10-1.27mm,2x10 through-hole 1.27mm header socket,1577754,farnell,5,through_hole
 sr-cn-8p8c,8P8C pcb socket,1691996,farnell,1,through_hole
-sr-cn-fpc40-0.5mm-bottom,40 pin bottom-contact FPC connector for PSP TFT,670-2632,rs,10,smt_fpc_socket
+sr-cn-fpc40-0.5mm-bottom,40 pin bottom-contact FPC connector for PSP TFT,1757130,farnell,10,smt_fpc_socket
 sr-cn-fpc4-0.5mm-bottom,4 pin bottom-contact FPC connector for PSP TFT power,673-4790,rs,10,smt_fpc_socket
 sr-cn-fpc4-0.5mm-top,4 pin top-contact FPC connector for PSP TFT power -- FCI SFV4R-2STE1LF,609-1847-1-ND,digikey,1,smt_fpc_socket
 # Alternative source for sr-cn-fpc4-0.5mm-top: RS(673-4759) but RS's stock is incorrect, and they actually
 # have the bottom contact one.
 sr-cn-usb-a,USB type A connector,1308874,farnell,1,smt_usb_socket
+sr-cn-usb-a-plug,USB type A plug,1696544,farnell,1,through_hole
 sr-cn-usb-b,USB type B connector,1308876,farnell,1,through_hole
 
 # LEDs
@@ -148,7 +151,7 @@ sr-d-smaj16ca,16V bidirectional TVS diode 400W,1578965,farnell,5,do-214ac(sma)
 sr-d-gsot12c,12V unidirectional dual TVS diode 312W common anode,1617678,farnell,5,sot23
 sr-d-gsot03c,3.3V unidrectional dual TVS diode 369W common anode,1617669,farnell,5,sot23
 sr-d-mmbz5v6al,3V unidirectional dual TVS diode 40W common anode,MMBZ5V6ALT1GOSCT-ND,digikey,1,sot23
-sr-d-gsot15,15V unidirectional single TVS diode 230W,1617684,farnell,5,sot23
+sr-d-gsot15,EQUIV. PESD15VS2UAT 15V unidirectional dual TVS diode 160W,8737436,farnell,5,sot23
 
 # ICs
 # SMPS/Linear Regs
@@ -168,12 +171,12 @@ sr-ic-lm3489,LM3489 hysteretic step-down DC/DC controller,1312570,farnell,1,msop
 
 # uC
 sr-ic-msp430f167,MSP430F167IPM microcontroller,1471271,farnell,1,tqfp64
-sr-ic-msp430f169,MSP430F169IPM 16bit mcu,619-5794,rs,1,tqfp64
+sr-ic-msp430f169,MSP430F169IPM 16bit mcu,296-17009-1-ND,digikey,1,tqfp64
 sr-ic-msp430f247,MSP430F247TPM 16bit mic,662-5100,rs,1,tqfp64
 sr-ic-msp430f2234, MSP430F2234 16bit mcu suffix: IDA,1649419,farnell,1,tssop38
 sr-ic-msp430f2254, MSP430F2254 16bit mcu suffix: IDA,1649422,farnell,1,tssop38
 sr-ic-msp430f2122, MSP430F2122 16bit mcu,1753280,farnell,1,tssop28
-sr-ic-pic10f200,PIC10F200T-I/OT 8bit mcu,1216921,farnell,1,sot-23-6
+sr-ic-pic10f200,PIC10F200T-I/OT 8bit mcu,666-8501,rs,5,sot-23-6
 
 # Logic-y
 sr-ic-74act04d, 74ACT04D HEX INVERTER SMD 74ACT04,9590323,farnell,1,soic14
@@ -195,7 +198,8 @@ sr-ic-mcp4018-103,MCP4018-103/LT 7-bit I2C digital pot,1715849,farnell,1,sc70-6
 sr-ic-at24c01,AT24C01BN-SH 1kbit I2C EEPROM,1362638,farnell,1,soic8
 sr-ic-max4069,MAX4069 - current sense amplifier,MAX4069,maxim,,
 sr-ic-ina213,INA213AIDCKT current sense amp,1754261,farnell,1,sc70-6
-sr-ic-lm2904,LM2904ST dual op-amp,1750144,farnell,1,msop8
+sr-ic-ts321,TS321CX5 single o-amp,1476668,farnell,1,sot23-5
+sr-ic-lm2904,LM2904DT dual op-amp,1564327,farnell,1,soic8
 sr-ic-lm339,LM339PT quad comparator,1750192,farnell,1,tssop14
 sr-ic-as5030,ADS5030 magnetic rotary sensor,1630797,farnell,1,tssop16
 sr-ic-ts2431,TS2431ILT 2.5V to 24V programmable voltage reference,1374139,farnell,1,sot23
@@ -211,7 +215,7 @@ sr-fet-n-sn7002w,SN7002W L6433 n-channel mosfet,1471758,farnell,1,sot323
 sr-fet-n-bsh121,BSH121 n-channel mosfet very low Vt of 1V,1758072,farnell,1,sot323
 sr-fet-n-fdd8586,FDD8586 n-channel mosfet,1324786,farnell,1,d-pak
 sr-fet-n-fdd8580,FDD8580 n-channel mosfet 35A,1324785,farnell,1,d-pak
-sr-fet-n-irf8721,IRF8721PbF n-channel mosfet,495-685,rs,10,soic8
+sr-fet-n-irf8721,IRF8721PbF n-channel mosfet,1551902,farnell,1,soic8
 sr-fet-n-irlml2030,IRLML2030TRPbF n-channel mosfet,1791568,farnell,1,sot-23
 sr-fet-n-irlr8743,IRLR8743PBF n-channel mosfet 160A,1551908,farnell,1,d-pak
 sr-fet-n-rtq020n03,fet vgs = -2.5v,1525552,farnell,1,TSMT6
@@ -228,6 +232,7 @@ sr-thy-bt148w-600r,BT148W-600R 600V 1Arms thyristor,1510728,farnell,1,sot223
 # Switches
 sr-sw-4dip,4way dipswitch,9471600,farnell,1,through_hole
 sr-sw-button,Tactile Button (dont press),3801305,farnell,25,smt_tactile_switch
+sr-sw-button-12.5mm,Tactile Button with 12.5mm stem,1217772,farnell,1,smt_tactile_switch
 sr-sw-rotary-12mm-pb,12mm 24-det Rotary encoder (6mm D shaft) with push button,1520813,farnell,1,through_hole
 
 # Crystals

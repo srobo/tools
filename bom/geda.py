@@ -72,3 +72,81 @@ class GSchem(dict):
             self[id] = value
 
         f.close()
+
+class PCB:
+    """Read in a gEDA PCB file"""
+
+    def __init__(self, fname):
+        self.fname = fname
+
+    def __export_image(self, res, ofname):
+        p = subprocess.Popen("""pcb -x png --as-shown --layer-stack "outline,component,silk" --dpi %s --outfile %s %s""" %
+                             (res, ofname, self.fname), shell=True)
+        p.communicate()
+        p.wait()
+
+    def __export_xy(self, ofname):
+        p = subprocess.Popen("""pcb -x bom --xyfile %s %s""" %
+                             (ofname, self.fname), shell=True)
+        p.communicate()
+        p.wait()
+
+    def get_image(self, res):
+        cache_dir = os.path.expanduser("~/.sr/cache/geda_pcbimg")
+        if not os.path.exists(cache_dir):
+            os.makedirs(cache_dir)
+
+        ab = os.path.abspath(self.fname)
+
+        # Generate cache filename
+        h = hashlib.sha1()
+        h.update(ab + str(res))
+        cfname = os.path.join(cache_dir, h.hexdigest())
+
+        cache_good = False
+        if os.path.exists(cfname):
+            img_t = os.path.getmtime(ab)
+            cache_t = os.path.getmtime(cfname)
+
+            if cache_t > img_t:
+                cache_good = True
+
+        if not cache_good:
+            self.__export_image(res, cfname)
+        else:
+            print "Using cached PCB image for %s" % os.path.basename(self.fname)
+
+        f = open(cfname, "r")
+        img = f.read()
+        f.close()
+        return img
+
+    def get_xy(self):
+        cache_dir = os.path.expanduser("~/.sr/cache/geda_pcbxy")
+        if not os.path.exists(cache_dir):
+            os.makedirs(cache_dir)
+
+        ab = os.path.abspath(self.fname)
+
+        # Generate cache filename
+        h = hashlib.sha1()
+        h.update(ab)
+        cfname = os.path.join(cache_dir, h.hexdigest())
+
+        cache_good = False
+        if os.path.exists(cfname):
+            xy_t = os.path.getmtime(ab)
+            cache_t = os.path.getmtime(cfname)
+
+            if cache_t > xy_t:
+                cache_good = True
+
+        if not cache_good:
+            self.__export_xy(cfname)
+        else:
+            print "Using cached PCB xy-data for %s" % os.path.basename(self.fname)
+
+        f = open(cfname, "r")
+        xy = f.read()
+        f.close()
+        return xy

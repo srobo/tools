@@ -225,6 +225,7 @@ sr-fet-p-pmv65xp,PMV65XP p-channel mosfet 20V 3.9A,1758119,farnell,1,sot-23
 sr-fet-p-si1473dh,SI1473DH-T1-E3 p-channel mostfet,1497603,farnell,1,sc70-6
 sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,1,soic-8
 sr-fet-p-nds8435a,NDS8435A p-channel mosfet,9846263,farnell,1,soic-8
+sr-fet-np-us6m1,US6M1TR n/p-channel mosfet 1A,1525602,farnell,1,tumt6
 
 # Thyristors
 sr-thy-bt148w-600r,BT148W-600R 600V 1Arms thyristor,1510728,farnell,1,sot223

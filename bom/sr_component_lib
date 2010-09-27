@@ -246,7 +246,7 @@ sr-sw-button-12.5mm,Tactile Button with 12.5mm stem,1217772,farnell,1,smt_tactil
 sr-sw-rotary-12mm-pb,12mm 24-det Rotary encoder (6mm D shaft) with push button,1520813,farnell,1,through_hole
 
 # Crystals
-sr-xtal-32k, 32kHz Crystal,1652573,farnell,1,through_hole
+sr-xtal-32k, 32kHz Crystal,1611828,farnell,1,through_hole
 sr-xtal-8m,8MHz Crystal,1611765,farnell,1,smt_crystal(hc49)
 
 # Assemblies

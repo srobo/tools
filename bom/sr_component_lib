@@ -202,7 +202,7 @@ sr-ic-txs0102,TXS0102DCT 2-bit non-inverting bi-directional level translator,595
 
 # Misc
 sr-ic-fan7380,FAN7380 dual MOSFET driver,1241880,farnell,1,soic8
-sr-ic-hcpl-817,HCPL-817-30DE Optoisolator,1244561,farnell,1,smt_optoisolator
+sr-ic-hcpl-817,HCPL-817-36BE Optoisolator,1244566,farnell,1,smt_optoisolator
 sr-ic-mcp4018-103,MCP4018-103/LT 7-bit I2C digital pot,1715849,farnell,1,sc70-6
 sr-ic-at24c01,AT24C01BN-SH 1kbit I2C EEPROM,1362638,farnell,1,soic8
 sr-ic-max4069,MAX4069 - current sense amplifier,MAX4069,maxim,,

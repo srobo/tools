@@ -76,6 +76,7 @@ sr-l-15u,18u 5.5A smt inductor,1704128,farnell,1,smt_inductor
 sr-l-22u,22u 180mA smt inductor,1711902,farnell,10,1008
 sr-l-22u-1300ma,1.3A smt inductor,1717487,farnell,5,smt_inductor
 sr-l-22u-2500ma,22u 2.5A smt inductor,1635894,farnell,1,smt_inductor
+sr-l-22u-6300ma,22u 6.3A smt inductor,1783727,farnell,1,smt_inductor
 sr-l-330u,330u 280mA smt inductor,1612678,farnell,1,smt_inductor
 
 # Ferrite Beads (value is current rating)

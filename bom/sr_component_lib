@@ -91,6 +91,7 @@ sr-fuse-r200-1812,200mA 30V resettable fuse,1800746,farnell,5,1812
 sr-fuse-r250-1206,250mA 16V resettable fuse,1596990,farnell,10,1206
 sr-fuse-r1850-2920,1.85A 33V resettable fuse,1822228,farnell,5,2920
 sr-fuse-1000-sil,1A PCB mount SIL fuse (5.08mm pitch),1566080,farnell,5,through_hole
+sr-fuse-5000-ato,5A ATO automotive fuse (Orange),1586586,farnell,5,N/A
 sr-fuse-15000-ato,15A ATO automotive fuse (Blue),1586589,farnell,5,N/A
 
 # Connectors

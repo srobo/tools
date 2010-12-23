@@ -195,6 +195,7 @@ sr-ic-pic10f200,PIC10F200T-I/OT 8bit mcu,666-8501,rs,5,sot-23-6
 sr-ic-74act04d, 74ACT04D HEX INVERTER SMD 74ACT04,9590323,farnell,1,soic14
 sr-ic-74hct04d,SN74HCT04D HEX INVERTER SMD,9591761,farnell,1,soic14
 sr-ic-74153,74153 bus multiplexer,1236217,farnell,1,soic-16
+sr-ic-74hct238,CD74HCT238PW 3-8 decoder,1752839,farnell,1,tssop16
 sr-ic-sn74lvc16t245,SN74LVC16T245DGGR 16-bit level translator,1494928,farnell,1,tssop48
 sr-ic-sn65176b,SN65176B RS-485 half duplex transceiver (5V),528-539,rs,10,soic8
 sr-ic-sn75179b,SN75179B RS-485 full duplex transceiver (5V),660-8275,rs,10,soic8

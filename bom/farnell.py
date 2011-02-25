@@ -30,7 +30,7 @@ class Item(sgmllib.SGMLParser):
         self.close()
 
     def __getData(self, partNumber):
-        page = grab_url_cached( 'http://xgoat.com/p/farnell/'+str(partNumber) )
+        page = grab_url_cached( 'https://xgoat.com/p/farnell/'+str(partNumber) )
 
         start = string.find(page, '<div class="availability">')
         if start == -1:

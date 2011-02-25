@@ -16,7 +16,7 @@ class Item:
         self.cost = []
         self.qty_range = 0
 
-        soup = BeautifulSoup(grab_url_cached('http://xgoat.com/p/digikey/'+str(partNumber)))
+        soup = BeautifulSoup(grab_url_cached('https://xgoat.com/p/digikey/'+str(partNumber)))
 
         # Extract availability
         qa_heading = soup.find(text='Quantity Available')

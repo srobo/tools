@@ -67,11 +67,11 @@ class Part(dict):
 
     def get_url(self):
         if self["supplier"] == "farnell":
-            return "http://xgoat.com/p/farnell/%s" % self["order-number"]
+            return "https://xgoat.com/p/farnell/%s" % self["order-number"]
         if self["supplier"] == "rs":
-            return "http://xgoat.com/p/rs/%s" % self["order-number"]
+            return "https://xgoat.com/p/rs/%s" % self["order-number"]
         if self["supplier"] == "digikey":
-            return "http://xgoat.com/p/digikey/%s" % self["order-number"]
+            return "https://xgoat.com/p/digikey/%s" % self["order-number"]
 
         return None
 

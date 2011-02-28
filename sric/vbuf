@@ -1,0 +1,107 @@
+#!/usr/bin/env python
+import pysric, sys
+VERSION_BUF_CMD = 0x84
+
+def read_dev_vbuf(dev):
+    "Read the versionbuf from dev"
+    d = []
+    off = 0
+
+    while True:
+        "Loop until we've received all the buffer"
+        r = dev.txrx( [VERSION_BUF_CMD, off & 0xff, (off >> 8) & 0xff] )
+        d += r
+
+        if len(r) == 0:
+            break
+        off += len(r)
+
+    return d
+
+def split_fields(buf):
+    "Split a versionbuf into its different fields"
+    l = list(buf)
+    fields = []
+
+    while len(l):
+        field_len = l[0]
+        l = l[1:]
+        fields.append( l[0:field_len] )
+        l = l[field_len:]
+    return fields
+
+def list_to_name(l):
+    return "".join(["%c" % x for x in l])
+
+def list_to_hash_str(l):
+    return "".join(["%2.2x" % x for x in l])
+
+def vbuf_dict(buf):
+    "Convert a versionbuf into a dict"
+    fields = split_fields(buf)
+    d = {}
+
+    for i in range(0, len(fields), 2):
+        key = list_to_name(fields[i])
+        val = list_to_hash_str(fields[i+1])
+        d[key] = val
+
+    return d
+
+def display_vbuf(dev, i):
+    print "%s[%i]:" % ( pysric.sric_class_strings[dev.type], i )
+    vbuf = read_dev_vbuf(dev)
+    for module, commit in vbuf_dict(vbuf).iteritems():
+        print "\t", commit, module
+
+
+if len(sys.argv) == 1:
+    p = pysric.PySric()
+
+    # All devices
+    for devclass in p.devices:
+        if devclass in [pysric.SRIC_MASTER_DEVICE,
+                        pysric.SRIC_BROADCAST,
+                        pysric.SRIC_NO_DEVICE ]:
+            continue
+
+        devs = p.devices[devclass]
+        for i in range(0,len(devs)):
+            dev = devs[i]
+            display_vbuf(dev, i)
+
+elif len(sys.argv) == 3:
+    p = pysric.PySric()
+
+    DEVNAME = sys.argv[1].upper()
+    DEVNUM = int(sys.argv[2])
+
+    DEVTYPE = None
+    for devtype, devstr in pysric.sric_class_strings.iteritems():
+        if DEVNAME == devstr:
+            DEVTYPE = devtype
+            break
+
+    if DEVTYPE == None:
+        print "Invalid device type \"%s\"" % (DEVNAME)
+        print "Valid types are:"
+        for devstr in pysric.sric_class_strings.values():
+            print "\t-",devstr
+        exit(1)
+
+    avail_devs = len(p.devices[DEVTYPE])
+    if avail_devs <= DEVNUM:
+        print "Device number %i too large -- only %i connected." % (DEVNUM, avail_devs)
+        exit(1)
+
+    display_vbuf( p.devices[DEVTYPE][DEVNUM], DEVNUM )
+
+else:
+    print "Usage:\tvbuf [DEVICE_TYPE DEVICE_NUM]"
+    print "\tReads and interprets the vbuf of a SRIC device"
+    print
+    print "\tWhen called with no arguments, will show *all* devices."
+    print "\te.g. `vbuf motor 0` will show the vbuf for motor[0]."
+    exit(1)
+
+

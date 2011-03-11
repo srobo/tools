@@ -235,7 +235,7 @@ sr-fet-n-irlml2030,IRLML2030TRPbF n-channel mosfet,1791568,farnell,1,sot-23
 sr-fet-n-irlr8743,IRLR8743PBF n-channel mosfet 160A,1551908,farnell,1,d-pak
 sr-fet-n-rtq020n03,RTQ020N03TR n-channel mosfet 1A,1525552,farnell,1,TSMT6
 sr-fet-p-mmbf2202pt1,MMBF2202PT1 p-channel mostfet 20V 300mA,1431300,farnell,1,sot323
-sr-fet-p-bss84lt1g,EQUIV BSH202 p-channel mosfet 30V 520mA,1758074,farnell,1,sot-23
+sr-fet-p-bss84lt1g,EQUIV IRLML9303 p-channel mosfet 30V 520mA,1831090,farnell,1,sot-23
 sr-fet-p-pmv65xp,PMV65XP p-channel mosfet 20V 3.9A,1758119,farnell,1,sot-23
 sr-fet-p-si1473dh,SI1473DH-T1-E3 p-channel mostfet,1497603,farnell,1,sc70-6
 sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,1,soic-8

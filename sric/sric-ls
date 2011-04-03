@@ -9,7 +9,7 @@ p = pysric.PySric()
 all_devs = []
 for devtype, devs in p.devices.iteritems():
     for dev in devs:
-        all_devs += devs
+        all_devs += [dev]
 
 all_devs.sort(cmp = cmp_dev_address)
 

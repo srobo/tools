@@ -30,3 +30,30 @@ def num_to_code(uid, pid):
     assetno = assetno + checkdigit
     assert(luhn.is_valid(assetno, alphabet_lut))
     return assetno
+
+def code_to_num(assetno):
+    """Convert an alphanumeric asset code to a uid/pid combo"""
+    assetno = str(assetno).upper()
+    if not luhn.is_valid(assetno, alphabet_lut):
+        raise Exception("""Asset code "%s" is not valid""" % assetno)
+
+    # Remove checkdigit
+    assetno = assetno[:-1]
+
+    field = [0, 0]
+    fieldno = 0
+    i = 0
+    for c in assetno:
+        if fieldno == 2:
+            raise Exception("""Error in asset code "%s", too many fields""" % assetno)
+        num = alphabet_lut.index(c)
+        print num
+        if num > 15:
+            field[fieldno] = field[fieldno] + (num-16)*(16**i)
+        else:
+            field[fieldno] = field[fieldno] + num*(16**i)
+            fieldno += 1
+            i = -1
+        i += 1
+
+    return (field[0], field[1])

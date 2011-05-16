@@ -47,7 +47,6 @@ def code_to_num(assetno):
         if fieldno == 2:
             raise Exception("""Error in asset code "%s", too many fields""" % assetno)
         num = alphabet_lut.index(c)
-        print num
         if num > 15:
             field[fieldno] = field[fieldno] + (num-16)*(16**i)
         else:

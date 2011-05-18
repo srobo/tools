@@ -74,8 +74,8 @@ if not os.path.isfile(usersfn):
 # Check that a template for the new asset exists
 templatefn = os.path.join(gitdir, ".meta", "parts", assetname)
 if not os.path.isfile(templatefn):
-    print "A template for the asset \"%s\" could not be found.\nPlease see http://srobo.org/trac/wiki/Inventory for more information" % assetname
-    sys.exit(4)
+    print "A template for the asset \"%s\" could not be found. The default template will be used." % assetname
+    templatefn = os.path.join(gitdir, ".meta", "parts", "default")
 
 # Get the git name/email of the user
 gitname = subprocess.Popen(("git", "config", "user.name"), stdout=subprocess.PIPE).communicate()[0].strip()

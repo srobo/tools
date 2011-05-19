@@ -1,52 +1,7 @@
 #!/usr/bin/env python
-import sys, os, subprocess, yaml
+import sys, os
+from inventory import *
 import assetcode
-
-def getusernumber(gitdir, user):
-    """Get the ID number of user"""
-    usersfn = os.path.join(gitdir, ".meta", "users")
-    f = open(usersfn)
-    users = yaml.load(f)
-    f.close()
-    
-    if users == None or user not in users:
-        print "Inventory user \"%s\" not found.\nPlease see http://srobo.org/trac/wiki/Inventory for more information" % user
-	sys.exit(3)
-
-    return users[user]
-
-def getpartnumbers(topd):
-    """Recursively get a list of all part numbers"""
-    parts = []
-
-    for d in os.listdir(topd):
-        if d in [".git", ".meta"]:
-            continue
-
-        path = os.path.join(topd, d)
-
-        if os.path.isdir(path):
-            parts.extend(getpartnumbers(path))
-        elif os.path.isfile(path):
-            fname = os.path.basename(path)
-            try:
-                acode = fname[fname.rindex("-sr")+3:]
-            except:
-                continue
-            parts.append(assetcode.code_to_num(acode))
-
-    return parts
-
-def getpartnumber(gitdir, userno):
-    """Get the next available part number"""
-    maxno = -1
-    # Gather all part numbers from the inventory
-    partnos = getpartnumbers(gitdir)
-    for p in partnos:
-        if p[0] == userno:
-            maxno = max(maxno, p[1])
-    return maxno+1
-
 
 if len(sys.argv) < 2:
     print "Usage: %s ASSET" % os.path.basename(sys.argv[0])
@@ -56,18 +11,9 @@ if len(sys.argv) < 2:
 
 assetname = sys.argv[1]
 
-# Find the top level of the inventory git repo
-tmp = subprocess.Popen(("git", "rev-parse", "--show-toplevel"), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-
-gitdir = tmp.communicate()[0].strip()
-
-if tmp.returncode != 0:
-    print "This command must be run in the inventory git repository."
-    sys.exit(2)
-
-usersfn = os.path.join(gitdir, ".meta", "users")
-
-if not os.path.isfile(usersfn):
+# Check we're being run in the inventory repo
+gitdir = gettoplevel()
+if not gitdir:
     print "This command must be run in the inventory git repository."
     sys.exit(2)
 
@@ -78,12 +24,9 @@ if not os.path.isfile(templatefn):
     templatefn = os.path.join(gitdir, ".meta", "parts", "default")
 
 # Get the git name/email of the user
-gitname = subprocess.Popen(("git", "config", "user.name"), stdout=subprocess.PIPE).communicate()[0].strip()
-gitemail = subprocess.Popen(("git", "config", "user.email"), stdout=subprocess.PIPE).communicate()[0].strip()
+username = getusername()
 
-invname = "%s <%s>" % (gitname, gitemail)
-
-userno = getusernumber(gitdir, invname)
+userno = getusernumber(gitdir, username)
 partno = getpartnumber(gitdir, userno)
 
 assetcd = assetcode.num_to_code(userno, partno)

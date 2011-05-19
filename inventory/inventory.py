@@ -47,6 +47,11 @@ def getpartnumbers(topd):
 
         if os.path.isdir(path):
             parts.extend(getpartnumbers(path))
+            try:
+                acode = d[d.rindex("-sr")+3:]
+            except:
+                continue
+            parts.append(assetcode.code_to_num(acode))
         elif os.path.isfile(path):
             fname = os.path.basename(path)
             try:

@@ -38,6 +38,10 @@ _sr()
 	    fwman)
 		COMPREPLY=( $(compgen -W "`sr fwman list-commands`" -- ${cur}) )
 		return 0;;
+
+	    *)
+		COMPREPLY=( $(compgen -f ${cur}) )
+		return 0;;
 	esac
     fi
 }

@@ -39,6 +39,16 @@ _sr()
 		COMPREPLY=( $(compgen -W "`sr fwman list-commands`" -- ${cur}) )
 		return 0;;
 
+	    # Inventory asset creation
+	    inv-new-asset)
+		COMPREPLY=( $(compgen -W "`sr inv-list-templates`" -- ${cur}) )
+		return 0;;
+
+	    # Inventory group creation
+	    inv-new-group)
+		COMPREPLY=( $(compgen -d ${cur}) )
+		return 0;;
+
 	    *)
 		COMPREPLY=( $(compgen -f ${cur}) )
 		return 0;;

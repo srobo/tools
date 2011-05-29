@@ -53,6 +53,11 @@ def getpartnumbers(topd):
                 continue
             parts.append(assetcode.code_to_num(acode))
         elif os.path.isfile(path):
+
+            if path[-1] == "~":
+                "Ignore temporary files from editors"
+                continue
+
             fname = os.path.basename(path)
             try:
                 acode = fname[fname.rindex("-sr")+3:]

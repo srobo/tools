@@ -17,6 +17,11 @@ if not gitdir:
     print "This command must be run in the inventory git repository."
     sys.exit(2)
 
+# Find out if there's a template for the 'info' file
+templatefn = os.path.join(gitdir, ".meta", "assemblies", dirname)
+if not os.path.isfile(templatefn):
+    templatefn = os.path.join(gitdir, ".meta", "assemblies", "default")
+
 username = getusername()
 userno = getusernumber(gitdir, username)
 partno = getpartnumber(gitdir, userno)
@@ -30,4 +35,13 @@ if os.path.isdir(dirname):
 else:
     os.mkdir(groupname)
 
-# TODO: Add 'info' file
+# Copy the group template to the group dir
+# Insert the asset code into the file while we're at it
+templatefile = open(templatefn)
+assetfile = open(os.path.join(groupname, "info"), "w")
+
+for line in templatefile:
+    assetfile.write(line.replace("[ASSET_CODE]", assetcd))
+
+templatefile.close()
+assetfile.close()

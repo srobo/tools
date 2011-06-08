@@ -35,6 +35,8 @@ if os.path.isdir(dirname):
 else:
     os.mkdir(groupname)
 
+print "Created new assembly with name \"%s\"" % groupname
+
 # Copy the group template to the group dir
 # Insert the asset code into the file while we're at it
 templatefile = open(templatefn)

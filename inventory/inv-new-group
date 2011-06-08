@@ -1,15 +1,16 @@
 #!/usr/bin/env python
-import sys, os
+import sys, os, argparse
 from inventory import *
 import assetcode
 
-if len(sys.argv) < 2:
-    print "Usage: %s DIR" % os.path.basename(sys.argv[0])
-    print "Where DIR is a directory to promote to a tracked assembly."
-    print "If DIR does not exist it will be created"
-    sys.exit(1)
+desc = "Promote a directory to a tracked assembly."
 
-dirname = sys.argv[1]
+aparser = argparse.ArgumentParser(description=desc)
+aparser.add_argument("dirname", metavar="DIR", help="The directory to promote to a tracked assembly. If it does not exist it will be created.")
+
+args = aparser.parse_args()
+
+dirname = args.dirname
 
 # Check we're being run in the inventory repo
 gitdir = gettoplevel()

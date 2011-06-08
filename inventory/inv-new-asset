@@ -32,7 +32,7 @@ partno = getpartnumber(gitdir, userno)
 assetcd = assetcode.num_to_code(userno, partno)
 assetfn = "%s-sr%s" % (assetname, assetcd)
 
-print "Created new asset with name \"%s\"" % assetfn
+print "Created new asset with name \"%s-\033[1msr%s\033[0m\"" % (assetname, assetcd)
 
 # Copy the template to the actual asset file
 # Insert the asset code into the file while we're at it

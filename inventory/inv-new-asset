@@ -1,15 +1,17 @@
 #!/usr/bin/env python
-import sys, os
+import sys, os, argparse
 from inventory import *
 import assetcode
 
-if len(sys.argv) < 2:
-    print "Usage: %s ASSET" % os.path.basename(sys.argv[0])
-    print "Create a new instance of an asset with a unique asset code."
-    print "ASSET is the name of an asset file in /.meta/parts"
-    sys.exit(1)
+desc = "Create a new instance of an asset with a unique asset code."
 
-assetname = sys.argv[1]
+aparser = argparse.ArgumentParser(description=desc)
+aparser.add_argument("-e", "--editor", action="store_true", default="False", dest="start_editor", help="Open up the newly created asset file in $EDITOR")
+aparser.add_argument("assetname", metavar="ASSET", help="The name of an asset template file in /.meta/parts.")
+
+args = aparser.parse_args()
+
+assetname = args.assetname
 
 # Check we're being run in the inventory repo
 gitdir = gettoplevel()

@@ -1,5 +1,6 @@
 import os, subprocess, yaml
 import assetcode
+import sys
 
 def gettoplevel():
     """Find the top level of the inventory repo"""

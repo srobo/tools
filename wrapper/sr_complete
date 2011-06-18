@@ -6,12 +6,14 @@ _sr()
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     opts=`sr _list_cmds`
 
-    if [[ ${COMP_CWORD} == "1" ]] ; then
+    _get_first_arg
+
+    if [ -z $arg ]; then
         COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
         return 0
-    elif [[ ${COMP_CWORD} == "2" ]] ; then
+    else
 	# Switch on the command
-	case "$prev" in
+	case $arg in
 
 	    # Repository listing
 	    cog)

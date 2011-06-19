@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+import sys, os, argparse, subprocess
+from inventory import *
+
+desc = "Replace the contents of an asset file with the contents of its corresponding template. WARNING: This command will completely overwrite an asset file, this includes the 'labelled' field."
+
+aparser = argparse.ArgumentParser(description=desc)
+aparser.add_argument("-e", "--editor", action="store_true", default=False, dest="start_editor", help="Opens up the modified asset file in $EDITOR")
+aparser.add_argument("assetfnames", metavar="ASSET", nargs="+", help="The name of an asset to synchronise with the template.")
+
+args = aparser.parse_args()
+
+# Check we're being run in the inventory repo
+gitdir = gettoplevel()
+if not gitdir:
+    print "This command must be run in the inventory git repository."
+    sys.exit(2)
+
+for assetfn in args.assetfnames:
+    assetname = assetfn[:assetfn.find("-sr")]
+    assetcd = assetfn[assetfn.find("-sr")+3:]
+    # Check that a template for the asset exists
+    templatefn = os.path.join(gitdir, ".meta", "parts", assetname)
+    if not os.path.isfile(templatefn):
+        print "A template for the asset \"%s\" could not be found. Skipping." % assetname
+        continue
+
+    templatefile = open(templatefn)
+    assetfile = open(assetfn, "w")
+
+    for line in templatefile:
+        assetfile.write(line.replace("[ASSET_CODE]", assetcd))
+
+    templatefile.close()
+    assetfile.close()
+
+    if args.start_editor:
+        subprocess.call([os.environ["EDITOR"] or "vi", assetfn])

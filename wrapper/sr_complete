@@ -55,7 +55,14 @@ _sr()
 
 	    # Inventory group creation
 	    inv-new-group)
-		COMPREPLY=( $(compgen -W "`sr inv-list-assy-templates`" -o dirnames -- ${cur}) )
+		if [[ "$cur" == -* ]]; then
+			COMPREPLY=( $(compgen -W "--help --editor --all" -- ${cur}) )
+		else
+			_count_args
+			if [ $args -eq 2 ]; then
+				COMPREPLY=( $(compgen -W "`sr inv-list-assy-templates`" -o dirnames -- ${cur}) )
+			fi
+		fi
 		return 0;;
 
 	    *)

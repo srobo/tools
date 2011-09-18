@@ -92,6 +92,15 @@ class ItemTree(object):
         self.children = {}
         self._find_children()
 
+        self.parts = {}
+        self.types = {}
+        for i in self.walk():
+            self.parts[i.code] = i
+
+            if i.name not in self.types:
+                self.types[i.name] = []
+            self.types[i.name].append(i)
+
     def _find_children(self):
         for fname in os.listdir(self.path):
             if should_ignore(fname):
@@ -126,13 +135,3 @@ class Inventory(object):
     def __init__(self, rootpath):
         self.rootpath = rootpath
         self.root = ItemTree(rootpath)
-
-        self.parts = {}
-        self.types = {}
-
-        for i in self.root.walk():
-            self.parts[i.code] = i
-
-            if i.name not in self.types:
-                self.types[i.name] = []
-            self.types[i.name].append(i)

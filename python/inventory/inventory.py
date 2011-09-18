@@ -73,7 +73,7 @@ class ItemGroup(object):
             p = os.path.join(self.path, fname)
 
             i = Item(p)
-            self.children[i.code] = p
+            self.children[i.code] = i
 
 class ItemTree(object):
     def __init__(self, path):

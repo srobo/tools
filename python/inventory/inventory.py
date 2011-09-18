@@ -26,8 +26,13 @@ class Item(object):
         # Load data from yaml file
         self.yaml = yaml.load( codecs.open(path, "r", encoding="utf-8") )
 
-        # TODO: Verify that assetcode matches filename
-
+        # Verify that assetcode matches filename
+        if self.yaml["assetcode"] != self.code:
+            print >>sys.stderr, "Code in asset filename does not match contents of file:"
+            print >>sys.stderr, "\t code in filename: '%s'" % self.code
+            print >>sys.stderr, "\t code in contents: '%s'" % self.yaml["assetcode"]
+            print >>sys.stderr, "\n\tOffending file:", self.path
+            exit(1)
 
 class ItemGroup(Item):
     "A group of items"
@@ -43,6 +48,13 @@ class ItemGroup(Item):
         # Load info from 'info' file
         self.yaml = yaml.load( codecs.open( os.path.join( path, "info" ),
                                             "r", encoding="utf-8") )
+
+        if self.yaml["assetcode"] != self.code:
+            print >>sys.stderr, "Code in group directory name does not match info file:"
+            print >>sys.stderr, "\t code in directory name: '%s'" % self.code
+            print >>sys.stderr, "\t           code in info: '%s'" % self.yaml["assetcode"]
+            print >>sys.stderr, "\n\tOffending group:", self.path
+            exit(1)
 
     def _find_children(self):
         for fname in os.listdir(self.path):

@@ -1,6 +1,9 @@
 "API for the SR inventory"
 import os, sys, re, yaml
 import assetcode, codecs
+import cPickle, hashlib
+
+CACHE_DIR = os.path.expanduser( "~/.sr/cache/inventory" )
 
 RE_GROUP = re.compile( "^(.+-assy)-sr([%s]+)$" % "".join(assetcode.alphabet_lut) )
 RE_PART = re.compile( "^(.+)-sr([%s]+)$" % "".join(assetcode.alphabet_lut) )
@@ -15,6 +18,29 @@ def should_ignore(path):
 
     return False
 
+def cached_yaml_load( path ):
+    "Load the pickled YAML file from cache"
+    path = os.path.abspath( path )
+
+    ho = hashlib.sha256()
+    ho.update( path )
+    h = ho.hexdigest()
+
+    if not os.path.exists( CACHE_DIR ):
+        os.makedirs( CACHE_DIR )
+
+    p = os.path.join( CACHE_DIR, h )
+
+    if os.path.exists( p ):
+        "Cache has file"
+        if os.path.getmtime(p) >= os.path.getmtime(path):
+            "Check that it's newer"
+            return cPickle.load( open(p, "r") )
+
+    y = yaml.load( codecs.open(path, "r", encoding="utf-8") )
+    cPickle.dump(y, open(p, "w"))
+    return y
+
 class Item(object):
     "An item in the inventory"
     def __init__(self, path):
@@ -24,7 +50,7 @@ class Item(object):
         self.code = m.group(2)
 
         # Load data from yaml file
-        self.info = yaml.load( codecs.open(path, "r", encoding="utf-8") )
+        self.info = cached_yaml_load( path )
 
         # Verify that assetcode matches filename
         if self.info["assetcode"] != self.code:
@@ -110,8 +136,7 @@ class ItemGroup(ItemTree):
         self.code = m.group(2)
 
         # Load info from 'info' file
-        self.info = yaml.load( codecs.open( os.path.join( path, "info" ),
-                                            "r", encoding="utf-8") )
+        self.info = cached_yaml_load( os.path.join( path, "info" ) )
 
         if self.info["assetcode"] != self.code:
             print >>sys.stderr, "Code in group directory name does not match info file:"

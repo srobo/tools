@@ -40,7 +40,7 @@ class Item(object):
         self.value = self.info["value"]
         self.condition = self.info["condition"]
 
-class ItemGroup(Item):
+class ItemGroup(object):
     "A group of items"
     def __init__(self, path):
         self.path = path

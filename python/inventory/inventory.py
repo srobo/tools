@@ -62,6 +62,12 @@ class ItemGroup(object):
             print >>sys.stderr, "\n\tOffending group:", self.path
             exit(1)
 
+        self.description = self.info["description"]
+        if "elements" in self.info:
+            self.elements = self.info["elements"]
+        else:
+            self.elements = []
+
     def _find_children(self):
         for fname in os.listdir(self.path):
             if should_ignore(fname):

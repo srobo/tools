@@ -88,6 +88,18 @@ class ItemTree(object):
             if hasattr(child, "code"):
                 yield child
 
+    def resolve(self, path):
+        "Resolve the given path into an object"
+
+        if path[0] == "/":
+            path = path[1:]
+
+        pos = self
+        for n in path.split("/"):
+            pos = pos.children[n]
+
+        return pos
+
 class ItemGroup(ItemTree):
     "A group of items"
     def __init__(self, path):

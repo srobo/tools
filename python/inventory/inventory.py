@@ -2,7 +2,7 @@
 import os, sys, re, yaml
 import assetcode, codecs
 
-RE_ASSY = re.compile( "^(.+)-assy-sr([%s]+)$" % "".join(assetcode.alphabet_lut) )
+RE_GROUP = re.compile( "^(.+)-assy-sr([%s]+)$" % "".join(assetcode.alphabet_lut) )
 RE_PART = re.compile( "^(.+)-sr([%s]+)$" % "".join(assetcode.alphabet_lut) )
 
 def should_ignore(path):
@@ -29,14 +29,14 @@ class Item(object):
         # TODO: Verify that assetcode matches filename
 
 
-class ItemAssembly(Item):
-    "An assembly"
+class ItemGroup(Item):
+    "A group of items"
     def __init__(self, path):
         self.path = path
         self.children = {}
         self._find_children()
 
-        m = RE_ASSY.match(os.path.basename(path))
+        m = RE_GROUP.match(os.path.basename(path))
         self.name = m.group(1)
         self.code = m.group(2)
 
@@ -76,10 +76,10 @@ class ItemTree(object):
                 self.children[i.code] = i
 
             elif os.path.isdir(p):
-                "Could either be an assembly or a collection"
+                "Could either be a group or a collection"
 
-                if RE_ASSY.match(p) != None:
-                    a = ItemAssembly(p)
+                if RE_GROUP.match(p) != None:
+                    a = ItemGroup(p)
                     self.children[a.code] = a
                 else:
                     t = ItemTree(p)

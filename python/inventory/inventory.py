@@ -24,15 +24,21 @@ class Item(object):
         self.code = m.group(2)
 
         # Load data from yaml file
-        self.yaml = yaml.load( codecs.open(path, "r", encoding="utf-8") )
+        self.info = yaml.load( codecs.open(path, "r", encoding="utf-8") )
 
         # Verify that assetcode matches filename
-        if self.yaml["assetcode"] != self.code:
+        if self.info["assetcode"] != self.code:
             print >>sys.stderr, "Code in asset filename does not match contents of file:"
             print >>sys.stderr, "\t code in filename: '%s'" % self.code
-            print >>sys.stderr, "\t code in contents: '%s'" % self.yaml["assetcode"]
+            print >>sys.stderr, "\t code in contents: '%s'" % self.info["assetcode"]
             print >>sys.stderr, "\n\tOffending file:", self.path
             exit(1)
+
+        # The mandatory properties
+        self.labelled = self.info["labelled"]
+        self.description = self.info["description"]
+        self.value = self.info["value"]
+        self.condition = self.info["condition"]
 
 class ItemGroup(Item):
     "A group of items"
@@ -46,13 +52,13 @@ class ItemGroup(Item):
         self.code = m.group(2)
 
         # Load info from 'info' file
-        self.yaml = yaml.load( codecs.open( os.path.join( path, "info" ),
+        self.info = yaml.load( codecs.open( os.path.join( path, "info" ),
                                             "r", encoding="utf-8") )
 
-        if self.yaml["assetcode"] != self.code:
+        if self.info["assetcode"] != self.code:
             print >>sys.stderr, "Code in group directory name does not match info file:"
             print >>sys.stderr, "\t code in directory name: '%s'" % self.code
-            print >>sys.stderr, "\t           code in info: '%s'" % self.yaml["assetcode"]
+            print >>sys.stderr, "\t           code in info: '%s'" % self.info["assetcode"]
             print >>sys.stderr, "\n\tOffending group:", self.path
             exit(1)
 

@@ -4,14 +4,12 @@ It provides an interface to a number of different CLI tools used by
 the SR project.
 
 The idea is that this script searches for executable files in the
-subdirectories of /tools/ in subversion and allows one to run them
-like so:
+subdirectories of /tools/ and allows one to run them like so:
  sr SCRIPT
 
 Where SCRIPT is the name of an executable file with the path
-/tools/*/SCRIPT in subversion.
+/tools/*/SCRIPT in tools.git.
 
-This script *must* be checked out along with the rest of /tools.
 See http://trac.srobo.org/wiki/DevScripts for more details."""
 import sys, os, subprocess, sr_commands
 

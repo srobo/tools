@@ -58,8 +58,10 @@ class ItemTree(object):
 
     def _find_children(self):
         for fname in os.listdir(self.path):
-            if should_ignore(fname):
+            if should_ignore(fname) or fname == "info":
+                "Ignore dotfiles and group description files"
                 continue
+
             p = os.path.join(self.path, fname)
 
             if os.path.isfile(p):
@@ -86,12 +88,10 @@ class ItemTree(object):
             if hasattr(child, "code"):
                 yield child
 
-class ItemGroup(object):
+class ItemGroup(ItemTree):
     "A group of items"
     def __init__(self, path):
-        self.path = path
-        self.children = {}
-        self._find_children()
+        ItemTree.__init__(self, path)
 
         m = RE_GROUP.match(os.path.basename(path))
         self.name = m.group(1)
@@ -113,19 +113,6 @@ class ItemGroup(object):
             self.elements = self.info["elements"]
         else:
             self.elements = []
-
-    def _find_children(self):
-        for fname in os.listdir(self.path):
-            if should_ignore(fname):
-                continue
-            if fname == "info":
-                "The info file is not a child"
-                continue
-
-            p = os.path.join(self.path, fname)
-
-            i = Item(p)
-            self.children[i.code] = i
 
     def walk(self):
         for child in self.children.values():

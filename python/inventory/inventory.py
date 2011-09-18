@@ -43,8 +43,9 @@ def cached_yaml_load( path ):
 
 class Item(object):
     "An item in the inventory"
-    def __init__(self, path):
+    def __init__(self, path, parent = None):
         self.path = path
+        self.parent = parent
         m = RE_PART.match(os.path.basename(path))
         self.name = m.group(1)
         self.code = m.group(2)
@@ -67,7 +68,7 @@ class Item(object):
         self.condition = self.info["condition"]
 
 class ItemTree(object):
-    def __init__(self, path):
+    def __init__(self, path, parent = None):
         self.name = os.path.basename(path)
         self.path = path
         self.children = {}
@@ -92,17 +93,17 @@ class ItemTree(object):
 
             if os.path.isfile(p):
                 "It's got to be an item"
-                i = Item(p)
+                i = Item(p, parent = self)
                 self.children[i.code] = i
 
             elif os.path.isdir(p):
                 "Could either be a group or a collection"
 
                 if RE_GROUP.match(p) != None:
-                    a = ItemGroup(p)
+                    a = ItemGroup(p, parent = self)
                     self.children[a.code] = a
                 else:
-                    t = ItemTree(p)
+                    t = ItemTree(p, parent = self)
                     self.children[t.name] = t
 
     def walk(self):
@@ -128,8 +129,8 @@ class ItemTree(object):
 
 class ItemGroup(ItemTree):
     "A group of items"
-    def __init__(self, path):
-        ItemTree.__init__(self, path)
+    def __init__(self, path, parent = None):
+        ItemTree.__init__(self, path, parent = parent)
 
         m = RE_GROUP.match(os.path.basename(path))
         self.name = m.group(1)

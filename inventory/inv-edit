@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+import sr.inventory as srinv
+import sr.inventory.assetcode as assetcode
+import sr.inventory.oldinv as oldinv
+import sys, os
+from subprocess import call
+
+if len(sys.argv) < 2:
+    print >>sys.stderr, "Usage: inv-edit PART_CODES"
+    exit(1)
+
+top = oldinv.gettoplevel()
+if top == None:
+    print >>sys.stderr, "Error: Must be run from within the inventory."
+    exit(1)
+inv = srinv.Inventory(top)
+
+parts = []
+for c in sys.argv[1:]:
+    code = c.upper().strip()
+    if code[0:2] == "SR":
+        code = code[2:]
+
+    try:
+        assetcode.code_to_num(code)
+    except:
+        print >>sys.stderr, "Error: %s is an invalid code." % code
+        exit(1)
+
+    try:
+        part = inv.root.parts[code]
+    except KeyError:
+        print >>sys.stderr, "Error: There is no part with code %s." % code
+        exit(1)
+
+    parts.append(part)
+
+editor = os.getenv( "EDITOR", "vi" )
+
+for part in parts:
+    r = call( "%s %s" % (editor, part.path),
+              shell = True )

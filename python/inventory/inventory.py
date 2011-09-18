@@ -120,3 +120,7 @@ class Inventory(object):
     def __init__(self, rootpath):
         self.rootpath = rootpath
         self.root = ItemTree(rootpath)
+
+        self.parts = {}
+        for i in self.root.walk():
+            self.parts[i.code] = i

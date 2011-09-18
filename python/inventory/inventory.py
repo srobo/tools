@@ -75,6 +75,10 @@ class ItemGroup(object):
             i = Item(p)
             self.children[i.code] = i
 
+    def walk(self):
+        for child in self.children.values():
+            yield child
+
 class ItemTree(object):
     def __init__(self, path):
         self.name = os.path.basename(path)
@@ -104,7 +108,13 @@ class ItemTree(object):
                     self.children[t.name] = t
 
     def walk(self):
-        pass
+        for child in self.children.values():
+            if hasattr(child, "walk"):
+                for c in child.walk():
+                    yield c
+
+            if hasattr(child, "code"):
+                yield child
 
 class Inventory(object):
     def __init__(self, rootpath):

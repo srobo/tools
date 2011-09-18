@@ -122,5 +122,11 @@ class Inventory(object):
         self.root = ItemTree(rootpath)
 
         self.parts = {}
+        self.types = {}
+
         for i in self.root.walk():
             self.parts[i.code] = i
+
+            if i.name not in self.types:
+                self.types[i.name] = []
+            self.types[i.name].append(i)

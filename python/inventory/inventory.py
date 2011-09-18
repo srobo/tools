@@ -114,10 +114,6 @@ class ItemGroup(ItemTree):
         else:
             self.elements = []
 
-    def walk(self):
-        for child in self.children.values():
-            yield child
-
 class Inventory(object):
     def __init__(self, rootpath):
         self.rootpath = rootpath

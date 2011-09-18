@@ -2,7 +2,7 @@
 import os, sys, re, yaml
 import assetcode, codecs
 
-RE_GROUP = re.compile( "^(.+)-assy-sr([%s]+)$" % "".join(assetcode.alphabet_lut) )
+RE_GROUP = re.compile( "^(.+-assy)-sr([%s]+)$" % "".join(assetcode.alphabet_lut) )
 RE_PART = re.compile( "^(.+)-sr([%s]+)$" % "".join(assetcode.alphabet_lut) )
 
 def should_ignore(path):

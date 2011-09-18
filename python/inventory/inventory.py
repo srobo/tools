@@ -40,51 +40,6 @@ class Item(object):
         self.value = self.info["value"]
         self.condition = self.info["condition"]
 
-class ItemGroup(object):
-    "A group of items"
-    def __init__(self, path):
-        self.path = path
-        self.children = {}
-        self._find_children()
-
-        m = RE_GROUP.match(os.path.basename(path))
-        self.name = m.group(1)
-        self.code = m.group(2)
-
-        # Load info from 'info' file
-        self.info = yaml.load( codecs.open( os.path.join( path, "info" ),
-                                            "r", encoding="utf-8") )
-
-        if self.info["assetcode"] != self.code:
-            print >>sys.stderr, "Code in group directory name does not match info file:"
-            print >>sys.stderr, "\t code in directory name: '%s'" % self.code
-            print >>sys.stderr, "\t           code in info: '%s'" % self.info["assetcode"]
-            print >>sys.stderr, "\n\tOffending group:", self.path
-            exit(1)
-
-        self.description = self.info["description"]
-        if "elements" in self.info:
-            self.elements = self.info["elements"]
-        else:
-            self.elements = []
-
-    def _find_children(self):
-        for fname in os.listdir(self.path):
-            if should_ignore(fname):
-                continue
-            if fname == "info":
-                "The info file is not a child"
-                continue
-
-            p = os.path.join(self.path, fname)
-
-            i = Item(p)
-            self.children[i.code] = i
-
-    def walk(self):
-        for child in self.children.values():
-            yield child
-
 class ItemTree(object):
     def __init__(self, path):
         self.name = os.path.basename(path)
@@ -130,6 +85,51 @@ class ItemTree(object):
 
             if hasattr(child, "code"):
                 yield child
+
+class ItemGroup(object):
+    "A group of items"
+    def __init__(self, path):
+        self.path = path
+        self.children = {}
+        self._find_children()
+
+        m = RE_GROUP.match(os.path.basename(path))
+        self.name = m.group(1)
+        self.code = m.group(2)
+
+        # Load info from 'info' file
+        self.info = yaml.load( codecs.open( os.path.join( path, "info" ),
+                                            "r", encoding="utf-8") )
+
+        if self.info["assetcode"] != self.code:
+            print >>sys.stderr, "Code in group directory name does not match info file:"
+            print >>sys.stderr, "\t code in directory name: '%s'" % self.code
+            print >>sys.stderr, "\t           code in info: '%s'" % self.info["assetcode"]
+            print >>sys.stderr, "\n\tOffending group:", self.path
+            exit(1)
+
+        self.description = self.info["description"]
+        if "elements" in self.info:
+            self.elements = self.info["elements"]
+        else:
+            self.elements = []
+
+    def _find_children(self):
+        for fname in os.listdir(self.path):
+            if should_ignore(fname):
+                continue
+            if fname == "info":
+                "The info file is not a child"
+                continue
+
+            p = os.path.join(self.path, fname)
+
+            i = Item(p)
+            self.children[i.code] = i
+
+    def walk(self):
+        for child in self.children.values():
+            yield child
 
 class Inventory(object):
     def __init__(self, rootpath):

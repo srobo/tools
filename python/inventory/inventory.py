@@ -147,10 +147,11 @@ class ItemGroup(ItemTree):
             exit(1)
 
         self.description = self.info["description"]
-        if "elements" in self.info:
-            self.elements = self.info["elements"]
-        else:
-            self.elements = []
+
+        if "elements" not in self.info:
+            raise Exception("Group %s lacks an elements field" % self.code)
+
+        self.elements = self.info["elements"]
 
 class Inventory(object):
     def __init__(self, rootpath):

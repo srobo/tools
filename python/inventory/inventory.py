@@ -5,7 +5,6 @@ import cPickle, hashlib
 
 CACHE_DIR = os.path.expanduser( "~/.sr/cache/inventory" )
 
-RE_GROUP = re.compile( "^(.+-assy)-sr([%s]+)$" % "".join(assetcode.alphabet_lut) )
 RE_PART = re.compile( "^(.+)-sr([%s]+)$" % "".join(assetcode.alphabet_lut) )
 
 def should_ignore(path):
@@ -99,7 +98,7 @@ class ItemTree(object):
             elif os.path.isdir(p):
                 "Could either be a group or a collection"
 
-                if RE_GROUP.match(p) != None:
+                if RE_PART.match(p) != None:
                     a = ItemGroup(p, parent = self)
                     self.children[a.code] = a
                 else:
@@ -132,7 +131,7 @@ class ItemGroup(ItemTree):
     def __init__(self, path, parent = None):
         ItemTree.__init__(self, path, parent = parent)
 
-        m = RE_GROUP.match(os.path.basename(path))
+        m = RE_PART.match(os.path.basename(path))
         self.name = m.group(1)
         self.code = m.group(2)
 

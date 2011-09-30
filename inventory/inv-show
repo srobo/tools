@@ -1,0 +1,29 @@
+#!/bin/sh
+if [ -z "$1" ]
+then
+	echo "Usage: sr `basename \"$0\"` PART_ID"
+	exit 1
+fi
+
+names=`find -iname *$1*`
+
+if [ -z "$names" ]
+then
+	echo "Part '$1' doesn't exist!"
+	exit 2
+fi
+
+fname=`echo "$names" | head --lines=1`
+
+if [ "$fname" != "$names" ]
+then
+	echo "Found:"
+	for name in $names; do echo $name; done
+	echo "Part '$1' not unique!"
+	exit 3
+fi
+
+echo "Ful name: $fname"
+cat "$fname"
+git log "$fname"
+

@@ -61,10 +61,14 @@ class Item(object):
             exit(1)
 
         # The mandatory properties
-        self.labelled = self.info["labelled"]
-        self.description = self.info["description"]
-        self.value = self.info["value"]
-        self.condition = self.info["condition"]
+        mand = ["labelled", "description", "value", "condition"]
+
+        for pname in mand:
+            try:
+                setattr( self, pname, self.info[pname] )
+            except KeyError:
+                raise Exception( "Part sr{0} is missing '{1}' property".format( self.code,
+                                                                                pname ) )
 
 class ItemTree(object):
     def __init__(self, path, parent = None):

@@ -31,5 +31,8 @@ def main():
         print "Run `git config --global user.email your@email.com`"
         sys.exit(1)
 
+
+    print "Your git is correctly configured :)"
+
 if __name__ == "__main__":
     main()

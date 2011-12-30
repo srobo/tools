@@ -1,0 +1,13 @@
+#!/bin/env python
+import sr.teamgit as T
+import os, sys
+
+if len(sys.argv) < 2:
+    print "Usage: cog-team TEAMNO"
+    exit(1)
+TEAM = int(sys.argv[1])
+
+team = T.Team(TEAM)
+
+for repo in team.list_repos():
+    print repo

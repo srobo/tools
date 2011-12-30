@@ -1,0 +1,32 @@
+#!/bin/env python
+import sr.teamgit as T
+import os, sys, subprocess
+
+if len(sys.argv) not in [3,4]:
+    print "Usage: cog-team TEAMNO REPOS [DIR]"
+    exit(1)
+
+TEAMNO = int(sys.argv[1])
+REPOS = sys.argv[2]
+if len(sys.argv) == 4:
+    DIR = sys.argv[3]
+else:
+    DIR = None
+
+args = [ "git", "clone" ]
+
+args.append( "{server}:{reporoot}/{team}/master/{repo}".format(
+        server = T.SERVER,
+        reporoot = T.REPOROOT,
+        team = str(TEAMNO),
+        repo = REPOS ) )
+
+if DIR != None:
+    args.append( DIR )
+
+print args
+
+p = subprocess.Popen( args )
+assert p.wait() == 0
+
+

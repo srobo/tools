@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+
+import json
+import sys
+import urllib2
+
+baseURL = 'https://www.studentrobotics.org/.git/'
+quiet = False
+
+def fetch(url):
+	page = urllib2.urlopen(url)
+	data = page.read()
+
+	if data is None:
+		print "Failed to download from '%s'." % url
+		exit(1)
+
+	return data
+
+if len(sys.argv) == 2 and sys.argv in ['-q', '--quiet']:
+	quiet = True
+
+url = baseURL + "HEAD"
+data = fetch(url).strip()
+
+refBase = "ref: "
+
+# it's a hash
+if data[:len(refBase)] != refBase:
+	print data[:9]
+	exit(0)
+
+ref = data[len(refBase):]
+if not quiet:
+	print "On: " + ref
+
+url = baseURL + ref
+data = fetch(url).strip()
+
+print data

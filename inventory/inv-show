@@ -23,7 +23,7 @@ then
 	exit 3
 fi
 
-echo "Ful name: $fname"
+echo "Full name: $fname"
 cat "$fname"
 git log "$fname"
 

@@ -24,6 +24,11 @@ then
 fi
 
 echo "Full name: $fname"
-cat "$fname"
+if [ -d "$fname" ]	# assemblies are directories
+then
+	cat "$fname"/info
+else
+	cat "$fname"
+fi
 git log "$fname"
 

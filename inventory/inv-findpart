@@ -2,11 +2,14 @@
 import sr.inventory as srinv
 import sr.inventory.assetcode as assetcode
 import sr.inventory.oldinv as oldinv
-import sys, os
+import sys, os, argparse
 
-if len(sys.argv) < 2:
-    print >>sys.stderr, "Usage: inv-findpath PART_CODE[S]"
-    exit(1)
+desc = "Find the location of a specific item in the inventory."
+
+aparser = argparse.ArgumentParser(description=desc)
+aparser.add_argument("partcodes", metavar="PART_CODE", nargs="+", help="The SR asset code of the item to find.")
+
+args = aparser.parse_args()
 
 top = oldinv.gettoplevel()
 if top == None:
@@ -15,7 +18,7 @@ if top == None:
 inv = srinv.Inventory(top)
 
 parts = []
-for c in sys.argv[1:]:
+for c in args.partcodes:
     code = c.upper().strip()
     if code[0:2] == "SR":
         code = code[2:]

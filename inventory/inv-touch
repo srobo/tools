@@ -4,6 +4,7 @@ import sys, os, re
 if len(sys.argv) < 2:
     print "Usage: %s ASSET" % os.path.basename(sys.argv[0])
     print "Increment the 'revision' field of an asset/assembly"
+    exit(1)
 
 assetname = sys.argv[1]
 

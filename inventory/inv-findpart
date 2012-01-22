@@ -4,10 +4,13 @@ import sr.inventory.assetcode as assetcode
 import sr.inventory.oldinv as oldinv
 import sys, os, argparse
 
+ASSET_CODE = 0
+PART_TYPE = 1
+
 desc = "Find the location of a specific item in the inventory."
 
 aparser = argparse.ArgumentParser(description=desc)
-aparser.add_argument("partcodes", metavar="PART_CODE", nargs="+", help="The SR asset code of the item to find.")
+aparser.add_argument("itemspecs", metavar="ITEM_SPEC", nargs="+", help="Either an SR asset code or part type. The nature of the specifier is auto-detected and asset codes/part types can be mixed.")
 
 args = aparser.parse_args()
 
@@ -18,24 +21,36 @@ if top == None:
 inv = srinv.Inventory(top)
 
 parts = []
-for c in args.partcodes:
+spec_type = ASSET_CODE
+for c in args.itemspecs:
     code = c.upper().strip()
     if code[0:2] == "SR":
         code = code[2:]
 
     try:
         assetcode.code_to_num(code)
+        spec_type = ASSET_CODE
     except:
-        print >>sys.stderr, "Error: %s is an invalid code." % code
-        exit(1)
+        if c in inv.root.types:
+            spec_type = PART_TYPE
+        else:
+            print >>sys.stderr, "Error: %s is an invalid asset code or part type." % c
+            exit(1)
 
-    try:
-        part = inv.root.parts[code]
-    except KeyError:
-        print >>sys.stderr, "Error: There is no part with code %s." % code
-        exit(1)
+    if spec_type == ASSET_CODE:
+        try:
+            part = inv.root.parts[code]
+        except KeyError:
+            print >>sys.stderr, "Error: There is no part with code %s." % code
+            exit(1)
 
-    parts.append(part)
+        parts.append(part)
+    else:
+        try:
+            parts.extend(inv.root.types[c])
+        except:
+            print >>sys.stderr, "Error: There is no part type %s." % c
+            exit(1)
 
 for part in parts:
     print part.path

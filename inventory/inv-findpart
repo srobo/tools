@@ -60,7 +60,7 @@ for c in args.itemspecs:
 
 stat_colour = ""
 for part in parts:
-    if args.asset_stat:
+    if args.asset_stat and hasattr(part, "condition"):
         if part.condition == "broken":
             stat_colour = COLOUR_RED
         elif part.condition == "unknown":

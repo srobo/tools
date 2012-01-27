@@ -65,6 +65,18 @@ _sr()
 		fi
 		return 0;;
 
+            # Inventory searching
+	    inv-findpart)
+		if [[ "$cur" == -* ]]; then
+			COMPREPLY=( $(compgen -W "--help --stat" -- ${cur}) )
+		else
+			_count_args
+			if [ $args -eq 2 ]; then
+				COMPREPLY=( $(compgen -W "`sr inv-list-templates` `sr inv-list-assy-templates`" -- ${cur}) )
+			fi
+		fi
+		return 0;;
+
 	    *)
 		COMPREPLY=( $(compgen -f ${cur}) )
 		return 0;;

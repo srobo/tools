@@ -16,6 +16,7 @@ desc = "Find the location of a specific item in the inventory."
 
 aparser = argparse.ArgumentParser(description=desc)
 aparser.add_argument("-s", "--stat", action="store_true", default=False, dest="asset_stat", help="Show the status of each asset listed based upon the 'condition' field.")
+aparser.add_argument("-r", "--relpath", action="store_true", default=False, dest="relpath", help="Print relative, rather than absolute, paths.")
 aparser.add_argument("itemspecs", metavar="ITEM_SPEC", nargs="+", help="Either an SR asset code or part type. The nature of the specifier is auto-detected and asset codes/part types can be mixed.")
 
 args = aparser.parse_args()
@@ -59,7 +60,13 @@ for c in args.itemspecs:
             exit(1)
 
 stat_colour = ""
+path = ""
 for part in parts:
+    if args.relpath:
+        path = os.path.relpath(part.path)
+    else:
+        path = part.path
+
     if args.asset_stat and hasattr(part, "condition"):
         if part.condition == "broken":
             stat_colour = COLOUR_RED
@@ -67,6 +74,6 @@ for part in parts:
             stat_colour = COLOUR_YELLOW
         elif part.condition == "working":
             stat_colour = COLOUR_GREEN
-        print part.path, stat_colour, part.condition, COLOUR_RESET
+        print path, stat_colour, part.condition, COLOUR_RESET
     else:
-        print part.path
+        print path

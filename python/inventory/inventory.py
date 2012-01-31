@@ -74,6 +74,7 @@ class ItemTree(object):
     def __init__(self, path, parent = None):
         self.name = os.path.basename(path)
         self.path = path
+        self.parent = parent
         self.children = {}
         self._find_children()
 

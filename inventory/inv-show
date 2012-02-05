@@ -23,12 +23,16 @@ then
 	exit 3
 fi
 
-echo "Full name: $fname"
-if [ -d "$fname" ]	# assemblies are directories
-then
-	cat "$fname"/info
-else
-	cat "$fname"
-fi
-git log "$fname"
+details()
+{
+	echo "Full name: $fname"
+	if [ -d "$fname" ]	# assemblies are directories
+	then
+		cat "$fname"/info
+	else
+		cat "$fname"
+	fi
+	git --no-pager log --follow -C -M  "$fname"
+}
 
+details | less -F

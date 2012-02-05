@@ -24,8 +24,6 @@ args.append( "{server}:{reporoot}/{team}/master/{repo}".format(
 if DIR != None:
     args.append( DIR )
 
-print args
-
 p = subprocess.Popen( args )
 assert p.wait() == 0
 

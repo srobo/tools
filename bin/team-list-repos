@@ -1,13 +1,31 @@
 #!/bin/env python
 import sr.teamgit as T
-import os, sys
+import os, sys, argparse
+from datetime import datetime
 
-if len(sys.argv) < 2:
-    print "Usage: cog-team TEAMNO"
-    exit(1)
-TEAM = int(sys.argv[1])
+parser = argparse.ArgumentParser( description = "List team repositories.")
 
-team = T.Team(TEAM)
+parser.add_argument( "teamno", metavar = "TEAM_NO", type=int,
+                     help = "Team number" )
+parser.add_argument( "-t", "--timesort", action = "store_true", default = False,
+                     help = "Sort by the time of the latest commit" )
 
-for repo in team.list_repos():
-    print repo
+
+args = parser.parse_args()
+team = T.Team( args.teamno )
+
+if not args.timesort:
+    for repo in team.repos:
+        print repo
+
+else:
+    repos = [(x.get_modtime(), x) for x in team.repos]
+
+    def sort(x,y):
+        return cmp( x[0], y[0] )
+
+    repos.sort( cmp = sort )
+    repos.reverse()
+
+    for modtime, repo in repos:
+        print datetime.fromtimestamp(modtime), repo

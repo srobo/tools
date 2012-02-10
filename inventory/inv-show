@@ -23,6 +23,21 @@ then
 	exit 3
 fi
 
+git_log_colour()
+{
+	ui=$(git config --get color.ui)
+	if [ -n "$ui"  -a  "$ui" != "false"  ]
+	then
+		echo "--color"
+	else
+		diff=$(git config --get color.diff)
+		if [ -n "$diff" -a "$diff" != "false" ]
+		then
+			echo "--color"
+		fi
+	fi
+}
+
 details()
 {
 	echo "Full name: $fname"
@@ -32,7 +47,8 @@ details()
 	else
 		cat "$fname"
 	fi
-	git --no-pager log --follow -C -M  "$fname"
+	colour=$(git_log_colour)
+	git --no-pager log $colour --follow -C -M  "$fname"
 }
 
-details | less -F -X
+details | less -R -F -X

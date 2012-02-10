@@ -35,4 +35,4 @@ details()
 	git --no-pager log --follow -C -M  "$fname"
 }
 
-details | less -F
+details | less -F -X

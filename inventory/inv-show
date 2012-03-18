@@ -5,7 +5,34 @@ then
 	exit 1
 fi
 
-names=`find -iname *$1*`
+# Mimic the pythong implementation of gettoplevel
+# Figures out if we're in an inventory clone or not
+getTopLeve()
+{
+	top=`git rev-parse --show-toplevel 2>/dev/null`
+	if [ $? -ne 0 ]
+	then
+		return 1
+	fi
+
+	usersFile="$top/.meta/users"
+	if [ ! -f "$usersFile" ]
+	then
+		return 1
+	fi
+
+	echo $top
+	return 0
+}
+
+top=$(getTopLeve)
+if [ $? -ne 0 ]
+then
+	echo "This command must be run in the inventory git repository."
+	exit 4
+fi
+
+names=`find "$top" -iname *$1*`
 
 if [ -z "$names" ]
 then

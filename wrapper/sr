@@ -15,7 +15,7 @@ import sys, os, subprocess, sr_commands
 import sitepackage
 sitepackage.check_installed()
 
-TOOLS = os.path.join( sys.path[0], "../" )
+TOOLS = os.path.join( sys.path[0], ".." )
 
 cmds = sr_commands.get_dict(TOOLS)
 

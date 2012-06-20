@@ -91,12 +91,12 @@ def load_budget(root):
     tree = BudgetTree("sr")
 
     for dirpath, dirnames, filenames in os.walk(root):
-        try:
-            dirnames.remove(".git")
-            dirnames.remove(".meta")
-        except ValueError:
-            "Those directories will not always be there"
-            pass
+        for d in [".git", ".meta"]:
+            try:
+                dirnames.remove(d)
+            except ValueError:
+                "Those directories will not always be there"
+                pass
 
         for fname in filenames:
             fullp = os.path.abspath( os.path.join(dirpath, fname) )

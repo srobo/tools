@@ -53,3 +53,39 @@ def diff_trees( a, b ):
 
     return changes
 
+def incr_tree( changes ):
+    "Convert a list of changes into a tree"
+
+    tree = budget.BudgetTree("sr")
+
+    for c in changes:
+        item = None
+
+        if isinstance( c, AddedItem):
+            item = c.a
+
+        elif isinstance( c, ChangedItem ):
+            # Only pay attention if the cost increased
+            if c.a.cost >= c.b.cost:
+                continue
+
+            # Craft a new item that only describes the increase in cost
+            item = budget.BudgetItem( c.a.name,
+                                      c.a.fname,
+                                      c.a.conf )
+            item.cost = c.b.cost - c.a.cost
+
+        else:
+            continue
+
+        r = tree
+
+        for d in item.name.split("/")[:-1]:
+            if d not in r.children:
+                r.add_child( budget.BudgetTree(d) )
+
+            r = r.children[d]
+
+        r.add_child( item )
+
+    return tree

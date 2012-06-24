@@ -3,8 +3,9 @@ import yaml, sympy, os, sys, logging
 from decimal import Decimal as D
 
 class BudgetItem(object):
-    def __init__(self, name, fname, conf):
+    def __init__(self, name, fname, conf ):
         self.fname = fname
+        self.conf = conf
         y = yaml.load( open(fname, "r") )
 
         if False in [x in y for x in ["cost", "summary", "description"]]:

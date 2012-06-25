@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import sr.budget as budget
+import sys, yaml
+from decimal import Decimal as D
+
+b = budget.load_budget( "./" )
+funds_in = yaml.load( open( "funds-in.yaml", "r" ) )
+
+total_in = D(0)
+
+for i in funds_in["incoming"]:
+    # Convert to str to avoid some rounding issues!
+    total_in += D( str(i["amount"]) )
+
+MAX = total_in
+t = b.total()
+
+if t > MAX:
+    print >> sys.stderr, "Fail: Budget is £%s too high" % (t - MAX)
+    exit (1)
+
+print "OK:",
+if t == MAX:
+    print "Budget is at maximum."
+else:
+    print "Budget is £%s below maximum." % (MAX-t)

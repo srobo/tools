@@ -87,6 +87,7 @@ class BudgetConfig(object):
 def load_budget(root):
     root = os.path.abspath(root)
     config_path = os.path.join( root, "config.yaml" )
+    funds_in_path = os.path.join( root, "funds-in.yaml" )
     conf = BudgetConfig( config_path )
     budget = []
     tree = BudgetTree("sr")
@@ -101,8 +102,8 @@ def load_budget(root):
 
         for fname in filenames:
             fullp = os.path.abspath( os.path.join(dirpath, fname) )
-            if fullp == config_path:
-                "The config file is a yaml file, but not a budget item"
+            if fullp in [config_path, funds_in_path]:
+                "These files are yaml files, but not budget items"
                 continue
 
             if fname[-5:] != ".yaml":

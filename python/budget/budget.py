@@ -1,6 +1,8 @@
 "Library for accessing the budget files"
 import yaml, sympy, os, sys, logging
 from decimal import Decimal as D
+import sys, tempfile
+from subprocess import check_call
 
 class BudgetItem(object):
     def __init__(self, name, fname, conf ):
@@ -120,3 +122,25 @@ def load_budget(root):
 
             r.add_child( BudgetItem(name, fullp, conf) )
     return tree
+
+class TmpBudgetExport(object):
+    def __init__(self, root, rev):
+        self.rev = rev
+        self.tmpdir = tempfile.mkdtemp()
+
+        self._export( root, rev, self.tmpdir )
+        self.btree = load_budget( self.tmpdir )
+
+    def _export(self, root, rev, path):
+        check_call( "git archive {0} | tar -x -C {1}".format( rev, path ),
+                    cwd = root,
+                    shell = True )
+
+    def __del__(self):
+        import shutil
+        shutil.rmtree(self.tmpdir)
+
+def load_budget_rev( root, rev ):
+    "Load a named revision of the budget"
+    t = TmpBudgetExport( root, rev )
+    return t.btree

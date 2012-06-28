@@ -1,6 +1,6 @@
 "Functions for diffing BudgetTrees"
 import budget
-import sys, subprocess, tempfile, shutil
+import sys, subprocess, tempfile, shutil, os
 from subprocess import check_call
 
 class AddedItem(object):
@@ -34,7 +34,6 @@ def diff_trees( a, b ):
     changes = []
 
     for ai in a_items.values():
-
         if ai.name in b_items:
             # Features in both trees
             bi = b_items[ai.name]
@@ -53,7 +52,7 @@ def diff_trees( a, b ):
 
     return changes
 
-def incr_tree( changes ):
+def changes_to_tree( changes ):
     "Convert a list of changes into a tree"
 
     tree = budget.BudgetTree("sr")
@@ -65,26 +64,55 @@ def incr_tree( changes ):
             item = c.a
 
         elif isinstance( c, ChangedItem ):
-            # Only pay attention if the cost increased
-            if c.a.cost >= c.b.cost:
-                continue
-
-            # Craft a new item that only describes the increase in cost
+            # Craft a new item that describes the change in cost
             item = budget.BudgetItem( c.a.name,
                                       c.a.fname,
                                       c.a.conf )
             item.cost = c.b.cost - c.a.cost
 
+        elif isinstance( c, RemovedItem ):
+            # Craft a new item that describes the reduction in cost
+
+            item = budget.BudgetItem( c.a.name,
+                                      c.a.fname,
+                                      c.a.conf )
+            item.cost *= -1
+
         else:
-            continue
+            raise Exception("Unsupported object type in change list")
+
+        def fudge_parent(parents, name):
+            "Fudge a directory name in because there were two..."
+            name = "{0}.d".format( name )
+            if name in parents[-1].children:
+                res = parents[-1].children[name]
+            else:
+                res = budget.BudgetTree( name )
+                parents[-1].add_child(res)
+
+            return res
 
         r = tree
+        parents = []
 
         for d in item.name.split("/")[:-1]:
+
+            if not hasattr( r, "children" ):
+                "It's not a directory -- add a directory at the same level with '.d' on the end"
+                r = fudge_parent( parents, d )
+
             if d not in r.children:
                 r.add_child( budget.BudgetTree(d) )
 
+            parents.append(r)
             r = r.children[d]
+
+        if not isinstance( r, budget.BudgetTree ):
+            "Need to fudge a directory in"
+            r = fudge_parent( parents, os.path.basename(r.name) )
+
+        if os.path.basename(item.name) in r.children:
+            raise Exception("Unsupported situation!")
 
         r.add_child( item )
 

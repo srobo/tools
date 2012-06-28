@@ -140,7 +140,11 @@ class TmpBudgetExport(object):
         import shutil
         shutil.rmtree(self.tmpdir)
 
-def load_budget_rev( root, rev ):
+def load_budget_rev( root, rev, keep_around = False ):
     "Load a named revision of the budget"
     t = TmpBudgetExport( root, rev )
-    return t.btree
+
+    if not keep_around:
+        return t.btree
+
+    return t.btree, t

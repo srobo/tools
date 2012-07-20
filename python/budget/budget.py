@@ -4,11 +4,16 @@ from decimal import Decimal as D
 import sys, tempfile
 from subprocess import check_call
 
+try:
+    from yaml import CLoader as YAML_Loader
+except ImportError:
+    from yaml import Loader as YAML_Loader
+
 class BudgetItem(object):
     def __init__(self, name, fname, conf ):
         self.fname = fname
         self.conf = conf
-        y = yaml.load( open(fname, "r") )
+        y = yaml.load( open(fname, "r"), Loader = YAML_Loader )
 
         if False in [x in y for x in ["cost", "summary", "description"]]:
             print >>sys.stderr, "Error: %s does not match schema." % fname
@@ -71,7 +76,7 @@ class BudgetTree(object):
 
 class BudgetConfig(object):
     def __init__(self, fname):
-        y = yaml.load( open(fname, "r") )
+        y = yaml.load( open(fname, "r"), Loader = YAML_Loader )
 
         if "vars" not in y:
             raise Exception("No variables declaration section in config")

@@ -3,6 +3,11 @@ import os, sys, re, yaml
 import assetcode, codecs
 import cPickle, hashlib
 
+try:
+    from yaml import CLoader as YAML_Loader
+except ImportError:
+    from yaml import Loader as YAML_Loader
+
 CACHE_DIR = os.path.expanduser( "~/.sr/cache/inventory" )
 
 RE_PART = re.compile( "^(.+)-sr([%s]+)$" % "".join(assetcode.alphabet_lut) )
@@ -36,7 +41,8 @@ def cached_yaml_load( path ):
             "Check that it's newer"
             return cPickle.load( open(p, "r") )
 
-    y = yaml.load( codecs.open(path, "r", encoding="utf-8") )
+    y = yaml.load( codecs.open(path, "r", encoding="utf-8"),
+                   Loader = YAML_Loader )
     cPickle.dump(y, open(p, "w"))
     return y
 

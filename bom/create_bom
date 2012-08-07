@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-import os, sys, time, base64, json, parts_db, bom, geda
+import sr.bom.parts_db as parts_db
+import sr.bom.bom as bom
+import sr.bom.geda as geda
+import os, sys, time, base64, json
 
 header_file = os.path.dirname(__file__) + "/bom_header.inc"
 # Image resolution in DPI

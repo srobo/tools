@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-import os, sys, parts_db, bom, schem
+import sr.bom.bom as bom
+import sr.bom.schem as schem
+import sr.bom.parts_db as parts_db
+import os, sys
 
 if len(sys.argv) < 2:
     print "Usage: %s SCHEMATIC" % os.path.basename(sys.argv[0])

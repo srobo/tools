@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # Export gerber from a board
-import sys, os, shutil, ConfigParser, subprocess, eagle, geda
+import sr.bom.eagle as eagle
+import sr.bom.geda as geda
+import sys, os, shutil, ConfigParser, subprocess
 OUTPUT_DIR = "./gerbers"
 
 FORMAT_RS274X = 1

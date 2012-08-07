@@ -129,7 +129,7 @@ sr-cn-socket2x10-1.27mm,2x10 through-hole 1.27mm header socket,1577754,farnell,5
 sr-cn-8p8c,8P8C pcb socket,1691996,farnell,1,through_hole
 sr-cn-fpc40-0.5mm-bottom,40 pin bottom-contact FPC connector for PSP TFT,1757130,farnell,10,smt_fpc_socket
 sr-cn-fpc4-0.5mm-bottom,4 pin bottom-contact FPC connector for PSP TFT power,673-4790,rs,10,smt_fpc_socket
-sr-cn-fpc4-0.5mm-top,4 pin top-contact FPC connector for PSP TFT power -- FCI SFV4R-2STE1LF,609-1847-1-ND,digikey,1,smt_fpc_socket
+sr-cn-fpc4-0.5mm-top,4 pin top-contact FPC connector for PSP TFT power -- FCI SFV4R-2STE1HLF,609-4329-1-ND,digikey,1,smt_fpc_socket
 # Alternative source for sr-cn-fpc4-0.5mm-top: RS(673-4759) but RS's stock is incorrect, and they actually
 # have the bottom contact one.
 sr-cn-usb-a,USB type A connector,1308874,farnell,1,smt_usb_socket

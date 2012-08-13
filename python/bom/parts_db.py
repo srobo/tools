@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Student Robotics parts database access library"""
 import csv, farnell, rs, digikey, os, sys
 

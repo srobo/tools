@@ -76,42 +76,23 @@ class Part(dict):
         return None
 
     def __load_data(self):
-        if self["supplier"] == "farnell":
-            f = farnell.Item( self["order-number"] )
-            self.stock = f.avail
-            # Minimum order
-            self.min_order = f.min_order
-            # How many *components* per item
-            # e.g. for an item that's a 5000 component reel of things, this 
-            #      is 5000.  This means when asking the distributor for one of 
-            #      part "XXXXX", they send a reel of 5000 components.
-            self.dist_unit = f.price_for
-            # Smallest quantity increment
-            self.increments = f.multi
+        o = None
 
-            # List of prices -- contains 2-entry tuples
-            self.prices = f.prices
+        if self["supplier"] == "farnell":
+            o = farnell.Item( self["order-number"] )
         elif self["supplier"] == "rs":
-            r = rs.Item( self["order-number"] )
-            if r.avail != None:
-                # RS don't tell us how much they have :(
-                self.stock = 0
-            else:
-                self.stock = None
-            self.min_order = r.min_order
-            self.dist_unit = r.price_for
-            self.increments = r.multi
-            self.prices = r.prices
+            o = rs.Item( self["order-number"] )
         elif self["supplier"] == "digikey":
-            d = digikey.Item( self["order-number"] )
-            self.stock = d.avail
-            self.min_order = d.min_order
-            self.dist_unit = d.price_for
-            self.increments = d.multi
-            self.prices = d.prices
+            o = digikey.Item( self["order-number"] )
         else:
             self.stock = None
             return
+
+        self.stock = o.avail
+        self.min_order = o.min_order
+        self.dist_unit = o.price_for
+        self.increments = o.multi
+        self.prices = o.prices
 
         self.loaded = True
 

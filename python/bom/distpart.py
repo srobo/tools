@@ -39,28 +39,37 @@ class DistItem(object):
         print "\tStock:",
         if self.avail == None:
             print "Unknown"
-        elif self.avail == False:
+        elif isinstance(self.avail, bool) and self.avail == False:
             print "Discontinued"
         elif self.avail == True:
             print "In stock"
         else:
             print "%i in stock" % self.avail
 
-        print "\tMinimum order: %i" % self.min_order
+        def f(n):
+            if n == None:
+                return "Unknown"
+            else:
+                return n
 
-        print "\tComponents per item: %i" % self.price_for
+        print "\tMinimum order:", f(self.min_order)
 
-        print "\tOrder multiple: %i" % self.multi
+        print "\tComponents per item:", f(self.price_for)
+
+        print "\tOrder multiple:", f(self.multi)
 
         print "\tPricing:"
 
-        for i in range(0, len(self.prices)):
+        if self.prices == None:
+            print "\t\tUnknown"
+        else:
+            for i in range(0, len(self.prices)):
 
-            quantity, price = self.prices[i]
-            
-            if i+1 < len(self.prices):
-                n_quant = self.prices[i+1][0]
+                quantity, price = self.prices[i]
 
-                print "\t\t %i - %i: £%s" % (quantity, n_quant - self.multi, price)
-            else:
-                print "\t\t %i+: £%s" % (quantity, price)
+                if i+1 < len(self.prices):
+                    n_quant = self.prices[i+1][0]
+
+                    print "\t\t %i - %i: £%s" % (quantity, n_quant - self.multi, price)
+                else:
+                    print "\t\t %i+: £%s" % (quantity, price)

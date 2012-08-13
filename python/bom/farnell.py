@@ -1,212 +1,156 @@
 # -*- coding: utf-8 -*-
 """Routines for scraping data about parts from Farnell"""
+from bs4 import BeautifulSoup
+import distpart
 from cachedfetch import grab_url_cached
-import string, sgmllib, re
-from decimal import Decimal
+from decimal import Decimal as D
+import re
 
-class Item(sgmllib.SGMLParser):
-    "Represents a Farnell item"
+class Item(distpart.DistItem):
+    def __init__(self, part_number):
+        distpart.DistItem.__init__(self, part_number)
 
-    def __init__(self, partNumber, verbose=0):
-        "Initialise an object, passing 'verbose' to the superclass."
+        self._get_data()
 
-        sgmllib.SGMLParser.__init__(self, verbose)
-        self.qty_range = []
-        self.cost = []
-        self.inside_td_element = 0
-        self.inside_p_element = 0
-        self.inside_b_element = 0
-        self.inside_a_element = 0
-        self.inside_price_div = 0
-        self.last_data = ''
-        self.qty = True
-        self.qty_str = ""
-        self.avail = 0
+    def _get_data(self):
+        page = grab_url_cached( 'https://xgoat.com/p/farnell/{0}'.format(self.part_number) )
 
-        self.last_qty = None
-        self.prices = []
+        soup = BeautifulSoup(page)
 
-        self.feed(self.__getData(partNumber))
-        self.close()
+        # Check that it exists
+        if not self._check_exists(soup):
+            raise distpart.NonExistentPart( self.part_number )
 
-    def __getData(self, partNumber):
-        page = grab_url_cached( 'https://xgoat.com/p/farnell/'+str(partNumber) )
+        # Check that the part we've retrieved is the requested part:
+        if not self._soup_check_part(soup):
+            raise distpart.NonExistentPart( self.part_number )
 
-        start = string.find(page, '<div class="availability">')
-        if start == -1:
-            raise Exception( """Part number "%s" doesn't exist""" % str(partNumber) )
+        self._get_availability(soup)
 
-        info = page[start:]
-        end = string.find(info, '<div class="price">')
-        availInfo = info[:end]
+        if self.avail != None and not isinstance(self.avail, bool):
+            self._get_pricing(soup)
+            self._get_constraints(soup)
 
-        start = string.find(page, '<div class="price">')
-        if start == -1:
-            raise Exception( """Part number "%s" doesn't exist""" % str(partNumber) )
+    def _check_exists(self, soup):
+        "Determine if the part exists from the soup"
 
-        info = page[start:]
-        end = string.find(info, '</div>')
-        priceInfo = info[:end]
+        # This div seems to exist on part pages, but not others
+        if soup.find( id = "orderDetailsContainer" ) == None:
+            return False
+        return True
 
-        return availInfo+priceInfo
+    def _soup_get_pddict(self, soup):
+        "Return a dict of the part details table information"
 
-    def start_td(self, attributes):
-        "Process a table div."
-        self.inside_td_element += 1
+        pd = soup.find( "dl", attrs = {"class": "pd_details" } )
 
-    def end_td(self):
-        "Record the end of a table div."
-        self.inside_td_element -= 1
+        details = {}
 
-    def start_p(self, attributes):
-        "Process a paragraph."
-        self.inside_p_element += 1
+        for dt in pd.find_all( "dt" ):
+            key = dt.text.strip()
+            if key == "":
+                continue
 
-    def end_p(self):
-        "Record the end of a paragraph."
-        self.inside_p_element -= 1
+            val = dt.find_next("dd").text.strip()
+            details[key] = val
 
-    def start_b(self, attributes):
-        "Process a bold."
-        self.inside_b_element += 1
+        return details
+    
+    def _soup_check_part(self, soup):
+        "Check the part in the soup is the one we wanted"
+        details = self._soup_get_pddict(soup)
+        return details["Order Code:"] == self.part_number
 
-    def end_b(self):
-        "Record the end of a bold."
-        self.inside_b_element -= 1
+    def _get_availability(self, soup):
+        "Extract the part availability from the soup"
 
-    def start_a(self, attributes):
-        "Process an anchor"
-        self.inside_a_element += 1
+        av = soup.find( "div", attrs = {"class": "availability"} )
+        sd = av.find( attrs = {"class": "stockDetail"} )
 
-    def end_a(self):
-        "Record the end of an anchor"
-        self.inside_a_element -= 1
+        if sd != None:
+            stock = sd.find("b").text
+        else:
+            "Some parts have a different format"
 
-    def start_div(self, attributes):
-        "Check for start of price div"
-        if ('class', 'price') in attributes:
-            self.inside_price_div += 1
+            sd = av.find( attrs = {"class": "prodDetailAvailability"} )
 
-    def handle_data(self, data):
-        "Handle the textual 'data'."
+            stock = sd.find( attrs = {"class": "stockDetails"} )
 
-        data = data.replace('\n', '').replace(':', '')
-        if data.replace(' ', '') == '':
-            return
-        if self.inside_td_element > 0 and self.inside_price_div > 0:
-            # print 'td:"'+data+'"'
-            if "£" in data:
-                # print "\tQTY_STR: \"%s\"" % self.qty_str
-                # print "\tPRICE: \"%s\"" % data
-                self._add_price_range( self.qty_str, data[2:] )
-                self.qty_str = ""
+            if stock == None:
+                "The stockDetails tag disappears in this situation"
+
+                if sd.find( text = re.compile(".*Awaiting Delivery.*") ) != None:
+                    stock = "0"
+                elif sd.find( text = re.compile( ".*Out of Stock.*") ) != None:
+                    stock = "0"
+                else:
+                    raise distpart.UnsupportedFormat( self.part_number )
             else:
-                self.qty_str += data
+                stock = stock.text
 
-        elif self.inside_b_element > 0:
-            # print 'b:"'+data+'"'
-            self.last_data = data
+        # They put commas in their numbers
+        stock = stock.replace( ",", "" )
 
-        elif self.inside_p_element > 0 or self.inside_a_element > 0:
-            # print 'p:"'+data+'"'
-            #kill off the last_data, but store it just in case
-            tmp_last_data = self.last_data
-            self.last_data = ''
-            #test for a match to last_data
-            if tmp_last_data == 'Price For':
-                self.price_for = self._parse_price_for(data)
-            elif tmp_last_data == 'Minimum Order Quantity':
-                self.min_order = int(data)
-            elif tmp_last_data == 'Order Multiple':
-                self.multi = int(data)
-            elif tmp_last_data == 'Availability':
-                if data.isdigit():
-                    self.avail = int(data)
-            else:	#not this time around
-                self.last_data = tmp_last_data
+        self.avail = int(stock)
 
-    def _parse_price_for(self, s):
-        "Break the 'price for' string up"
-        r = re.compile( "Reel of ([0-9,]+)" )
-        m = r.search( s )
-        if m != None:
-            # Strip commas
-            n = m.group(1).replace(",","")
-            return int(n)
+    def _parse_quantity(self, q):
+        "Parse a quantity string, return the lower boundary"
+        if "-" in q:
+            return int( q.split("-")[0].strip() )
+        elif "+" in q:
+            return int( q.split("+")[0].strip() )
+        else:
+            raise distpart.UnsupportedFormat( self.part_number )
 
-        r = re.compile( "Pack of ([0-9,]+)" )
-        m = r.search( s )
-        if m != None:
-            # Strip commas
-            n = m.group(1).replace(",","")
-            return int(n)
+    def _get_pricing(self, soup):
+        "Extract the item pricing from the soup"
 
-        r = re.compile( "([0-9,]+) Each" )
-        m = r.search( s )
-        if m != None:
-            # Strip commas
-            n = m.group(1).replace(",","")
-            return int(n)
+        # The table of quantities and prices
+        pd = soup.find( id = "otherquantites" )
 
-        print """Warning: Farnell script can't parse price_for field "%s".""" % s
+        prices = []
 
-    def _add_price_range(self, qty, cost):
-        # print "_add_price_range( qty = \"%s\", cost = \"%s\" )" % (qty, cost)
-        q = self._parse_qty(qty)
-        c = self._parse_cost(cost)
+        for row in pd.find_all( "tr" )[1:]:
 
-        if q == None:
-            return
+            cells = row.find_all("td")
 
-        # print "\tq: %i" % q
-        # print "\tc: %s" % c
+            quant_str = cells[0].text.strip()
+            if quant_str == "":
+                continue
 
-        self.prices.append( (q,c) )
+            q = self._parse_quantity( quant_str )
+            p = D( cells[1].text.strip()[1:] )
 
-    def _parse_qty(self, qty):
-        r = re.compile( "([0-9,]+)\s*-\s*([0-9,]+)" )
-        m = r.search(qty)
-        if m != None:
-            # Strip commas
-            t = int(m.group(2).replace(",",""))
+            prices.append( (q,p) )
 
-            # Only use the higher end of the range
-            return t
+        self.prices = prices
 
-        r = re.compile( "([0-9]{1}[0-9,.]*)" )
-        m = r.search(qty)
-        if m != None:
-            # Strip commas
-            t = int(m.group(1).replace(",",""))
-            return t
+    def _get_constraints(self, soup):
+        "Extract the purchasing constraints from the soup"
 
-        print """Warning: Farnell script can't parse quantity field: "%s".""" % qty
+        av = soup.find( "div", attrs = {"class": "availability"} )
 
-    def _parse_cost(self, cost):
-        r = re.compile( "([0-9]{1}[0-9,.]*)" )
-        m = r.search(cost)
-        if m != None:
-            # Strip commas
-            t = m.group(1).replace(",","")
-            return Decimal(t)
+        # The "Price For" row
+        pf = av.find( text = re.compile( ".*Price For.*" ) ) \
+            .parent.next_sibling.strip()
 
-    def get_info(self):
-        "Return a dict of the info garnered."
-        return dict(qty=self.qty_range, price=self.cost, num_for_price=self.price_for, min_order=self.min_order, multiple=self.multi, number_available=self.avail)
+        # pf now contains a string like "1 each" or "Reel of 5,000"
+        e = re.search( "([0-9,]+)", pf ).group(1)
+        e = e.replace( ",", "" )
+        self.price_for = D(e)
 
-    def print_info(self):
-        "Print a the info garnered in a nice way."
-        print ' Number Available:',self.avail
-        print ' Price For:',self.price_for
-        print ' Minimum Order Quantity:',self.min_order
-        print ' Order Multiple:',self.multi
-        print ' Pricing:'
+        # The minimum order quantity row
+        mo = av.find( text = re.compile( ".*Minimum Order Quantity.*" ) ) \
+            .parent.next_sibling.strip()
 
-        n = self.min_order
-        for p in self.prices:
-            if n != p[0]:
-                print "\t%i - %i: \t£%s" % (n, p[0], p[1])
-                n = p[0] + 1
-            else:
-                print "\t%i +: \t£%s" % (n, p[1])
+        # mo now contains the minimum order quantity in string form
+        mo = mo.replace( ",", "" )
+        self.min_order = int(mo)
 
+        # The order multiple row
+        om = av.find( text = re.compile( ".*Order Multiple.*" ) ) \
+            .parent.next_sibling.strip()
+
+        # om now contains the order multiple in string form
+        om = om.replace( ",", "" )
+        self.multi = int(om)

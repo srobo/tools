@@ -4,6 +4,11 @@
 class NonExistentPart(Exception):
     pass
 
+class UnsupportedFormat(Exception):
+    "The page returned by the distributor was of an unsupported format"
+    pass
+
+
 class DistItem(object):
     def __init__(self, part_number):
         self.part_number = part_number

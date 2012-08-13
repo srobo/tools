@@ -202,7 +202,7 @@ sr-ic-sn65176b,SN65176B RS-485 half duplex transceiver (5V),528-539,rs,10,soic8
 sr-ic-sn75179b,SN75179B RS-485 full duplex transceiver (5V),660-8275,rs,10,soic8
 sr-ic-sn65lvds1,SN65LVDS1DBVTG4 LVDS driver,526-864,rs,5,sot23-5
 sr-ic-sn65lvds2,SN65LVDS2DBVTG4 LVDS receiver,528-084,rs,5,sot23-5
-sr-ic-sn65lvds051,SN65LVDS051PW LVDS dual transceiver,660-9004,rs,1,tssop16
+sr-ic-sn65lvds051,SN65LVDS051PW LVDS dual transceiver,660-9004P,rs,1,tssop16
 sr-ic-fxlp34,FXLP34P5X 1-bit non-inverting level translator,1652415,farnell,1,sc70-5
 sr-ic-txs0102,TXS0102DCT 2-bit non-inverting bi-directional level translator,595-TXS0102DCTR,mouser,1,ssop8
 

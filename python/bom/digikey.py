@@ -3,11 +3,14 @@
 from cachedfetch import grab_url_cached
 from srBeautifulSoup import BeautifulSoup
 from decimal import Decimal
+import distpart
 
-class Item:
+class Item(distpart.DistItem):
     """Represents a Digikey item"""
 
     def __init__(self, partNumber):
+        distpart.DistItem.__init__(self, partNumber)
+
         self.avail = 0
         self.min_order = 0
         self.price_for = 1
@@ -16,12 +19,14 @@ class Item:
         self.cost = []
         self.qty_range = 0
 
-        soup = BeautifulSoup(grab_url_cached('https://xgoat.com/p/digikey/'+str(partNumber)))
+        page = grab_url_cached('https://xgoat.com/p/digikey/'+str(partNumber))
+        soup = BeautifulSoup(page)
 
         # Extract availability
         qa_heading = soup.find(text='Quantity Available')
         if qa_heading == None:
-            raise Exception("""Part number "%s" doesn't exist""" % str(partNumber))
+            raise distpart.NonExistentPart( self.part_number )
+
         qa = qa_heading.findNext('td').contents[0].string
         if qa != None:
             self.avail = int(qa.replace(',',''))
@@ -54,19 +59,3 @@ class Item:
     def get_info(self):
         """Return a dict of the info"""
         return dict(qty=self.qty_range, price=self.cost, num_for_price=self.price_for, min_order=self.min_order, multiple=self.multi, number_available=self.avail)
-
-    def print_info(self):
-        """Print all of the info on the part"""
-        print ' Number Available:',self.avail
-        print ' Price For:',self.price_for
-        print ' Minimum Order Quantity:',self.min_order
-        print ' Order Multiple:',self.multi
-        print ' Pricing:'
-
-        n = self.min_order
-        for p in self.prices:
-            if n != p[0]:
-                print "\t%i - %i: \t£%s" % (n, p[0], p[1])
-                n = p[0] + 1
-            else:
-                print "\t%i +: \t£%s" % (n, p[1])

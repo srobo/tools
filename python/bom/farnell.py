@@ -83,6 +83,14 @@ class Item(distpart.DistItem):
                     stock = "0"
                 elif sd.find( text = re.compile( ".*Out of Stock.*") ) != None:
                     stock = "0"
+
+                elif sd.find( text = re.compile( ".*No Longer Manufactured.*") ) != None:
+                    # False means discontinued
+                    self.avail = False
+                    stock = 0
+                    # There's nothing else to do in this case
+                    return
+
                 else:
                     raise distpart.UnsupportedFormat( self.part_number )
             else:

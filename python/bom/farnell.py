@@ -35,7 +35,7 @@ class Item(distpart.DistItem):
         "Determine if the part exists from the soup"
 
         # This div seems to exist on part pages, but not others
-        if soup.find( id = "orderDetailsContainer" ) == None:
+        if soup.find( attrs = { "class": "order-details" } ) == None:
             return False
         return True
 

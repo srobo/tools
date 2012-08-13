@@ -46,6 +46,10 @@ class PartGroup(list):
             # Assume one part per distributor unit
             return len(self)
 
+        if self.part.get_dist_units() == None:
+            "Same as above"
+            return len(self)
+
         n = len(self)
         if n == 0:
             return 0

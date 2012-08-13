@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 """Routines for scraping data about parts from RS"""
-from cachedfetch import grab_url_cached
-import string, sgmllib, re
-from decimal import Decimal as D
-
-import distpart
 from bs4 import BeautifulSoup
+from cachedfetch import grab_url_cached
+from decimal import Decimal as D
+import distpart
 
 class Item(distpart.DistItem):
     "An item sold by RS"

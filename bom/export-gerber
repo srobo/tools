@@ -48,7 +48,7 @@ class EagleBoard():
             os.remove( "%s.dri" % out_fname )
 
 if len(sys.argv) < 2:
-    print "Usage: %s CONFIG_FILE BOARD"
+    print "Usage: export-gerber CONFIG_FILE BOARD"
     print "Will output gerbers to directory %s" % OUTPUT_DIR
     sys.exit(1)
 

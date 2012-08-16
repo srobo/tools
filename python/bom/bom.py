@@ -32,6 +32,10 @@ class PartGroup(list):
         if s == None:
             return None
 
+        if isinstance(s, bool) and s:
+            # There are some in stock, but we don't know how many
+            return None
+
         if s < self.order_num():
             return False
         return True

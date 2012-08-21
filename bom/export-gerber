@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # Export gerber from a board
-import sr.bom.eagle as eagle
 import sr.bom.geda as geda
 import sys, os, shutil, ConfigParser, subprocess
 OUTPUT_DIR = "./gerbers"
@@ -8,52 +7,12 @@ OUTPUT_DIR = "./gerbers"
 FORMAT_RS274X = 1
 FORMAT_EXCELLON = 2
 
-PCB_FORMAT_EAGLE = 1
-PCB_FORMAT_GEDA = 2
-
-class EagleBoard():
-    def __init__(self, fname):
-        self.fname = fname
-
-    def export_gerber(self, out_fname, layers, format = FORMAT_RS274X ):
-        "Export the given list of layers into a gerber file"
-
-        if format == FORMAT_RS274X:
-            fstr = "GERBER_RS274X"
-        elif format == FORMAT_EXCELLON:
-            fstr = "excellon"
-        else:
-            raise Exception("Invalid file format requested")
-
-        if eagle.file_version( self.fname )[0] == 4:
-            ecmd = "eagle"
-        else:
-            ecmd = "eagle5"
-
-        cmd = "%s -X -d%s -o%s %s %s" % ( ecmd,
-                                          fstr,
-                                          out_fname,
-                                          self.fname,
-                                          " ".join(layers) )
-        p = subprocess.Popen( cmd,
-                              shell = True,
-                              stdout = open("/dev/null", "w") )
-        p.communicate()
-        p.wait()
-
-        # Remove useless 'gpi' file
-        if format == FORMAT_RS274X:
-            os.remove( "%s.gpi" % out_fname )
-        elif format == FORMAT_EXCELLON:
-            os.remove( "%s.dri" % out_fname )
-
-if len(sys.argv) < 2:
-    print "Usage: export-gerber CONFIG_FILE BOARD"
+if len(sys.argv) != 2:
+    print "Usage: export-gerber BOARD"
     print "Will output gerbers to directory %s" % OUTPUT_DIR
     sys.exit(1)
 
-CONFIG_FILE = sys.argv[1]
-BOARD = sys.argv[2]
+BOARD = sys.argv[1]
 
 if os.path.exists( OUTPUT_DIR ) and not os.path.isdir( OUTPUT_DIR ):
     print "%s exists and is not a directory" % OUTPUT_DIR
@@ -63,58 +22,23 @@ if os.path.exists( OUTPUT_DIR ) and not os.path.isdir( OUTPUT_DIR ):
 if not os.path.exists( OUTPUT_DIR ):
     os.mkdir( OUTPUT_DIR )
 
-type = 0
 f = open(BOARD, "r")
-if (eagle.file_is_eagle(f)):
-    type = PCB_FORMAT_EAGLE
-    board = EagleBoard( BOARD )
-elif (geda.file_is_geda_pcb(f)):
-    type = PCB_FORMAT_GEDA
+assert geda.file_is_geda_pcb(f) 
 f.close()
 
-if (type == 0):
-    print "PCB layout file not recognized"
-    sys.exit(1)
+print "Generating gerbers from %s" % BOARD
+# You can't specify the output dir and of the files created some
+# are in the cwd, others are in the same dir as the PCB file :S
 
-# Unfortunately PCB doesn't have anywhere near the same flexibility
-# as eagle for exporting gerbers, either from the GUI or command
-# line. It will output a gerber for each layer; top/bottom silk,
-# mask & paste; fab drawing containing drill markers and other crap
-# and two drill files (plated and unplated)
+shutil.copy(BOARD, OUTPUT_DIR)
+os.chdir(OUTPUT_DIR)
 
-if (type == PCB_FORMAT_GEDA):
-    print "Generating gerbers from %s" % BOARD
-    # You can't specify the output dir and of the files created some
-    # are in the cwd, others are in the same dir as the PCB file :S
+cmd = "pcb -x gerber %s" % BOARD
+p = subprocess.Popen( cmd,
+                      shell = True,
+                      stdout = open("/dev/null", "w") )
+p.communicate()
+p.wait()
 
-    shutil.copy(BOARD, OUTPUT_DIR)
-    os.chdir(OUTPUT_DIR)
-
-    cmd = "pcb -x gerber %s" % BOARD
-    p = subprocess.Popen( cmd,
-                          shell = True,
-                          stdout = open("/dev/null", "w") )
-    p.communicate()
-    p.wait()
-
-    os.remove(BOARD)
-
-elif (type == PCB_FORMAT_EAGLE):
-    conf = ConfigParser.SafeConfigParser()
-    conf.read( CONFIG_FILE )
-
-    for fname in conf.sections():
-        if conf.has_option( fname, "layers" ):
-            print "Generating gerber: %s" % fname
-            layers = conf.get( fname, "layers" ).split()
-            board.export_gerber( os.path.join( OUTPUT_DIR, fname ), layers )
-
-        elif conf.has_option( fname, "drill_layers" ):
-            print "Generating drill file: %s" % fname
-            layers = conf.get( fname, "drill_layers" ).split()
-            board.export_gerber( os.path.join( OUTPUT_DIR, fname ), layers, format = FORMAT_EXCELLON )
-
-        else:
-            print "Fatal Error: Section '%s' in config file lacks 'layers' or 'drill_layers' option."
-            sys.exit(1)
+os.remove(BOARD)
 

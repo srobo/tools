@@ -127,7 +127,14 @@ class Item(distpart.DistItem):
                 continue
 
             q = self._parse_quantity( quant_str )
-            p = D( cells[1].text.strip()[1:] )
+
+            p = cells[1].text
+
+            # Sometimes Farnell do something stupid with unicode
+            p = p.replace( u"\ufffd", "" )
+            p = p.replace( u"£", "" )
+
+            p = D( p.strip() )
 
             prices.append( (q,p) )
 

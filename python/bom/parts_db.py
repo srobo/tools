@@ -81,8 +81,10 @@ class Part(dict):
             o = farnell.Item( self["order-number"] )
         elif self["supplier"] == "rs":
             o = rs.Item( self["order-number"] )
-        elif self["supplier"] == "digikey":
-            o = digikey.Item( self["order-number"] )
+
+        # Digikey scraping is nonfunctional at the moment
+        # elif self["supplier"] == "digikey":
+        #     o = digikey.Item( self["order-number"] )
         else:
             self.stock = None
             return

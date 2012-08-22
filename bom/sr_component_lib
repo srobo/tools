@@ -231,6 +231,7 @@ sr-fet-n-bsh121,BSH121 n-channel mosfet very low Vt of 1V,1758072,farnell,1,sot3
 sr-fet-n-fdd8586,FDD8586 n-channel mosfet,1324786,farnell,1,d-pak
 sr-fet-n-fdd8580,FDD8580 n-channel mosfet 35A,1324785,farnell,1,d-pak
 sr-fet-n-irf8721,IRF8721PbF n-channel mosfet,1551902,farnell,1,soic8
+sr-fet-n-irf8734,IRF8734PbF n-channel mosfet,688-6891,rs,1,soic8
 sr-fet-n-irlml2030,IRLML2030TRPbF n-channel mosfet,1791568,farnell,1,sot-23
 sr-fet-n-irlr8743,IRLR8743PBF n-channel mosfet 160A,1551908,farnell,1,d-pak
 sr-fet-n-rtq020n03,RTQ020N03TR n-channel mosfet 1A,1525552,farnell,1,TSMT6

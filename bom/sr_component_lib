@@ -68,6 +68,7 @@ sr-c-68u,68u capacitor smt CPOL-EUE,9694390,farnell,10,smt_electrolytic_cap
 sr-c-100u,100u capacitor smt CPOL-EUE,9694404,farnell,10,smt_electrolytic_cap
 sr-c-220u,220u capacitor smt CPOL-EUE,1580568,farnell,5,smt_electrolytic_cap
 sr-c-220u-10v,220uF cap through-hole 10V,1219454,farnell,1,through_hole
+sr-c-470u-16v,470uF cap through-hole 16V,9692053,farnell,5,through_hole
 sr-c-1m,1m electrolytic capacitor 16V,9451129,farnell,10,through_hole
 
 # Inductors

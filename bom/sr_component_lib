@@ -77,7 +77,7 @@ sr-l-10u-1150ma,10u inductor 1.15A max,1782801,farnell,1,1515
 sr-l-10u-2a,10u inductor 2A max,1612715,farnell,1,smt_inductor
 #sr-l-18u,18u?? inductor,1463496,farnell NO LONGER STOCKED
 sr-l-15u,18u 5.5A smt inductor,1704128,farnell,1,smt_inductor
-sr-l-22u,22u 180mA smt inductor,1711902,farnell,10,1008
+sr-l-22u,22u 160mA smt inductor,1198441,farnell,5,1008
 sr-l-22u-1300ma,1.3A smt inductor,1717487,farnell,5,smt_inductor
 sr-l-22u-2500ma,22u 2.5A smt inductor,1635894,farnell,1,smt_inductor
 sr-l-22u-6300ma,22u 6.3A smt inductor,1783727,farnell,1,smt_inductor

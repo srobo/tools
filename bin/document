@@ -10,6 +10,8 @@ parser.add_argument("-o", dest = "output",
                     help = "Output file")
 parser.add_argument("-l", action = "store_true", dest = "latex",
                     help = "Emit LaTeX source rather than PDF")
+parser.add_argument("-s", dest = "signature", type = str,
+                    help = "Add a signature space")
 
 args = parser.parse_args()
 
@@ -75,7 +77,20 @@ suffix = r"""
 \end{document}
 """
 
-total = '\n'.join((prefix, generated, suffix))
+signature_block = ''
+if args.signature:
+    signature_elements = args.signature.split(':')
+    if len(signature_elements) == 1:
+        signature_username = signature_elements[0]
+        signature_title = None
+    else:
+        signature_username, signature_title = signature_elements
+    signature_block = '\n'.join([r'\bigskip'] * 5)
+    signature_block += '\n{0}\n'.format(signature_username)
+    if signature_title:
+        signature_block += '\\\\ {0}\n'.format(signature_title)
+
+total = '\n'.join((prefix, generated, signature_block, suffix))
 
 if args.latex:
     args.output.write(total)

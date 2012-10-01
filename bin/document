@@ -1,0 +1,99 @@
+#!/usr/bin/env python
+import argparse, subprocess, tempfile, os, os.path, shutil, zipfile
+
+parser = argparse.ArgumentParser(description = "Generate formatted documents.")
+
+parser.add_argument("source", metavar = "FILE", type=argparse.FileType('r'),
+                    help = "Source markdown file")
+parser.add_argument("-o", dest = "output",
+                    metavar = "FILE", type=argparse.FileType('w'),
+                    help = "Output file")
+
+args = parser.parse_args()
+
+source = args.source.read()
+
+pandoc_process = subprocess.Popen(['pandoc', '-f', 'markdown', '-t', 'latex', '-'],
+                                  stdin = subprocess.PIPE,
+                                  stdout = subprocess.PIPE)
+pandoc_process.stdin.write(source)
+pandoc_process.stdin.close()
+generated = pandoc_process.stdout.read()
+pandoc_process.wait()
+
+generated = generated.replace('\section', '\section*').replace('\subsection', '\subsection*')
+
+prefix = r"""
+\documentclass[a4paper]{article}
+\usepackage[dvinames]{xcolor}
+\usepackage[top=2in,left=1.5in,bottom=2.8in,right=1.25in]{geometry}
+\usepackage{graphicx}
+\usepackage[colorlinks=false,
+            pdfborder={0 0 0},]{hyperref}
+\usepackage[absolute]{textpos}
+\usepackage[oldstylenums]{kpfonts}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\parindent0pt
+\setlength{\parskip}{0.8\baselineskip}
+\definecolor{SRblue}{RGB}{13,31,97}
+\definecolor{SRgrey}{RGB}{223,219,215}
+\urlstyle{sf}
+\fancyhead{}
+\fancyfoot{}
+\setlength{\footskip}{3em}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{1pt}
+\fancyfoot[C]{\footnotesize\color{SRblue}\sffamily
+Student Robotics, School of Electronics and Computer Science, University of Southampton, SO17 1BJ\\[-0.1\baselineskip]
+\url{info@studentrobotics.org} \textbullet\ \url{http://studentrobotics.org/}\\ \medskip \Huge
+\includegraphics[height=1em]{moto.png}\hfill{}\includegraphics[height=1em]{ecs.png}\hfill{}\includegraphics[height=1em]{bitbox.png} \\ \hfill
+}
+\begin{document}
+\begin{textblock*}{2in}[0.3066,0.39](1.5in,1.33in)
+    \includegraphics[width=1.7in]{sr-logo.pdf}
+\end{textblock*}
+\begin{textblock*}{6.375in}(0.65in,1.0in)
+    \sffamily
+    \begin{flushright}
+    \sffamily \Huge \color{SRblue}
+    Student Robotics\\ \large
+    \smallskip
+    School of Electronics and Computer Science\\
+    University of Southampton\\
+    SO17 1BJ
+    \end{flushright}
+\end{textblock*}
+\color{black}
+\vspace*{0.4in}
+"""
+
+suffix = r"""
+\end{document}
+"""
+
+total = '\n'.join((prefix, generated, suffix))
+
+temp_dir = tempfile.mkdtemp('srdoc')
+
+main_file = os.path.join(temp_dir, 'main.tex')
+with open(main_file, 'w') as f:
+    f.write(total)
+
+zip_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data.zip')
+with zipfile.ZipFile(zip_path, 'r') as zf:
+    for name in ('ecs.png', 'moto.png', 'bitbox.png', 'sr-logo.pdf'):
+        zf.extract(name, temp_dir)
+
+with open(os.devnull, 'w') as fnull:
+    subprocess.check_call(['pdflatex', 'main.tex'],
+                          cwd=temp_dir,
+                          stderr = fnull,
+                          stdout = fnull)
+
+with open(os.path.join(temp_dir, 'main.pdf'), 'r') as f:
+    args.output.write(f.read())
+
+shutil.rmtree(temp_dir)
+

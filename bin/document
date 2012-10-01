@@ -12,12 +12,14 @@ parser.add_argument("-l", action = "store_true", dest = "latex",
                     help = "Emit LaTeX source rather than PDF")
 parser.add_argument("-s", dest = "signature", type = str,
                     help = "Add a signature space")
+parser.add_argument("-H", action = "store_true", dest = "html",
+                    help = "Take HTML rather than markdown")
 
 args = parser.parse_args()
 
 source = args.source.read()
 
-pandoc_process = subprocess.Popen(['pandoc', '-f', 'markdown', '-t', 'latex', '-'],
+pandoc_process = subprocess.Popen(['pandoc', '-f', 'html' if args.html else 'markdown', '-t', 'latex', '-'],
                                   stdin = subprocess.PIPE,
                                   stdout = subprocess.PIPE)
 pandoc_process.stdin.write(source)
@@ -32,6 +34,7 @@ prefix = r"""
 \usepackage[dvinames]{xcolor}
 \usepackage[top=2in,left=1.5in,bottom=2.8in,right=1.25in]{geometry}
 \usepackage{graphicx}
+\usepackage{ctable}
 \usepackage[colorlinks=false,
             pdfborder={0 0 0},]{hyperref}
 \usepackage[absolute]{textpos}

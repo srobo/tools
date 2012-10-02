@@ -215,7 +215,7 @@ sr-ic-hcpl-817,HCPL-817-36BE Optoisolator,1244566,farnell,1,smt_optoisolator
 sr-ic-mcp4018-103,MCP4018-103/LT 7-bit I2C digital pot,1715849,farnell,1,sc70-6
 sr-ic-at24c01,AT24C01BN-SH 1kbit I2C EEPROM,1362638,farnell,1,soic8
 sr-ic-max4069,MAX4069 - current sense amplifier,MAX4069,maxim,,
-sr-ic-ina213,INA213AIDCKT current sense amp,1754261,farnell,1,sc70-6
+sr-ic-ina213,INA213AIDCKT current sense amp,709-4535,rs,1,sc70-6
 sr-ic-ts321,TS321CX5 single o-amp,1476668,farnell,1,sot23-5
 sr-ic-lm2904,LM2904DT dual op-amp,1564327,farnell,1,soic8
 sr-ic-lm339,LM339PT quad comparator,1750192,farnell,1,tssop14

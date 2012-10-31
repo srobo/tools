@@ -77,7 +77,7 @@ sr-l-10u-1150ma,10u inductor 1.15A max,1782801,farnell,1,1515
 sr-l-10u-2a,10u inductor 2A max,1612715,farnell,1,smt_inductor
 #sr-l-18u,18u?? inductor,1463496,farnell NO LONGER STOCKED
 sr-l-15u,18u 5.5A smt inductor,1704128,farnell,1,smt_inductor
-sr-l-22u,22u 180mA smt inductor,1711902,farnell,10,1008
+sr-l-22u,22u 160mA smt inductor,1198441,farnell,5,1008
 sr-l-22u-1300ma,1.3A smt inductor,1717487,farnell,5,smt_inductor
 sr-l-22u-2500ma,22u 2.5A smt inductor,1635894,farnell,1,smt_inductor
 sr-l-22u-6300ma,22u 6.3A smt inductor,1783727,farnell,1,smt_inductor
@@ -215,7 +215,7 @@ sr-ic-hcpl-817,HCPL-817-36BE Optoisolator,1244566,farnell,1,smt_optoisolator
 sr-ic-mcp4018-103,MCP4018-103/LT 7-bit I2C digital pot,1715849,farnell,1,sc70-6
 sr-ic-at24c01,AT24C01BN-SH 1kbit I2C EEPROM,1362638,farnell,1,soic8
 sr-ic-max4069,MAX4069 - current sense amplifier,MAX4069,maxim,,
-sr-ic-ina213,INA213AIDCKT current sense amp,1754261,farnell,1,sc70-6
+sr-ic-ina213,INA213AIDCKT current sense amp,709-4535,rs,1,sc70-6
 sr-ic-ts321,TS321CX5 single o-amp,1476668,farnell,1,sot23-5
 sr-ic-lm2904,LM2904DT dual op-amp,1564327,farnell,1,soic8
 sr-ic-lm339,LM339PT quad comparator,1750192,farnell,1,tssop14
@@ -238,7 +238,7 @@ sr-fet-n-irf8734,IRF8734PbF n-channel mosfet,688-6891,rs,1,soic8
 sr-fet-n-irlml2030,IRLML2030TRPbF n-channel mosfet,1791568,farnell,1,sot-23
 sr-fet-n-irlr8743,IRLR8743PBF n-channel mosfet 160A,1551908,farnell,1,d-pak
 sr-fet-n-rtq020n03,RTQ020N03TR n-channel mosfet 1A,1525552,farnell,1,TSMT6
-sr-fet-p-mmbf2202pt1,MMBF2202PT1 p-channel mostfet 20V 300mA,1431300,farnell,1,sot323
+sr-fet-p-mmbf2202pt1,EQUIV NX3008PBKW p-channel mostfet 30V 200mA,2069551,farnell,1,sot323
 sr-fet-p-bss84lt1g,EQUIV IRLML9303 p-channel mosfet 30V 520mA,1831090,farnell,1,sot-23
 sr-fet-p-pmv65xp,PMV65XP p-channel mosfet 20V 3.9A,1758119,farnell,1,sot-23
 sr-fet-p-si1473dh,SI1473DH-T1-E3 p-channel mostfet,1497603,farnell,1,sc70-6

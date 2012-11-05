@@ -1,4 +1,5 @@
 from pyparsing import *
+import query_ast
 
 TRUE       = Keyword("true")
 FALSE      = Keyword("false")
@@ -68,6 +69,33 @@ not_expr    << NOT + primary
 
 root        = or_expr
 
+
+# Parser actions, i.e. AST construction
+def _pa_or_expr(x):
+    if len(x) == 1:
+        return x[0]
+    return query_ast.Or(x[0], x[2])
+
+def _pa_and_expr(x):
+    if len(x) == 1:
+        return x[0]
+    if len(x) == 2:
+        return query_ast.And(x[0], x[1])
+    return query_ast.And(x[0], x[2])
+
+code_single.setParseAction(lambda x: query_ast.Code(x[2]))
+code_list.setParseAction(lambda x: query_ast.Code(*x[3::2]))
+type_single.setParseAction(lambda x: query_ast.Type(x[2]))
+type_list.setParseAction(lambda x: query_ast.Type(*x[3::2]))
+cond_single.setParseAction(lambda x: query_ast.Condition(x[2]))
+cond_list.setParseAction(lambda x: query_ast.Condition(*x[3::2]))
+path_single.setParseAction(lambda x: query_ast.Path(x[2]))
+path_list.setParseAction(lambda x: query_ast.Path(*x[3::2]))
+label_expr.setParseAction(lambda x: query_ast.Labelled(x[2]))
+or_expr.setParseAction(_pa_or_expr)
+and_expr.setParseAction(_pa_and_expr)
+not_expr.setParseAction(lambda x: query_ast.Not(x[1]))
+paren_expr.setParseAction(lambda x: x[1])
 
 def search_tree(query):
     return root.parseString(query)[0]

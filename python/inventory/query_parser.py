@@ -26,8 +26,8 @@ LABELLED   = Literal("labelled")
 PATH       = Literal("path")
 
 ASSET_CODE = Regex(r"(sr)?[a-zA-Z0-9]+")
-ASSET_NAME = Regex(r"[a-z0-9\.\*\-\?\[\]]+")
-PATH_RE    = Regex(r"[a-zA-Z0-9-\./]+")
+ASSET_NAME = Regex(r"[a-zA-Z0-9\.\*\-\?\[\]]+")
+PATH_RE    = Regex(r"[a-zA-Z0-9\.\*\-\?\[\]/]+")
 CONDITIONS = oneOf("working unknown broken")
 
 def generate_in_expr(prop, val_type):

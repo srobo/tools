@@ -135,7 +135,8 @@ class Labelled(Terminal):
 class Path(Terminal):
     def __init__(self, *paths):
         super(Path, self).__init__()
-        self.paths = [path[1:] if path[0] == '/' else path for path in paths]
+        paths = [path[1:] if path[0] == '/' else path for path in paths]
+        self.paths = [path + '*' for path in paths]
 
     def _root_path(self, inv_node):
         n = inv_node
@@ -145,9 +146,10 @@ class Path(Terminal):
             n = n.parent
 
     def match(self, inv_node):
+        root_path = self._root_path(inv_node)
         if hasattr(inv_node, 'path'):
             for path in self.paths:
-                if inv_node.path[len(self._root_path(inv_node))+1:].startswith(path):
+                if fnmatch.fnmatch(inv_node.path[len(root_path)+1:], path):
                     return True
         return False
 

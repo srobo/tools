@@ -16,6 +16,7 @@ R_C_BRKT   = Literal("}")
 L_BRKT     = Literal("(")
 R_BRKT     = Literal(")")
 COMMA      = Literal(",")
+BANG       = Literal("!")
 
 EQUALITY   = Or((EQUALS, COLON, IS))
 
@@ -65,7 +66,7 @@ primary     << (base_expr | paren_expr)
 
 and_expr    << (primary + Optional(AND) + and_expr | primary)
 or_expr     << (and_expr + OR + or_expr | and_expr)
-not_expr    << NOT + primary
+not_expr    << Or((NOT, BANG)) + primary
 
 root        = or_expr
 

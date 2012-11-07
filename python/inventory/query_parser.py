@@ -1,13 +1,13 @@
 from pyparsing import *
 import query_ast
 
-TRUE       = Keyword("true")
-FALSE      = Keyword("false")
-IN         = Keyword("in")
-IS         = Keyword("is")
-OR         = Keyword("or")
-AND        = Keyword("and")
-NOT        = Keyword("not")
+TRUE       = CaselessKeyword("true")
+FALSE      = CaselessKeyword("false")
+IN         = CaselessKeyword("in")
+IS         = CaselessKeyword("is")
+OR         = CaselessKeyword("or")
+AND        = CaselessKeyword("and")
+NOT        = CaselessKeyword("not")
 
 EQUALS     = Literal("=")
 COLON      = Literal(":")

@@ -36,8 +36,14 @@ for c in args.assetcodes:
         print >>sys.stderr, "Error: There is no part with code %s." % code
         exit(1)
 
-    if args.assy and hasattr(part.parent, "code"):
-        parts.append(part.parent)
+    if hasattr(part.parent, "code"):
+        if args.assy:
+            parts.append(part.parent)
+        else:
+            print >>sys.stderr, "Warning: Part %s is in an assembly." % code, \
+                    "To move the assembly, use the -a switch."
+            parts.append(part)
+
     else:
         parts.append(part)
 

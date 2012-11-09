@@ -1,19 +1,30 @@
 import inventory
 import fnmatch
 
-class NonTerminal(object):
+class ASTNode(object):
+    def match_single(self, inv_node):
+        raise NotImplementedError("match_single(...) not implemented"
+                                  " for {}".format(self.__class__))
+
+    def match(self, inv_nodes):
+        return filter(self.match_single, inv_nodes)
+
+
+class NonTerminal(ASTNode):
     pass
 
-class Terminal(object):
+
+class Terminal(ASTNode):
     pass
+
 
 class Not(NonTerminal):
     def __init__(self, node):
         super(Not, self).__init__()
         self.node = node
 
-    def match(self, inv_node):
-        return not self.node.match(inv_node)
+    def match_single(self, inv_node):
+        return not self.node.match_single(inv_node)
 
     def sexpr(self):
         return "(NOT {0})".format(self.node.sexpr())
@@ -25,8 +36,9 @@ class And(NonTerminal):
         self.left = left
         self.right = right
 
-    def match(self, inv_node):
-        return self.left.match(inv_node) and self.right.match(inv_node)
+    def match_single(self, inv_node):
+        return (self.left.match_single(inv_node)
+                and self.right.match_single(inv_node))
 
     def sexpr(self):
         return "(AND {0} {1})".format(self.left.sexpr(), self.right.sexpr())
@@ -38,8 +50,9 @@ class Or(NonTerminal):
         self.left = left
         self.right = right
 
-    def match(self, inv_node):
-        return self.left.match(inv_node) or self.right.match(inv_node)
+    def match_single(self, inv_node):
+        return (self.left.match_single(inv_node)
+                or self.right.match_single(inv_node))
 
     def sexpr(self):
         return "(OR {0} {1})".format(self.left.sexpr(), self.right.sexpr())
@@ -95,7 +108,7 @@ class Condition(Terminal):
                 return 'broken'
             return 'unknown'
 
-    def match(self, inv_node):
+    def match_single(self, inv_node):
         return self._state(inv_node) in self.conditions
 
     def sexpr(self):
@@ -107,7 +120,7 @@ class Type(Terminal):
         super(Type, self).__init__()
         self.types = types
 
-    def match(self, inv_node):
+    def match_single(self, inv_node):
         if hasattr(inv_node, 'name'):
             for type in self.types:
                 if fnmatch.fnmatch(inv_node.name, type):
@@ -123,7 +136,7 @@ class Labelled(Terminal):
         super(Labelled, self).__init__()
         self.labelled = labelled.lower() in ('true', '1')
 
-    def match(self, inv_node):
+    def match_single(self, inv_node):
         if hasattr(inv_node, 'labelled'):
             return inv_node.labelled == self.labelled
         return False
@@ -145,7 +158,7 @@ class Path(Terminal):
                 return n.path
             n = n.parent
 
-    def match(self, inv_node):
+    def match_single(self, inv_node):
         root_path = self._root_path(inv_node)
         if hasattr(inv_node, 'path'):
             for path in self.paths:
@@ -167,7 +180,7 @@ class Code(Terminal):
             code = code[2:]
         return code
 
-    def match(self, inv_node):
+    def match_single(self, inv_node):
         return inv_node.code in self.codes
 
     def sexpr(self):

@@ -12,6 +12,4 @@ def _get_inv():
 def query(query_str):
     inv = _get_inv()
     tree = query_parser.search_tree(query_str)
-    for part in inv.parts.values():
-        if tree.match(part):
-            yield part
+    return tree.match(inv.parts.values())

@@ -225,3 +225,6 @@ class Function(NonTerminal):
                                    self.node.match(inv_nodes)),
                                [])))
 
+@Function.register('parent')
+def _parent(inv_node):
+    return [inv_node.parent]

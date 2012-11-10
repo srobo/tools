@@ -234,3 +234,8 @@ def _children(inv_node):
     if not hasattr(inv_node, 'children'):
         return []
     return inv_node.children.values()
+
+@Function.register('siblings')
+def _siblings(inv_node):
+    return filter(lambda x: x is not inv_node,
+                  inv_node.parent.children.values())

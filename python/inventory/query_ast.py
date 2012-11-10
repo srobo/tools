@@ -2,6 +2,16 @@ import inventory
 import fnmatch
 
 class ASTNode(object):
+    pass
+
+
+class NonTerminal(ASTNode):
+    def match(self, inv_nodes):
+        raise NotImplementedError("match(...) not implemented"
+                                  " for {}".format(self.__class__))
+
+
+class Terminal(ASTNode):
     def match_single(self, inv_node):
         raise NotImplementedError("match_single(...) not implemented"
                                   " for {}".format(self.__class__))
@@ -10,21 +20,15 @@ class ASTNode(object):
         return filter(self.match_single, inv_nodes)
 
 
-class NonTerminal(ASTNode):
-    pass
-
-
-class Terminal(ASTNode):
-    pass
-
 
 class Not(NonTerminal):
     def __init__(self, node):
         super(Not, self).__init__()
         self.node = node
 
-    def match_single(self, inv_node):
-        return not self.node.match_single(inv_node)
+    def match(self, inv_nodes):
+        matches = self.left.match(inv_nodes)
+        return list(set([x for x in inv_nodes if x not in matches]))
 
     def sexpr(self):
         return "(NOT {0})".format(self.node.sexpr())
@@ -36,9 +40,10 @@ class And(NonTerminal):
         self.left = left
         self.right = right
 
-    def match_single(self, inv_node):
-        return (self.left.match_single(inv_node)
-                and self.right.match_single(inv_node))
+    def match(self, inv_nodes):
+        left_matches = self.left.match(inv_nodes)
+        right_matches = self.right.match(inv_nodes)
+        return list(set([x for x in inv_nodes if (x in left_matches and x in right_matches)]))
 
     def sexpr(self):
         return "(AND {0} {1})".format(self.left.sexpr(), self.right.sexpr())
@@ -50,9 +55,10 @@ class Or(NonTerminal):
         self.left = left
         self.right = right
 
-    def match_single(self, inv_node):
-        return (self.left.match_single(inv_node)
-                or self.right.match_single(inv_node))
+    def match(self, inv_nodes):
+        left_matches = self.left.match(inv_nodes)
+        right_matches = self.right.match(inv_nodes)
+        return list(set([x for x in inv_nodes if (x in left_matches or x in right_matches)]))
 
     def sexpr(self):
         return "(OR {0} {1})".format(self.left.sexpr(), self.right.sexpr())

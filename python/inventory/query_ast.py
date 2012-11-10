@@ -227,16 +227,9 @@ class Function(NonTerminal):
 
     def match(self, inv_nodes):
         ret = []
-        for match in self.node.match(inv_nodes):
-            func_res = self._functions[self.func_name](match)
-            if type(func_res) in (list, tuple):
-                ret = ret + list(func_res)
-            else:
-                ret.append(func_res)
         return list(set(reduce(lambda x, y: list(x) + list(y),
                                map(self._functions[self.func_name],
-                                   self.node.match(inv_nodes)),
-                               [])))
+                                   self.node.match(inv_nodes)), [])))
 
     def sexpr(self):
         return "(Function '{0}' {1})".format(self.func_name, self.node.sexpr())

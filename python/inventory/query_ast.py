@@ -228,3 +228,9 @@ class Function(NonTerminal):
 @Function.register('parent')
 def _parent(inv_node):
     return [inv_node.parent]
+
+@Function.register('children')
+def _children(inv_node):
+    if not hasattr(inv_node, 'children'):
+        return []
+    return inv_node.children.values()

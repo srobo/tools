@@ -8,6 +8,7 @@ IS         = CaselessKeyword("is")
 OR         = CaselessKeyword("or")
 AND        = CaselessKeyword("and")
 NOT        = CaselessKeyword("not")
+OF         = CaselessKeyword("of")
 
 EQUALS     = Literal("=")
 COLON      = Literal(":")
@@ -30,6 +31,9 @@ ASSET_CODE = Regex(r"(sr)?[a-zA-Z0-9]+")
 ASSET_NAME = Regex(r"[a-zA-Z0-9\.\*\-\?\[\]]+")
 PATH_RE    = Regex(r"[a-zA-Z0-9\.\*\-\?\[\]/]+")
 CONDITIONS = oneOf("working unknown broken")
+
+# pull registered function names from query_ast
+FUNCTIONS  = oneOf(' '.join(query_ast.Function.registered_names()))
 
 def generate_in_expr(prop, val_type):
     return (prop + IN + L_C_BRKT +
@@ -58,13 +62,17 @@ or_expr     = Forward()
 and_expr    = Forward()
 not_expr    = Forward()
 primary     = Forward()
+func_expr   = Forward()
 
 base_expr   = (not_expr | code_expr | type_expr | cond_expr |
                path_expr | label_expr)
 paren_expr  = L_BRKT + or_expr + R_BRKT
+
 primary     << (base_expr | paren_expr)
 
-and_expr    << (primary + Optional(AND) + and_expr | primary)
+func_expr   << (FUNCTIONS + OF + func_expr | primary)
+
+and_expr    << (func_expr + Optional(AND) + and_expr | func_expr)
 or_expr     << (and_expr + OR + or_expr | and_expr)
 not_expr    << Or((NOT, BANG)) + primary
 
@@ -84,6 +92,12 @@ def _pa_and_expr(x):
         return query_ast.And(x[0], x[1])
     return query_ast.And(x[0], x[2])
 
+def _pa_func_expr(x):
+    if len(x) == 1:
+        return x[0]
+    else:
+        return query_ast.Function(x[0], x[2])
+
 code_single.setParseAction(lambda x: query_ast.Code(x[2]))
 code_list.setParseAction(lambda x: query_ast.Code(*x[3::2]))
 type_single.setParseAction(lambda x: query_ast.Type(x[2]))
@@ -95,6 +109,7 @@ path_list.setParseAction(lambda x: query_ast.Path(*x[3::2]))
 label_expr.setParseAction(lambda x: query_ast.Labelled(x[2]))
 or_expr.setParseAction(_pa_or_expr)
 and_expr.setParseAction(_pa_and_expr)
+func_expr.setParseAction(_pa_func_expr)
 not_expr.setParseAction(lambda x: query_ast.Not(x[1]))
 paren_expr.setParseAction(lambda x: x[1])
 

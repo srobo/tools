@@ -192,3 +192,36 @@ class Code(Terminal):
     def sexpr(self):
         return "(Code {0})".format(list(self.codes))
 
+
+class Function(NonTerminal):
+
+    _functions = {}
+
+    @classmethod
+    def register(cls, name):
+        def wrap(f):
+            cls._functions[name] = f
+            return f
+        return wrap
+
+    @classmethod
+    def registered_names(cls):
+        return cls._functions.keys()
+
+    def __init__(self, func_name, node):
+        self.func_name = func_name
+        self.node = node
+
+    def match(self, inv_nodes):
+        ret = []
+        for match in self.node.match(inv_nodes):
+            func_res = self._functions[self.func_name](match)
+            if type(func_res) in (list, tuple):
+                ret = ret + list(func_res)
+            else:
+                ret.append(func_res)
+        return list(set(reduce(lambda x, y: list(x) + list(y),
+                               map(self._functions[self.func_name],
+                                   self.node.match(inv_nodes)),
+                               [])))
+

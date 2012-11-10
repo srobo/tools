@@ -151,6 +151,19 @@ class Labelled(Terminal):
         return "(Labelled {0})".format(self.labelled)
 
 
+class Assy(Terminal):
+    def __init__(self, assy):
+        super(Assy, self).__init__()
+        self.assy = assy.lower() in ('true', '1')
+
+    def match_single(self, inv_node):
+        return self.assy == (hasattr(inv_node, 'code')
+                             and hasattr(inv_node, 'children'))
+
+    def sexpr(self):
+        return "(Assy {0})".format(self.assy)
+
+
 class Path(Terminal):
     def __init__(self, *paths):
         super(Path, self).__init__()

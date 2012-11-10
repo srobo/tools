@@ -26,6 +26,7 @@ TYPE       = Literal("type")
 COND       = Or((Literal("condition"), Literal("cond")))
 LABELLED   = Literal("labelled")
 PATH       = Literal("path")
+ASSY       = Literal("assy")
 
 ASSET_CODE = Regex(r"(sr)?[a-zA-Z0-9]+")
 ASSET_NAME = Regex(r"[a-zA-Z0-9\.\*\-\?\[\]]+")
@@ -57,6 +58,7 @@ path_list   = generate_in_expr(PATH, PATH_RE)
 path_expr   = path_list | path_single
 
 label_expr  = LABELLED + EQUALITY + Or((TRUE, FALSE))
+assy_expr  = ASSY + EQUALITY + Or((TRUE, FALSE))
 
 or_expr     = Forward()
 and_expr    = Forward()
@@ -65,7 +67,7 @@ primary     = Forward()
 func_expr   = Forward()
 
 base_expr   = (not_expr | code_expr | type_expr | cond_expr |
-               path_expr | label_expr)
+               path_expr | label_expr | assy_expr)
 paren_expr  = L_BRKT + or_expr + R_BRKT
 
 primary     << (base_expr | paren_expr)
@@ -107,6 +109,7 @@ cond_list.setParseAction(lambda x: query_ast.Condition(*x[3::2]))
 path_single.setParseAction(lambda x: query_ast.Path(x[2]))
 path_list.setParseAction(lambda x: query_ast.Path(*x[3::2]))
 label_expr.setParseAction(lambda x: query_ast.Labelled(x[2]))
+assy_expr.setParseAction(lambda x: query_ast.Assy(x[2]))
 or_expr.setParseAction(_pa_or_expr)
 and_expr.setParseAction(_pa_and_expr)
 func_expr.setParseAction(_pa_func_expr)

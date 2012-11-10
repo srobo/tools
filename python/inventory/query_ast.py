@@ -27,7 +27,7 @@ class Not(NonTerminal):
         self.node = node
 
     def match(self, inv_nodes):
-        matches = self.left.match(inv_nodes)
+        matches = self.node.match(inv_nodes)
         return list(set([x for x in inv_nodes if x not in matches]))
 
     def sexpr(self):

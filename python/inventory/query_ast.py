@@ -248,3 +248,10 @@ def _children(inv_node):
 def _siblings(inv_node):
     return filter(lambda x: x is not inv_node,
                   inv_node.parent.children.values())
+
+@Function.register('descendants')
+def _descendants(inv_node):
+    def rec(node):
+        children = getattr(node, 'children', {})
+        return sum(map(rec, children.values()), [node])
+    return rec(inv_node)[1:]

@@ -225,6 +225,9 @@ class Function(NonTerminal):
                                    self.node.match(inv_nodes)),
                                [])))
 
+    def sexpr(self):
+        return "(Function '{0}' {1})".format(self.func_name, self.node.sexpr())
+
 @Function.register('parent')
 def _parent(inv_node):
     return [inv_node.parent]

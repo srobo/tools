@@ -76,7 +76,7 @@ func_expr   << (FUNCTIONS + OF + func_expr | primary)
 
 and_expr    << (func_expr + Optional(AND) + and_expr | func_expr)
 or_expr     << (and_expr + OR + or_expr | and_expr)
-not_expr    << Or((NOT, BANG)) + primary
+not_expr    << Or((NOT, BANG)) + func_expr
 
 root        = or_expr
 

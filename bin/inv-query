@@ -6,8 +6,10 @@ import argparse, sys
 from pyparsing import ParseException
 
 def _get_args():
-    description = """ """
-    parser = argparse.ArgumentParser(description=description)
+    description = query.__doc__
+    parser = argparse.ArgumentParser(
+        description=description,
+        formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--codes', action='store_true')
     parser.add_argument('--paths', action='store_true')
     parser.add_argument('-v', action='store_true')

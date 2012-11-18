@@ -1,6 +1,7 @@
 import inventory
 import oldinv
 import query_parser
+import sys
 
 def _get_inv():
     top = oldinv.gettoplevel()

@@ -105,7 +105,7 @@ main_file = os.path.join(temp_dir, 'main.tex')
 with open(main_file, 'w') as f:
     f.write(total)
 
-zip_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data.zip')
+zip_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'latex-assets.zip')
 with zipfile.ZipFile(zip_path, 'r') as zf:
     for name in ('ecs.png', 'moto.png', 'bitbox.png', 'sr-logo.pdf'):
         zf.extract(name, temp_dir)

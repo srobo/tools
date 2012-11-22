@@ -143,7 +143,8 @@ def _get_inv():
         exit(1)
     return inventory.Inventory(top).root
 
-def query(query_str):
-    inv = _get_inv()
+def query(query_str, inv=None):
+    if inv is None:
+        inv = _get_inv()
     tree = query_parser.search_tree(query_str)
     return tree.match(inv.parts.values())

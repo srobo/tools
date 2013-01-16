@@ -41,7 +41,7 @@ for trans in budline.transactions:
 
 
 print "Summary: line is",
-if remaining_funds > 0:
+if remaining_funds >= 0:
 	print "under",
 else:
 	print "OVER",

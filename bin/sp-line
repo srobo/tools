@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+
+import sr.spending as spending
+import sys, os, argparse
+
+desc = "Inspect spending for budget line"
+
+p = argparse.ArgumentParser(description=desc)
+p.add_argument("budgetline", help="The budget line to inspect")
+
+args = p.parse_args()

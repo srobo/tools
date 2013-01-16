@@ -1,5 +1,5 @@
 "Library for accessing the spending files"
-import yaml, os, sys, datetime, budget
+import yaml, os, sys, datetime, sr.budget
 from decimal import Decimal as D
 
 class Transaction(object):

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sr.spending as spending
+import sr.spending.spending as spending
 import sys, os, argparse
 
 desc = "Inspect spending for budget line"
@@ -9,3 +9,17 @@ p = argparse.ArgumentParser(description=desc)
 p.add_argument("budgetline", help="The budget line to inspect")
 
 args = p.parse_args()
+
+if not os.path.exists('.git'):
+	print >>sys.stderr, "Please run in spending.git top level directory"
+	sys.exit(1)
+
+t = spending.load_transactions('.')
+grp = spending.group_trans_by_budget_line(t)
+
+if not args.budgetline in grp:
+	print >>sys.stderr, "Budget line '" + args.budgetline + "' not found"
+	sys.exit(1)
+
+# Clean up shortly
+print repr(grp[args.budgetline])

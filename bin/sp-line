@@ -22,6 +22,8 @@ except KeyError:
 	print >>sys.stderr, "Budget line '" + args.budgetline + "' not found"
 	sys.exit(1)
 
+remaining_funds = budline.cost
+
 for trans in budline.transactions:
 	if trans.date != None:
 		print "Transaction '" + trans.name + "' " + trans.date + ":"
@@ -29,3 +31,12 @@ for trans in budline.transactions:
 		print "Transaction '" + trans.name + "' (pending):"
 	print "  Cost: " + str(trans.cost)
 	print "  Trac: #" + str(trans.trac)
+	remaining_funds -= trans.cost
+
+
+print "Summary: line is",
+if remaining_funds > 0:
+	print "under",
+else:
+	print "OVER",
+print "budget by " + str(remaining_funds)

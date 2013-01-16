@@ -21,5 +21,10 @@ if not args.budgetline in grp:
 	print >>sys.stderr, "Budget line '" + args.budgetline + "' not found"
 	sys.exit(1)
 
-# Clean up shortly
-print repr(grp[args.budgetline])
+for trans in grp[args.budgetline]:
+	if trans.date != None:
+		print "Transaction '" + trans.name + "' " + trans.date + ":"
+	else:
+		print "Transaction '" + trans.name + "' (pending):"
+	print "  Cost: " + str(trans.cost)
+	print "  Trac: #" + str(trans.trac)

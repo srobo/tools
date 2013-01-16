@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# coding=utf8
+
 
 import sr.spending.spending as spending
 import sys, os, argparse
@@ -23,12 +25,16 @@ except KeyError:
 	sys.exit(1)
 
 remaining_funds = budline.cost
+paid_funds = 0
+pending_funds = 0
 
 for trans in budline.transactions:
 	if trans.date != None:
 		print "Transaction '" + trans.name + "' " + trans.date + ":"
+		paid_funds += trans.cost
 	else:
 		print "Transaction '" + trans.name + "' (pending):"
+		pending_funds += trans.cost
 	print "  Cost: " + str(trans.cost)
 	print "  Trac: #" + str(trans.trac)
 	remaining_funds -= trans.cost
@@ -39,4 +45,5 @@ if remaining_funds > 0:
 	print "under",
 else:
 	print "OVER",
-print "budget by " + str(remaining_funds)
+print "budget by £" + str(remaining_funds),
+print "(£" + str(pending_funds) + " pounds pending)"

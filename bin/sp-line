@@ -14,14 +14,15 @@ if not os.path.exists('.git'):
 	print >>sys.stderr, "Please run in spending.git top level directory"
 	sys.exit(1)
 
-t = spending.load_transactions('.')
-grp = spending.group_trans_by_budget_line(t)
+bud = spending.load_budget_with_spending('.')
 
-if not args.budgetline in grp:
+try:
+	budline = bud.path(args.budgetline)
+except KeyError:
 	print >>sys.stderr, "Budget line '" + args.budgetline + "' not found"
 	sys.exit(1)
 
-for trans in grp[args.budgetline]:
+for trans in budline.transactions:
 	if trans.date != None:
 		print "Transaction '" + trans.name + "' " + trans.date + ":"
 	else:

@@ -48,8 +48,9 @@ def load_transactions(root):
             
             # The date of the transaction if it has been reconciled. None if
             # it's still pending.
+            topdir = fullp[len(root)+1:fullp.find('/',len(root)+1)]
             repopath = fullp[len(root)+1:-(len(fname)+1)]
-            if repopath == "pending":
+            if topdir == "pending":
                 date = None
             else:
                 try:

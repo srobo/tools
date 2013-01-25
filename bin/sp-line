@@ -30,7 +30,7 @@ pending_funds = 0
 
 for trans in budline.transactions:
 	if trans.date != None:
-		print "Transaction '" + trans.name + "' " + trans.date + ":"
+		print "Transaction '" + trans.name + "' " + str(trans.date) + ":"
 		paid_funds += trans.cost
 	else:
 		print "Transaction '" + trans.name + "' (pending):"

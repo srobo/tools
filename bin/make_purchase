@@ -1,0 +1,69 @@
+#!/usr/bin/env python
+# coding=utf8
+
+import xmlrpclib, getpass, os
+from random import choice
+from time import sleep
+
+_SERVER = "scarzybrook.is-a-geek.com"
+_PORT = 5443
+
+user = raw_input("Username: ")
+supplier = raw_input("Supplier: ")
+items = raw_input("Items to be purchased, separated by commas: ")
+purpose = raw_input("What are the items for?: ")
+budget = raw_input("Budget line: ")
+
+server = xmlrpclib.ServerProxy("".join(["https://",user,":",getpass.getpass(),"@",_SERVER,":",str(_PORT),"/trac/login/rpc"]))
+
+if "ticket.create" not in server.system.listMethods():
+	print "ARGH!"
+	sleep(3)
+	print "That'll be all"
+	exit
+
+description = ""
+
+msg = ""
+msg += "{{{Payee: " + str(_USER) + "}}}\n"
+msg += "{{{Supplier: " + str(supplier) + "}}}\n"
+msg += "{{{Items: }}}\n"
+totalCost = 0
+for item in items.split(','):
+	i,j = item.split(':')
+	totalCost += float(j.strip('£ '))
+	msg += "  || " + i + ' || £' + j.strip('£ ') + "||\n" 
+	description += i + ", "
+msg += "{{{Total cost: £%.2f}}}\n" % totalCost
+msg += "{{{Budget line: " + str(budget) + "}}}\n"
+
+name = ""
+name += items.split(',')[0].split(':')[0]
+if len(items.split(',')) > 1:
+	name += '-and-'
+	name += choice(items.split(',')[1:]).split(':')[0]
+	if len(items.split(',')) > 2:
+		name += '-etc'
+
+summary = name.replace("-"," ") + " for " + purpose
+name += ".yaml"
+
+description = description.rstrip(', ')
+description += " for " + purpose
+
+ticketNum = server.ticket.create(summary, msg, {'component':"Purchasing",'owner':"treasurer",'type':"task"})
+
+if not ticketNum > 0:
+	print "Unable to create a valid ticket"
+	exit()
+
+spendName = os.path.join("pending",name)
+spendFile = open(spendName, "w")
+
+spendFile.write("summary: " + summary + '\n')
+spendFile.write("description: >-\n  " + description + '\n')
+spendFile.write("budget: " + budget + '\n')
+spendFile.write("cost: " + str(totalCost) + '\n')
+spendFile.write("trac: " + str(ticketNum) + '\n')
+
+print "Purchase ready (trac: #" + str(ticketNum) + ")"

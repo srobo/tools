@@ -10,7 +10,7 @@ _PORT = 443
 
 user = raw_input("Username: ")
 supplier = raw_input("Supplier: ")
-items = raw_input("Items to be purchased, separated by commas: ")
+items = raw_input("Items to be purchased (item:cost,item:cost...): ")
 purpose = raw_input("What are the items for?: ")
 budget = raw_input("Budget line: ")
 

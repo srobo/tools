@@ -5,8 +5,8 @@ import xmlrpclib, getpass, os
 from random import choice
 from time import sleep
 
-_SERVER = "scarzybrook.is-a-geek.com"
-_PORT = 5443
+_SERVER = "studentrobotics.org"
+_PORT = 443
 
 user = raw_input("Username: ")
 supplier = raw_input("Supplier: ")

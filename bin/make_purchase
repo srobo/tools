@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding=utf8
 
+import sr.spending.spending as srspending
+import sr.budget.budget as srbudget
 import xmlrpclib, getpass, os
 from random import choice
 from time import sleep
@@ -13,6 +15,16 @@ supplier = raw_input("Supplier: ")
 items = raw_input("Items to be purchased (item:cost,item:cost...): ")
 purpose = raw_input("What are the items for?: ")
 budget = raw_input("Budget line: ")
+
+try:
+	budgetline = srspending.load_budget_with_spending('.').path(budget)
+except KeyError:
+	print >>sys.stderr, "Budget line '" + budget + "' not found"
+	exit()
+
+spent = 0
+for trans in budgetline.transactions:
+	spent +=trans.cost
 
 server = xmlrpclib.ServerProxy("".join(["https://",user,":",getpass.getpass(),"@",_SERVER,":",str(_PORT),"/trac/login/rpc"]))
 
@@ -37,11 +49,16 @@ for item in items.split(','):
 msg += "{{{Total cost: £%.2f}}}\n" % totalCost
 msg += "{{{Budget line: " + str(budget) + "}}}\n"
 
+if float(spent) + totalCost > budgetline.cost:
+	print "That purchase takes you over the budget limit"
+	if not raw_input("Continue anyway? [y/N] ").lower() == 'y':
+		exit()
+
 name = ""
-name += items.split(',')[0].split(':')[0]
+name += items.split(',')[0].split(':')[0].replace(" ","-")
 if len(items.split(',')) > 1:
 	name += '-and-'
-	name += choice(items.split(',')[1:]).split(':')[0]
+	name += choice(items.split(',')[1:]).split(':')[0].replace(" ","-")
 	if len(items.split(',')) > 2:
 		name += '-etc'
 

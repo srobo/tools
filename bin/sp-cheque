@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import sr.spending.spending as spending
+import xmlrpclib, argparse, getpass, yaml
+
+_SERVER = "studentrobotics.org"
+_PORT = 443
+
+parser = argparse .ArgumentParser("Add a cheque to a purchase")
+parser.add_argument("CHEQUE", help="Cheque number")
+parser.add_argument("TRAC", type=int, help="Trac ticket number")
+
+args = parser.parse_args()
+
+spends =  spending.load_transactions('.')
+for spend in spends:
+	if spend.trac == args.TRAC:
+		print "Updating " + spend.fname
+		spendfile = open(spend.fname,'r+')
+		for line in spendfile.readlines():
+			if line.startswith("trac"):
+				spendfile.write("cheque: " + str(args.CHEQUE) + "\n")
+			if line.startswith("cheque"):
+				print "ERROR: This file already has a cheque attribute"
+				quit()
+		spendfile.close()
+
+server = xmlrpclib.ServerProxy("".join(["https://",raw_input("Username: "),":",getpass.getpass(),"@",_SERVER,":",str(_PORT),"/trac/login/rpc"]))
+server.ticket.update(int(args.TRAC),"Paid, cheque " + args.CHEQUE)

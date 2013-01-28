@@ -40,7 +40,7 @@ for trans in budline.transactions:
 	remaining_funds -= trans.cost
 
 
-print "Summary: line is",
+print "Summary: £{0} budgeted, £{1} spent, line is".format(budline.cost, paid_funds + pending_funds),
 if remaining_funds >= 0:
 	print "under",
 else:

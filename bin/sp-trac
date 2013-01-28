@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+# coding=utf8
+
+import sr.spending.spending as srspending
+import xmlrpclib, getpass, os, re
+
+_SERVER = "studentrobotics.org"
+_PORT = 443
+
+spends = srspending.load_transactions('.')
+
+spendsumgrp = {}
+for s in spends:
+	if s.trac in spendsumgrp:
+		spendsumgrp[s.trac] += float(s.cost)
+	else:
+		spendsumgrp[s.trac] = float(s.cost)
+
+server = xmlrpclib.ServerProxy("".join(["https://","anonymous","@",_SERVER,":",str(_PORT),"/trac/rpc"]))
+mserver = xmlrpclib.MultiCall(server)
+
+tickets = server.ticket.query("status!=closed&component=Purchasing")
+for ticket in tickets:
+	mserver.ticket.get(ticket)
+
+costsumgrp = {}
+for ticket in mserver():
+	match = re.search('Total cost: \xa3([0-9.]+)',ticket[3]['description'])
+	if match is None:
+		print "Unable to determine cost for ticket " + str(ticket[0]) + ". Invalid formatting"
+		continue
+	if ticket[0] in costsumgrp:
+		costsumgrp[ticket[0]] += float(match.groups()[0])
+	else:
+		costsumgrp[ticket[0]] = float(match.groups()[0])
+
+for val in costsumgrp:
+	if spendsumgrp[val] != costsumgrp[val]:
+		print "Ticket " + str(val) + " does not match transactions"
+		print "\tTicket cost:  £" + str(costsumgrp[val])
+		print "\tTransactions: £" + str(spendsumgrp[val])

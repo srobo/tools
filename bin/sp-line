@@ -46,4 +46,4 @@ if remaining_funds >= 0:
 else:
 	print "OVER",
 print "budget by £" + str(remaining_funds),
-print "(£" + str(pending_funds) + " pounds pending)"
+print "(£" + str(pending_funds) + " pending)"

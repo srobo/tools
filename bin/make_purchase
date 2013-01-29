@@ -60,8 +60,10 @@ for item in items:
 msg += "{{{Total cost: £%.2f}}}\n" % totalCost
 msg += "{{{Budget line: " + str(budget) + "}}}\n"
 
-if float(spent) + totalCost > budgetline.cost:
+if float(spent) + totalCost > float(budgetline.cost):
 	print "That purchase takes you over the budget limit"
+	print "\tBudget line: " + str(budgetline.cost)
+	print "\tExpenditure: " + str(float(spent) + totalCost) + " (" + str(int((float(spent) + totalCost)*100/float(budgetline.cost))) + "%)"
 	if not raw_input("Continue anyway? [y/N] ").lower() == 'y':
 		exit()
 
@@ -93,5 +95,7 @@ spendFile.write("description: >-\n  " + description + '\n')
 spendFile.write("budget: " + budget + '\n')
 spendFile.write("cost: " + str(totalCost) + '\n')
 spendFile.write("trac: " + str(ticketNum) + '\n')
+spendFile.flush()
+spendFile.close()
 
 print "Purchase ready (trac: #" + str(ticketNum) + ")"

@@ -3,12 +3,16 @@
 
 import sr.spending.spending as srspending
 import sr.budget.budget as srbudget
-import xmlrpclib, getpass, os
+import xmlrpclib, getpass, os, sys
 from random import choice
 from time import sleep
 
 _SERVER = "studentrobotics.org"
 _PORT = 443
+
+if not (os.path.exists('.git') and os.path.exists('spending.py')):
+	print >>sys.stderr, "Please run in spending.git top level directory"
+	exit(1)
 
 user = raw_input("Username: ")
 supplier = raw_input("Supplier: ")

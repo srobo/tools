@@ -2,7 +2,11 @@
 # coding=utf8
 
 import sr.spending.spending as srspending
-import xmlrpclib, getpass, os, re
+import xmlrpclib, getpass, os, re, sys
+
+if not (os.path.exists('.git') and os.path.exists('spending.py')):
+	print >>sys.stderr, "Please run in spending.git top level directory"
+	exit(1)
 
 _SERVER = "studentrobotics.org"
 _PORT = 443

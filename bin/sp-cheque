@@ -29,4 +29,4 @@ for spend in spends:
 		spendfile.close()
 
 server = xmlrpclib.ServerProxy("".join(["https://",raw_input("Username: "),":",getpass.getpass(),"@",_SERVER,":",str(_PORT),"/trac/login/rpc"]))
-server.ticket.update(int(args.TRAC),"Paid, cheque " + args.CHEQUE)
+server.ticket.update(int(args.TRAC),"Paid, cheque " + args.CHEQUE,{'status': 'closed', 'resolution': 'fixed'})

@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+
+import sr.spending.spending as srspending
+import os, sys, re, argparse, yaml
+
+if not (os.path.exists('.git') and os.path.exists('spending.py')):
+        print >>sys.stderr, "Please run in spending.git top level directory"
+        exit(1)
+
+parser = argparse.ArgumentParser("Parse bank data to organise transactions")
+parser.add_argument("FILE", help="The file containing the bank data")
+args = parser.parse_args()
+
+if not os.path.exists(args.FILE):
+	print "ERROR: File \"" + str(args.FILE) + "\" not found"
+	exit(1)
+
+#Sort transactions by cheque
+srspends = srspending.load_transactions('.')
+spends = {}
+for spend in srspends:
+	y = yaml.load(open(spend.fname, 'r'))
+	if not "cheque" in y:
+		continue
+	if y["cheque"] in spends:
+		spends[y["cheque"]].append(spend)
+	else:
+		spends[y["cheque"]] = [spend]
+
+data = open(args.FILE)
+for line in data.readlines():
+	splits = re.split(',',line,5,0)
+	#0 - Number
+	#1 - Date
+	#2 - Account
+	#3 - Amount
+	#4 - Subcatagory
+	#5 - Memo
+	if splits[4] == "CHQ":
+		date = re.match(r'^(\d{1,2})/(\d{1,2})/(\d{4})$',splits[1])
+		if date == None:
+			print "Warning: Unable to match date on line:"
+			print line
+			continue
+		if not os.path.exists(date.group(3)):
+			os.mkdir(date.group(3))
+		if not os.path.exists(date.group(3) + '/' + date.group(2)):
+			os.mkdir(date.group(3) + '/' + date.group(2))
+		if not os.path.exists(date.group(3) + '/' + date.group(2) + '/' + date.group(1)):
+			os.mkdir(date.group(3) + '/' + date.group(2) + '/' + date.group(1))
+		for spend in spends[int(splits[0])]:
+			relpath = os.path.relpath(spend.fname)
+			if not re.match(r'^pending/',relpath):
+				print "ERROR: transaction not pending"
+				continue
+			os.system('git mv \"{0}\" \"{1}\"'.format(spend.fname,date.group(3) + '/' + date.group(2) + '/' + date.group(1) + '/' + spend.name + '.yaml'))

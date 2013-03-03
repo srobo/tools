@@ -48,6 +48,7 @@ sr-ra-4-1k,4pack of 1k resistors 1206 (0603 equiv),1770133,farnell,50,1206_res_a
 
 # Capacitors
 sr-c-10p-50v,10pF capacitor 0603 50V,1759053,farnell,100,0603
+sr-c-27p-0402-50v,27p capacitor 0402 50V C0G/NP0,1414584,farnell,10,0402
 sr-c-220p-50v,220pF capacitor 0603 50V,1759070,farnell,100,0603
 sr-c-1n,1n capacitor 0603,1759088,farnell,100,0603
 sr-c-1n-0402-50v,1n capacitor 0402 50V X7R,1758991,farnell,100,0402
@@ -272,6 +273,7 @@ sr-sw-rotary-12mm-pb,12mm 24-det Rotary encoder (6mm D shaft) with push button,1
 # Crystals
 sr-xtal-32k, 32kHz Crystal,1611828,farnell,1,through_hole
 sr-xtal-8m,8MHz Crystal,1611765,farnell,1,smt_crystal(hc49)
+sr-xtal-ABMM2-8.000MHZ-E2-T,8MHz Crystal 20ppm,815-ABMM2-8-E2T,mouser,1,smt_crystal
 
 # Assemblies
 sr-asm-xbee,2(sr-cn-socket10-2mm). XBee connector assembly,,

@@ -52,6 +52,7 @@ sr-c-220p-50v,220pF capacitor 0603 50V,1759070,farnell,100,0603
 sr-c-1n,1n capacitor 0603,1759088,farnell,100,0603
 sr-c-2n2,2.2nF capacitor 0603,1759093,farnell,100,0603
 sr-c-10n,10n capacitor 0603,1759819,farnell,4000,0603
+sr-c-33n-0402-25v,33n capacitor 0402 25V X7R,1865445,farnell,10,0402
 sr-c-100n,100n capacitor 0603,1759017,farnell,100,0603
 sr-c-100n-0402-16v,100n capacitor 0402 16V X7R,1758896,farnell,100,0402
 sr-c-100n-0603-50v,100n capacitor 0603 50V X7R,1759122,farnell,100,0603
@@ -59,9 +60,11 @@ sr-c-330n-0805,0.33u capacitor 0805,1759174,farnell,100,0805
 sr-c-470n,0.47u capacitor 0603,1759021,farnell,100,0603
 sr-c-1u,1u electrolytic capacitor,1236655,farnell,5,through_hole
 sr-c-1u-0805,1u ceramic capacitor 0805 50V,1611943,farnell,1,0805
+sr-c-1u-0603-16v,1u capacitor 0603 16V X7R,2112839,farnell,1,0603
 sr-c-2u2-0805,2u2 capacitor 0805 16V,1759480,farnell,100,0805
 sr-c-4u7-0805-16v,4.7uF capacitor 0805 16V,1759427,farnell,100,0805
 sr-c-10u-0805,10u capacitor 0805 6.3V,1759136,farnell,100,0805
+sr-c-10u-1206-16v,10u capacitor 1206 16V X7R,2070502,farnell,10,1206
 sr-c-10u-1210-25v,10u capacitor 1210 25V,1650940,farnell,1,1210
 sr-c-15u-7343,15u tantalum capacitor 25V,1754110,farnell,5,7343
 sr-c-22u-1210,22u ceramic capacitor 1210 16V,1759466,farnell,10,1210

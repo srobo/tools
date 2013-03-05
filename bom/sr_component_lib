@@ -195,6 +195,7 @@ sr-ic-ua78l05,UA78L05 5V linear voltage regulator,1236590,farnell,1,sot-89-3
 sr-ic-ld1117s50,LD1117S50TR 5V linear voltage reg 800mA,686-9379,rs,25,sot-223
 sr-ic-ld1117s33,LD1117S33CTR 3.3V 800mA linear voltage reg - hefty,686-9388,rs,25,sot223
 sr-ic-ts5205cx533,TS5205CX533 3.3V 150mA linear voltage reg - weedy,398-708,rs,50,sot23-5
+sr-ic-mcp1703at3302emb,MCP1703AT-3302E/MB 3.3V 250mA linear voltage reg - middling,579-MCP1703AT3302EMB,mouser,1,sot-89
 sr-ic-tps73025,EQUIV(ish) LP5951MF-2.5 2.5V 150mA(NOT 200mA) linear voltage reg,1312655,farnell,1,sot23-5
 sr-ic-tl5001acd,TL5001ACD 20-500kHz PWM controller,1100958,farnell,1,soic8
 sr-ic-lm2704,LM2704 step-up DC/DC converter,8207461,farnell,1,sot25

@@ -243,7 +243,7 @@ sr-ic-ft232rq,FT232RQ USB to UART,895-FT232RQ,mouser,1,qfn32
 sr-ic-dg2731dq,DG2731DQ-T1-E3 dual SPDT analogue switch,1414078,farnell,1,msop10
 sr-ic-tsop2236,IR 36KHz receiver and demodulator,4913061,farnell,1,through-hole
 sr-ic-ts555cd,555 timer 8 pin soic,1737202,farnell,1,soic8
-
+sr-ic-vnh5019,VNH5019A-E 30A H-Bridge,511-VNH5019A-E,mouser,1,power-so30
 
 # FETs
 sr-fet-n-bss123,BSS123 n-channel mosfet,1510764,farnell,5,sot-23

@@ -223,6 +223,7 @@ sr-ic-sn65lvds2,SN65LVDS2DBVTG4 LVDS receiver,528-084,rs,5,sot23-5
 sr-ic-sn65lvds051,SN65LVDS051PW LVDS dual transceiver,660-9004P,rs,1,tssop16
 sr-ic-fxlp34,FXLP34P5X 1-bit non-inverting level translator,1652415,farnell,1,sc70-5
 sr-ic-txs0102,TXS0102DCT 2-bit non-inverting bi-directional level translator,595-TXS0102DCTR,mouser,1,ssop8
+sr-ic-adum3211arz,ADUM3211ARZ 2.5kV 10Mbps dual bi-directional isolator,ADUM3211ARZ-ND,digikey,1,soic8
 
 # Misc
 sr-ic-fan7380,FAN7380 dual MOSFET driver,1241880,farnell,1,soic8
@@ -237,6 +238,7 @@ sr-ic-lm339,LM339PT quad comparator,1750192,farnell,1,tssop14
 sr-ic-as5030,ADS5030 magnetic rotary sensor,1630797,farnell,1,tssop16
 sr-ic-ts2431,TS2431ILT 2.5V to 24V programmable voltage reference,1374139,farnell,1,sot23
 sr-ic-ft232rl,FT232RL USB to UART,1146032,farnell,1,ssop28
+sr-ic-ft232rq,FT232RQ USB to UART,895-FT232RQ,mouser,1,qfn32
 sr-ic-dg2731dq,DG2731DQ-T1-E3 dual SPDT analogue switch,1414078,farnell,1,msop10
 sr-ic-tsop2236,IR 36KHz receiver and demodulator,4913061,farnell,1,through-hole
 sr-ic-ts555cd,555 timer 8 pin soic,1737202,farnell,1,soic8

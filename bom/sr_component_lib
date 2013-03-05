@@ -249,6 +249,9 @@ sr-ic-tsop2236,IR 36KHz receiver and demodulator,4913061,farnell,1,through-hole
 sr-ic-ts555cd,555 timer 8 pin soic,1737202,farnell,1,soic8
 sr-ic-vnh5019,VNH5019A-E 30A H-Bridge,511-VNH5019A-E,mouser,1,power-so30
 
+# BJTs
+sr-npn-bc846b,BC846B NPN BJT 65V 100mA,1081229,farnell,10,sot23
+
 # FETs
 sr-fet-n-bss123,BSS123 n-channel mosfet,1510764,farnell,5,sot-23
 sr-fet-n-sn7002w,SN7002W L6433 n-channel mosfet,1471758,farnell,1,sot323

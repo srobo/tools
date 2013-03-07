@@ -104,6 +104,7 @@ sr-l-22u-6300ma,22u 6.3A smt inductor,1783727,farnell,1,smt_inductor
 sr-l-330u,330u 280mA smt inductor,1612678,farnell,1,smt_inductor
 
 # Ferrite Beads (value is current rating)
+sr-fb-200m-1k-0402,200mA 1k @ 100MHz 0402,1669673,farnell,0402
 sr-fb-300m,300mA 1k @ 100MHz 0603,1463451,farnell,1,0603
 sr-fb-3,3A 100R @ 100MHz 1206,1653393,farnell,1,1206
 

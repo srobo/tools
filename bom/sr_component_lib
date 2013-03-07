@@ -188,6 +188,7 @@ sr-d-bat754c,schottky diode dual,1081205,farnell,5,sot23
 sr-d-bat754a,Schottky diode dual,1081204,farnell,1,sot23
 sr-d-bas40h,Schottky diode 120mA 40V,1757749,farnell,1,sod123
 sr-d-bzx384c3v3, zener diode 3.3V 5%,8735646,farnell,10,sod323
+sr-d-mmsz4689t1g,zener diode 5.1V 500mW,1459121,farnell,1,sod123
 sr-d-tvs-16v-smcj16a,16v tvs diode 1500W,1470983,farnell,1,do-214ab(smc)
 sr-d-smaj16a,16V unidirectional TVS diode 400W,1578964,farnell,5,do-214ac(sma)
 sr-d-smaj16ca,16V bidirectional TVS diode 400W,1578965,farnell,5,do-214ac(sma)

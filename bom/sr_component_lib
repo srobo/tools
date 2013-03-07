@@ -141,7 +141,9 @@ sr-cn-header4, 4Way header 1 row programming,3418303,farnell,1,through_hole
 sr-cn-header4tp, 4 Way header 1 row - turned-pin,1668577,farnell,1,through_hole
 sr-cn-header5, 5Way header 1 row pic programming,1187826,farnell,1,through_hole
 sr-cn-header8-keyed-7pin,8 way keyed ELCO header modded to have 7 pins,636563,farnell,1,through_hole
-sr-cn-header2x4,2x4 through-hole 2.54mm header,1668491,farnell,1,through_hole
+sr-cn-header2x4,2x4 through-hole 2.54mm header with short pins,1668491,farnell,1,through_hole
+sr-cn-header2x4-std,2x4 through-hole 2.54mm header,1593441,farnell,10,through_hole
+sr-cn-header2x5-1.27mm,2x5 through-hole 1.27mm header,1577743,farnell,5,through_hole
 sr-cn-header2x7-smt,2x7 surface mount 2.5mm header,9689605,farnell,1,through_hole
 sr-cn-header2x7-box,2x7 through-hole 2.5mm boxed header,8395926,farnell,1,through_hole
 sr-cn-header2x10-1.27mm,2x10 through-hole 1.27mm header,1022306,farnell,5,through_hole

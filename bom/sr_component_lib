@@ -169,12 +169,17 @@ sr-cn-usb-micro-b,Micro USB B connector for top mounting,714-2334,rs,5,through_h
 
 # LEDs
 sr-led-green-plcc2,LED PLCC2 GREEN,4134436,farnell,5,plcc2
+sr-led-green-0805,LED 0805 Green,1318243,farnell,10,0805
 sr-led-red-0603,LED 0603 RED,1465988,farnell,10,0603
+sr-led-red-0805,LED 0805 Red,8529949,farnell,10,0805
 sr-led-redgreen,Bi-Colour LED Red/Green,5790888,farnell,5,smt_dual_led
 sr-led-red-plcc2,LED PLCC2 RED,4134321,farnell,5,plcc2
 sr-led-yellow-plcc2,LED PLCC2 YELLOW,4134424,farnell,5,plcc2
+sr-led-blue-0805,LED 0805 Blue,2217974,farnell,1,0805
 sr-led-ir-t1,950nm IR LED side or top,1045378,farnell,5,through-hole
 sr-led-red-smt,red side-mounted led,8530327,farnell,10,sr_led-smt
+sr-led-redgreen-0805,Bi-Colour LED Red/Green 0805,2079908,farnell,1,0805
+sr-led-redblue-dual,Dual LED Red/Blue,1686083,farnell,5,0805_split
 
 # Special nothing
 sr-nothing,nothing,,

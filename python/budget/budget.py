@@ -23,6 +23,11 @@ class BudgetItem(object):
         self.summary = y["summary"]
         self.description = y["description"]
 
+        if "closed" in y:
+            self.closed = y["closed"]
+        else:
+            self.closed = False
+
         if "consumable" in y:
             self.consumable = y["consumable"]
         else:

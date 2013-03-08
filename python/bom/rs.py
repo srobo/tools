@@ -71,13 +71,7 @@ class Item(distpart.DistItem):
     def _get_availability(self, soup):
         "Extract the part availability from the soup"
 
-        # This div contains availability
-        kd = soup.find( attrs = { "class": "keyDetailsDiv" } )
-
-        # The label for the part availability field
-        av = kd.find( attrs = {"class":"keyLabel"}, text="Availability" )
-        # And the actual availability itself:
-        av = av.find_next( attrs = {"class":"keyValue"} )
+        av = soup.find( attrs = {"class":"instockMessage"} )
 
         if "In stock for next working day delivery" in av.text:
             self.avail = True

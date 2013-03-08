@@ -68,7 +68,8 @@ class Item(distpart.DistItem):
         sd = av.find( attrs = {"class": "stockDetail"} )
 
         if sd != None:
-            stock = sd.find("b").text
+            # Farnell now report their stock in the UK/EU separately
+            stock = [s.text for s in sd.find_all("b")]
         else:
             "Some parts have a different format"
 
@@ -96,10 +97,14 @@ class Item(distpart.DistItem):
             else:
                 stock = stock.text
 
-        # They put commas in their numbers
-        stock = stock.replace( ",", "" )
+        if isinstance(stock, basestring):
+            stock = [stock]
 
-        self.avail = int(stock)
+        # They put commas in their numbers
+        stock = [int(s.replace( ",", "" )) for s in stock]
+
+        # Sum the stock from all warehouses
+        self.avail = sum(stock)
 
     def _parse_quantity(self, q):
         "Parse a quantity string, return the lower boundary"

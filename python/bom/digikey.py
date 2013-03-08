@@ -4,6 +4,7 @@ from cachedfetch import grab_url_cached
 from srBeautifulSoup import BeautifulSoup
 from decimal import Decimal
 import distpart
+import re
 
 class Item(distpart.DistItem):
     """Represents a Digikey item"""
@@ -27,8 +28,10 @@ class Item(distpart.DistItem):
         if qa_heading == None:
             raise distpart.NonExistentPart( self.part_number )
 
-        qa = qa_heading.findNext('td').contents[0].string
+        qa = qa_heading.findNext('td').text
+        qa = re.search("[1-9](?:\d{0,2})(?:,\d{3})*", qa)
         if qa != None:
+            qa = qa.group(0)
             self.avail = int(qa.replace(',',''))
         else:
             self.avail = 0

@@ -23,7 +23,7 @@ sr-r-1k1-0402,1k1 0402 chip resistor,2072548,farnell,100,0402
 sr-r-2k4,2k4 0603 chip resistor,9330879,farnell,50,0603
 sr-r-2k7,2k7 0603 chip resistor,612534,farnell,50,0603
 sr-r-3k3,3k3 0603 chip resistor,9331026,farnell,50,0603
-sr-r-4k3,4k3 0402 chip resistor,2073030,farnell,100,0402
+sr-r-4k3-0402,4k3 0402 chip resistor,2073030,farnell,100,0402
 sr-r-4k7-0402,4k7 0402 chip resistor,2073064,farnell,100,0402
 sr-r-9k1,9k1 0603 chip resistor,1469842,farnell,50,0603
 sr-r-10k,10k 0603 chip resistor,1117235,farnell,5000,0603
@@ -87,7 +87,7 @@ sr-c-68u,68u capacitor smt CPOL-EUE,9694390,farnell,10,smt_electrolytic_cap
 sr-c-100u,100u capacitor smt CPOL-EUE,9694404,farnell,10,smt_electrolytic_cap
 sr-c-220u,220u capacitor smt CPOL-EUE,1580568,farnell,5,smt_electrolytic_cap
 sr-c-220u-10v,220uF cap through-hole 10V,1219454,farnell,1,through_hole
-sr-c-PCF1C221MCL1GS,220u capacitor smt electrolytic 16V 3.9A ripple,493-3003-2-ND,digikey,500,smt_electrolytic_cap
+sr-c-pcf1c221mcl1gs,220u capacitor smt electrolytic 16V 3.9A ripple,493-3003-2-ND,digikey,500,smt_electrolytic_cap
 sr-c-470u-16v,470uF cap through-hole 16V,9692053,farnell,5,through_hole
 sr-c-1m,1m electrolytic capacitor 16V,9451129,farnell,10,through_hole
 
@@ -304,7 +304,7 @@ sr-sw-rotary-12mm-pb,12mm 24-det Rotary encoder (6mm D shaft) with push button,1
 # Crystals
 sr-xtal-32k, 32kHz Crystal,1611828,farnell,1,through_hole
 sr-xtal-8m,8MHz Crystal,1611765,farnell,1,smt_crystal(hc49)
-sr-xtal-ABMM2-8.000MHZ-E2-T,8MHz Crystal 20ppm,815-ABMM2-8-E2T,mouser,1,smt_crystal
+sr-xtal-abmm2-8.000mhz-e2-t,8MHz Crystal 20ppm,815-ABMM2-8-E2T,mouser,1,smt_crystal
 
 # Assemblies
 sr-asm-xbee,2(sr-cn-socket10-2mm). XBee connector assembly,,

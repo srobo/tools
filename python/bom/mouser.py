@@ -19,7 +19,7 @@ class Item(distpart.DistItem):
 
     def _getinfo(self):
         "Load information from the distributor"
-        page = grab_url_cached('http://uk.mouser.com/Search/ProductDetail.aspx?R={0}'.format(self.part_number) )
+        page = grab_url_cached('https://xgoat.com/p/mouser/{0}'.format(self.part_number) )
 
         soup = BeautifulSoup(page)
 

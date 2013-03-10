@@ -1,5 +1,5 @@
 """Student Robotics parts database access library"""
-import csv, farnell, rs, digikey, os, sys
+import csv, farnell, rs, digikey, mouser, os, sys
 
 PARTS_DB = os.path.expanduser("~/.sr/tools/bom/sr_component_lib")
 if not os.path.exists( PARTS_DB ):
@@ -81,10 +81,10 @@ class Part(dict):
             o = farnell.Item( self["order-number"] )
         elif self["supplier"] == "rs":
             o = rs.Item( self["order-number"] )
-
-        # Digikey scraping is nonfunctional at the moment
-        # elif self["supplier"] == "digikey":
-        #     o = digikey.Item( self["order-number"] )
+        elif self["supplier"] == "digikey":
+            o = digikey.Item( self["order-number"] )
+        elif self["supplier"] == "mouser":
+            o = mouser.Item( self["order-number"] )
         else:
             self.stock = None
             return

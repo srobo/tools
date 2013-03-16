@@ -4,6 +4,7 @@
 
 import sr.spending.spending as spending
 import sys, os, argparse
+from sr.budget import BudgetTree
 
 desc = "Inspect spending for budget line"
 
@@ -24,23 +25,36 @@ except KeyError:
 	print >>sys.stderr, "Budget line '" + args.budgetline + "' not found"
 	sys.exit(1)
 
-remaining_funds = budline.cost
 paid_funds = 0
 pending_funds = 0
+remaining_funds = 0
 
-for trans in budline.transactions:
-	if trans.date != None:
-		print "Transaction '" + trans.name + "' " + str(trans.date) + ":"
-		paid_funds += trans.cost
-	else:
-		print "Transaction '" + trans.name + "' (pending):"
-		pending_funds += trans.cost
-	print "  Cost: " + str(trans.cost)
-	print "  Trac: #" + str(trans.trac)
-	remaining_funds -= trans.cost
+if isinstance(budline, BudgetTree):
+	remaining_funds = budline.total()
+else:
+	remaining_funds = budline.cost
+orig_funds = remaining_funds
 
+def print_line(budline):
+	global paid_funds, pending_funds, remaining_funds
+	for trans in budline.transactions:
+		if trans.date != None:
+			print "Transaction '" + trans.name + "' " + str(trans.date) + ":"
+			paid_funds += trans.cost
+		else:
+			print "Transaction '" + trans.name + "' (pending):"
+			pending_funds += trans.cost
+		print "  Cost: " + str(trans.cost)
+		print "  Trac: #" + str(trans.trac)
+		remaining_funds -= trans.cost
 
-print "Summary: £{0} budgeted, £{1} spent, line is".format(budline.cost, paid_funds + pending_funds),
+if isinstance(budline, BudgetTree):
+	for trans in budline.walk():
+		print_line(trans)
+else:
+	print_line(budline)
+
+print "Summary: £{0} budgeted, £{1} spent, line is".format(orig_funds, paid_funds + pending_funds),
 if remaining_funds >= 0:
 	print "under",
 else:

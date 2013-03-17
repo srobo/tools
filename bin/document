@@ -20,6 +20,8 @@ def which(name):
 
 def ensure_callable(*names):
     missing = [name for name in names if which(name) is None]
+    if len(missing) == 0:
+        return
     end = 'y' if len(missing) is 1 else 'ies'
     print "Missing dependenc{0}: {1}".format(end, ", ".join(missing))
     exit(1)

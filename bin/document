@@ -147,4 +147,3 @@ with open(os.path.join(temp_dir, 'main.pdf'), 'r') as f:
     args.output.write(f.read())
 
 shutil.rmtree(temp_dir)
-

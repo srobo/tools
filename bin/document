@@ -1,5 +1,13 @@
 #!/usr/bin/env python
-import argparse, subprocess, tempfile, os, os.path, shutil, zipfile, sys
+
+import argparse
+import os
+import os.path
+import shutil
+import sys
+import subprocess
+import tempfile
+import zipfile
 
 parser = argparse.ArgumentParser(description = "Generate formatted documents.")
 

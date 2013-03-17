@@ -9,6 +9,21 @@ import subprocess
 import tempfile
 import zipfile
 
+def which(name):
+    # Adapted from answer to http://stackoverflow.com/questions/775351/os-path-exists-for-files-in-your-path
+    for p in os.environ["PATH"].split(os.pathsep):
+        possible_path = os.path.join(p, name)
+        if os.path.exists(possible_path):
+            return possible_path
+
+    return None
+
+def ensure_callable(*names):
+    missing = [name for name in names if which(name) is None]
+    end = 'y' if len(missing) is 1 else 'ies'
+    print "Missing dependenc{0}: {1}".format(end, ", ".join(missing))
+    exit(1)
+
 parser = argparse.ArgumentParser(description = "Generate formatted documents.")
 
 parser.add_argument("source", metavar = "FILE", type=argparse.FileType('r'),
@@ -26,6 +41,8 @@ parser.add_argument("-H", action = "store_true", dest = "html",
 args = parser.parse_args()
 
 source = args.source.read()
+
+ensure_callable('pandoc', 'pdflatex')
 
 pandoc_process = subprocess.Popen(['pandoc', '-f', 'html' if args.html else 'markdown', '-t', 'latex', '-'],
                                   stdin = subprocess.PIPE,

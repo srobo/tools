@@ -71,6 +71,8 @@ class Part(dict):
             return "https://xgoat.com/p/rs/%s" % self["order-number"]
         if self["supplier"] == "digikey":
             return "https://xgoat.com/p/digikey/%s" % self["order-number"]
+        if self["supplier"] == "mouser":
+            return "https://xgoat.com/p/mouser/%s" % self["order-number"]
 
         return None
 

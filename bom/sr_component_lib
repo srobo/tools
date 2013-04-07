@@ -21,12 +21,14 @@ sr-r-1k,1k 0603 chip resistor,9330380,farnell,50,0603
 sr-r-1k-0402,1k 0402 chip resistor,2072516,farnell,100,0402
 sr-r-1k-1206,1k 1206 chip resistor,2073877,farnell,100,1206
 sr-r-1k1-0402,1k1 0402 chip resistor,2072548,farnell,100,0402
+sr-r-2k2-1206,2k2 1206 chip resistor,2073909,farnell,100,1206
 sr-r-2k4,2k4 0603 chip resistor,9330879,farnell,50,0603
 sr-r-2k7,2k7 0603 chip resistor,612534,farnell,50,0603
 sr-r-3k3,3k3 0603 chip resistor,9331026,farnell,50,0603
 sr-r-4k3-0402,4k3 0402 chip resistor,2073030,farnell,100,0402
 sr-r-4k7-0402,4k7 0402 chip resistor,2073064,farnell,100,0402
 sr-r-9k1,9k1 0603 chip resistor,1469842,farnell,50,0603
+sr-r-9k1-0402,9k1 0402 chip resistor,2073309,farnell,100,0402
 sr-r-10k,10k 0603 chip resistor,9330399,farnell,50,0603
 sr-r-10k-0402,10k 0402 chip resistor,2072517,farnell,100,0402
 sr-r-10k5,10.5k 0603 1% chip resistor,1170890,farnell,50,0603
@@ -83,6 +85,7 @@ sr-c-4u7-0805-10v,4.7u capacitor 0805 10V X7R,1833814,farnell,10,0805
 sr-c-4u7-0805-16v,4.7uF capacitor 0805 16V,1759427,farnell,100,0805
 sr-c-10u-0805,10u capacitor 0805 6.3V,1759136,farnell,100,0805
 sr-c-10u-1206-16v,10u capacitor 1206 16V X7R,2070502,farnell,10,1206
+sr-c-10u-1206-50v,10u capacitor 1206 50V X5R,1845762,farnell,10,1206
 sr-c-10u-1210-25v,10u capacitor 1210 25V,1650940,farnell,1,1210
 sr-c-15u-7343,15u tantalum capacitor 25V,1754110,farnell,5,7343
 sr-c-22u-0805-6v3,22u capacitor 0805 6.3V X5R,1867955,farnell,10,0805
@@ -90,6 +93,7 @@ sr-c-22u-1210,22u ceramic capacitor 1210 16V,1759466,farnell,10,1210
 sr-c-47u,47u electrolytic capacitor,9451072,farnell,10,through_hole
 sr-c-68u,68u capacitor smt CPOL-EUE,9694390,farnell,10,smt_electrolytic_cap
 sr-c-100u,100u capacitor smt CPOL-EUE,9694404,farnell,10,smt_electrolytic_cap
+sr-c-pcv1v101mcl1gs,100u capacitor smt electrolytic 35V 2.2A ripple,493-4388-1-ND,digikey,1,smt_electrolytic_cap
 sr-c-220u,220u capacitor smt CPOL-EUE,1580568,farnell,5,smt_electrolytic_cap
 sr-c-220u-10v,220uF cap through-hole 10V,1219454,farnell,1,through_hole
 sr-c-pcf1c221mcl1gs,220u capacitor smt electrolytic 16V 3.9A ripple,493-3003-2-ND,digikey,500,smt_electrolytic_cap
@@ -207,6 +211,7 @@ sr-d-tvs-16v-smcj16a,16v tvs diode 1500W,1470983,farnell,1,do-214ab(smc)
 sr-d-smaj16a,16V unidirectional TVS diode 400W,1578964,farnell,5,do-214ac(sma)
 sr-d-smaj16ca,16V bidirectional TVS diode 400W,1578965,farnell,5,do-214ac(sma)
 sr-d-smaj5.0a,5V unidirectional TVS diode 400W,1815679,farnell,1,do-214ac(sma)
+sr-d-smaj28ca,28V bidirectional TVS diode 400W,9802800,farnell,5,do-214ac(sma)
 sr-d-gsot03c,3.3V unidrectional dual TVS diode 369W common anode,1617669,farnell,5,sot23
 sr-d-gsot05c,5V unidirectional dual TVS diode 480W common anode,78-GSOT05C,mouser,1,sot23
 sr-d-gsot12c,12V unidirectional dual TVS diode 312W common anode,1617678,farnell,5,sot23

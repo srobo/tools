@@ -77,6 +77,7 @@ sr-c-1u,1u electrolytic capacitor,1236655,farnell,5,through_hole
 sr-c-1u-0805,1u ceramic capacitor 0805 50V,1611943,farnell,1,0805
 sr-c-1u-0603-16v,1u capacitor 0603 16V X7R,2112839,farnell,1,0603
 sr-c-2u2-0805,2u2 capacitor 0805 16V,1759480,farnell,100,0805
+sr-c-2u2-1206-50v,2u2 capacitor 1206 50V X7R,1797017,farnell,10,1206
 sr-c-4u7-0805-10v,4.7u capacitor 0805 10V X7R,1833814,farnell,10,0805
 sr-c-4u7-0805-16v,4.7uF capacitor 0805 16V,1759427,farnell,100,0805
 sr-c-10u-0805,10u capacitor 0805 6.3V,1759136,farnell,100,0805

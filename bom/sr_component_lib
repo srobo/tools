@@ -37,6 +37,7 @@ sr-r-20k,20k 0603 1% chip resistor,1469774,farnell,50,0603
 sr-r-27k,27k 0603 1% chip resistor,9330933,farnell,50,0603
 sr-r-28k,28k 0603 1% chip resistor,1170931,farnell,50,0603
 sr-r-30k,30k 0603 chip resistor,9330984,farnell,50,0603
+sr-r-33k2-0402,33k2 0402 chip resistor,2072936,farnell,100,0402
 sr-r-36k,36k 0603 1% chip resistor,9331093,farnell,50,0603
 sr-r-39k-1pc,39k 0603 1% chip resistor,9331158,farnell,50,0603
 sr-r-42k2,42.2k 0603 1% chip resistor,1170950,farnell,50,0603
@@ -68,6 +69,7 @@ sr-c-47n-0603-50v,47n capacitor 0603 50V X7R,1759116,farnell,100,0603
 sr-c-100n,100n capacitor 0603,1759017,farnell,100,0603
 sr-c-100n-0402-16v,100n capacitor 0402 16V X7R,1758896,farnell,100,0402
 sr-c-100n-0603-50v,100n capacitor 0603 50V X7R,1759122,farnell,100,0603
+sr-c-220n-0402-16v,220n capacitor 0402 16V X5R,1759389,farnell,100,0402
 sr-c-330n-0805,0.33u capacitor 0805,1759174,farnell,100,0805
 sr-c-470n,0.47u capacitor 0603,1759021,farnell,100,0603
 sr-c-470n-0603-25v,470n capacitor 0603 25V X7R,1856365,farnell,100,0603
@@ -81,6 +83,7 @@ sr-c-10u-0805,10u capacitor 0805 6.3V,1759136,farnell,100,0805
 sr-c-10u-1206-16v,10u capacitor 1206 16V X7R,2070502,farnell,10,1206
 sr-c-10u-1210-25v,10u capacitor 1210 25V,1650940,farnell,1,1210
 sr-c-15u-7343,15u tantalum capacitor 25V,1754110,farnell,5,7343
+sr-c-22u-0805-6v3,22u capacitor 0805 6.3V X5R,1867955,farnell,10,0805
 sr-c-22u-1210,22u ceramic capacitor 1210 16V,1759466,farnell,10,1210
 sr-c-47u,47u electrolytic capacitor,9451072,farnell,10,through_hole
 sr-c-68u,68u capacitor smt CPOL-EUE,9694390,farnell,10,smt_electrolytic_cap
@@ -101,6 +104,7 @@ sr-l-22u,22u 160mA smt inductor,1198441,farnell,5,1008
 sr-l-22u-1300ma,1.3A smt inductor,1717487,farnell,5,smt_inductor
 sr-l-22u-2500ma,22u 2.5A smt inductor,1635894,farnell,1,smt_inductor
 sr-l-22u-6300ma,22u 6.3A smt inductor,1783727,farnell,1,smt_inductor
+sr-l-68u-900ma,68u 0.9A smt inductor,2061657,farnell,5,smt_inductor
 sr-l-330u,330u 280mA smt inductor,1612678,farnell,1,smt_inductor
 
 # Ferrite Beads (value is current rating)
@@ -225,6 +229,7 @@ sr-ic-tl5001acd,TL5001ACD 20-500kHz PWM controller,1100958,farnell,1,soic8
 sr-ic-lm2704,LM2704 step-up DC/DC converter,8207461,farnell,1,sot25
 sr-ic-sc4524a,SC5424A step-down DC/DC converter,691-0600,rs,5,soic8
 sr-ic-lm3489,LM3489 hysteretic step-down DC/DC controller,1312570,farnell,1,msop8
+sr-ic-lmr14203,LMR14203XMK step-down DC/DC converter 42V 0.3A,926-LMR14203XMKENOPB,mouser,1,sot23-6
 
 # uC
 sr-ic-msp430f167,MSP430F167IPM microcontroller,1471271,farnell,1,tqfp64

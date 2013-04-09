@@ -137,13 +137,25 @@ with zipfile.ZipFile(zip_path, 'r') as zf:
     for name in ('ecs.png', 'moto.png', 'bitbox.png', 'sr-logo.pdf'):
         zf.extract(name, temp_dir)
 
-with open(os.devnull, 'w') as fnull:
-    subprocess.check_call(['pdflatex', 'main.tex'],
-                          cwd=temp_dir,
-                          stderr = fnull,
-                          stdout = fnull)
+pdflatex_proc = subprocess.Popen(['pdflatex', '-interaction=nonstopmode', 'main.tex'],
+                                 cwd = temp_dir,
+                                 stderr = subprocess.PIPE,
+                                 stdout = subprocess.PIPE)
 
-with open(os.path.join(temp_dir, 'main.pdf'), 'r') as f:
-    args.output.write(f.read())
+while pdflatex_proc.returncode is None:
+    (out, err) = pdflatex_proc.communicate()
+    errors = [line for line in out.split(os.linesep) if len(line) > 0 and line[0] == '!']
+    if len(errors) > 0:
+        print os.linesep.join(errors)
+
+output_file = os.path.join(temp_dir, 'main.pdf')
+success = pdflatex_proc.returncode == 0 and os.path.exists(output_file)
+if success:
+    with open(output_file, 'r') as f:
+        args.output.write(f.read())
 
 shutil.rmtree(temp_dir)
+
+if not success:
+    print 'Error: pdflatex failed to produce output'
+    exit(1)

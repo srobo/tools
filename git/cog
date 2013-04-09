@@ -2,18 +2,24 @@
 import argparse
 import os, sys, subprocess
 
-GERRIT = "sr-gerrit:"
-
 parser = argparse.ArgumentParser( description = "Clone an SR git repository" )
 parser.add_argument( "repo",
                      help = "Repository path -- e.g. tools.git" )
 parser.add_argument( "dir", nargs="?",
                      help = "Directory to clone to (optional)" )
+parser.add_argument( "-a", "--anonymous",
+                     action = "store_true", default = False,
+                     help = "Clone anonomously over git://" )
 args = parser.parse_args()
 
+if args.anonymous:
+    prefix = "git://srobo.org/"
+else:
+    prefix = "sr-gerrit:"
+
 repo = args.repo
-if repo[:len(GERRIT)] != GERRIT:
-    repo = "{0}{1}".format( GERRIT, repo )
+if repo[:len(prefix)] != prefix:
+    repo = "{0}{1}".format( prefix, repo )
 
 cmd = ["git", "clone", "--recursive", repo]
 if args.dir != None:

@@ -1,14 +1,21 @@
 #!/usr/bin/env python
 # coding=utf8
 
+import argparse
 import sr.spending.spending as srspending
 import sr.budget.budget as srbudget
 import xmlrpclib, getpass, os, sys
 from random import choice
 from decimal import Decimal as D
 
-_SERVER = "studentrobotics.org"
-_PORT = 443
+parser = argparse.ArgumentParser( description = "Make an SR purchase request" )
+parser.add_argument( "-s", "--server",
+		     help = "Hostname of server to talk to",
+		     default = "www.studentrobotics.org" )
+parser.add_argument( "-p", "--port",
+		     help = "Server port number to talk to",
+		     type = int, default = 443 )
+args = parser.parse_args()
 
 if not (os.path.exists('.git') and os.path.exists('spending.py')):
 	print >>sys.stderr, "Please run in spending.git top level directory"
@@ -38,7 +45,13 @@ spent = 0
 for trans in budgetline.transactions:
 	spent += trans.cost
 
-server = xmlrpclib.ServerProxy("".join(["https://",user,":",getpass.getpass(),"@",_SERVER,":",str(_PORT),"/trac/login/rpc"]))
+rpc_url = "https://{user}:{password}@{server}:{port}/trac/login/rpc".format(
+	user = user,
+	password = getpass.getpass(),
+	server = args.server,
+	port = args.port )
+
+server = xmlrpclib.ServerProxy(rpc_url)
 
 if "ticket.create" not in server.system.listMethods():
 	print >>sys.stderr, "Error: ticket.create not found in trac's RPC methods"

@@ -59,17 +59,29 @@ if "ticket.create" not in server.system.listMethods():
 
 description = ""
 
-msg = ""
-msg += "{{{Payee: " + str(user) + "}}}\n"
-msg += "{{{Supplier: " + str(supplier) + "}}}\n"
-msg += "{{{Items: }}}\n"
+msg = """
+Payee: {user} \\\\
+Supplier: {supplier} \\\\
+
+=== Items ===
+||= '''Item''' =||= '''Cost''' =||
+""".format( user = user,
+	    supplier = supplier )
+
 totalCost = D(0)
 for item in items:
 	totalCost += D(item[1].strip('£ '))
-	msg += "  || " + item[0] + ' || £' + item[1].strip('£ ') + "||\n" 
+
+	msg += "|| {desc} || £{cost} ||".format( desc = item[0],
+						 cost = item[1].strip('£ ') )
+
 	description += item[0] + ", "
-msg += "{{{Total cost: £%.2f}}}\n" % totalCost
-msg += "{{{Budget line: " + str(budget) + "}}}\n"
+
+msg += """
+Total cost: £{total}
+Budget line: [budget:{budgetline}]
+""".format( total = totalCost,
+	    budgetline = budget )
 
 if spent + totalCost > budgetline.cost:
 	print "That purchase takes you over the budget limit"

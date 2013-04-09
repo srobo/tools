@@ -5,6 +5,7 @@ import sr.spending.spending as srspending
 import sr.budget.budget as srbudget
 import xmlrpclib, getpass, os, sys
 from random import choice
+from decimal import Decimal as D
 
 _SERVER = "studentrobotics.org"
 _PORT = 443
@@ -49,18 +50,19 @@ msg = ""
 msg += "{{{Payee: " + str(user) + "}}}\n"
 msg += "{{{Supplier: " + str(supplier) + "}}}\n"
 msg += "{{{Items: }}}\n"
-totalCost = 0
+totalCost = D(0)
 for item in items:
-	totalCost += float(item[1].strip('£ '))
+	totalCost += D(item[1].strip('£ '))
 	msg += "  || " + item[0] + ' || £' + item[1].strip('£ ') + "||\n" 
 	description += item[0] + ", "
 msg += "{{{Total cost: £%.2f}}}\n" % totalCost
 msg += "{{{Budget line: " + str(budget) + "}}}\n"
 
-if float(spent) + totalCost > float(budgetline.cost):
+if spent + totalCost > budgetline.cost:
 	print "That purchase takes you over the budget limit"
-	print "\tBudget line: " + str(budgetline.cost)
-	print "\tExpenditure: " + str(float(spent) + totalCost) + " (" + str(int((float(spent) + totalCost)*100/float(budgetline.cost))) + "%)"
+	print "\tBudget line: £{0}".format( budgetline.cost )
+	print "\tExpenditure: £{0} {1}%".format( spent + totalCost,
+						100 * (spent + totalCost)/budgetline.cost )
 	if not raw_input("Continue anyway? [y/N] ").lower() == 'y':
 		exit()
 

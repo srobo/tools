@@ -9,7 +9,7 @@ parser.add_argument( "dir", nargs="?",
                      help = "Directory to clone to (optional)" )
 parser.add_argument( "-a", "--anonymous",
                      action = "store_true", default = False,
-                     help = "Clone anonomously over git://" )
+                     help = "Clone anonymously over git://" )
 args = parser.parse_args()
 
 if args.anonymous:

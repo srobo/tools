@@ -11,30 +11,30 @@ from xmlrpclib import ServerProxy
 
 parser = argparse.ArgumentParser( description = "Make an SR purchase request" )
 parser.add_argument( "-s", "--server",
-		     help = "Hostname of server to talk to",
-		     default = "www.studentrobotics.org" )
+                     help = "Hostname of server to talk to",
+                     default = "www.studentrobotics.org" )
 parser.add_argument( "-p", "--port",
-		     help = "Server port number to talk to",
-		     type = int, default = 443 )
+                     help = "Server port number to talk to",
+                     type = int, default = 443 )
 args = parser.parse_args()
 
 if not (os.path.exists('.git') and os.path.exists('spending.py')):
-	print >>sys.stderr, "Please run in spending.git top level directory"
-	exit(1)
+    print >>sys.stderr, "Please run in spending.git top level directory"
+    exit(1)
 
 class TracProxy(ServerProxy):
-	def __init__(self, server, port, user, password):
-		rpc_url = "https://{user}:{password}@{server}:{port}/trac/login/rpc".format(
-			user = user,
-			password = password,
-			server = server,
-			port = port )
+    def __init__(self, server, port, user, password):
+        rpc_url = "https://{user}:{password}@{server}:{port}/trac/login/rpc".format(
+                user = user,
+                password = password,
+                server = server,
+                port = port )
 
-		ServerProxy.__init__(self, rpc_url)
+        ServerProxy.__init__(self, rpc_url)
 
-		if "ticket.create" not in self.system.listMethods():
-			print >>sys.stderr, "Error: ticket.create not found in trac's RPC methods"
-			exit(1)
+        if "ticket.create" not in self.system.listMethods():
+            print >>sys.stderr, "Error: ticket.create not found in trac's RPC methods"
+            exit(1)
 
 user = raw_input("Username: ")
 supplier = raw_input("Supplier: ")
@@ -42,27 +42,27 @@ item_number = 1
 
 items = []
 while True:
-	item = raw_input("Item #{0}: ".format(item_number))
-	if item == "":
-		break
-	cost = raw_input("Line cost: ")
-	items.append([item,cost])
-	item_number += 1
+    item = raw_input("Item #{0}: ".format(item_number))
+    if item == "":
+        break
+    cost = raw_input("Line cost: ")
+    items.append([item,cost])
+    item_number += 1
 purpose = raw_input("What are the items for?: ")
 budget = raw_input("Budget line: ")
 
 try:
-	budgetline = srspending.load_budget_with_spending('.').path(budget)
+    budgetline = srspending.load_budget_with_spending('.').path(budget)
 except KeyError:
-	print >>sys.stderr, "Budget line '" + budget + "' not found"
-	exit()
+    print >>sys.stderr, "Budget line '" + budget + "' not found"
+    exit()
 
 spent = 0
 for trans in budgetline.transactions:
-	spent += trans.cost
+    spent += trans.cost
 
 server = TracProxy( args.server, args.port,
-		    user, getpass.getpass() )
+                    user, getpass.getpass() )
 
 description = ""
 
@@ -73,38 +73,38 @@ Supplier: {supplier} \\\\
 === Items ===
 ||= '''Item''' =||= '''Cost''' =||
 """.format( user = user,
-	    supplier = supplier )
+            supplier = supplier )
 
 totalCost = D(0)
 for item in items:
-	totalCost += D(item[1].strip('£ '))
+    totalCost += D(item[1].strip('£ '))
 
-	msg += "|| {desc} || £{cost} ||".format( desc = item[0],
-						 cost = item[1].strip('£ ') )
+    msg += "|| {desc} || £{cost} ||".format( desc = item[0],
+                                             cost = item[1].strip('£ ') )
 
-	description += item[0] + ", "
+    description += item[0] + ", "
 
 msg += """
 Total cost: £{total}
 Budget line: [budget:{budgetline}]
 """.format( total = totalCost,
-	    budgetline = budget )
+            budgetline = budget )
 
 if spent + totalCost > budgetline.cost:
-	print "That purchase takes you over the budget limit"
-	print "\tBudget line: £{0}".format( budgetline.cost )
-	print "\tExpenditure: £{0} {1}%".format( spent + totalCost,
-						100 * (spent + totalCost)/budgetline.cost )
-	if not raw_input("Continue anyway? [y/N] ").lower() == 'y':
-		exit()
+    print "That purchase takes you over the budget limit"
+    print "\tBudget line: £{0}".format( budgetline.cost )
+    print "\tExpenditure: £{0} {1}%".format( spent + totalCost,
+                                            100 * (spent + totalCost)/budgetline.cost )
+    if not raw_input("Continue anyway? [y/N] ").lower() == 'y':
+        exit()
 
 name = ""
 name += items[0][0].replace(" ","-")
 if len(items) > 1:
-	name += '-and-'
-	name += choice(items[1:])[0].replace(" ","-")
-	if len(items) > 2:
-		name += '-etc'
+    name += '-and-'
+    name += choice(items[1:])[0].replace(" ","-")
+    if len(items) > 2:
+        name += '-etc'
 
 summary = name.replace("-"," ") + " for " + purpose
 name += ".yaml"
@@ -115,8 +115,8 @@ description += " for " + purpose
 ticketNum = server.ticket.create(summary, msg, {'component':"Purchasing",'owner':"treasurer",'type':"task"})
 
 if not ticketNum > 0:
-	print "Unable to create a valid ticket"
-	exit()
+    print "Unable to create a valid ticket"
+    exit()
 
 spendName = os.path.join("pending",name)
 spendFile = open(spendName, "w")

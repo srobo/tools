@@ -7,6 +7,7 @@ import sr.budget.budget as srbudget
 import xmlrpclib, getpass, os, sys
 from random import choice
 from decimal import Decimal as D
+from xmlrpclib import ServerProxy
 
 parser = argparse.ArgumentParser( description = "Make an SR purchase request" )
 parser.add_argument( "-s", "--server",
@@ -20,6 +21,20 @@ args = parser.parse_args()
 if not (os.path.exists('.git') and os.path.exists('spending.py')):
 	print >>sys.stderr, "Please run in spending.git top level directory"
 	exit(1)
+
+class TracProxy(ServerProxy):
+	def __init__(self, server, port, user, password):
+		rpc_url = "https://{user}:{password}@{server}:{port}/trac/login/rpc".format(
+			user = user,
+			password = password,
+			server = server,
+			port = port )
+
+		ServerProxy.__init__(self, rpc_url)
+
+		if "ticket.create" not in self.system.listMethods():
+			print >>sys.stderr, "Error: ticket.create not found in trac's RPC methods"
+			exit(1)
 
 user = raw_input("Username: ")
 supplier = raw_input("Supplier: ")
@@ -45,17 +60,8 @@ spent = 0
 for trans in budgetline.transactions:
 	spent += trans.cost
 
-rpc_url = "https://{user}:{password}@{server}:{port}/trac/login/rpc".format(
-	user = user,
-	password = getpass.getpass(),
-	server = args.server,
-	port = args.port )
-
-server = xmlrpclib.ServerProxy(rpc_url)
-
-if "ticket.create" not in server.system.listMethods():
-	print >>sys.stderr, "Error: ticket.create not found in trac's RPC methods"
-	exit(1)
+server = TracProxy( args.server, args.port,
+		    user, getpass.getpass() )
 
 description = ""
 

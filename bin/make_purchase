@@ -119,14 +119,18 @@ if not ticketNum > 0:
     exit()
 
 spendName = os.path.join("pending",name)
-spendFile = open(spendName, "w")
 
-spendFile.write("summary: " + summary + '\n')
-spendFile.write("description: >-\n  " + description + '\n')
-spendFile.write("budget: " + budget + '\n')
-spendFile.write("cost: " + str(totalCost) + '\n')
-spendFile.write("trac: " + str(ticketNum) + '\n')
-spendFile.flush()
-spendFile.close()
+with open(spendName, "w") as f:
+    print >>f, """summary: {summary}
+description: >-
+  {description}
+budget: {budgetline}
+cost: {total}
+trac: {ticket_num}
+""".format( summary = summary,
+            description = description,
+            budgetline = budget,
+            total = totalCost,
+            ticket_num = ticketNum )
 
 print "Purchase ready (trac: #" + str(ticketNum) + ")"

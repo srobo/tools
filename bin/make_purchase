@@ -7,7 +7,10 @@ import sr.budget.budget as srbudget
 import xmlrpclib, getpass, os, sys
 from random import choice
 from decimal import Decimal as D
+import tempfile
 from xmlrpclib import ServerProxy
+from subprocess import check_call
+import yaml
 
 parser = argparse.ArgumentParser( description = "Make an SR purchase request" )
 parser.add_argument( "-s", "--server",
@@ -16,6 +19,8 @@ parser.add_argument( "-s", "--server",
 parser.add_argument( "-p", "--port",
                      help = "Server port number to talk to",
                      type = int, default = 443 )
+parser.add_argument( "-f", "--spend-file",
+                     help = "Take spending info from this YAML file rather than running an editor" )
 args = parser.parse_args()
 
 if not (os.path.exists('.git') and os.path.exists('spending.py')):
@@ -36,101 +41,206 @@ class TracProxy(ServerProxy):
             print >>sys.stderr, "Error: ticket.create not found in trac's RPC methods"
             exit(1)
 
-user = raw_input("Username: ")
-supplier = raw_input("Supplier: ")
-item_number = 1
+class PurchaseItem(object):
+    def __init__(self, info ):
+        self.desc = info["desc"]
+        self.cost = D( "%.2f" % info["cost"])
 
-items = []
-while True:
-    item = raw_input("Item #{0}: ".format(item_number))
-    if item == "":
-        break
-    cost = raw_input("Line cost: ")
-    items.append([item,cost])
-    item_number += 1
-purpose = raw_input("What are the items for?: ")
-budget = raw_input("Budget line: ")
+class Purchase(object):
+    def __init__(self, pinfo ):
+        self.budget_line = pinfo["budget-line"]
+        self.summary = pinfo["summary"]
 
-try:
-    budgetline = srspending.load_budget_with_spending('.').path(budget)
-except KeyError:
-    print >>sys.stderr, "Budget line '" + budget + "' not found"
-    exit()
+        self.items = []
+        for item in pinfo["items"]:
+            if item["desc"] is None:
+                continue
 
-spent = 0
-for trans in budgetline.transactions:
-    spent += trans.cost
+            i = PurchaseItem( item )
+            self.items.append(i)            
+
+class SpendRequest(object):
+    "Query the user for purchase information"
+
+    def __init__(self, fname, delete_file = False):
+        self.fname = fname
+        self.delete_file = delete_file
+        self._parse()
+
+    @classmethod
+    def from_editor(cls):
+        "Present the user with a template in an editor"
+
+        # Temporary file for user to fill in
+        fd, fname = tempfile.mkstemp(suffix=".yaml")
+        os.close(fd)
+
+        # Fill in the temporary file from the template
+        template_path = os.path.join( os.path.dirname( __file__ ), "../var", "spend-template.yaml" )
+        with open( template_path, "r" ) as f:
+            template = f.read()
+
+        with open( fname, "w" ) as f:
+            f.write( template )
+
+        while True:
+            check_call( [ os.getenv( "EDITOR", "vi" ), fname ] )
+
+            try:
+                spendreq = cls( fname,
+                                delete_file = True )
+
+            except KeyError as e:
+                print >>sys.stderr, "Missing field:", e
+                raw_input( "Press return to try again" )
+                continue
+
+            except yaml.parser.ParserError as e:
+                print >>sys.stderr, "Error parsing your YAML"
+                print >>sys.stderr, e
+                raw_input( "Press return to try again" )
+                continue
+
+            break
+
+        return spendreq
+
+    def __del__(self):
+        "Remove our temporary file"
+        if self.delete_file:
+            os.remove( self.fname )
+
+    def _parse(self):
+        "Parse our YAML file"
+
+        with open( self.fname, "r" ) as f:
+            data = yaml.load( f )
+
+        self.username = data["username"]
+        self.summary = data["summary"]
+        self.supplier = data["supplier"]
+        self.supplier_url = data.get( "supplier-url", None )
+
+        self.purchases = []
+        for purchase in data["purchases"]:
+            if purchase["budget-line"] is None:
+                continue
+
+            p = Purchase( purchase )
+            self.purchases.append(p)
+
+if args.spend_file is not None:
+    spend_request = SpendRequest( args.spend_file )
+else:
+    spend_request = SpendRequest.from_editor()
+
+budget = srspending.load_budget_with_spending(".")
+
+ticket_text = "Payee: {} \\\\\n".format( spend_request.username )
+
+if spend_request.supplier_url is None:
+    ticket_text += "Supplier: {} \\\\\n".format( spend_request.supplier )
+else:
+    ticket_text += "Supplier: [{url} {supplier}] \\\\\n".format( url = spend_request.supplier_url,
+                                                                 supplier = spend_request.supplier )
+
+budget_line_totals = {}
+
+for purchase in spend_request.purchases:
+
+    try:
+        budget_line = budget.path(purchase.budget_line)
+    except KeyError:
+        # TODO: Move this check up into the parser so it's caught and the user can fix it
+        print >>sys.stderr, """Budget line "{0}" not found"""
+        exit(1)
+
+    bl_request_total = D(0)
+
+    ticket_text += """
+=== Items from [budget:{budget_line}] ===
+{summary} \\\\
+||= '''Item''' =||= '''Cost''' =||
+""".format( budget_line = purchase.budget_line,
+            summary = purchase.summary )
+
+    for item in purchase.items:
+        ticket_text += "|| {desc} || £{cost} ||\n".format( desc = item.desc,
+                                                           cost = item.cost )
+
+        bl_request_total += item.cost
+
+    # How much has already been spent against this budget line
+    spent = sum([x.cost for x in budget_line.transactions])
+
+    req_total = spent + bl_request_total
+
+    # It is over the limit?
+    if req_total > budget_line.cost:
+        print "Warning: This purchase exceeds the budget line '{0}'".format( purchase.budget_line )
+        print "\tBudget line's value: £{0}".format( budget_line.cost )
+        print "\tRequested Expenditure: £{0} ({1}%)".format( req_total,
+                                                             100 * (req_total)/budget_line.cost )
+        if not raw_input("Continue anyway? [y/N] ").lower() == 'y':
+            exit()
+
+    if purchase.budget_line not in budget_line_totals:
+        budget_line_totals[ purchase.budget_line ] = D(0)
+    budget_line_totals[ purchase.budget_line ] += bl_request_total
+
+ticket_text += """
+=== Budget Line Totals ===
+||= '''Budget Line''' =||= '''Total''' =||
+"""
+for line, total in budget_line_totals.iteritems():
+    ticket_text += """|| [budget:{line}] || £{total} ||\n""".format( line = line,
+                                                                     total = total )
+
+print ticket_text
 
 server = TracProxy( args.server, args.port,
-                    user, getpass.getpass() )
+                    spend_request.username,
+                    getpass.getpass() )
 
-description = ""
 
-msg = """
-Payee: {user} \\\\
-Supplier: {supplier} \\\\
-
-=== Items ===
-||= '''Item''' =||= '''Cost''' =||
-""".format( user = user,
-            supplier = supplier )
-
-totalCost = D(0)
-for item in items:
-    totalCost += D(item[1].strip('£ '))
-
-    msg += "|| {desc} || £{cost} ||".format( desc = item[0],
-                                             cost = item[1].strip('£ ') )
-
-    description += item[0] + ", "
-
-msg += """
-Total cost: £{total}
-Budget line: [budget:{budgetline}]
-""".format( total = totalCost,
-            budgetline = budget )
-
-if spent + totalCost > budgetline.cost:
-    print "That purchase takes you over the budget limit"
-    print "\tBudget line: £{0}".format( budgetline.cost )
-    print "\tExpenditure: £{0} {1}%".format( spent + totalCost,
-                                            100 * (spent + totalCost)/budgetline.cost )
-    if not raw_input("Continue anyway? [y/N] ").lower() == 'y':
-        exit()
-
-name = ""
-name += items[0][0].replace(" ","-")
-if len(items) > 1:
-    name += '-and-'
-    name += choice(items[1:])[0].replace(" ","-")
-    if len(items) > 2:
-        name += '-etc'
-
-summary = name.replace("-"," ") + " for " + purpose
-name += ".yaml"
-
-description = description.rstrip(', ')
-description += " for " + purpose
-
-ticketNum = server.ticket.create(summary, msg, {'component':"Purchasing",'owner':"treasurer",'type':"task"})
+ticketNum = server.ticket.create( spend_request.summary,
+                                  ticket_text, 
+                                  { 'component': "Purchasing",
+                                    'owner': "treasurer",
+                                    'type': "task" } )
 
 if not ticketNum > 0:
     print "Unable to create a valid ticket"
     exit()
 
-spendName = os.path.join("pending",name)
+if args.port == 443:
+    hostname = args.server
+else:
+    hostname = "{0}:{1}".format( args.server, args.port )
 
-with open(spendName, "w") as f:
-    print >>f, """summary: {summary}
+print "Purchasing ticket created: https://{0}/trac/ticket/{1}".format(
+    hostname, ticketNum )
+
+
+for purchase in spend_request.purchases:
+
+    name = purchase.items[0].desc.replace(" ","-")
+    if len(purchase.items) > 1:
+        name += "-etc"
+    name += ".yaml"
+
+    fname = os.path.join("pending",name)
+
+    with open(fname, "w") as f:
+        print >>f, """summary: {summary}
 description: >-
   {description}
 budget: {budgetline}
 cost: {total}
-trac: {ticket_num}
-""".format( summary = summary,
-            description = description,
-            budgetline = budget,
-            total = totalCost,
-            ticket_num = ticketNum )
+trac: {ticket_num}""".format( summary = purchase.summary,
+                              description = ", ".join( [x.desc for x in purchase.items] ),
+                              budgetline = purchase.budget_line,
+                              total = sum([x.cost for x in purchase.items]),
+                              ticket_num = ticketNum )
 
-print "Purchase ready (trac: #" + str(ticketNum) + ")"
+    print "Spending.git entry written to", fname

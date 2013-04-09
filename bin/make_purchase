@@ -38,15 +38,16 @@ class TracProxy(ServerProxy):
 
 user = raw_input("Username: ")
 supplier = raw_input("Supplier: ")
-counter = 1
+item_number = 1
+
 items = []
 while True:
-	item = raw_input("Item #" + str(counter) + ": ")
+	item = raw_input("Item #{0}: ".format(item_number))
 	if item == "":
 		break
 	cost = raw_input("Line cost: ")
 	items.append([item,cost])
-	counter += 1
+	item_number += 1
 purpose = raw_input("What are the items for?: ")
 budget = raw_input("Budget line: ")
 

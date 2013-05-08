@@ -4,6 +4,10 @@ from decimal import Decimal as D
 import sys, tempfile
 from subprocess import check_call
 
+# Spending against a budget line is allowed to go over its value by
+# this factor
+FUDGE_FACTOR = D("1.1")
+
 try:
     from yaml import CLoader as YAML_Loader
 except ImportError:

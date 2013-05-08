@@ -5,10 +5,6 @@ import sr.budget as budget
 import sys, yaml
 from decimal import Decimal as D, ROUND_UP
 
-# Spending against a budget line is allowed to go over its value by
-# this factor
-FUDGE_FACTOR = D("1.1")
-
 b = budget.load_budget( "./" )
 
 try:
@@ -35,7 +31,7 @@ for line in b.walk():
 
     if line.closed:
         """Budget lines that are closed need no breathing space."""
-        c /= FUDGE_FACTOR
+        c /= budget.FUDGE_FACTOR
         # Round the result up for extra paranoia
         c = c.quantize(D("0.01"), rounding=ROUND_UP)
 

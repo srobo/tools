@@ -5,35 +5,35 @@ import sr.budget.budget as srbudget
 import os, re, sys, yaml, argparse
 
 if not (os.path.exists('.git') and os.path.exists('spending.py')):
-        print >>sys.stderr, "Please run in spending.git top level directory"
-        exit(1)
+    print >>sys.stderr, "Please run in spending.git top level directory"
+    exit(1)
 
 parser = argparse.ArgumentParser( description = "Close a budget line" )
 parser.add_argument("LINE", help="Budget line to close")
 args = parser.parse_args()
 
 try:
-	budget = srspending.load_budget_with_spending('.')
+    budget = srspending.load_budget_with_spending('.')
 except KeyError:
-	print >>sys.stderr, "Budget line '" + args.LINE + "' not found"
-	exit(1)
+    print >>sys.stderr, "Budget line '" + args.LINE + "' not found"
+    exit(1)
 
 spends = srspending.group_trans_by_budget_line(srspending.load_transactions('.'))
 path = budget.path(args.LINE)
 
 if isinstance(path, srbudget.BudgetItem):
-	items = [path]
+    items = [path]
 else:
-	items = path.walk()
+    items = path.walk()
 
 for item in items:
-	try:
-		spent = sum( [trans.cost for trans in spends[item.name]] )
-	except KeyError:
-		spent = 0
+    try:
+        spent = sum( [trans.cost for trans in spends[item.name]] )
+    except KeyError:
+        spent = 0
 
-	contents = open(item.fname,'r').read()
-	contents = re.sub( r'^(\s*cost\s*:\s*)\d+\.?\d*(\s*)$',
-			   r'\g<1>{0}\g<2>'.format(str(spent)),
-			   contents, 0, re.MULTILINE )
-	open(item.fname,'w').write(contents)
+    contents = open(item.fname,'r').read()
+    contents = re.sub( r'^(\s*cost\s*:\s*)\d+\.?\d*(\s*)$',
+                       r'\g<1>{0}\g<2>'.format(str(spent)),
+                       contents, 0, re.MULTILINE )
+    open(item.fname,'w').write(contents)

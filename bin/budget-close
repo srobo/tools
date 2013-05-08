@@ -8,7 +8,7 @@ if not (os.path.exists('.git') and os.path.exists('spending.py')):
         print >>sys.stderr, "Please run in spending.git top level directory"
         exit(1)
 
-parser = argparse.ArgumentParser("Close budget lines")
+parser = argparse.ArgumentParser( description = "Close a budget line" )
 parser.add_argument("LINE", help="Budget line to close")
 args = parser.parse_args()
 

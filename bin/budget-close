@@ -51,4 +51,19 @@ for item in items:
     contents = re.sub( r'^(\s*cost\s*:\s*)\d+\.?\d*(\s*)$',
                        r'\g<1>{0}\g<2>'.format(str(spent)),
                        contents, 0, re.MULTILINE )
+
+    # Mark as closed
+    m = re.search( r"^\s*closed\s*:.*$", contents,
+                   flags = re.MULTILINE )
+    if m is not None:
+        "There's a closed line in there already"
+
+        contents = re.sub( r"^(\s*closed\s*:\s*).*$",
+                           r"\1true",
+                           contents,
+                           flags = re.MULTILINE )
+
+    else:
+        contents += "\nclosed: true\n"
+
     open(item.fname,'w').write(contents)

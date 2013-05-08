@@ -28,6 +28,10 @@ else:
     items = path.walk()
 
 for item in items:
+    if item.closed:
+        "Line is already closed; nothing to do"
+        continue
+
     try:
         spent = sum( [trans.cost for trans in spends[item.name]] )
     except KeyError:

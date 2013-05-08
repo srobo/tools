@@ -18,15 +18,13 @@ except KeyError:
 	print >>sys.stderr, "Budget line '" + args.LINE + "' not found"
 	exit(1)
 
-path = budget.path(args.LINE)
-items = []
-if isinstance(path, srbudget.BudgetItem):
-	items.append(path)
-else:
-	for i in path.walk():
-		items.append(i)
-
 spends = srspending.group_trans_by_budget_line(srspending.load_transactions('.'))
+path = budget.path(args.LINE)
+
+if isinstance(path, srbudget.BudgetItem):
+	items = [path]
+else:
+	items = path.walk()
 
 for item in items:
 	try:

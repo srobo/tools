@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import sr.spending.spending as srspending
 import sr.budget.budget as srbudget
@@ -31,6 +32,16 @@ for item in items:
         spent = sum( [trans.cost for trans in spends[item.name]] )
     except KeyError:
         spent = 0
+
+    if spent > (item.cost * srbudget.FUDGE_FACTOR):
+        "More has been spent than the budget line's value"
+        print >>sys.stderr, \
+            "Cannot close {0}: More has been spent than budgeted.".format( item.name )
+        print >>sys.stderr, \
+            "\tSpent: £{0}\n\tBudgeted: £{1}".format( spent,
+                                                      item.cost * srbudget.FUDGE_FACTOR )
+        # Skip this item
+        continue
 
     contents = open(item.fname,'r').read()
     contents = re.sub( r'^(\s*cost\s*:\s*)\d+\.?\d*(\s*)$',

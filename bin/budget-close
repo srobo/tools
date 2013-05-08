@@ -28,17 +28,12 @@ else:
 
 spends = srspending.group_trans_by_budget_line(srspending.load_transactions('.'))
 
-spents = {}
-for spend in spends:
-	spents[spend] = 0
-	for s in spends[spend]:
-		spents[spend] += s.cost
-
 for item in items:
 	try:
-		spent = spents[item.name]
+		spent = sum( [trans.cost for trans in spends[item.name]] )
 	except KeyError:
 		spent = 0
+
 	contents = open(item.fname,'r').read()
 	contents = re.sub(r'^(\s*cost\s*:\s*)\d+\.?\d*(\s*)$',r'\g<1>{0}\g<2>'.format(str(spent)),contents,0,re.MULTILINE)
 	open(item.fname,'w').write(contents)

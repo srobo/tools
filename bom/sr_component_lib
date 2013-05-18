@@ -219,6 +219,7 @@ sr-d-gsot15,EQUIV. PESD15VS2UAT 15V unidirectional dual TVS diode 160W,8737436,f
 sr-d-gsot24c,24V unidirectional dual TVS diode 325W common anode,78-GSOT24C,mouser,1,sot23
 sr-d-mmbz5v6al,3V unidirectional dual TVS diode 40W common anode,MMBZ5V6ALT1GOSCT-ND,digikey,1,sot23
 sr-d-vbus052cd,VBUS052CD-FAH dual bus protection array,1697040,farnell,5,llp1713
+sr-d-82400102,Wurth 82400102 dual TVS diode array,1825875,farnell,1,sot23-6
 
 # ICs
 # SMPS/Linear Regs

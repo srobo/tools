@@ -2,13 +2,15 @@
 # coding=utf8
 
 import argparse
+import getpass
+import os
 import sr.spending.spending as srspending
 import sr.budget.budget as srbudget
-import xmlrpclib, getpass, os, sys
 from decimal import Decimal as D
 import tempfile
 from xmlrpclib import ServerProxy
 from subprocess import check_call, check_output, CalledProcessError
+import sys
 import yaml
 
 parser = argparse.ArgumentParser( description = "Make an SR purchase request" )

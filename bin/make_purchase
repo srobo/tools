@@ -5,7 +5,6 @@ import argparse
 import sr.spending.spending as srspending
 import sr.budget.budget as srbudget
 import xmlrpclib, getpass, os, sys
-from random import choice
 from decimal import Decimal as D
 import tempfile
 from xmlrpclib import ServerProxy

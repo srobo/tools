@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-
-import sr.spending.spending as spending
+from sr import spending
 import xmlrpclib, argparse, getpass, yaml, os, sys
 
 _SERVER = "studentrobotics.org"

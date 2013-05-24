@@ -24,14 +24,14 @@ spends =  spending.load_transactions('.')
 for spend in spends:
     if spend.trac == args.TRAC:
         print "Updating " + spend.fname
-        spendfile = open(spend.fname,'r+')
-        for line in spendfile.readlines():
-            if line.startswith("trac"):
-                spendfile.write( "cheque: {0}\n".format( args.CHEQUE ) )
-            if line.startswith("cheque"):
-                print "ERROR: This file already has a cheque attribute"
-                quit()
-        spendfile.close()
+
+        with open(spend.fname, "r+") as spendfile:
+            for line in spendfile.readlines():
+                if line.startswith("trac"):
+                    spendfile.write( "cheque: {0}\n".format( args.CHEQUE ) )
+                if line.startswith("cheque"):
+                    print "ERROR: This file already has a cheque attribute"
+                    quit()
 
 rpc_url = "https://{username}:{password}@{server}:{port}/trac/login/rpc".format( 
     username = raw_input( "Username: " ),

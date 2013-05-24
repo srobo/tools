@@ -41,4 +41,4 @@ rpc_url = "https://{username}:{password}@{server}:{port}/trac/login/rpc".format(
 
 server = xmlrpclib.ServerProxy( rpc_url )
 
-server.ticket.update(int(args.TRAC),"Paid, cheque " + args.CHEQUE,{'status': 'closed', 'resolution': 'fixed'})
+server.ticket.update( args.TRAC,"Paid, cheque " + args.CHEQUE,{'status': 'closed', 'resolution': 'fixed'})

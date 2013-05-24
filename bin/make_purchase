@@ -2,14 +2,12 @@
 # coding=utf8
 
 import argparse
-import getpass
 import os
 import sr.spending.spending as srspending
 import sr.budget.budget as srbudget
 from sr.trac import TracProxy, WrongServer
 from decimal import Decimal as D
 import tempfile
-from xmlrpclib import ServerProxy
 from subprocess import check_call, check_output, CalledProcessError
 import sys
 import yaml

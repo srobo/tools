@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import argparse
 import os, sys, subprocess
+from sr import Config
 
 parser = argparse.ArgumentParser( description = "Clone an SR git repository" )
 parser.add_argument( "repo",
@@ -12,10 +13,12 @@ parser.add_argument( "-a", "--anonymous",
                      help = "Clone anonymously over git://" )
 args = parser.parse_args()
 
+config = Config()
+
 if args.anonymous:
-    prefix = "git://srobo.org/"
+    prefix = "git://{0}/".format( config["server"] )
 else:
-    prefix = "sr-gerrit:"
+    prefix = "{0}:".format( config["gerrit_ssh"] )
 
 repo = args.repo
 if repo[:len(prefix)] != prefix:

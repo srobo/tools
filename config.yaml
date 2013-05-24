@@ -15,3 +15,6 @@ keyring_service: "SR tools"
 server: www.studentrobotics.org
 # The port to access HTTPS on
 https_port: 443
+
+# ssh URL for git to use with gerrit
+gerrit_ssh: "sr-gerrit"

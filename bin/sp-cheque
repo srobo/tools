@@ -5,17 +5,17 @@ import xmlrpclib, argparse, getpass, yaml, os, sys
 _SERVER = "www.studentrobotics.org"
 _PORT = 443
 
-try:
-    root = spending.find_root()
-except spending.NotSpendingRepo:
-    print >>sys.stderr, "Please run in spending.git top level directory"
-    exit(1)
-
 parser = argparse .ArgumentParser("Add a cheque to a purchase")
 parser.add_argument("CHEQUE", help="Cheque number")
 parser.add_argument("TRAC", type=int, help="Trac ticket number")
 
 args = parser.parse_args()
+
+try:
+    root = spending.find_root()
+except spending.NotSpendingRepo:
+    print >>sys.stderr, "Please run in spending.git top level directory"
+    exit(1)
 
 spends =  spending.load_transactions('.')
 for spend in spends:

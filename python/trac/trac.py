@@ -7,12 +7,28 @@ class WrongServer(Exception):
     pass
 
 class TracProxy(ServerProxy):
+    "An XML-RPC proxy for SR Trac"
+
     def __init__( self,
                   user = None,
                   password = None,
                   server = None,
                   port = None,
                   anon = False ):
+        """Initialise an SR trac object
+
+        Arguments:
+        user -- The username.  By default this is looked up in the
+                config or the user is prompted for it.
+        password -- The password to use.  If left as its default value
+                    of None, it may be looked up in the keyring, or
+                    the user may be prompted for it.
+        server -- The server hostname.  Defaults to that found in the
+                  config.
+        port -- The HTTPS port of the server.  Defaults to that found
+                in the config.
+        anon -- Whether to use trac anonymously.
+        """
 
         config = Config()
 

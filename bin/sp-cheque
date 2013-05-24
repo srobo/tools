@@ -1,7 +1,10 @@
 #!/usr/bin/env python
-from sr import spending
 from argparse import ArgumentParser
-import xmlrpclib, getpass, yaml, os, sys
+import getpass
+import os
+from sr import spending
+import sys
+import xmlrpclib
 
 _SERVER = "www.studentrobotics.org"
 _PORT = 443

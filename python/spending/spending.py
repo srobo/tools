@@ -1,5 +1,6 @@
 "Library for accessing the spending files"
 import yaml, os, sys, datetime, sr.budget as budget
+from subprocess import check_output, check_call, CalledProcessError
 from decimal import Decimal as D
 
 class Transaction(object):
@@ -83,3 +84,35 @@ def load_budget_with_spending(root):
             b.transactions = []
     
     return bud
+
+class NotSpendingRepo(Exception):
+    pass
+
+def find_root( path = os.getcwd() ):
+    """Find the root directory of the spending repository
+
+    Checks that the repository is spending.git too
+
+    Arguments:
+    path -- if provided is a path within the spending.git repository
+            (defaults to working directory)"""
+
+    try:
+        "Check that we're in spending.git"
+
+        with open("/dev/null", "w") as n:
+            check_call( ["git", "rev-list",
+                         # This is the first commit of spending.git
+                         "82ab25832fea63773e0f98f1e3a2a1424ed8af6f" ],
+                        cwd = path,
+                        stdout = n,
+                        stderr = n )
+    except CalledProcessError:
+        "It's not the spending repository"
+        raise NotSpendingRepo
+
+    root = check_output( [ "git", "rev-parse", "--show-toplevel" ],
+                         cwd = path )
+
+    # Remove newline
+    return root[0:-1]

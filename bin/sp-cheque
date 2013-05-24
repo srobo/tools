@@ -4,7 +4,10 @@ import xmlrpclib, argparse, getpass, yaml, os, sys
 
 _SERVER = "www.studentrobotics.org"
 _PORT = 443
-if not (os.path.exists('.git') and os.path.exists('spending.py')):
+
+try:
+    root = spending.find_root()
+except spending.NotSpendingRepo:
     print >>sys.stderr, "Please run in spending.git top level directory"
     exit(1)
 

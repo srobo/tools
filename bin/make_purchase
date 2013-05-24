@@ -6,6 +6,7 @@ import getpass
 import os
 import sr.spending.spending as srspending
 import sr.budget.budget as srbudget
+from sr.trac import TracProxy, WrongServer
 from decimal import Decimal as D
 import tempfile
 from xmlrpclib import ServerProxy
@@ -29,20 +30,6 @@ try:
 except srspending.NotSpendingRepo:
     print >>sys.stderr, "Please run in spending.git top level directory"
     exit(1)
-
-class TracProxy(ServerProxy):
-    def __init__(self, server, port, user, password):
-        rpc_url = "https://{user}:{password}@{server}:{port}/trac/login/rpc".format(
-                user = user,
-                password = password,
-                server = server,
-                port = port )
-
-        ServerProxy.__init__(self, rpc_url)
-
-        if "ticket.create" not in self.system.listMethods():
-            print >>sys.stderr, "Error: ticket.create not found in trac's RPC methods"
-            exit(1)
 
 class PurchaseItem(object):
     def __init__(self, info ):
@@ -201,10 +188,14 @@ for line, total in budget_line_totals.iteritems():
 
 print ticket_text
 
-server = TracProxy( args.server, args.port,
-                    spend_request.username,
-                    getpass.getpass() )
-
+try:
+    server = TracProxy( user = spend_request.username,
+                        password = getpass.getpass(),
+                        server = args.server,
+                        port = args.port )
+except WrongServer:
+    print >>sys.stderr, "Error: The specified server is not a Trac instance"
+    exit(1)
 
 ticketNum = server.ticket.create( spend_request.summary,
                                   ticket_text, 

@@ -73,7 +73,7 @@ def group_trans_by_budget_line(trans):
     return transgrp
 
 def load_budget_with_spending(root):
-    bud = budget.load_budget("budget/")
+    bud = budget.load_budget( os.path.join( root, "budget/" ) )
     trans = group_trans_by_budget_line(load_transactions(root))
     
     for b in bud.walk():

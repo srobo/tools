@@ -1,13 +1,8 @@
 #!/usr/bin/env python
 from argparse import ArgumentParser
-import getpass
-import os
 from sr import spending
+from sr.trac import TracProxy
 import sys
-import xmlrpclib
-
-_SERVER = "www.studentrobotics.org"
-_PORT = 443
 
 parser = ArgumentParser( description = "Add a cheque to a purchase" )
 parser.add_argument("CHEQUE", type=int, help="Cheque number")
@@ -33,13 +28,7 @@ for spend in spends:
                     print "ERROR: This file already has a cheque attribute"
                     quit()
 
-rpc_url = "https://{username}:{password}@{server}:{port}/trac/login/rpc".format( 
-    username = raw_input( "Username: " ),
-    password = getpass.getpass(),
-    server = _SERVER,
-    port = _PORT )
-
-server = xmlrpclib.ServerProxy( rpc_url )
+server = TracProxy()
 
 server.ticket.update( args.TRAC,
                       "Paid.  Cheque: {0}".format( args.CHEQUE ),

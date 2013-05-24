@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 # coding=utf8
 from sr import spending
+from sr.trac import TracProxy
 import xmlrpclib, getpass, os, re, sys
-
-_SERVER = "studentrobotics.org"
-_PORT = 443
 
 try:
     root = spending.find_root()
@@ -21,7 +19,7 @@ for s in spends:
     else:
         spendsumgrp[s.trac] = float(s.cost)
 
-server = xmlrpclib.ServerProxy("".join(["https://","anonymous","@",_SERVER,":",str(_PORT),"/trac/rpc"]))
+server = TracProxy()
 mserver = xmlrpclib.MultiCall(server)
 
 tickets = server.ticket.query("status!=closed&component=Purchasing")

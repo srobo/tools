@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 from sr import spending
-import sys, os, xmlrpclib
+from sr.trac import TracProxy
+import sys, os
 
 transactions = spending.load_transactions( "./" )
-p = xmlrpclib.ServerProxy("https://www.studentrobotics.org/trac/rpc")
+p = TracProxy()
 tickets = p.ticket.query( "component=purchasing&max=0&resolution=fixed&status=closed" )
 
 counts = {}

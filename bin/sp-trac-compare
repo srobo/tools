@@ -4,7 +4,7 @@ from sr.trac import TracProxy
 import sys, os
 
 transactions = spending.load_transactions( "./" )
-p = TracProxy()
+p = TracProxy( anon = True )
 tickets = p.ticket.query( "component=purchasing&max=0&resolution=fixed&status=closed" )
 
 counts = {}

@@ -19,7 +19,7 @@ for s in spends:
     else:
         spendsumgrp[s.trac] = float(s.cost)
 
-server = TracProxy()
+server = TracProxy( anon = True )
 mserver = xmlrpclib.MultiCall(server)
 
 tickets = server.ticket.query("status!=closed&component=Purchasing")

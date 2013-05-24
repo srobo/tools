@@ -11,11 +11,10 @@ class TracProxy(ServerProxy):
                   user = None,
                   password = None,
                   server = None,
-                  port = None ):
+                  port = None,
+                  anon = False ):
 
         config = Config()
-        user = config.get_user( user )
-        password = config.get_password( password, user = user )
 
         if server is None:
             server = config["server"]
@@ -23,11 +22,20 @@ class TracProxy(ServerProxy):
         if port is None:
             port = config["https_port"]
 
-        rpc_url = "https://{user}:{password}@{server}:{port}/trac/login/rpc".format(
-                user = user,
-                password = password,
-                server = server,
-                port = port )
+        rpc_settings = { "server": server,
+                         "port": port }
+
+        if anon:
+            rpc_url = "https://{server}:{port}/trac/rpc"
+        else:
+            rpc_url = "https://{user}:{password}@{server}:{port}/trac/login/rpc"
+
+            user = config.get_user( user )
+            rpc_settings["user"] = user
+            rpc_settings["password"] = config.get_password( password,
+                                                            user = user )
+
+        rpc_url = rpc_url.format( **rpc_settings )
 
         ServerProxy.__init__(self, rpc_url)
 

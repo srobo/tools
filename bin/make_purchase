@@ -16,11 +16,10 @@ import yaml
 
 parser = argparse.ArgumentParser( description = "Make an SR purchase request" )
 parser.add_argument( "-s", "--server",
-                     help = "Hostname of server to talk to",
-                     default = "www.studentrobotics.org" )
+                     help = "Hostname of server to talk to" )
 parser.add_argument( "-p", "--port",
                      help = "Server port number to talk to",
-                     type = int, default = 443 )
+                     type = int )
 parser.add_argument( "-f", "--spend-file",
                      help = "Take spending info from this YAML file rather than running an editor" )
 args = parser.parse_args()
@@ -189,9 +188,7 @@ for line, total in budget_line_totals.iteritems():
 print ticket_text
 
 try:
-    server = TracProxy( user = spend_request.username,
-                        password = getpass.getpass(),
-                        server = args.server,
+    server = TracProxy( server = args.server,
                         port = args.port )
 except WrongServer:
     print >>sys.stderr, "Error: The specified server is not a Trac instance"

@@ -1,3 +1,5 @@
+from sr import Config
+import sys
 from xmlrpclib import ServerProxy
 
 class WrongServer(Exception):
@@ -6,9 +8,21 @@ class WrongServer(Exception):
 
 class TracProxy(ServerProxy):
     def __init__( self,
-                  user, password 
-                  server = "www.studentrobotics.org",
-                  port = 443 ):
+                  user = None,
+                  password = None,
+                  server = None,
+                  port = None ):
+
+        config = Config()
+        user = config.get_user( user )
+        password = config.get_password( password, user = user )
+
+        if server is None:
+            server = config["server"]
+
+        if port is None:
+            port = config["https_port"]
+
         rpc_url = "https://{user}:{password}@{server}:{port}/trac/login/rpc".format(
                 user = user,
                 password = password,

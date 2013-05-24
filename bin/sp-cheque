@@ -27,7 +27,7 @@ for spend in spends:
         spendfile = open(spend.fname,'r+')
         for line in spendfile.readlines():
             if line.startswith("trac"):
-                spendfile.write("cheque: " + str(args.CHEQUE) + "\n")
+                spendfile.write( "cheque: {0}\n".format( args.CHEQUE ) )
             if line.startswith("cheque"):
                 print "ERROR: This file already has a cheque attribute"
                 quit()

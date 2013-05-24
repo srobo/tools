@@ -2,7 +2,7 @@
 from sr import spending
 import xmlrpclib, argparse, getpass, yaml, os, sys
 
-_SERVER = "studentrobotics.org"
+_SERVER = "www.studentrobotics.org"
 _PORT = 443
 if not (os.path.exists('.git') and os.path.exists('spending.py')):
     print >>sys.stderr, "Please run in spending.git top level directory"

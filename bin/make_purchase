@@ -25,11 +25,8 @@ parser.add_argument( "-f", "--spend-file",
 args = parser.parse_args()
 
 try:
-    "Check that we're in spending.git"
-    # This is the first commit of spending.git and so must exist here
-    check_call( ["git", "rev-list", "82ab25832fea63773e0f98f1e3a2a1424ed8af6f" ],
-                stdout = open("/dev/null", "w") )
-except CalledProcessError:
+    spending_root = srspending.find_root()
+except srspending.NotSpendingRepo:
     print >>sys.stderr, "Please run in spending.git top level directory"
     exit(1)
 
@@ -140,8 +137,6 @@ if args.spend_file is not None:
 else:
     spend_request = SpendRequest.from_editor()
 
-# Find the root directory of spending.git
-spending_root = check_output( [ "git", "rev-parse", "--show-toplevel" ] )
 budget = srspending.load_budget_with_spending( spending_root )
 
 ticket_text = "Payee: {} \\\\\n".format( spend_request.username )

@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 # coding=utf8
-
-import sr.spending.spending as srspending
+from sr import spending
 import xmlrpclib, getpass, os, re, sys
-
-if not (os.path.exists('.git') and os.path.exists('spending.py')):
-    print >>sys.stderr, "Please run in spending.git top level directory"
-    exit(1)
 
 _SERVER = "studentrobotics.org"
 _PORT = 443
 
-spends = srspending.load_transactions('.')
+try:
+    root = spending.find_root()
+except spending.NotSpendingRepo:
+    print >>sys.stderr, "Please run in spending.git top level directory"
+    exit(1)
+
+spends = spending.load_transactions('.')
 
 spendsumgrp = {}
 for s in spends:

@@ -1,0 +1,14 @@
+# Warning: You don't want to edit this file. Instead, write the config
+# options you'd like to change to ~/.sr/config.yaml
+# The values in that file will take precedence over this one.
+
+# Student Robotics username
+user: null
+
+# Store passwords in the keyring if it's available
+use_keyring: False
+
+# The SR server
+server: www.studentrobotics.org
+# The port to access HTTPS on
+https_port: 443

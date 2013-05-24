@@ -10,7 +10,7 @@ _SERVER = "www.studentrobotics.org"
 _PORT = 443
 
 parser = ArgumentParser( description = "Add a cheque to a purchase" )
-parser.add_argument("CHEQUE", help="Cheque number")
+parser.add_argument("CHEQUE", type=int, help="Cheque number")
 parser.add_argument("TRAC", type=int, help="Trac ticket number")
 args = parser.parse_args()
 

@@ -6,8 +6,8 @@ import xmlrpclib, argparse, getpass, yaml, os, sys
 _SERVER = "studentrobotics.org"
 _PORT = 443
 if not (os.path.exists('.git') and os.path.exists('spending.py')):
-	print >>sys.stderr, "Please run in spending.git top level directory"
-	exit(1)
+    print >>sys.stderr, "Please run in spending.git top level directory"
+    exit(1)
 
 parser = argparse .ArgumentParser("Add a cheque to a purchase")
 parser.add_argument("CHEQUE", help="Cheque number")
@@ -17,16 +17,16 @@ args = parser.parse_args()
 
 spends =  spending.load_transactions('.')
 for spend in spends:
-	if spend.trac == args.TRAC:
-		print "Updating " + spend.fname
-		spendfile = open(spend.fname,'r+')
-		for line in spendfile.readlines():
-			if line.startswith("trac"):
-				spendfile.write("cheque: " + str(args.CHEQUE) + "\n")
-			if line.startswith("cheque"):
-				print "ERROR: This file already has a cheque attribute"
-				quit()
-		spendfile.close()
+    if spend.trac == args.TRAC:
+        print "Updating " + spend.fname
+        spendfile = open(spend.fname,'r+')
+        for line in spendfile.readlines():
+            if line.startswith("trac"):
+                spendfile.write("cheque: " + str(args.CHEQUE) + "\n")
+            if line.startswith("cheque"):
+                print "ERROR: This file already has a cheque attribute"
+                quit()
+        spendfile.close()
 
 server = xmlrpclib.ServerProxy("".join(["https://",raw_input("Username: "),":",getpass.getpass(),"@",_SERVER,":",str(_PORT),"/trac/login/rpc"]))
 server.ticket.update(int(args.TRAC),"Paid, cheque " + args.CHEQUE,{'status': 'closed', 'resolution': 'fixed'})

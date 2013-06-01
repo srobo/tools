@@ -49,10 +49,15 @@ for item in items:
         # Skip this item
         continue
 
-    contents = open(item.fname,'r').read()
-    contents = re.sub( r'^(\s*cost\s*:\s*)\d+\.?\d*(\s*)$',
-                       r'\g<1>{0}\g<2>'.format(str(spent)),
-                       contents, 0, re.MULTILINE )
+    orig_contents = open(item.fname,'r').read()
+    contents = re.sub( r'^(\s*cost\s*:\s*).+$',
+                       r'\g<1>{0}'.format(spent),
+                       orig_contents, 0, re.MULTILINE )
+
+    if contents == orig_contents:
+        print >>sys.stderr, \
+            "Warning: Failed to set the cost of {0} -- skipping it.".format( item.name )
+        continue
 
     # Mark as closed
     m = re.search( r"^\s*closed\s*:.*$", contents,

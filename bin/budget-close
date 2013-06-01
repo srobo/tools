@@ -5,16 +5,18 @@ import sr.spending.spending as srspending
 import sr.budget.budget as srbudget
 import os, re, sys, yaml, argparse
 
-if not (os.path.exists('.git') and os.path.exists('spending.py')):
-    print >>sys.stderr, "Please run in spending.git top level directory"
-    exit(1)
-
 parser = argparse.ArgumentParser( description = "Close a budget line" )
 parser.add_argument("LINE", help="Budget line to close")
 args = parser.parse_args()
 
 try:
-    budget = srspending.load_budget_with_spending('.')
+    spending_root = srspending.find_root()
+except srspending.NotSpendingRepo:
+    print >>sys.stderr, "Please run in spending.git repository"
+    exit(1)
+
+try:
+    budget = srspending.load_budget_with_spending(spending_root)
 except KeyError:
     print >>sys.stderr, "Budget line '" + args.LINE + "' not found"
     exit(1)

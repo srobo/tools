@@ -3,20 +3,22 @@
 import sr.spending.spending as srspending
 import os, sys, re, argparse, yaml
 
-if not (os.path.exists('.git') and os.path.exists('spending.py')):
-        print >>sys.stderr, "Please run in spending.git top level directory"
-        exit(1)
-
 parser = argparse.ArgumentParser("Parse bank data to organise transactions")
 parser.add_argument("FILE", help="The file containing the bank data")
 args = parser.parse_args()
+
+try:
+    spending_root = srspending.find_root()
+except srspending.NotSpendingRepo:
+    print >>sys.stderr, "Please run in spending.git repository"
+    exit(1)
 
 if not os.path.exists(args.FILE):
 	print "ERROR: File \"" + str(args.FILE) + "\" not found"
 	exit(1)
 
 #Sort transactions by cheque
-srspends = srspending.load_transactions('.')
+srspends = srspending.load_transactions(spending_root)
 spends = {}
 for spend in srspends:
 	y = yaml.load(open(spend.fname, 'r'))

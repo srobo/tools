@@ -54,7 +54,9 @@ for item in items:
                        r'\g<1>{0}'.format(spent),
                        orig_contents, 0, re.MULTILINE )
 
-    if contents == orig_contents:
+    # Check that the cost has actually been changed
+    # within the string if it actually needed to be
+    if spent != item.cost and contents == orig_contents:
         print >>sys.stderr, \
             "Warning: Failed to set the cost of {0} -- skipping it.".format( item.name )
         continue

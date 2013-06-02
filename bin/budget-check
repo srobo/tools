@@ -57,6 +57,7 @@ if args.spending is not None:
     "Check stuff with spending.git"
 
     inv_budget_lines = {}
+    grouped_trans = {}
 
     transactions = spending.load_transactions( args.spending )
 
@@ -70,6 +71,10 @@ if args.spending is not None:
                 inv_budget_lines[trans.budget] = []
 
             inv_budget_lines[trans.budget].append( trans )
+        else:
+            if trans.budget not in grouped_trans:
+                grouped_trans[trans.budget] = []
+            grouped_trans[trans.budget].append( trans )
 
     if len(inv_budget_lines):
         print "{0} non-existent budget lines referenced from spending.git:".format( len(inv_budget_lines) )
@@ -81,3 +86,48 @@ if args.spending is not None:
                 print "\t", t.fname
     else:
         print "OK: All spending.git budget line references are valid."
+
+    # Lines that have been closed but don't match their spends
+    close_fail = {}
+
+    # Lines that are over budget
+    over_budget = {}
+
+    # Check that the spends line up with the budget moneywise
+    for bpath, tlist in grouped_trans.iteritems():
+        spent = sum( [t.cost for t in tlist] )
+        bline = b.path( bpath )
+
+        if bline.closed:
+            "Closed lines must match their spent amount"
+            if bline.cost != spent:
+                close_fail[bline] = spent
+
+            continue
+
+        fudged = bline.cost * budget.FUDGE_FACTOR
+        if spent > fudged:
+            over_budget[bline] = spent
+
+
+    if len(close_fail):
+        print "{0} closed lines do not match the amount spent against them:".format(
+            len( close_fail ) )
+        for line, spent in close_fail.iteritems():
+            print " - {0}: £{1} spent, £{2} allocated".format(
+                line.name,
+                spent,
+                line.cost )
+    else:
+        print "OK: All closed lines have the correct value."
+
+    if len(over_budget):
+        print "{0} lines are over budget:".format( len(over_budget) )
+        for line, spent in over_budget.iteritems():
+
+            print " - {0}: £{1} spent, £{2} allocated (including fudge)".format(
+                line.name,
+                spent,
+                line.cost * budget.FUDGE_FACTOR )
+    else:
+        print "OK: No open budget lines are overspent."

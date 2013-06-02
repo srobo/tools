@@ -2,7 +2,8 @@
 import yaml, sympy, os, sys, logging
 from decimal import Decimal as D
 import sys, tempfile
-from subprocess import check_call
+from subprocess import ( check_call, check_output,
+                         CalledProcessError )
 
 # Spending against a budget line is allowed to go over its value by
 # this factor
@@ -165,3 +166,35 @@ def load_budget_rev( root, rev, keep_around = False ):
         return t.btree
 
     return t.btree, t
+
+class NotBudgetRepo(Exception):
+    pass
+
+def find_root( path = os.getcwd() ):
+    """Find the root directory of the budget repository
+
+    Checks that the repository is budget.git too
+
+    Arguments:
+    path -- if provided is a path within the budget.git repository
+            (defaults to working directory)"""
+
+    try:
+        "Check that we're in budget.git"
+
+        with open("/dev/null", "w") as n:
+            check_call( ["git", "rev-list",
+                         # This is the first commit of spending.git
+                         "c7e8a3bdc82ad244ed302bf9a7f4934e0ca83292" ],
+                        cwd = path,
+                        stdout = n,
+                        stderr = n )
+    except CalledProcessError:
+        "It's not the spending repository"
+        raise NotBudgetRepo
+
+    root = check_output( [ "git", "rev-parse", "--show-toplevel" ],
+                         cwd = path )
+
+    # Remove newline
+    return root[0:-1]

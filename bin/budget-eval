@@ -13,7 +13,13 @@ if len(sys.argv) != 2:
 
 EXPR = sys.argv[1]
 
-t = budget.load_budget("./")
+try:
+    root = budget.find_root()
+except budget.NotBudgetRepo:
+    print >>sys.stderr, "Error: Please run in budget.git"
+    exit(1)
+
+t = budget.load_budget( root )
 
 config = None
 

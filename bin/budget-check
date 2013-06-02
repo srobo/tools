@@ -1,9 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from argparse import ArgumentParser
 import os
-import sr.budget as budget
+from sr import budget, spending
 import sys, yaml
 from decimal import Decimal as D, ROUND_UP
+
+parser = ArgumentParser( description = "Check the budget is valid" )
+parser.add_argument( "-s", "--spending",
+                     help = "The location of spending.git to check against" )
+args = parser.parse_args()
 
 b = budget.load_budget( "./" )
 
@@ -46,3 +52,32 @@ if budgeted == MAX:
     print "Budget is at maximum."
 else:
     print "Budget is £%s below maximum." % (MAX-budgeted)
+
+if args.spending is not None:
+    "Check stuff with spending.git"
+
+    inv_budget_lines = {}
+
+    transactions = spending.load_transactions( args.spending )
+
+    # Check that all transactions reference valid budget lines
+    for trans in transactions:
+        try:
+            b.path( trans.budget )
+        except budget.InvalidPath:
+
+            if trans.budget not in inv_budget_lines:
+                inv_budget_lines[trans.budget] = []
+
+            inv_budget_lines[trans.budget].append( trans )
+
+    if len(inv_budget_lines):
+        print "{0} non-existent budget lines referenced from spending.git:".format( len(inv_budget_lines) )
+
+        for line, tlist in inv_budget_lines.iteritems():
+            print " - {0} is referenced in:".format( line )
+
+            for t in tlist:
+                print "\t", t.fname
+    else:
+        print "OK: All spending.git budget line references are valid."

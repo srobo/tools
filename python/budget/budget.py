@@ -40,6 +40,9 @@ class BudgetItem(object):
         c = sympy.S( y["cost"] )
         self.cost = D( "%.2f" % c.evalf( subs = conf.vars ) )
 
+class InvalidPath(Exception):
+    pass
+
 class BudgetTree(object):
     "Container for the BudgetItems and BudgetTrees below a certain point"
     def __init__(self, name):
@@ -80,7 +83,7 @@ class BudgetTree(object):
             try:
                 pos = pos.children[s]
             except KeyError:
-                raise Exception( "'%s' has no child node '%s'" % ( pos.name, s ) )
+                raise InvalidPath( "'%s' has no child node '%s'" % ( pos.name, s ) )
         return pos
 
 class BudgetConfig(object):

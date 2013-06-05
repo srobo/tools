@@ -29,3 +29,15 @@ if args.dir != None:
     args += [args.dir]
 
 subprocess.check_call( cmd )
+
+clonedir = os.path.dirname( args.repo )
+if clonedir == "":
+    clonedir = args.repo
+
+if not args.anonymous:
+    # Set up the gerrit Change-Id commit hook
+
+    subprocess.check_call(
+        [ "scp",
+          "{0}:hooks/commit-msg".format( config["gerrit_ssh"] ),
+          os.path.join( clonedir, ".git", "hooks" ) ] )

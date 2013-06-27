@@ -21,12 +21,12 @@ class Item(distpart.DistItem):
 
     def _getinfo(self):
         "Load information from the distributor"
-        page = grab_url_cached( 'https://xgoat.com/p/rs/{0}'.format(self.part_number) )
+        page = grab_url_cached( 'http://uk.rs-online.com/web/p/products/{0}/'.format(self.part_number) )
 
         soup = BeautifulSoup(page)
 
         if not self._check_exists(soup):
-            raise distpart.NonExistentPart
+            raise distpart.NonExistentPart(self.part_number)
 
         # Check that the page we've been returned is for the requested part:
         if not self._soup_check_part(soup):

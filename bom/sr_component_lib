@@ -248,6 +248,7 @@ sr-ic-msp430f2254, MSP430F2254 16bit mcu suffix: IDA,1649422,farnell,1,tssop38
 sr-ic-msp430f2122, MSP430F2122 16bit mcu,1753280,farnell,1,tssop28
 sr-ic-pic10f200,PIC10F200T-I/OT 8bit mcu,666-8501,rs,5,sot-23-6
 sr-ic-stm32f100r6,STM32F100R6 32bit mcu 32k flash 4k ram,723-8889P,rs,1,lqfp64
+sr-ic-stm32f100r8,STM32F100R8 32bit mcu 64k flash 8k ram,723-8883P,rs,1,lqfp64
 
 # Logic-y
 sr-ic-74act04d, 74ACT04D HEX INVERTER SMD 74ACT04,9590323,farnell,1,soic14

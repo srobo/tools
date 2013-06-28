@@ -6,7 +6,7 @@ import sys
 
 parser = ArgumentParser( description = "Add a cheque to a purchase" )
 parser.add_argument("CHEQUE", type=int, help="Cheque number")
-parser.add_argument("TRAC", type=int, help="Trac ticket number")
+parser.add_argument("TRAC", type=int, nargs='+', help="Trac ticket number")
 args = parser.parse_args()
 
 try:
@@ -17,7 +17,7 @@ except spending.NotSpendingRepo:
 
 spends =  spending.load_transactions('.')
 for spend in spends:
-    if spend.trac == args.TRAC:
+    if spend.trac in args.TRAC:
         print "Updating " + spend.fname
 
         with open(spend.fname, "r+") as spendfile:
@@ -30,7 +30,8 @@ for spend in spends:
 
 server = TracProxy()
 
-server.ticket.update( args.TRAC,
+for trac in args.TRAC:
+	server.ticket.update( trac,
                       "Paid.  Cheque: {0}".format( args.CHEQUE ),
                       { 'status': 'closed',
                         'resolution': 'fixed' } )

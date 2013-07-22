@@ -3,10 +3,6 @@
 import sr.spending.spending as srspending
 import os, sys, re, argparse, yaml
 
-if not (os.path.exists('.git') and os.path.exists('pending')):
-        print >>sys.stderr, "Please run in spending.git top level directory"
-        exit(1)
-
 parser = argparse.ArgumentParser("Parse bank data to organise transactions")
 parser.add_argument("FILE", help="The file containing the bank data")
 args = parser.parse_args()

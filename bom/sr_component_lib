@@ -138,7 +138,7 @@ sr-cn-camcon2w-5mm,camdenboss,CTB9350/2A,CTB9350/2A - Camden Electronics 2way 5m
 sr-cn-minicamcon2w,camdenboss,CTB93HE/2,CTB93HE/2 - Camden Electronics 2way 3.81mm pitch,1717071,farnell,1,through_hole
 sr-cn-minicamcon4w,camdenboss,CTB93HE/4,CTB93HE/4 - Camden Electronics 4way 3.81mm pitch,1717073,farnell,1,through_hole
 sr-cn-minicamcon8w,camdenboss,CTB93HE/8,CTB93HE/8 - Camden Electronics 8way 3.81mm pitch,1717077,farnell,1,through_hole
-sr-cn-battcon,phoenix contact,"PC 4/2-G-7,62","PC 4/2-G-7,62 - Pheonix Contact 2way 35A",325-4698,rs,5,through_hole
+sr-cn-battcon,phoenix contact,"PC 4/2-G-7,62","PC 4/2-G-7,62 - Pheonix Contact 2way 35A",1792928,farnell,5,through_hole
 sr-cn-rj11,mh connectors,MHRJJ44NFRA,RJ11 4p4c pcb socket,3938335,farnell,1,through_hole
 sr-cn-pjack,lumberg,NEB 21 R,LUMBERG 2.1MM powerjack,1217037,farnell,1,through_hole
 sr-cn-fuse-20mm,schurter,0031.8201,20mm glass fuse holder,1162740,farnell,1,through_hole
@@ -217,7 +217,7 @@ sr-d-gsot05c,vishay,GSOT05C-GS08,5V unidirectional dual TVS diode 480W common an
 sr-d-gsot12c,vishay,GSOT12C-GS08,12V unidirectional dual TVS diode 312W common anode,1617678,farnell,5,sot23
 sr-d-gsot15,nxp,PESD15VS2UAT,EQUIV. PESD15VS2UAT 15V unidirectional dual TVS diode 160W,8737436,farnell,5,sot23
 sr-d-gsot24c,vishay,GSOT24C-GS08,24V unidirectional dual TVS diode 325W common anode,78-GSOT24C,mouser,1,sot23
-sr-d-mmbz5v6al,on semiconductor,MMBZ5V6ALT1G,3V unidirectional dual TVS diode 40W common anode,MMBZ5V6ALT1GOSCT-ND,digikey,1,sot23
+sr-d-mmbz5v6al,on semiconductor,MMBZ5V6ALT1G,3V unidirectional dual TVS diode 40W common anode,1829219,farnell,1,sot23
 sr-d-vbus052cd,vishay,VBUS052CD-FAH-GS08,VBUS052CD-FAH dual bus protection array,1697040,farnell,5,llp1713
 sr-d-82400102,wurth elektronik,82400102,Wurth 82400102 dual TVS diode array,1825875,farnell,1,sot23-6
 
@@ -229,7 +229,7 @@ sr-ic-tb62752afug,toshiba,TB62752BFUG,TB62752BFUG boost convertor for backlight 
 #sr-ic-ts1935,TS1935 1.6MHz Boost Converter,1476681,farnell,1,sot25 NO LONGER STOCKED
 sr-ic-ua78l05,ti,UA78L05ACPKG3,UA78L05 5V linear voltage regulator,1236590,farnell,1,sot-89-3
 sr-ic-ld1117s50,stmicroelectronics,LD1117S50TR,LD1117S50TR 5V linear voltage reg 800mA,686-9379,rs,25,sot-223
-sr-ic-ld1117s33,stmicroelectronics,LD1117S33CTR,LD1117S33CTR 3.3V 800mA linear voltage reg - hefty,686-9388,rs,25,sot223
+sr-ic-ld1117s33,stmicroelectronics,LD1117S33CTR,LD1117S33CTR 3.3V 800mA linear voltage reg - hefty,1467779,farnell,1,sot223
 sr-ic-ts5205cx533,taiwan semiconductor,TS5205CX533 RF,TS5205CX533 3.3V 150mA linear voltage reg - weedy,398-708,rs,50,sot23-5
 sr-ic-mcp1703at3302emb,microchip,MCP1703AT-3302E/MB,MCP1703AT-3302E/MB 3.3V 250mA linear voltage reg - middling,579-MCP1703AT3302EMB,mouser,1,sot-89
 sr-ic-tps73025,ti,LP5951MF-2.5,EQUIV(ish) LP5951MF-2.5 2.5V 150mA(NOT 200mA) linear voltage reg,1312655,farnell,1,sot23-5
@@ -260,9 +260,9 @@ sr-ic-sn65176b,ti,SN65176BDRG4,SN65176B RS-485 half duplex transceiver (5V),528-
 sr-ic-sn75179b,ti,SN75179BDRG4,SN75179B RS-485 full duplex transceiver (5V),660-8275,rs,10,soic8
 sr-ic-sn65lvds1,ti,SN65LVDS1DBVTG4,SN65LVDS1DBVTG4 LVDS driver,526-864,rs,5,sot23-5
 sr-ic-sn65lvds2,ti,SN65LVDS2DBVTG4,SN65LVDS2DBVTG4 LVDS receiver,528-084,rs,5,sot23-5
-sr-ic-sn65lvds051,ti,SN65LVDS051PWG4,SN65LVDS051PW LVDS dual transceiver,660-9004P,rs,1,tssop16
+sr-ic-sn65lvds051,ti,SN65LVDS051PWG4,SN65LVDS051PW LVDS dual transceiver,1460775,farnell,1,tssop16
 sr-ic-fxlp34,fairchild semiconductor,FXLP34P5X,FXLP34P5X 1-bit non-inverting level translator,1652415,farnell,1,sc70-5
-sr-ic-txs0102,ti,TXS0102DCTR,TXS0102DCT 2-bit non-inverting bi-directional level translator,595-TXS0102DCTR,mouser,1,ssop8
+sr-ic-txs0102,ti,TXS0102DCTR,TXS0102DCT 2-bit non-inverting bi-directional level translator,2098018,farnell,1,ssop8
 sr-ic-adum3211arz,analog devices,ADUM3211ARZ,ADUM3211ARZ 2.5kV 10Mbps dual bi-directional isolator,ADUM3211ARZ-ND,digikey,1,soic8
 
 # Misc

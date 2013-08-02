@@ -41,13 +41,15 @@ function highlight(refdes) {
 <table style="border-style:none;border-spacing:0;">
 <thead>
 <tr>
-<th>&nbsp;</th>
-<th>srcode</th>
-<th>Description</th>
+<th>Line No.</th>
+<th>Internal Part No.</th>
+<th>Qty</th>
+<th>Value/Description</th>
 <th>Package</th>
-<th>Distributer</th>
-<th>Distributor Order Number</th>
-<th>Quantity</th>
+<th>Distributor</th>
+<th>Distributor Order No.</th>
+<th>Manufacturer</th>
+<th>Part No.</th>
 <th>Designators</th>
 </tr>
 </thead>

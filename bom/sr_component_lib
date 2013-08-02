@@ -109,7 +109,7 @@ sr-l-10u-2a,bourns,SRR0805-100M,10u inductor 2A max,1612715,farnell,1,smt_induct
 sr-l-22u,panasonic,ELJPC220KF,22u 160mA smt inductor,1198441,farnell,5,1008
 sr-l-22u-1300ma,panasonic,ELL6UH220M,1.3A smt inductor,1717487,farnell,5,smt_inductor
 sr-l-22u-2500ma,wurth elektronik,744066220,22u 2.5A smt inductor,1635894,farnell,1,smt_inductor
-sr-l-22u-6300ma,coiltronics,HC9-220-R,22u 6.3A smt inductor,1783727,farnell,1,smt_inductor
+sr-l-22u-6300ma,coiltronics,HC9-220-R,22u 6.3A smt inductor,513-1349-1-ND,digikey,1,smt_inductor
 sr-l-68u-900ma,bourns,SRN6045-680M,68u 0.9A smt inductor,2061657,farnell,5,smt_inductor
 sr-l-330u,bourns,SDR0503-331KL,330u 280mA smt inductor,1612678,farnell,1,smt_inductor
 

@@ -77,7 +77,7 @@ sr-c-330n-0805,any,,0.33u capacitor 0805,1759174,farnell,100,0805
 sr-c-470n,any,,0.47u capacitor 0603,1759021,farnell,100,0603
 sr-c-470n-0603-25v,any,,470n capacitor 0603 25V X7R,1856365,farnell,100,0603
 sr-c-1u,any,,1u electrolytic capacitor,1236655,farnell,5,through_hole
-sr-c-1u-0805,any,,1u ceramic capacitor 0805 50V,1611943,farnell,1,0805
+sr-c-1u-0805,any,,1u ceramic capacitor 0805 50V,1845750,farnell,1,0805
 sr-c-1u-0603-16v,any,,1u capacitor 0603 16V X7R,2112839,farnell,1,0603
 sr-c-2u2-0805,any,,2u2 capacitor 0805 16V,1759480,farnell,100,0805
 sr-c-2u2-1206-50v,any,,2u2 capacitor 1206 50V X7R,1797017,farnell,10,1206

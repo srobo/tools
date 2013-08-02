@@ -246,7 +246,7 @@ sr-ic-msp430f247,ti,MSP430F247TPM,MSP430F247TPM 16bit mic,662-5100,rs,1,tqfp64
 sr-ic-msp430f2234,ti,MSP430F2234IDA, MSP430F2234 16bit mcu suffix: IDA,1649419,farnell,1,tssop38
 sr-ic-msp430f2254,ti,MSP430F2254IDA, MSP430F2254 16bit mcu suffix: IDA,1649422,farnell,1,tssop38
 sr-ic-msp430f2122,ti,MSP430F2122IPW, MSP430F2122 16bit mcu,1753280,farnell,1,tssop28
-sr-ic-pic10f200,microchip,PIC10F200T-I/OT,PIC10F200T-I/OT 8bit mcu,666-8501,rs,5,sot-23-6
+sr-ic-pic10f200,microchip,PIC10F200T-I/OT,PIC10F200T-I/OT 8bit mcu,1216921,farnell,1,sot-23-6
 sr-ic-stm32f100r6,stmicroelectronics,STM32F100R6T6B,STM32F100R6 32bit mcu 32k flash 4k ram,723-8889P,rs,1,lqfp64
 sr-ic-stm32f100r8,stmicroelectronics,STM32F100R8T6B,STM32F100R8 32bit mcu 64k flash 8k ram,723-8883P,rs,1,lqfp64
 

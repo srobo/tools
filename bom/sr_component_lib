@@ -271,7 +271,7 @@ sr-ic-hcpl-817,avago technologies,HCPL-817-36BE,HCPL-817-36BE Optoisolator,12445
 sr-ic-mcp4018-103,microchip,MCP4018T-103E/LT,MCP4018-103/LT 7-bit I2C digital pot,1715849,farnell,1,sc70-6
 sr-ic-at24c01,atmel,AT24C01BN-SH-B,AT24C01BN-SH 1kbit I2C EEPROM,1362638,farnell,1,soic8
 sr-ic-max4069,maxim,MAX4069,MAX4069 - current sense amplifier,MAX4069,maxim,,
-sr-ic-ina213,INA213AIDCKT current sense amp,709-4535,rs,1,sc70-6
+sr-ic-ina213,ti,INA213AIDCKT,INA213AIDCKT current sense amp,1754261,farnell,1,sc70-6
 sr-ic-ts321,taiwan semiconductor,TS321CX5 RF,TS321CX5 single o-amp,1476668,farnell,1,sot23-5
 sr-ic-lm2904,stmicroelectronics,LM2904DT,LM2904DT dual op-amp,1564327,farnell,1,soic8
 sr-ic-lm339,stmicroelectronics,LM339PT,LM339PT quad comparator,1750192,farnell,1,tssop14

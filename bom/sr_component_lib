@@ -289,7 +289,7 @@ sr-npn-bc846b,nxp,BC846B,BC846B NPN BJT 65V 100mA,1081229,farnell,10,sot23
 
 # FETs
 sr-fet-n-bss123,nxp,BSS123,BSS123 n-channel mosfet,1510764,farnell,5,sot-23
-#sr-fet-n-sn7002w,SN7002W L6433 n-channel mosfet,1471758,farnell,1,sot323 NO LONGER STOCKED
+sr-fet-n-sn7002w,nxp,2N7002PW,2N7002PW n-channel mosfet,1829184,farnell,1,sot323
 sr-fet-n-bsh121,nxp,BSH121,BSH121 n-channel mosfet very low Vt of 1V,1758072,farnell,1,sot323
 #sr-fet-n-fdd8586,FDD8586 n-channel mosfet,1324786,farnell,1,d-pak NO LONGER STOCKED
 #sr-fet-n-fdd8580,FDD8580 n-channel mosfet 35A,1324785,farnell,1,d-pak NO LONGER STOCKED

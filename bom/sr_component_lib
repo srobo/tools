@@ -97,7 +97,7 @@ sr-c-pcv1v101mcl1gs,any,,100u capacitor smt electrolytic 35V 2.2A ripple,493-438
 sr-c-220u,any,,220u capacitor smt CPOL-EUE,1580568,farnell,5,smt_electrolytic_cap
 sr-c-220u-10v,any,,220uF cap through-hole 10V,1219454,farnell,1,through_hole
 sr-c-pcf1c221mcl1gs,nichicon,PCF1C221MCL1GS,220u capacitor smt electrolytic 16V 3.9A ripple,493-3003-2-ND,digikey,500,smt_electrolytic_cap
-sr-c-470u-16v,any,,470uF cap through-hole 16V,9692053,farnell,5,through_hole
+sr-c-470u-16v,panasonic,EEUFC1C471,470uF cap through-hole 16V,9692053,farnell,5,through_hole
 sr-c-1m,any,,1m electrolytic capacitor 16V,9451129,farnell,10,through_hole
 
 # Inductors

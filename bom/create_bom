@@ -163,23 +163,38 @@ for line in lines:
         "Ignore sr-nothing -- we don't want it in HTML BOMs"
         continue
 
-    outf.write( "<td>%i.</td>" % line_num )
-    line_num += 1
-
-    outf.write( """<td>%(sr-code)s</td>
-<td>%(description)s</td>
-<td>%(package)s</td>
-<td>%(supplier)s</td>""" % p )
+    if p["manufacturer"] == "any":
+        "We don't care where these parts come from"
+        p["manufacturer"] = "any/open"
+        p["part-number"] = "&nbsp;"
 
     url = p.get_url()
     order_num = wrap_order_number(p["order-number"])
     if url == None:
-        outf.write( "<td>%s</td>" % order_num )
+        order_num_html = order_num
     else:
-        outf.write( """<td><a href="%s">%s</a></td>""" % ( url, order_num ) )
+        order_num_html = """<a href="%s">%s</a>""" % ( url, order_num )
 
-    outf.write( "<td>%i</td>" % len(line) )
-    total_parts += len(line)
+    quantity = len(line)
+
+    p.update({"line-no": line_num,
+              "order-no": order_num_html,
+              "qty": quantity})
+
+    outf.write( """
+        <td>%(line-no)i</td>
+        <td>%(sr-code)s</td>
+        <td>%(qty)i</td>
+        <td>%(description)s</td>
+        <td>%(package)s</td>
+        <td>%(supplier)s</td>
+        <td>%(order-no)s</td>
+        <td>%(manufacturer)s</td>
+        <td>%(part-number)s</td>
+    """ % p )
+    line_num += 1
+
+    total_parts += quantity
 
     pcodes = [x[1] for x in line]
     pcodes.sort(cmp=pcode_cmp)

@@ -11,26 +11,26 @@ sr-r-4r7,any,,4r7 0603 chip resistor,9332189,farnell,50,0603
 sr-r-15,any,,15 0603 chip resistor,9330631,farnell,50,0603
 sr-r-22,any,,22 0603 chip resistor,1576607,farnell,50,0603
 sr-r-100,any,,100 0603 chip resistor (100mW),1469752,farnell,50,0603
-sr-r-100-0402,any,,100 0402 chip resistor (63mW),2072515,farnell,100,0402
+sr-r-100-0402,any,,100 0402 chip resistor (63mW) 1%,2072515,farnell,100,0402
 sr-r-100-1206,any,,100 1206 chip resistor(500mW),1576615,farnell,50,1206
 sr-r-330,any,,330 0603 chip resistor,9331018,farnell,50,0603
-sr-r-330-0402,any,,330 0402 chip resistor,2072927,farnell,100,0402
+sr-r-330-0402,any,,330 0402 chip resistor 1%,2072927,farnell,100,0402
 sr-r-560,any,,560 0603 chip resistor,9233342,farnell,50,0603
 sr-r-680-1206,any,,680 1206 chip resistor (0.5W),1739010,farnell,50,1206
 sr-r-1k,any,,1k 0603 chip resistor,9330380,farnell,50,0603
-sr-r-1k-0402,any,,1k 0402 chip resistor,2072516,farnell,100,0402
-sr-r-1k-1206,any,,1k 1206 chip resistor,2073877,farnell,100,1206
-sr-r-1k1-0402,any,,1k1 0402 chip resistor,2072548,farnell,100,0402
+sr-r-1k-0402,any,,1k 0402 chip resistor 1%,2072516,farnell,100,0402
+sr-r-1k-1206,any,,1k 1206 chip resistor 1%,2073877,farnell,100,1206
+sr-r-1k1-0402,any,,1k1 0402 chip resistor 1%,2072548,farnell,100,0402
 sr-r-2k2-1206,any,,2k2 1206 chip resistor,2073909,farnell,100,1206
 sr-r-2k4,any,,2k4 0603 chip resistor,9330879,farnell,50,0603
 sr-r-2k7,any,,2k7 0603 chip resistor,2073452,farnell,100,0603
 sr-r-3k3,any,,3k3 0603 chip resistor,9331026,farnell,50,0603
-sr-r-4k3-0402,any,,4k3 0402 chip resistor,2073030,farnell,100,0402
-sr-r-4k7-0402,any,,4k7 0402 chip resistor,2073064,farnell,100,0402
+sr-r-4k3-0402,any,,4k3 0402 chip resistor 1%,2073030,farnell,100,0402
+sr-r-4k7-0402,any,,4k7 0402 chip resistor 1%,2073064,farnell,100,0402
 sr-r-9k1,any,,9k1 0603 chip resistor,1469842,farnell,50,0603
-sr-r-9k1-0402,any,,9k1 0402 chip resistor,2073309,farnell,100,0402
+sr-r-9k1-0402,any,,9k1 0402 chip resistor 1%,2073309,farnell,100,0402
 sr-r-10k,any,,10k 0603 chip resistor,9330399,farnell,50,0603
-sr-r-10k-0402,any,,10k 0402 chip resistor,2072517,farnell,100,0402
+sr-r-10k-0402,any,,10k 0402 chip resistor 1%,2072517,farnell,100,0402
 sr-r-10k5,any,,10.5k 0603 1% chip resistor,1170890,farnell,50,0603
 sr-r-12k,any,,12k 0603 5% chip resistor,9233512,farnell,50,0603
 sr-r-13k3,any,,13k3 0603 1% chip resistor,1170899,farnell,50,0603
@@ -40,7 +40,7 @@ sr-r-20k,any,,20k 0603 1% chip resistor,1469774,farnell,50,0603
 sr-r-27k,any,,27k 0603 1% chip resistor,9330933,farnell,50,0603
 sr-r-28k,any,,28k 0603 1% chip resistor,1170931,farnell,50,0603
 sr-r-30k,any,,30k 0603 chip resistor,9330984,farnell,50,0603
-sr-r-33k2-0402,any,,33k2 0402 chip resistor,2072936,farnell,100,0402
+sr-r-33k2-0402,any,,33k2 0402 chip resistor 1%,2072936,farnell,100,0402
 sr-r-36k,any,,36k 0603 1% chip resistor,9331093,farnell,50,0603
 sr-r-39k-1pc,any,,39k 0603 1% chip resistor,9331158,farnell,50,0603
 sr-r-42k2,any,,42.2k 0603 1% chip resistor,1170950,farnell,50,0603
@@ -51,7 +51,7 @@ sr-r-118k,any,,118k 0603 chip 1% resistor,1170992,farnell,50,0603
 sr-r-160k,any,,160k 0603 chip resistor,2074200,farnell,1,0603
 sr-r-240k,any,,240k 0603 chip resistor,1469786,farnell,50,0603
 sr-r-330k-1pc,any,,330k 0603 1% chip resistor,9331042,farnell,50,0603
-sr-r-1000k-0402,any,,1M 0402 chip resistor,2072521,farnell,100,0402
+sr-r-1000k-0402,any,,1M 0402 chip resistor 1%,2072521,farnell,100,0402
 sr-r-10000k,any,,10M 0603 1% chip resistor,1469750,farnell,50,0603
 
 # Resistory Arrays
@@ -132,12 +132,12 @@ sr-fuse-5000-ato,any,,5A ATO automotive fuse (Orange),1586586,farnell,5,N/A
 sr-fuse-15000-ato,any,,15A ATO automotive fuse (Blue),1586589,farnell,5,N/A
 
 # Connectors
-sr-cn-camcon2w,camdenboss,CTB9550/2,CTB9550/2 - Camden Electronics 2way,3882391,farnell,1,through_hole
-sr-cn-camcon3w,camdenboss,CTB9550/3,CTB9550/3 - Camden Electronics 3way,3882408,farnell,1,through_hole
-sr-cn-camcon2w-5mm,camdenboss,CTB9350/2A,CTB9350/2A - Camden Electronics 2way 5mm pitch,3882093,farnell,1,through_hole
-sr-cn-minicamcon2w,camdenboss,CTB93HE/2,CTB93HE/2 - Camden Electronics 2way 3.81mm pitch,1717071,farnell,1,through_hole
-sr-cn-minicamcon4w,camdenboss,CTB93HE/4,CTB93HE/4 - Camden Electronics 4way 3.81mm pitch,1717073,farnell,1,through_hole
-sr-cn-minicamcon8w,camdenboss,CTB93HE/8,CTB93HE/8 - Camden Electronics 8way 3.81mm pitch,1717077,farnell,1,through_hole
+sr-cn-camcon2w,camdenboss,CTB9550/2,Pluggable terminal block 2way 7.5mm pitch male horiz,3882391,farnell,1,through_hole
+sr-cn-camcon3w,camdenboss,CTB9550/3,Pluggable terminal block 3way 7.5mm pitch male horiz,3882408,farnell,1,through_hole
+sr-cn-camcon2w-5mm,camdenboss,CTB9350/2A,Pluggable terminal block 2way 5mm pitch male horiz,3882093,farnell,1,through_hole
+sr-cn-minicamcon2w,camdenboss,CTB93HE/2,Pluggable terminal block 2way 3.81mm pitch male horiz,1717071,farnell,1,through_hole
+sr-cn-minicamcon4w,camdenboss,CTB93HE/4,Pluggable terminal block 4way 3.81mm pitch male horiz,1717073,farnell,1,through_hole
+sr-cn-minicamcon8w,camdenboss,CTB93HE/8,Pluggable terminal block 8way 3.81mm pitch male horiz,1717077,farnell,1,through_hole
 sr-cn-battcon,phoenix contact,"PC 4/2-G-7,62","PC 4/2-G-7,62 - Pheonix Contact 2way 35A",1792928,farnell,5,through_hole
 sr-cn-rj11,mh connectors,MHRJJ44NFRA,RJ11 4p4c pcb socket,3938335,farnell,1,through_hole
 sr-cn-pjack,lumberg,NEB 21 R,LUMBERG 2.1MM powerjack,1217037,farnell,1,through_hole
@@ -152,8 +152,8 @@ sr-cn-header4tp,samtec,TS-104-G-A, 4 Way header 1 row - turned-pin,1668577,farne
 sr-cn-header5,any,, 5Way header 1 row pic programming,1187826,farnell,1,through_hole
 sr-cn-header8-keyed-7pin,avx interconnect,108284008000030,8 way keyed ELCO header modded to have 7 pins,636563,farnell,1,through_hole
 sr-cn-header2x4,samtec,TLW-104-05-G-D,2x4 through-hole 2.54mm header with short pins,1668491,farnell,1,through_hole
-sr-cn-header2x4-std,any,,2x4 through-hole 2.54mm header,1593441,farnell,10,through_hole
-sr-cn-header2x5-1.27mm,any,,2x5 through-hole 1.27mm header,1577743,farnell,5,through_hole
+sr-cn-header2x4-std,any,,2x4 through-hole 2.54mm header 6mm pin length,1593441,farnell,10,through_hole
+sr-cn-header2x5-1.27mm,any,,2x5 through-hole 1.27mm header 3mm pin length,1577743,farnell,5,through_hole
 sr-cn-header2x7-smt,amp,1241050-7,2x7 surface mount 2.5mm header,9689605,farnell,1,through_hole
 sr-cn-header2x7-box,te connectivity,1-1634688-4,2x7 through-hole 2.5mm boxed header,8395926,farnell,1,through_hole
 sr-cn-header2x10-1.27mm,harwin,M50-3501042,2x10 through-hole 1.27mm header,1022306,farnell,5,through_hole

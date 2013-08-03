@@ -175,7 +175,7 @@ sr-cn-fpc4-0.5mm-top,fci,SFV4R-2STE1HLF,4 pin top-contact FPC connector for PSP 
 sr-cn-usb-a,lumberg,2410 06,USB type A connector,1308874,farnell,1,smt_usb_socket
 sr-cn-usb-a-plug,multicomp,MC32603,USB type A plug,1696544,farnell,1,through_hole
 sr-cn-usb-b,lumberg,2411 03,USB type B connector,1308876,farnell,1,through_hole
-sr-cn-usb-micro-b,fci,10103592-0001LF,Micro USB B connector for top mounting,714-2334,rs,5,through_hole
+sr-cn-usb-micro-b,fci,10103592-0001LF,Micro USB B connector for top mounting,609-4048-6-ND,digikey,1,through_hole
 
 # LEDs
 sr-led-green-plcc2,avago technologies,HSMG-A100-H01J1,LED PLCC2 GREEN,4134436,farnell,5,plcc2
@@ -237,7 +237,7 @@ sr-ic-tl5001acd,ti,TL5001ACD,TL5001ACD 20-500kHz PWM controller,1100958,farnell,
 sr-ic-lm2704,ti,LM2704MF-ADJ,LM2704 step-up DC/DC converter,8207461,farnell,1,sot25
 #sr-ic-sc4524a,SC5424A step-down DC/DC converter,691-0600,rs,5,soic8 NO LONGER STOCKED
 sr-ic-lm3489,ti,LM3489MM,LM3489 hysteretic step-down DC/DC controller,1312570,farnell,1,msop8
-sr-ic-lmr14203,ti,LMR14203XMKE/NOPB,LMR14203XMK step-down DC/DC converter 42V 0.3A,926-LMR14203XMKENOPB,mouser,1,sot23-6
+sr-ic-lmr14203,ti,LMR14203XMKE/NOPB,LMR14203XMK step-down DC/DC converter 42V 0.3A,2064680,farnell,1,sot23-6
 
 # uC
 sr-ic-msp430f167,ti,MSP430F167IPM,MSP430F167IPM microcontroller,1471271,farnell,1,tqfp64
@@ -248,7 +248,7 @@ sr-ic-msp430f2254,ti,MSP430F2254IDA, MSP430F2254 16bit mcu suffix: IDA,1649422,f
 sr-ic-msp430f2122,ti,MSP430F2122IPW, MSP430F2122 16bit mcu,1753280,farnell,1,tssop28
 sr-ic-pic10f200,microchip,PIC10F200T-I/OT,PIC10F200T-I/OT 8bit mcu,1216921,farnell,1,sot-23-6
 sr-ic-stm32f100r6,stmicroelectronics,STM32F100R6T6B,STM32F100R6 32bit mcu 32k flash 4k ram,723-8889P,rs,1,lqfp64
-sr-ic-stm32f100r8,stmicroelectronics,STM32F100R8T6B,STM32F100R8 32bit mcu 64k flash 8k ram,723-8883P,rs,1,lqfp64
+sr-ic-stm32f100r8,stmicroelectronics,STM32F100R8T6B,STM32F100R8 32bit mcu 64k flash 8k ram,1838508,farnell,1,lqfp64
 
 # Logic-y
 sr-ic-74act04d,ti,SN74ACT04D, 74ACT04D HEX INVERTER SMD 74ACT04,9590323,farnell,1,soic14
@@ -263,7 +263,7 @@ sr-ic-sn65lvds2,ti,SN65LVDS2DBVTG4,SN65LVDS2DBVTG4 LVDS receiver,528-084,rs,5,so
 sr-ic-sn65lvds051,ti,SN65LVDS051PWG4,SN65LVDS051PW LVDS dual transceiver,1460775,farnell,1,tssop16
 sr-ic-fxlp34,fairchild semiconductor,FXLP34P5X,FXLP34P5X 1-bit non-inverting level translator,1652415,farnell,1,sc70-5
 sr-ic-txs0102,ti,TXS0102DCTR,TXS0102DCT 2-bit non-inverting bi-directional level translator,2098018,farnell,1,ssop8
-sr-ic-adum3211arz,analog devices,ADUM3211ARZ,ADUM3211ARZ 2.5kV 10Mbps dual bi-directional isolator,ADUM3211ARZ-ND,digikey,1,soic8
+sr-ic-adum3211arz,analog devices,ADUM3211ARZ,ADUM3211ARZ 2.5kV 10Mbps dual bi-directional isolator,2313635,farnell,1,soic8
 
 # Misc
 sr-ic-fan7380,fairchild semiconductor,FAN7380MX,FAN7380 dual MOSFET driver,1241880,farnell,1,soic8
@@ -278,7 +278,7 @@ sr-ic-lm339,stmicroelectronics,LM339PT,LM339PT quad comparator,1750192,farnell,1
 sr-ic-as5030,ams,AS5030-ATSU,ADS5030 magnetic rotary sensor,1630797,farnell,1,tssop16
 sr-ic-ts2431,stmicroelectronics,TS2431ILT,TS2431ILT 2.5V to 24V programmable voltage reference,1374139,farnell,1,sot23
 sr-ic-ft232rl,ftdi,FT232RL,FT232RL USB to UART,1146032,farnell,1,ssop28
-sr-ic-ft232rq,ftdi,FT232RQ,FT232RQ USB to UART,895-FT232RQ,mouser,1,qfn32
+sr-ic-ft232rq,ftdi,FT232RQ,FT232RQ USB to UART,1146033,farnell,1,qfn32
 sr-ic-dg2731dq,vishay,DG2731DQ-T1-E3,DG2731DQ-T1-E3 dual SPDT analogue switch,1414078,farnell,1,msop10
 sr-ic-tsop2236,vishay,TSOP2236,IR 36KHz receiver and demodulator,4913061,farnell,1,through-hole
 sr-ic-ts555cd,stmicroelectronics,TS555CD-T,555 timer 8 pin soic,1737202,farnell,1,soic8
@@ -298,7 +298,7 @@ sr-fet-n-irf8734,international rectifier,IRF8734PBF,IRF8734PbF n-channel mosfet,
 sr-fet-n-irlml2030,international rectifier,IRLML2030TRPBF,IRLML2030TRPbF n-channel mosfet,1791568,farnell,1,sot-23
 sr-fet-n-irlr8743,international rectifier,IRLR8743PBF,IRLR8743PBF n-channel mosfet 160A,1551908,farnell,1,d-pak
 #sr-fet-n-rtq020n03,RTQ020N03TR n-channel mosfet 1A,1525552,farnell,1,TSMT6 NO LONGER STOCKED
-sr-fet-n-irfh5301,international rectifier,IRFH5301TR2PBF,IRFH5301PBF n-channel mosfet 35A,725-9280P,rs,2,pqfn8
+sr-fet-n-irfh5301,international rectifier,IRFH5301TR2PBF,IRFH5301PBF n-channel mosfet 35A,1782047,farnell,1,pqfn8
 sr-fet-p-mmbf2202pt1,nxp,NX3008PBKW,EQUIV NX3008PBKW p-channel mostfet 30V 200mA,2069551,farnell,1,sot323
 sr-fet-p-bss84lt1g,international rectifier,IRLML9303TRPBF,EQUIV IRLML9303 p-channel mosfet 30V 520mA,1831090,farnell,1,sot-23
 sr-fet-p-pmv65xp,nxp,"PMV65XP,215",PMV65XP p-channel mosfet 20V 3.9A,1758119,farnell,1,sot-23
@@ -321,7 +321,7 @@ sr-sw-rotary-12mm-pb,alps,EC12E2424407,12mm 24-det Rotary encoder (6mm D shaft) 
 # Crystals
 sr-xtal-32k,abracon,AB38T-32.768KHZ, 32kHz Crystal,1611828,farnell,1,through_hole
 sr-xtal-8m,vishay,XT49M-8M,8MHz Crystal,1611765,farnell,1,smt_crystal(hc49)
-sr-xtal-abmm2-8.000mhz-e2-t,abracon,ABMM2-8.000MHZ-E2-T,8MHz Crystal 20ppm,815-ABMM2-8-E2T,mouser,1,smt_crystal
+sr-xtal-abmm2-8.000mhz-e2-t,abracon,ABMM2-8.000MHZ-E2-T,8MHz Crystal 20ppm,1611803,farnell,1,smt_crystal
 
 # Assemblies
 sr-asm-xbee,2(sr-cn-socket10-2mm). XBee connector assembly,,

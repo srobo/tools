@@ -274,6 +274,7 @@ sr-ic-24l08,rohm,BR24L08F-WE2,8kbit 400kHz I2C EEPROM,1620325,farnell,1,soic8
 sr-ic-max4069,maxim,MAX4069,MAX4069 - current sense amplifier,MAX4069,maxim,,
 sr-ic-ina213,ti,INA213AIDCKT,INA213AIDCKT current sense amp,1754261,farnell,1,sc70-6
 sr-ic-ts321,taiwan semiconductor,TS321CX5 RF,TS321CX5 single o-amp,1476668,farnell,1,sot23-5
+sr-ic-lmv321w,diodes inc,LMV321WG-7,single op-amp,1825373,farnell,1,sot23-5
 sr-ic-lm2904,stmicroelectronics,LM2904DT,LM2904DT dual op-amp,1564327,farnell,1,soic8
 sr-ic-lm339,stmicroelectronics,LM339PT,LM339PT quad comparator,1750192,farnell,1,tssop14
 sr-ic-as5030,ams,AS5030-ATSU,ADS5030 magnetic rotary sensor,1630797,farnell,1,tssop16

@@ -162,11 +162,11 @@ sr-cn-plug2-5a,te connectivity,3-640427-2,2 way plug for sr-cn-header2-5a-ra,109
 sr-cn-idcsocket16,any,, 16Way IDC socket with wings,1099027,farnell,1,through_hole
 sr-cn-cageclamp,phoenix contact,1791826,1 way 2.54mm horizontal cage clamp,3041050,farnell,1,through_hole
 sr-cn-cageclamp-end,phoenix contact,1791868,1 way 2.54mm horizontal cage clamp with endcap,3105295,farnell,1,through_hole
-sr-cn-socket4,samtec,SS-104-T-2-N, 4Way turned pin through-hole 2.54mm pitch SIL socket,1668203,farnell,1,through_hole
+sr-cn-socket4,samtec,HSS-104-T-2,4Way turned pin through-hole 2.54mm pitch SIL socket,1926491,farnell,10,through_hole
 sr-cn-socket10-2mm,harwin,M22-7131042,10 way 2mm pitch SIL socket,1109732,farnell,10,through_hole
 sr-cn-socket2x4,samtec,SLW-104-01-G-D,2x4 through-hole 2.54mm header socket,1668094,farnell,1,through_hole
 sr-cn-socket2x10-1.27mm,multicomp,2200SB-20G-A1,2x10 through-hole 1.27mm header socket,1577754,farnell,5,through_hole
-sr-cn-8p8c,fci,54601-908WPLF,8P8C pcb socket,2135981,farnell,1,through_hole
+sr-cn-8p8c,te connectivity,1-1705951-1,8P8C pcb socket,1284338,farnell,1,through_hole
 sr-cn-fpc40-0.5mm-bottom,molex,54132-4097,40 pin bottom-contact FPC connector for PSP TFT,1757130,farnell,10,smt_fpc_socket
 sr-cn-fpc4-0.5mm-bottom,fci,SFV4R-2STE9HLF,4 pin bottom-contact FPC connector for PSP TFT power,673-4790,rs,10,smt_fpc_socket
 sr-cn-fpc4-0.5mm-top,fci,SFV4R-2STE1HLF,4 pin top-contact FPC connector for PSP TFT power -- FCI SFV4R-2STE1HLF,609-4329-1-ND,digikey,1,smt_fpc_socket
@@ -180,7 +180,7 @@ sr-cn-usb-micro-b,fci,10103592-0001LF,Micro USB B connector for top mounting,609
 # LEDs
 sr-led-green-plcc2,avago technologies,HSMG-A100-H01J1,LED PLCC2 GREEN,4134436,farnell,5,plcc2
 sr-led-green-0805,kingbright,KP-2012SGC,LED 0805 Green,1318243,farnell,10,0805
-sr-led-red-0603,dialight,5988010107F,LED 0603 RED,1465988,farnell,10,0603
+sr-led-red-0603,rohm,SML-512UWT86S,LED 0603 RED,1685078,farnell,1,0603
 sr-led-red-0805,kingbright,KP-2012EC,LED 0805 Red,8529949,farnell,10,0805
 sr-led-redgreen,avago technologies,HSMF-C155,Bi-Colour LED Red/Green,5790888,farnell,5,smt_dual_led
 sr-led-red-plcc2,avago technologies,HSMS-A100-J00J1,LED PLCC2 RED,4134321,farnell,5,plcc2
@@ -199,7 +199,7 @@ sr-d-ll4448,vishay,LL4448-GS08,signal diode 100mA 100V 1N4148 equiv,1617730,farn
 sr-d-112cwq04fntrpbf,vishay,VS-12CWQ04FNTRPBF, schottky diode 12A D-PAK,1298442,farnell,1,d-pak
 sr-d-30bq040trpbf,taiwan semiconductor,SK56C,schottky diode 3a smc,1299292,farnell,1,do-214ab(smc)
 sr-d-15mq040n,vishay,VS-15MQ040NTRPBF,schottky diode 3A 40V SMA,1463215,farnell,1,do-214ac(sma)
-sr-d-v8p10,vishay,V8P10-M3/86A,schottky diode 8A 100V SMPC,1812501,farnell,1,to-277a(smpc)
+sr-d-v8p10,vishay,V8P10-M3/86A,schottky diode 8A 100V SMPC,V8P10-M3/86AGICT-ND,digikey,1,to-277a(smpc)
 sr-d-bat754s,nxp,BAT754S,schottky diode dual,1081206,farnell,5,sot23
 sr-d-bat754c,nxp,BAT754C,schottky diode dual,1081205,farnell,5,sot23
 sr-d-bat754a,nxp,BAT754A,Schottky diode dual,1081204,farnell,5,sot23
@@ -269,7 +269,8 @@ sr-ic-adum3211arz,analog devices,ADUM3211ARZ,ADUM3211ARZ 2.5kV 10Mbps dual bi-di
 sr-ic-fan7380,fairchild semiconductor,FAN7380MX,FAN7380 dual MOSFET driver,1241880,farnell,1,soic8
 sr-ic-hcpl-817,avago technologies,HCPL-817-36BE,HCPL-817-36BE Optoisolator,1244566,farnell,1,smt_optoisolator
 sr-ic-mcp4018-103,microchip,MCP4018T-103E/LT,MCP4018-103/LT 7-bit I2C digital pot,1715849,farnell,1,sc70-6
-sr-ic-at24c01,atmel,AT24C01BN-SH-B,AT24C01BN-SH 1kbit I2C EEPROM,1362638,farnell,1,soic8
+#sr-ic-at24c01,atmel,AT24C01BN-SH-B,AT24C01BN-SH 1kbit I2C EEPROM,1362638,farnell,1,soic8 NO LONGER STOCKED
+sr-ic-24l08,rohm,BR24L08F-WE2,8kbit 400kHz I2C EEPROM,1620325,farnell,1,soic8
 sr-ic-max4069,maxim,MAX4069,MAX4069 - current sense amplifier,MAX4069,maxim,,
 sr-ic-ina213,ti,INA213AIDCKT,INA213AIDCKT current sense amp,1754261,farnell,1,sc70-6
 sr-ic-ts321,taiwan semiconductor,TS321CX5 RF,TS321CX5 single o-amp,1476668,farnell,1,sot23-5

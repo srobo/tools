@@ -326,8 +326,8 @@ sr-xtal-8m,vishay,XT49M-8M,8MHz Crystal,1611765,farnell,1,smt_crystal(hc49)
 sr-xtal-abmm2-8.000mhz-e2-t,abracon,ABMM2-8.000MHZ-E2-T,8MHz Crystal 20ppm,1611803,farnell,1,smt_crystal
 
 # Assemblies
-sr-asm-xbee,2(sr-cn-socket10-2mm). XBee connector assembly,,
-sr-asm-beagleboard,2(sr-cn-header2x10-1.27mm) 2(sr-cn-socket2x10-1.27mm) 2(sr-cn-header2x4) 2(sr-cn-socket2x4). Beagleboard headers,,
+sr-asm-xbee,,,2(sr-cn-socket10-2mm). XBee connector assembly,,
+sr-asm-beagleboard,,,2(sr-cn-header2x10-1.27mm) 2(sr-cn-socket2x10-1.27mm) 2(sr-cn-header2x4) 2(sr-cn-socket2x4). Beagleboard headers,,
 
 # Relays
 sr-relay-5v,imo precision,SRM-1C-SL-5VDC,5V relay 10A max,1094018,farnell,1,through_hole

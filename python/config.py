@@ -2,6 +2,7 @@
 import getpass
 import os
 from subprocess import check_output
+import sys
 import yaml
 
 try:

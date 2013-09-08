@@ -20,6 +20,8 @@ parser.add_argument( "-p", "--port",
                      type = int )
 parser.add_argument( "-f", "--spend-file",
                      help = "Take spending info from this YAML file rather than running an editor" )
+parser.add_argument( "--dry-run", action = "store_true",
+                     help = "Process and check everything, but don't actually create purchasing ticket" )
 args = parser.parse_args()
 
 try:
@@ -184,6 +186,10 @@ for line, total in budget_line_totals.iteritems():
                                                                      total = total )
 
 print ticket_text
+
+if args.dry_run:
+    print "Stopping before actually creating ticket."
+    exit(0)
 
 try:
     server = TracProxy( server = args.server,

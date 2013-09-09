@@ -26,7 +26,7 @@ if repo[:len(prefix)] != prefix:
 
 cmd = ["git", "clone", "--recursive", repo]
 if args.dir != None:
-    args += [args.dir]
+    cmd += [args.dir]
 
 subprocess.check_call( cmd )
 

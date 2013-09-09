@@ -30,9 +30,12 @@ if args.dir != None:
 
 subprocess.check_call( cmd )
 
-clonedir = os.path.dirname( args.repo )
-if clonedir == "":
-    clonedir = args.repo
+clonedir = args.dir
+if clonedir is None:
+    clonedir = os.path.basename( args.repo )
+
+    if clonedir[-4:] == ".git":
+        clonedir = clonedir[:-4]
 
 if not args.anonymous:
     # Set up the gerrit Change-Id commit hook

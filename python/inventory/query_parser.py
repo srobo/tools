@@ -3,6 +3,7 @@ import query_ast
 
 TRUE       = CaselessKeyword("true")
 FALSE      = CaselessKeyword("false")
+UNSET      = CaselessKeyword("unset")
 IN         = CaselessKeyword("in")
 IS         = CaselessKeyword("is")
 OR         = CaselessKeyword("or")
@@ -27,6 +28,14 @@ COND       = Or((Literal("condition"), Literal("cond")))
 LABELLED   = Literal("labelled")
 PATH       = Literal("path")
 ASSY       = Literal("assy")
+
+_TRI_STATE_KEY_NAMES = ("development", "v-sense-move-1213",
+                        "motor-rail-mod-1360", "tested",
+                        "has_headers", "velcro-attached",
+                        "cased", "umbilical", "climit_disabled",
+                        "dremel-mod", "tvs-mod-698",
+                        "battery-aa-mod-1270")
+TRI_STATE_KEYS = map(Literal, _TRI_STATE_KEY_NAMES)
 
 ASSET_CODE = Regex(r"(sr)?[a-zA-Z0-9]+")
 ASSET_NAME = Regex(r"[a-zA-Z0-9\.\*\-\?\[\]]+")
@@ -60,6 +69,8 @@ path_expr   = path_list | path_single
 label_expr  = LABELLED + EQUALITY + Or((TRUE, FALSE))
 assy_expr  = ASSY + EQUALITY + Or((TRUE, FALSE))
 
+tristate_expr = Or(TRI_STATE_KEYS) + EQUALITY + Or((TRUE, FALSE, UNSET))
+
 or_expr     = Forward()
 and_expr    = Forward()
 not_expr    = Forward()
@@ -67,7 +78,7 @@ primary     = Forward()
 func_expr   = Forward()
 
 base_expr   = (not_expr | code_expr | type_expr | cond_expr |
-               path_expr | label_expr | assy_expr)
+               path_expr | label_expr | assy_expr | tristate_expr)
 paren_expr  = L_BRKT + or_expr + R_BRKT
 
 primary     << (base_expr | paren_expr)
@@ -108,6 +119,7 @@ cond_single.setParseAction(lambda x: query_ast.Condition(x[2]))
 cond_list.setParseAction(lambda x: query_ast.Condition(*x[3::2]))
 path_single.setParseAction(lambda x: query_ast.Path(x[2]))
 path_list.setParseAction(lambda x: query_ast.Path(*x[3::2]))
+tristate_expr.setParseAction(lambda x: query_ast.TriState(*x[0::2]))
 label_expr.setParseAction(lambda x: query_ast.Labelled(x[2]))
 assy_expr.setParseAction(lambda x: query_ast.Assy(x[2]))
 or_expr.setParseAction(_pa_or_expr)

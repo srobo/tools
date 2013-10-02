@@ -164,6 +164,26 @@ class Assy(Terminal):
         return "(Assy {0})".format(self.assy)
 
 
+class TriState(Terminal):
+    def __init__(self, key, desired_val):
+        super(TriState, self).__init__()
+        self.key = key
+        self.desired_val = desired_val.lower()
+
+    def match_single(self, inv_node):
+        if self.desired_val == 'unset':
+            return self.key not in inv_node.info.keys()
+        if self.key in inv_node.info.keys():
+            if self.desired_val == "true":
+                return inv_node.info[self.key]
+            else:
+                return inv_node.info[self.key] == False
+        return False
+
+    def sexpr(self):
+        return "(TriState {0}: {1})".format(self.key, self.desired_val)
+
+
 class Path(Terminal):
     def __init__(self, *paths):
         super(Path, self).__init__()

@@ -54,7 +54,7 @@ if isinstance(budline, BudgetTree):
 else:
 	print_line(budline)
 
-print "Summary: £{0} budgeted, £{1} spent, line is".format(orig_funds, paid_funds + pending_funds),
+print "Summary: for line {0}, £{1} budgeted, £{2} spent, line is".format(args.budgetline, orig_funds, paid_funds + pending_funds),
 if remaining_funds >= 0:
 	print "under",
 else:

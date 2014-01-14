@@ -15,6 +15,21 @@ class Ticket(object):
         "Refresh with data from trac"
         _, _, _, ticket = self.proxy.ticket.get( self.num )
         desc = self.desc = ticket["description"]
+        self.status = ticket["status"]
+        self.resolution = ticket["resolution"]
+        self.summary = ticket["summary"]
+        self.changetime = ticket["changetime"]
+        self.component = ticket["component"]
+        self.keywords = ticket["keywords"]
+        self.milestone = ticket["milestone"]
+        self.owner = ticket["owner"]
+        self.cc = ticket["cc"]
+        self.priority = ticket["priority"]
+        self.reporter = ticket["reporter"]
+        self.time = ticket["time"]
+        self.type = ticket["type"]
+        self.version = ticket["version"]
+
         reg = self._construct_regex()
 
         self.deps = []

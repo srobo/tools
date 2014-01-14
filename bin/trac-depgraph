@@ -1,0 +1,37 @@
+#!/usr/bin/env python
+import argparse
+from sr.trac import TracProxy, WrongServer
+from sr.trac.deptree import Ticket
+
+parser = argparse.ArgumentParser( description = "Produce a graph of a ticket's dependencies" )
+parser.add_argument( "ticket", type = int,
+                     help = "Ticket number to attach" )
+args = parser.parse_args()
+
+try:
+    server = TracProxy()
+except WrongServer:
+    print >>sys.stderr, "Error: The specified server is not a Trac instance"
+    exit(1)
+
+done = set()
+todo = set([args.ticket])
+
+print "digraph G {"
+print "rankdir=LR;"
+
+while len(todo):
+    for num in list(todo):
+        t = Ticket( num, server )
+
+        for dep in t.deps:
+            if dep not in done:
+                todo.add(dep)
+
+            print "{0} -> {1};".format( dep, num )
+
+        done.add(num)
+        todo.remove(num)
+
+print "}"
+

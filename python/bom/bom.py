@@ -124,6 +124,9 @@ class BoardBom(Bom):
         s = schem.open_schem(fname)
 
         for des,srcode in s.iteritems():
+            if srcode == "unknown":
+                print "No value set for %s" % des
+                continue
             if not self.has_key(srcode):
                 self[srcode] = PartGroup( db[srcode], name )
             self[srcode].append((name,des))

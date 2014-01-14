@@ -3,11 +3,13 @@ sr-code,manufacturer,part-number,description,order-number,supplier,per-reel,pack
 ##########
 
 # Resistors:
+sr-r-1m-2512-1w,welwyn,ULR1-R001FT2,1m 2512 1W 50ppm,1292474,farnell,5,2512
 sr-r-1m-2512,any,,1m 2512 chip resistor 3W,1292506,farnell,5,2512
 sr-r-3m5-2512,any,,3m5 2512 chip resistor,1292479,farnell,5,2512
 sr-r-15m-1206,any,,15m 1206 chip resistor,1099908,farnell,5,1206
 sr-r-40m-2512,any,,40m 2512 chip resistor,1107400,farnell,5,2512
 sr-r-4r7,any,,4r7 0603 chip resistor,9332189,farnell,50,0603
+sr-r-10-0402,any,,10 0402 chip resistor 1%,2072541,farnell,100,0402
 sr-r-15,any,,15 0603 chip resistor,9330631,farnell,50,0603
 sr-r-22,any,,22 0603 chip resistor,1576607,farnell,50,0603
 sr-r-100,any,,100 0603 chip resistor (100mW),1469752,farnell,50,0603
@@ -97,6 +99,7 @@ sr-c-pcv1v101mcl1gs,any,,100u capacitor smt electrolytic 35V 2.2A ripple,493-438
 sr-c-220u,any,,220u capacitor smt CPOL-EUE,1580568,farnell,5,smt_electrolytic_cap
 sr-c-220u-10v,panasonic,EEUFM1A221,220uF cap through-hole 10V,1219454,farnell,1,through_hole
 sr-c-pcf1c221mcl1gs,nichicon,PCF1C221MCL1GS,220u capacitor smt electrolytic 16V 3.9A ripple,493-3003-2-ND,digikey,500,smt_electrolytic_cap
+sr-c-ucw1e471mnl1gs,nichicon,UCW1E471MNL1GS,470u capacitor smt electrolytic 25V 850mA ripple,1580575,farnell,5,smt_electrolytic_cap
 sr-c-470u-16v,panasonic,EEUFC1C471,470uF cap through-hole 16V,9692053,farnell,5,through_hole
 sr-c-1m,any,,1m electrolytic capacitor 16V,9451129,farnell,10,through_hole
 
@@ -220,6 +223,7 @@ sr-d-gsot24c,vishay,GSOT24C-GS08,24V unidirectional dual TVS diode 325W common a
 sr-d-mmbz5v6al,on semiconductor,MMBZ5V6ALT1G,3V unidirectional dual TVS diode 40W common anode,1829219,farnell,1,sot23
 sr-d-vbus052cd,vishay,VBUS052CD-FAH-GS08,VBUS052CD-FAH dual bus protection array,1697040,farnell,5,llp1713
 sr-d-82400102,wurth elektronik,82400102,Wurth 82400102 dual TVS diode array,1825875,farnell,1,sot23-6
+sr-d-pesd5z12,nxp,PESD5Z12,12V unidirectional TVS diode 200W,1829227,farnell,1,sod523
 
 # ICs
 # SMPS/Linear Regs
@@ -273,6 +277,7 @@ sr-ic-mcp4018-103,microchip,MCP4018T-103E/LT,MCP4018-103/LT 7-bit I2C digital po
 sr-ic-24l08,rohm,BR24L08F-WE2,8kbit 400kHz I2C EEPROM,1620325,farnell,1,soic8
 sr-ic-max4069,maxim,MAX4069,MAX4069 - current sense amplifier,MAX4069,maxim,,
 sr-ic-ina213,ti,INA213AIDCKT,INA213AIDCKT current sense amp,1754261,farnell,1,sc70-6
+sr-ic-ina219,ti,INA219AIDCNR,INA219AIDCNR I2C current sense amp,2295989,farnell,1,sot23-8
 sr-ic-ts321,taiwan semiconductor,TS321CX5 RF,TS321CX5 single o-amp,1476668,farnell,1,sot23-5
 sr-ic-lmv321w,diodes inc,LMV321WG-7,single op-amp,1825373,farnell,1,sot23-5
 sr-ic-lm2904,stmicroelectronics,LM2904DT,LM2904DT dual op-amp,1564327,farnell,1,soic8

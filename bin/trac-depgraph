@@ -14,6 +14,8 @@ except WrongServer:
     print >>sys.stderr, "Error: The specified server is not a Trac instance"
     exit(1)
 
+tickets = {}
+
 done = set()
 todo = set([args.ticket])
 
@@ -23,6 +25,7 @@ print "rankdir=LR;"
 while len(todo):
     for num in list(todo):
         t = Ticket( num, server )
+        tickets[num] = t
 
         for dep in t.deps:
             if dep not in done:
@@ -32,6 +35,19 @@ while len(todo):
 
         done.add(num)
         todo.remove(num)
+
+for num, ticket in tickets.iteritems():
+    props = {}
+
+    if ticket.status == "closed":
+        props["style"] = "filled"
+        props["color"] = "grey"
+
+    propstr = ""
+    for name, val in props.iteritems():
+        propstr += """{0}="{1}" """.format( name, val )
+
+    print """{0} [{1}]""".format( num, propstr )
 
 print "}"
 

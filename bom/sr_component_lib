@@ -6,6 +6,7 @@ sr-code,manufacturer,part-number,description,order-number,supplier,per-reel,pack
 sr-r-1m-2512-1w,welwyn,ULR1-R001FT2,1m 2512 1W 50ppm,1292474,farnell,5,2512
 sr-r-1m-2512,any,,1m 2512 chip resistor 3W,1292506,farnell,5,2512
 sr-r-3m5-2512,any,,3m5 2512 chip resistor,1292479,farnell,5,2512
+sr-r-10m-0805,any,,10m 0805 chip resistor,8067643,farnell,10,0805
 sr-r-15m-1206,any,,15m 1206 chip resistor,1099908,farnell,5,1206
 sr-r-40m-2512,any,,40m 2512 chip resistor,1107400,farnell,5,2512
 sr-r-4r7,any,,4r7 0603 chip resistor,9332189,farnell,50,0603
@@ -15,6 +16,7 @@ sr-r-22,any,,22 0603 chip resistor,1576607,farnell,50,0603
 sr-r-100,any,,100 0603 chip resistor (100mW),1469752,farnell,50,0603
 sr-r-100-0402,any,,100 0402 chip resistor (63mW) 1%,2072515,farnell,100,0402
 sr-r-100-1206,any,,100 1206 chip resistor(500mW),1576615,farnell,50,1206
+sr-r-200-0402,any,,200 0402 chip resistor 1%,2072751,farnell,100,0402
 sr-r-330,any,,330 0603 chip resistor,9331018,farnell,50,0603
 sr-r-330-0402,any,,330 0402 chip resistor 1%,2072927,farnell,100,0402
 sr-r-560,any,,560 0603 chip resistor,9233342,farnell,50,0603
@@ -47,13 +49,19 @@ sr-r-36k,any,,36k 0603 1% chip resistor,9331093,farnell,50,0603
 sr-r-39k-1pc,any,,39k 0603 1% chip resistor,9331158,farnell,50,0603
 sr-r-42k2,any,,42.2k 0603 1% chip resistor,1170950,farnell,50,0603
 sr-r-47k,any,,47k 0603 chip resistor,1469811,farnell,50,0603
+sr-r-57k6-0402,any,,57.6k 0402 chip resistor 1%,2073148,farnell,100,0402
+sr-r-64k9-0402,any,,64.9k 0402 chip resisotr 1%,2073190,farnell,100,0402
 sr-r-75k-0.1-0805,any,,75k 0805 0.1% chip resistor,1653312,farnell,1,0805
 sr-r-100k,any,,100k 0603 chip resistor,9330402,farnell,50,0603
 sr-r-118k,any,,118k 0603 chip 1% resistor,1170992,farnell,50,0603
+sr-r-150k-0402,any,,150k 0402 chip resistor 1%,2072648,farnell,100,0402
 sr-r-160k,any,,160k 0603 chip resistor,2074200,farnell,1,0603
+sr-r-180k-0402,any,,180k 0402 chip resistor 1%,2072711,farnell,100,0402
 sr-r-240k,any,,240k 0603 chip resistor,1469786,farnell,50,0603
 sr-r-330k-1pc,any,,330k 0603 1% chip resistor,9331042,farnell,50,0603
+sr-r-576k-0402,any,,576k 0402 chip resistor 1%,2073149,farnell,100,0402
 sr-r-1000k-0402,any,,1M 0402 chip resistor 1%,2072521,farnell,100,0402
+sr-r-4700k-0402,any,,4.7M 0402 chip resistor 1%,2141492,farnell,1,0402
 sr-r-10000k,any,,10M 0603 1% chip resistor,1469750,farnell,50,0603
 
 # Resistory Arrays
@@ -61,6 +69,7 @@ sr-ra-4-330,bourns,CAY16-331J4LF,4pack of 330R resistors 1206 (0603 equiv),17701
 sr-ra-4-1k,bourns,CAY16-102J4LF,4pack of 1k resistors 1206 (0603 equiv),1770133,farnell,50,1206_res_arr
 
 # Capacitors
+sr-c-10p-0402-50v,any,,10p capacitor 0402 50V C0G/NP0,1856064,farnell,100,0402
 sr-c-10p-50v,any,,10pF capacitor 0603 50V,1759053,farnell,100,0603
 sr-c-27p-0402-50v,any,,27p capacitor 0402 50V C0G/NP0,1414584,farnell,10,0402
 sr-c-220p-50v,any,,220pF capacitor 0603 50V,1759070,farnell,100,0603
@@ -79,6 +88,7 @@ sr-c-330n-0805,any,,0.33u capacitor 0805,1759174,farnell,100,0805
 sr-c-470n,any,,0.47u capacitor 0603,1759021,farnell,100,0603
 sr-c-470n-0603-25v,any,,470n capacitor 0603 25V X7R,1856365,farnell,100,0603
 sr-c-1u,any,,1u electrolytic capacitor,1236655,farnell,5,through_hole
+sr-c-1u-0402-10v,any,,1u capacitor 0402 10V X5R,1759381,farnell,100,0402
 sr-c-1u-0805,any,,1u ceramic capacitor 0805 50V,1845750,farnell,1,0805
 sr-c-1u-0603-16v,any,,1u capacitor 0603 16V X7R,2112839,farnell,1,0603
 sr-c-2u2-0805,any,,2u2 capacitor 0805 16V,1759480,farnell,100,0805
@@ -91,6 +101,7 @@ sr-c-10u-1206-50v,any,,10u capacitor 1206 50V X5R,1845762,farnell,10,1206
 sr-c-10u-1210-25v,any,,10u capacitor 1210 25V,1650940,farnell,1,1210
 sr-c-15u-7343,any,,15u tantalum capacitor 25V,1754110,farnell,5,7343
 sr-c-22u-0805-6v3,any,,22u capacitor 0805 6.3V X5R,1867955,farnell,10,0805
+sr-c-22u-0805-10v,any,,22u capacitor 0805 10V X5R,1867956,farnell,10,0805
 sr-c-22u-1210,any,,22u ceramic capacitor 1210 16V,1759466,farnell,10,1210
 sr-c-47u,any,,47u electrolytic capacitor,9451072,farnell,10,through_hole
 sr-c-68u,any,,68u capacitor smt CPOL-EUE,9694390,farnell,10,smt_electrolytic_cap
@@ -104,12 +115,14 @@ sr-c-470u-16v,panasonic,EEUFC1C471,470uF cap through-hole 16V,9692053,farnell,5,
 sr-c-1m,any,,1m electrolytic capacitor 16V,9451129,farnell,10,through_hole
 
 # Inductors
+sr-l-3u3-3000ma,coiltronics,MPI4040R3-3R3-R,3.3u inductor 3A,2145279,farnell,1,smt_inductor
 sr-l-10u,multicomp,MCFT000175,10u inductor,1711900,farnell,1,1008
 sr-l-10u-1150ma,murata,LQH44PN100MP0L,10u inductor 1.15A max,1782801,farnell,1,1515
 sr-l-10u-2a,bourns,SRR0805-100M,10u inductor 2A max,1612715,farnell,1,smt_inductor
 #sr-l-18u,18u?? inductor,1463496,farnell NO LONGER STOCKED
 #sr-l-15u,18u 5.5A smt inductor,1704128,farnell,1,smt_inductor NO LONGER STOCKED
 sr-l-22u,panasonic,ELJPC220KF,22u 160mA smt inductor,1198441,farnell,5,1008
+sr-l-22u-380ma,laird technologies,TYS252012L220M-10,22u 380mA smt inductor,2292500,farnell,10,smt_inductor
 sr-l-22u-1300ma,panasonic,ELL6UH220M,1.3A smt inductor,1717487,farnell,5,smt_inductor
 sr-l-22u-2500ma,wurth elektronik,744066220,22u 2.5A smt inductor,1635894,farnell,1,smt_inductor
 sr-l-22u-6300ma,coiltronics,HC9-220-R,22u 6.3A smt inductor,513-1349-1-ND,digikey,1,smt_inductor
@@ -126,6 +139,7 @@ sr-cm-20a-170r,laird technologies,CM3440Z171B-10,20A through-hole cm choke 170R 
 
 # Fuses/Resettable Fuses (Polyfuse, etc). In mA, r prefix for resettable
 sr-fuse-r50-1206,bel fuse inc,0ZCA0005FF2E,50mA 60V resettable fuse,507-1476-1-ND,digikey,1,1206
+sr-fuse-r100-1206,any,,100mA 30V resettable fuse,1861178,farnell,5,1206
 sr-fuse-r100-1210,te connectivity,MICROSMD010F,100mA 30V resettable fuse,1345917,farnell,5,1210
 sr-fuse-r200-1812,any,,200mA 30V resettable fuse,1800746,farnell,5,1812
 sr-fuse-r250-1206,littelfuse,1206L025YR,250mA 16V resettable fuse,1596990,farnell,10,1206
@@ -221,6 +235,7 @@ sr-d-gsot12c,vishay,GSOT12C-GS08,12V unidirectional dual TVS diode 312W common a
 sr-d-gsot15,nxp,PESD15VS2UAT,EQUIV. PESD15VS2UAT 15V unidirectional dual TVS diode 160W,8737436,farnell,5,sot23
 sr-d-gsot24c,vishay,GSOT24C-GS08,24V unidirectional dual TVS diode 325W common anode,78-GSOT24C,mouser,1,sot23
 sr-d-mmbz5v6al,on semiconductor,MMBZ5V6ALT1G,3V unidirectional dual TVS diode 40W common anode,1829219,farnell,1,sot23
+sr-d-mmbz15val,nxp,MMBZ15VAL,12V unidirectional dual TVS diode 40W common anode,1829193,farnell,1,sot23
 sr-d-vbus052cd,vishay,VBUS052CD-FAH-GS08,VBUS052CD-FAH dual bus protection array,1697040,farnell,5,llp1713
 sr-d-82400102,wurth elektronik,82400102,Wurth 82400102 dual TVS diode array,1825875,farnell,1,sot23-6
 sr-d-pesd5z12,nxp,PESD5Z12,12V unidirectional TVS diode 200W,1829227,farnell,1,sod523
@@ -242,6 +257,8 @@ sr-ic-lm2704,ti,LM2704MF-ADJ,LM2704 step-up DC/DC converter,8207461,farnell,1,so
 #sr-ic-sc4524a,SC5424A step-down DC/DC converter,691-0600,rs,5,soic8 NO LONGER STOCKED
 sr-ic-lm3489,ti,LM3489MM,LM3489 hysteretic step-down DC/DC controller,1312570,farnell,1,msop8
 sr-ic-lmr14203,ti,LMR14203XMKE/NOPB,LMR14203XMK step-down DC/DC converter 42V 0.3A,2064680,farnell,1,sot23-6
+sr-ic-tps54327drc,ti,TPS54327DRCT,TPS54327DRC step-down DC/DC converter synchronous 18V 3A,2361237,farnell,1,son10
+sr-ic-tps62125dsg,ti,TPS62125DSGT,TPS62125DSG step-down DC/DC converter syncrhonous 17V 300mA,2144287,farnell,1,son8
 
 # uC
 sr-ic-msp430f167,ti,MSP430F167IPM,MSP430F167IPM microcontroller,1471271,farnell,1,tqfp64
@@ -282,6 +299,7 @@ sr-ic-ts321,taiwan semiconductor,TS321CX5 RF,TS321CX5 single o-amp,1476668,farne
 sr-ic-lmv321w,diodes inc,LMV321WG-7,single op-amp,1825373,farnell,1,sot23-5
 sr-ic-lm2904,stmicroelectronics,LM2904DT,LM2904DT dual op-amp,1564327,farnell,1,soic8
 sr-ic-lm339,stmicroelectronics,LM339PT,LM339PT quad comparator,1750192,farnell,1,tssop14
+sr-ic-lt6703hv-3,linear technology,LT6703HV-3 Micropower comparator with 400mV reference,2294787,farnell,1,sot23-5
 sr-ic-as5030,ams,AS5030-ATSU,ADS5030 magnetic rotary sensor,1630797,farnell,1,tssop16
 sr-ic-ts2431,stmicroelectronics,TS2431ILT,TS2431ILT 2.5V to 24V programmable voltage reference,1374139,farnell,1,sot23
 sr-ic-ft232rl,ftdi,FT232RL,FT232RL USB to UART,1146032,farnell,1,ssop28

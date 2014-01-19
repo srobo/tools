@@ -19,16 +19,19 @@ sr-r-100-1206,any,,100 1206 chip resistor(500mW),1576615,farnell,50,1206
 sr-r-200-0402,any,,200 0402 chip resistor 1%,2072751,farnell,100,0402
 sr-r-330,any,,330 0603 chip resistor,9331018,farnell,50,0603
 sr-r-330-0402,any,,330 0402 chip resistor 1%,2072927,farnell,100,0402
+sr-r-560-0402,any,,560 0402 chip resistor 1%,2073129,farnell,100,0402
 sr-r-560,any,,560 0603 chip resistor,9233342,farnell,50,0603
 sr-r-680-1206,any,,680 1206 chip resistor (0.5W),1739010,farnell,50,1206
 sr-r-1k,any,,1k 0603 chip resistor,9330380,farnell,50,0603
 sr-r-1k-0402,any,,1k 0402 chip resistor 1%,2072516,farnell,100,0402
+sr-r-1k-0805,any,,1k 0805 chip resistor 1%,2073606,farnell,100,0805
 sr-r-1k-1206,any,,1k 1206 chip resistor 1%,2073877,farnell,100,1206
 sr-r-1k1-0402,any,,1k1 0402 chip resistor 1%,2072548,farnell,100,0402
 sr-r-2k2-1206,any,,2k2 1206 chip resistor,2073909,farnell,100,1206
 sr-r-2k4,any,,2k4 0603 chip resistor,9330879,farnell,50,0603
 sr-r-2k7,any,,2k7 0603 chip resistor,2073452,farnell,100,0603
 sr-r-3k3,any,,3k3 0603 chip resistor,9331026,farnell,50,0603
+sr-r-3k3-0402,any,,3k3 0402 chip resistor 1%,2072928,farnell,100,0402
 sr-r-4k3-0402,any,,4k3 0402 chip resistor 1%,2073030,farnell,100,0402
 sr-r-4k7-0402,any,,4k7 0402 chip resistor 1%,2073064,farnell,100,0402
 sr-r-9k1,any,,9k1 0603 chip resistor,1469842,farnell,50,0603
@@ -67,6 +70,8 @@ sr-r-10000k,any,,10M 0603 1% chip resistor,1469750,farnell,50,0603
 # Resistory Arrays
 sr-ra-4-330,bourns,CAY16-331J4LF,4pack of 330R resistors 1206 (0603 equiv),1770132,farnell,50,1206_res_arr
 sr-ra-4-1k,bourns,CAY16-102J4LF,4pack of 1k resistors 1206 (0603 equiv),1770133,farnell,50,1206_res_arr
+sr-ra-4-4k7-0402,bourns,CAY10-472J4LF,4pack of 4k7 resistors 0804 (0402 equiv),1770151,farnell,50,0804_res_arr
+sr-ra-4-10k-0402,bourns,CAY10-103J4LF,4pack of 10k resistors 0804 (0402 equiv),1770152,farnell,50,0804_res_arr
 
 # Capacitors
 sr-c-10p-0402-50v,any,,10p capacitor 0402 50V C0G/NP0,1856064,farnell,100,0402
@@ -167,6 +172,7 @@ sr-cn-header3,any,, 3Way header 1 row header,3418297,farnell,1,through_hole
 sr-cn-header4,any,, 4Way header 1 row programming,3418303,farnell,1,through_hole
 sr-cn-header4tp,samtec,TS-104-G-A, 4 Way header 1 row - turned-pin,1668577,farnell,1,through_hole
 sr-cn-header5,any,, 5Way header 1 row pic programming,1187826,farnell,1,through_hole
+sr-cn-header6,any,, 6Way header 1 row header,1593415,farnell,10,tht
 sr-cn-header8-keyed-7pin,avx interconnect,108284008000030,8 way keyed ELCO header modded to have 7 pins,636563,farnell,1,through_hole
 sr-cn-header2x4,samtec,TLW-104-05-G-D,2x4 through-hole 2.54mm header with short pins,1668491,farnell,1,through_hole
 sr-cn-header2x4-std,any,,2x4 through-hole 2.54mm header 6mm pin length,1593441,farnell,10,through_hole
@@ -193,6 +199,7 @@ sr-cn-usb-a,lumberg,2410 06,USB type A connector,1308874,farnell,1,smt_usb_socke
 sr-cn-usb-a-plug,multicomp,MC32603,USB type A plug,1696544,farnell,1,through_hole
 sr-cn-usb-b,lumberg,2411 03,USB type B connector,1308876,farnell,1,through_hole
 sr-cn-usb-micro-b,fci,10103592-0001LF,Micro USB B connector for top mounting,609-4048-6-ND,digikey,1,through_hole
+sr-cn-7460305,wurth elektronik,7460305,M5 bushing 8 pin 2 row,7460305,wurth,1,press_fit
 
 # LEDs
 sr-led-green-plcc2,avago technologies,HSMG-A100-H01J1,LED PLCC2 GREEN,4134436,farnell,5,plcc2
@@ -207,6 +214,7 @@ sr-led-ir-t1,vishay,TSUS5400,950nm IR LED side or top,1045378,farnell,5,through-
 sr-led-red-smt,kingbright,KPA-3010EC,red side-mounted led,8530327,farnell,10,sr_led-smt
 sr-led-redgreen-0805,kingbright,KPB-2012SURKCGKC,Bi-Colour LED Red/Green 0805,2079908,farnell,1,0805
 sr-led-redblue-dual,kingbright,KPHBM-2012PBASURKC,Dual LED Red/Blue,1686083,farnell,5,0805_split
+sr-led-redgreen-0805,kingbright,KPHBM-2012SURKCGKC,Dual LED Red/Green,1686079,farnell,5,0805_split
 
 # Special nothing
 sr-nothing,nothing,,
@@ -270,6 +278,7 @@ sr-ic-msp430f2122,ti,MSP430F2122IPW, MSP430F2122 16bit mcu,1753280,farnell,1,tss
 sr-ic-pic10f200,microchip,PIC10F200T-I/OT,PIC10F200T-I/OT 8bit mcu,1216921,farnell,1,sot-23-6
 sr-ic-stm32f100r6,stmicroelectronics,STM32F100R6T6B,STM32F100R6 32bit mcu 32k flash 4k ram,723-8889P,rs,1,lqfp64
 sr-ic-stm32f100r8,stmicroelectronics,STM32F100R8T6B,STM32F100R8 32bit mcu 64k flash 8k ram,1838508,farnell,1,lqfp64
+sr-ic-stm32f103r6,stmicroelectronics,STM32F103R6T6A,STM32F103R6 32bit mcu 32k flash 10k ram,1899014,farnell,1,lqfp64
 
 # Logic-y
 sr-ic-74act04d,ti,SN74ACT04D, 74ACT04D HEX INVERTER SMD 74ACT04,9590323,farnell,1,soic14
@@ -308,6 +317,9 @@ sr-ic-dg2731dq,vishay,DG2731DQ-T1-E3,DG2731DQ-T1-E3 dual SPDT analogue switch,14
 sr-ic-tsop2236,vishay,TSOP2236,IR 36KHz receiver and demodulator,4913061,farnell,1,through-hole
 sr-ic-ts555cd,stmicroelectronics,TS555CD-T,555 timer 8 pin soic,1737202,farnell,1,soic8
 sr-ic-vnh5019,stmicroelectronics,VNH5019A-E,VNH5019A-E 30A H-Bridge,511-VNH5019A-E,mouser,1,power-so30
+sr-ic-vnd5012,stmicroelectronics,VND5012AK-E,VND5012AK-E 12mR dual MOSFET,445-781,rs,1,powersso-24
+sr-ic-mcp9701at,microchip,MCP9701AT-E/LT,Temperature sensor,1627203,farnell,1,sc70-6
+sr-ic-stf202,on semiconductor,STF202-22T1G,USB EMI/ESD protection and termination,1651958,farnell,1,sot23-6
 
 # BJTs
 sr-npn-bc846b,nxp,BC846B,BC846B NPN BJT 65V 100mA,1081229,farnell,10,sot23
@@ -341,7 +353,9 @@ sr-sw-4dip,multicomp,MCDP04,4way dipswitch,9471600,farnell,1,through_hole
 sr-sw-button,te connectivity,FSM4JSMA,Tactile Button (dont press),3801305,farnell,25,smt_tactile_switch
 sr-sw-button-12.5mm,schurter,1301.9320,Tactile Button with 12.5mm stem,1217772,farnell,1,smt_tactile_switch
 sr-sw-button-ra,te connectivity,FSMRA2JH,FSMRA2JH Right angle tactile button,1555987,farnell,25,through_hole
+sr-sw-button-ra-4.24mm,te connectivity,FSMRA6JH,FSMRA6JH Right angle tactile button with 4.24mm actuator,1555989,farnell,25,tht
 sr-sw-rotary-12mm-pb,alps,EC12E2424407,12mm 24-det Rotary encoder (6mm D shaft) with push button,1520813,farnell,1,through_hole
+sr-sw-os102011ma1qn1,ck components,OS102011MA1QN1,SPDT RA slide switch,1201431,farnell,5,tht
 
 # Crystals
 sr-xtal-32k,abracon,AB38T-32.768KHZ, 32kHz Crystal,1611828,farnell,1,through_hole
@@ -358,3 +372,7 @@ sr-relay-5v,imo precision,SRM-1C-SL-5VDC,5V relay 10A max,1094018,farnell,1,thro
 # Piezo speakers
 sr-piezo-ps1720p02,tdk,PS1720P02,Through-hole 17mm piezo buzzer,1669968,farnell,1,through_hole
 sr-piezo-kmtg1603,kingstate,KMTG1603,SMT 16x16x2.6mm piezo buzzer,1502709,farnell,1,smt_piezo_buzzer
+sr-piezo-pkm13epy-4000-a0,murata,PKM13EPY-4000-A0,THT 12.6mm piezo sounder,1192513,farnell,1,tht
+
+# Fans
+sr-fan-40-10-12v,any,,40mmx40mmx10mm axial fan 12V,1924856,farnell,1,wire_ended

@@ -266,7 +266,7 @@ sr-ic-lm2704,ti,LM2704MF-ADJ,LM2704 step-up DC/DC converter,8207461,farnell,1,so
 sr-ic-lm3489,ti,LM3489MM,LM3489 hysteretic step-down DC/DC controller,1312570,farnell,1,msop8
 sr-ic-lmr14203,ti,LMR14203XMKE/NOPB,LMR14203XMK step-down DC/DC converter 42V 0.3A,2064680,farnell,1,sot23-6
 sr-ic-tps54327drc,ti,TPS54327DRCT,TPS54327DRC step-down DC/DC converter synchronous 18V 3A,2361237,farnell,1,son10
-sr-ic-tps62125dsg,ti,TPS62125DSGT,TPS62125DSG step-down DC/DC converter syncrhonous 17V 300mA,2144287,farnell,1,son8
+sr-ic-tps62125dsg,ti,TPS62125DSGT,TPS62125DSG step-down DC/DC converter synchronous 17V 300mA,2144287,farnell,1,son8
 
 # uC
 sr-ic-msp430f167,ti,MSP430F167IPM,MSP430F167IPM microcontroller,1471271,farnell,1,tqfp64
@@ -318,7 +318,7 @@ sr-ic-tsop2236,vishay,TSOP2236,IR 36KHz receiver and demodulator,4913061,farnell
 sr-ic-ts555cd,stmicroelectronics,TS555CD-T,555 timer 8 pin soic,1737202,farnell,1,soic8
 sr-ic-vnh5019,stmicroelectronics,VNH5019A-E,VNH5019A-E 30A H-Bridge,511-VNH5019A-E,mouser,1,power-so30
 sr-ic-vnd5012,stmicroelectronics,VND5012AK-E,VND5012AK-E 12mR dual MOSFET,445-781,rs,1,powersso-24
-sr-ic-mcp9701at,microchip,MCP9701AT-E/LT,Temperature sensor,1627203,farnell,1,sc70-6
+sr-ic-mcp9701at,microchip,MCP9701AT-E/LT,Temperature sensor,1627203,farnell,1,sc70-5
 sr-ic-stf202,on semiconductor,STF202-22T1G,USB EMI/ESD protection and termination,1651958,farnell,1,sot23-6
 
 # BJTs

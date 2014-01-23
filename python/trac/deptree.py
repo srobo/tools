@@ -63,7 +63,7 @@ class Ticket(object):
         self.list_prefix = spacings.most_common(1)[0][0]
         self.deplist_ends_in_newline = (self.deplist[-1] == "\n")
 
-    def cleanup(self, dry_run = False):
+    def cleanup(self, dry_run = False, msg = "Synchronise dependency summaries with dependencies (automated edit)"):
         "Clean-up the ticket's description"
 
         # Rebuild the deplist:
@@ -86,8 +86,7 @@ class Ticket(object):
             return False
 
         if not dry_run:
-            self.proxy.ticket.update( self.num,
-                                      "Synchronise dependency summaries with dependencies (automated edit).",
+            self.proxy.ticket.update( self.num, msg,
                                       { "description": d } )
 
         self.refresh()

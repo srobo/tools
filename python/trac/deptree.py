@@ -67,6 +67,10 @@ class Ticket(object):
         "Clean-up the ticket's description"
 
         # Rebuild the deplist:
+        if len(self.deps) != 0 and self.deptitle == "":
+            self.deptitle = "\n\nDependencies:\n"
+            self.list_prefix = " * "
+
         d = self.prelude + self.deptitle + self.depspace
 
         for i, ticket_num in enumerate(self.deps):

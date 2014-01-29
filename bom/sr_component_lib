@@ -356,6 +356,8 @@ sr-sw-button-ra,te connectivity,FSMRA2JH,FSMRA2JH Right angle tactile button,155
 sr-sw-button-ra-4.24mm,te connectivity,FSMRA6JH,FSMRA6JH Right angle tactile button with 4.24mm actuator,1555989,farnell,25,tht
 sr-sw-rotary-12mm-pb,alps,EC12E2424407,12mm 24-det Rotary encoder (6mm D shaft) with push button,1520813,farnell,1,through_hole
 sr-sw-os102011ma1qn1,ck components,OS102011MA1QN1,SPDT RA slide switch,1201431,farnell,5,tht
+sr-sw-spph410100,alps,SPPH410100,DPST vertical latching push button,1435768,farnell,1,tht
+sr-sw-spph410200,alps,SPPH410200,DPST vertical non-latching push button,1435769,farnell,1,tht
 
 # Crystals
 sr-xtal-32k,abracon,AB38T-32.768KHZ, 32kHz Crystal,1611828,farnell,1,through_hole

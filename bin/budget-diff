@@ -52,5 +52,6 @@ for x in changes:
 
 print "---"
 print " Summary"
-print "     Added: £{0}".format(summary.added)
-print "   Removed: £{0}".format(summary.removed)
+print "      Added: £{0}".format(summary.added)
+print "    Removed: £{0}".format(summary.removed)
+print " Net change: {0:+}".format(summary.added - summary.removed)

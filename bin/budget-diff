@@ -7,8 +7,10 @@ import sr.budget as budget
 from sr.budget.diff import diff_trees, AddedItem, RemovedItem, ChangedItem
 
 parser = ArgumentParser( description = "Diff two versions of the budget" )
-parser.add_argument( "old" )
-parser.add_argument( "new", nargs="?", default = "HEAD" )
+parser.add_argument( "old",
+                     help = "Old git commit to compare against." )
+parser.add_argument( "new", nargs="?", default = "HEAD",
+                     help = "New git commit to act as reference (default HEAD)." )
 args = parser.parse_args()
 
 # Build the two trees

@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from decimal import Decimal as D
 import sys
 import sr.budget as budget
 from sr.budget.diff import diff_trees, AddedItem, RemovedItem, ChangedItem
@@ -19,13 +21,22 @@ b = budget.load_budget_rev( "./", B_REV )
 
 changes = diff_trees( a, b )
 
+class Summary:
+    def __init__(self):
+        self.added = D(0)
+        self.removed = D(0)
+
+summary = Summary()
+
 for x in changes:
 
     if isinstance(x, AddedItem):
         print "A", x.a.name, "({0})".format(x.a.cost)
+        summary.added += x.a.cost
 
     if isinstance(x, RemovedItem):
         print "D", x.a.name, "({0})".format(x.a.cost)
+        summary.removed += x.a.cost
 
     if isinstance(x, ChangedItem):
         d = x.b.cost - x.a.cost
@@ -33,5 +44,13 @@ for x in changes:
         s = ""
         if d > 0:
             s = "+"
+            summary.added += d
+        else:
+            summary.removed += -d
 
         print "M", x.a.name, "({0}{1})".format( s,d )
+
+print "---"
+print " Summary"
+print "     Added: £{0}".format(summary.added)
+print "   Removed: £{0}".format(summary.removed)

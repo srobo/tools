@@ -4,13 +4,16 @@ from argparse import ArgumentParser
 from decimal import Decimal as D
 import sys
 import sr.budget as budget
-from sr.budget.diff import diff_trees, AddedItem, RemovedItem, ChangedItem
+from sr.budget.diff import ( diff_trees, AddedItem, RemovedItem,
+                             ChangedItem, changes_to_tree )
 
 parser = ArgumentParser( description = "Diff two versions of the budget" )
 parser.add_argument( "old",
                      help = "Old git commit to compare against." )
 parser.add_argument( "new", nargs="?", default = None,
                      help = "New git commit to act as reference (default HEAD)." )
+parser.add_argument( "--tree", "-t", action="store_true",
+                     help = "Display the diff as a tree" )
 args = parser.parse_args()
 
 # Build the two trees
@@ -24,6 +27,12 @@ else:
     b, tree_b = budget.load_budget_rev( "./", args.new, keep_around = True )
 
 changes = diff_trees( a, b )
+
+if args.tree:
+    tree = changes_to_tree( changes )
+
+    tree.draw()
+    exit(0)
 
 class Summary:
     def __init__(self):

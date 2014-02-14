@@ -87,6 +87,36 @@ class BudgetTree(object):
                 raise InvalidPath( "'%s' has no child node '%s'" % ( pos.name, s ) )
         return pos
 
+    def draw(self, fd = sys.stdout, space = "  ", prefix = "" ):
+        "Draw a text-representation of the tree"
+
+        print >>fd, "{prefix}--{name} ({cost})".format(prefix = prefix,
+                                                      name = os.path.basename(self.name),
+                                                      cost = self.total() )
+
+        for n, c in enumerate(self.children.values()):
+            child_prefix = prefix + space
+
+            if isinstance(c, BudgetItem):
+                if n == len(self.children)-1:
+                    child_prefix += "+"
+                else:
+                    child_prefix += "|"
+
+                print >>fd, "{prefix}--{name} ({cost})".format(prefix = child_prefix,
+                                                              name = os.path.basename(c.name),
+                                                              cost = c.cost )
+
+            elif isinstance(c, BudgetTree):
+                child_prefix = prefix + space
+
+                if n == len(self.children)-1:
+                    child_prefix += " "
+                else:
+                    child_prefix += "|"
+
+                c.draw( fd = fd, prefix = child_prefix )
+
 class BudgetConfig(object):
     def __init__(self, fname):
         y = yaml.load( open(fname, "r"), Loader = YAML_Loader )

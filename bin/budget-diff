@@ -9,13 +9,19 @@ from sr.budget.diff import diff_trees, AddedItem, RemovedItem, ChangedItem
 parser = ArgumentParser( description = "Diff two versions of the budget" )
 parser.add_argument( "old",
                      help = "Old git commit to compare against." )
-parser.add_argument( "new", nargs="?", default = "HEAD",
+parser.add_argument( "new", nargs="?", default = None,
                      help = "New git commit to act as reference (default HEAD)." )
 args = parser.parse_args()
 
 # Build the two trees
-a = budget.load_budget_rev( "./", args.old )
-b = budget.load_budget_rev( "./", args.new )
+a, tree_a = budget.load_budget_rev( "./", args.old, keep_around = True )
+
+if args.new is None:
+    "Use current working copy"
+    b = budget.load_budget( "./" )
+else:
+    "Use specified revision"
+    b, tree_b = budget.load_budget_rev( "./", args.new, keep_around = True )
 
 changes = diff_trees( a, b )
 

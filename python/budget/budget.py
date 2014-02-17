@@ -80,6 +80,7 @@ class BudgetItem(object):
         s = py_translate_to_decimals(s)
         cost = eval( s,
                      {"Decimal": D,
+                      "ceil": dec_ceil,
                       "ceiling": dec_ceil,
                       "floor": dec_floor},
                      conf.vars )
@@ -193,6 +194,7 @@ class BudgetConfig(object):
 
             conf = runpy.run_path(f.name,
                                   init_globals = { "Decimal": D,
+                                                   "ceil": dec_ceil,
                                                    "ceiling": dec_ceil,
                                                    "floor": dec_floor })
 

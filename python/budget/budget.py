@@ -183,7 +183,18 @@ class BudgetConfig(object):
             raise Exception("No config file found")
 
     def _load_from_py(self, fname):
-        conf = runpy.run_path( fname )
+        with open(fname, "r") as in_file:
+            in_src = in_file.read()
+
+        with NamedTemporaryFile() as f:
+            trans_src = py_translate_to_decimals(in_src)
+            f.write(trans_src)
+            f.flush()
+
+            conf = runpy.run_path(f.name,
+                                  init_globals = { "Decimal": D,
+                                                   "ceiling": dec_ceil,
+                                                   "floor": dec_floor })
 
         # Variables that are part of the normal running environment
         nullset = set( runpy.run_path( "/dev/null" ).keys() )
@@ -214,8 +225,6 @@ class BudgetConfig(object):
         y = yaml.load(open(fname, "r"))
 
         with NamedTemporaryFile() as f:
-            print >>f, "from math import ceil as ceiling, floor"
-
             for vname, val in y["vars"].iteritems():
                 print >>f, "{0} = {1}".format( vname, val )
 

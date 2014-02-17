@@ -1,13 +1,16 @@
 "Library for accessing the budget files"
-import yaml, sympy, os, sys, logging
+import yaml, os, sys, logging
 import collections
-from decimal import Decimal as D
+from decimal import ( Decimal as D, ROUND_CEILING, ROUND_FLOOR,
+                      ROUND_UP )
 import math
 import runpy
 import sys, tempfile
 from subprocess import ( check_call, check_output,
                          CalledProcessError )
 from tempfile import NamedTemporaryFile
+import tokenize
+from StringIO import StringIO
 
 # Spending against a budget line is allowed to go over its value by
 # this factor
@@ -17,6 +20,33 @@ try:
     from yaml import CLoader as YAML_Loader
 except ImportError:
     from yaml import Loader as YAML_Loader
+
+def dec_ceil(d):
+    return d.to_integral_exact( ROUND_CEILING )
+
+def dec_floor(d):
+    return d.to_integral_exact( ROUND_FLOOR )
+
+def py_translate_to_decimals(s):
+    "Translate any literal floats in the given source into decimals"
+
+    # Parse numbers in the string as Decimals
+    # based on example from http://docs.python.org/2.7/library/tokenize.html
+    result = []
+    g = tokenize.generate_tokens(StringIO(s).readline)
+    for toknum, tokval, _, _, _  in g:
+        if toknum == tokenize.NUMBER and '.' in tokval:
+            result.extend([
+                (tokenize.NAME, 'Decimal'),
+                (tokenize.OP, '('),
+                (tokenize.STRING, repr(tokval)),
+                (tokenize.OP, ')')
+            ])
+        else:
+            result.append((toknum, tokval))
+
+    # Turn it back into python
+    return tokenize.untokenize(result)
 
 class BudgetItem(object):
     def __init__(self, name, fname, conf ):
@@ -42,8 +72,25 @@ class BudgetItem(object):
         else:
             self.consumable = None
 
-        c = sympy.S( y["cost"] )
-        self.cost = D( "%.2f" % c.evalf( subs = conf.vars ) )
+        self.cost = self._parse_cost( y["cost"], conf )
+
+    def _parse_cost(self, s, conf):
+        "Parse the cost string"
+
+        s = py_translate_to_decimals(s)
+        cost = eval( s,
+                     {"Decimal": D,
+                      "ceiling": dec_ceil,
+                      "floor": dec_floor},
+                     conf.vars )
+
+        if type(cost) is int:
+            cost = D(cost)
+
+        # Round the result up to the nearest penny
+        cost = cost.quantize( D("0.01"), rounding = ROUND_UP )
+
+        return cost
 
 class InvalidPath(Exception):
     pass

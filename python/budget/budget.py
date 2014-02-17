@@ -1,9 +1,13 @@
 "Library for accessing the budget files"
 import yaml, sympy, os, sys, logging
+import collections
 from decimal import Decimal as D
+import math
+import runpy
 import sys, tempfile
 from subprocess import ( check_call, check_output,
                          CalledProcessError )
+from tempfile import NamedTemporaryFile
 
 # Spending against a budget line is allowed to go over its value by
 # this factor
@@ -118,27 +122,63 @@ class BudgetTree(object):
                 c.draw( fd = fd, prefix = child_prefix )
 
 class BudgetConfig(object):
-    def __init__(self, fname):
-        y = yaml.load( open(fname, "r"), Loader = YAML_Loader )
+    def __init__(self, root):
+        pypath = os.path.join( root, "config.py" )
+        yamlpath = os.path.join( root, "config.yaml" )
 
-        if "vars" not in y:
-            raise Exception("No variables declaration section in config")
-        self.vars = y["vars"]
+        if os.path.exists( pypath ):
+            self._load_from_py( pypath )
+            self.path = pypath
+        elif os.path.exists( yamlpath ):
+            self._load_from_yaml( yamlpath )
+            self.path = yamlpath
+        else:
+            raise Exception("No config file found")
 
-        # Perform substitution of config variables.
-        # This allows something like the following to work
-        # cost = thing; thing = a*2; a = b+2; b = 5
-        for var in self.vars:
-            # Have to repeat this until there's nothing left to substitute
-            # Limit the number of iterations in case of recursion
-            for i in range(0,20):
-                self.vars[var] = sympy.S(self.vars[var]).subs(self.vars).evalf()
+    def _load_from_py(self, fname):
+        conf = runpy.run_path( fname )
+
+        # Variables that are part of the normal running environment
+        nullset = set( runpy.run_path( "/dev/null" ).keys() )
+
+        # Remove vars that are part of the normal running env
+        for name in nullset:
+            if name in conf:
+                conf.pop(name)
+
+        self.vars = conf
+
+        for vname in self.vars.keys():
+            val = self.vars[vname]
+            if type(val) not in [int, D, float]:
+                self.vars.pop(vname)
+
+    def _load_from_yaml(self, fname):
+        # Munge the old yaml file into a python file
+
+        def dict_constructor(loader, node):
+            return collections.OrderedDict(loader.construct_pairs(node))
+
+        # Give me ordered dictionaries back
+        yaml.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+                             dict_constructor)
+
+        # Use the python loader to make ordered dicts work
+        y = yaml.load(open(fname, "r"))
+
+        with NamedTemporaryFile() as f:
+            print >>f, "from math import ceil as ceiling, floor"
+
+            for vname, val in y["vars"].iteritems():
+                print >>f, "{0} = {1}".format( vname, val )
+
+            f.flush()
+            self._load_from_py(f.name)
 
 def load_budget(root):
     root = os.path.abspath(root)
-    config_path = os.path.join( root, "config.yaml" )
     funds_in_path = os.path.join( root, "funds-in.yaml" )
-    conf = BudgetConfig( config_path )
+    conf = BudgetConfig( root )
     budget = []
     tree = BudgetTree("sr")
 
@@ -152,7 +192,7 @@ def load_budget(root):
 
         for fname in filenames:
             fullp = os.path.abspath( os.path.join(dirpath, fname) )
-            if fullp in [config_path, funds_in_path]:
+            if fullp in [conf.path, funds_in_path]:
                 "These files are yaml files, but not budget items"
                 continue
 

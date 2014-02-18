@@ -3,10 +3,23 @@ import yaml, os, sys, datetime, sr.budget as budget
 from subprocess import check_output, check_call, CalledProcessError
 from decimal import Decimal as D
 
+try:
+    from yaml import CLoader as YAML_Loader
+except ImportError:
+    from yaml import Loader as YAML_Loader
+
+def num_constructor(loader, node):
+    "Constructor for libyaml to translate numeric literals to Decimals"
+    return D( node.value )
+
+# Parse floats as decimals
+YAML_Loader.add_constructor( "tag:yaml.org,2002:float",
+                             num_constructor )
+
 class Transaction(object):
     def __init__(self, name, date, fname):
         self.fname = fname
-        y = yaml.load( open(fname, "r") )
+        y = yaml.load( open(fname, "r"), Loader = YAML_Loader )
 
         if False in [x in y for x in ["summary", "description", "budget",
                                       "cost", "trac"]]:

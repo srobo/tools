@@ -21,9 +21,17 @@ try:
 except ImportError:
     from yaml import Loader as YAML_Loader
 
+def dict_constructor(loader, node):
+    "Constructor for libyaml to use ordered dicts instead of dicts"
+    return collections.OrderedDict(loader.construct_pairs(node))
+
 def num_constructor(loader, node):
     "Constructor for libyaml to translate numeric literals to Decimals"
     return D( node.value )
+
+# Give me ordered dictionaries back
+YAML_Loader.add_constructor( yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+                             dict_constructor)
 
 # Parse floats as decimals
 YAML_Loader.add_constructor( "tag:yaml.org,2002:float",
@@ -222,17 +230,9 @@ class BudgetConfig(object):
                 self.vars.pop(vname)
 
     def _load_from_yaml(self, fname):
-        # Munge the old yaml file into a python file
-
-        def dict_constructor(loader, node):
-            return collections.OrderedDict(loader.construct_pairs(node))
-
-        # Give me ordered dictionaries back
-        yaml.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
-                             dict_constructor)
-
+        "Munge the old yaml file into a python file"
         # Use the python loader to make ordered dicts work
-        y = yaml.load(open(fname, "r"))
+        y = yaml.load(open(fname, "r"), Loader = YAML_Loader)
 
         with NamedTemporaryFile() as f:
             for vname, val in y["vars"].iteritems():

@@ -21,6 +21,14 @@ try:
 except ImportError:
     from yaml import Loader as YAML_Loader
 
+def num_constructor(loader, node):
+    "Constructor for libyaml to translate numeric literals to Decimals"
+    return D( node.value )
+
+# Parse floats as decimals
+YAML_Loader.add_constructor( "tag:yaml.org,2002:float",
+                             num_constructor )
+
 def dec_ceil(d):
     return d.to_integral_exact( ROUND_CEILING )
 

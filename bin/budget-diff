@@ -14,6 +14,8 @@ parser.add_argument( "new", nargs="?", default = None,
                      help = "New git commit to act as reference (default HEAD)." )
 parser.add_argument( "--tree", "-t", action="store_true",
                      help = "Display the diff as a tree" )
+parser.add_argument( "--limit", "-l", type=str,
+                     help = "Limit to the given subtree" )
 args = parser.parse_args()
 
 try:
@@ -31,6 +33,23 @@ if args.new is None:
 else:
     "Use specified revision"
     b, tree_b = budget.load_budget_rev( root, args.new, keep_around = True )
+
+if args.limit is not None:
+    "Limit the diff to the given subtree"
+
+    try:
+        a = a.path( args.limit )
+    except budget.InvalidPath:
+        # Tree wasn't present in the original
+        # Create an empty tree
+        a = budget.BudgetTree("")
+
+    try:
+        b = b.path( args.limit )
+    except budget.InvalidPath:
+        # Tree isn't present in the other
+        # Create an empty tree
+        b = budget.BudgetTree("")
 
 changes = diff_trees( a, b )
 

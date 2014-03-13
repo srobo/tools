@@ -34,6 +34,14 @@ class Transaction(object):
         self.cost = D( "%.2f" % y["cost"] )
         self.trac = y["trac"]
 
+        for prop in [ "cheque", "payee", "ackdate" ]:
+            if prop in y:
+                setattr( self, prop, y[prop] )
+            else:
+                setattr( self, prop, None )
+
+        self.bank_transfer = "bank-transfer" in y and y["bank-transfer"]
+
         # Strip the '.yaml' off the end of the budget field if it's present
         if self.budget[-5:] == ".yaml":
             self.budget = self.budget[:-5]

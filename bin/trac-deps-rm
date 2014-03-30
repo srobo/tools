@@ -7,7 +7,7 @@ parser = argparse.ArgumentParser( description = "Remove dependencies from a tick
 parser.add_argument( "ticket", type = int,
                      help = "Ticket number" )
 parser.add_argument( "deps", type = int, nargs = "+",
-                     help = "Tickets to add" )
+                     help = "Tickets to remove" )
 parser.add_argument( "-m", type = str,
                      help = "Message to append" )
 parser.add_argument( "--dry-run", action = "store_true",

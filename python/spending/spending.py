@@ -1,46 +1,24 @@
 "Library for accessing the spending files"
-import yaml, os, sys, datetime, sr.budget as budget
+import os, sys, datetime, sr.budget as budget
 from subprocess import check_output, check_call, CalledProcessError
 from decimal import Decimal as D
 
-try:
-    from yaml import CLoader as YAML_Loader
-except ImportError:
-    from yaml import Loader as YAML_Loader
-
-def num_constructor(loader, node):
-    "Constructor for libyaml to translate numeric literals to Decimals"
-    return D( node.value )
-
-# Parse floats as decimals
-YAML_Loader.add_constructor( "tag:yaml.org,2002:float",
-                             num_constructor )
-
 class Transaction(object):
     def __init__(self, name, date, fname):
-        self.fname = fname
-        y = yaml.load( open(fname, "r"), Loader = YAML_Loader )
 
-        if False in [x in y for x in ["summary", "description", "budget",
-                                      "cost", "trac"]]:
-            print >>sys.stderr, "Error: %s does not match schema." % fname
-            exit(1)
+        self.name = "TODO"
+        self.date = None        # TODO
+        self.summary = "TODO"
+        self.description = "TODO"
+        self.budget = "TODO"
+        self.cost = D(0)        # TODO
+        self.trac = 0           # TODO
 
-        self.name = name # Not unique
-        self.date = date # None if pending
-        self.summary = y["summary"]
-        self.description = y["description"]
-        self.budget = y["budget"]
-        self.cost = D( "%.2f" % y["cost"] )
-        self.trac = y["trac"]
+        self.cheque = None      # TODO
+        self.payee = None       # TODO
+        self.ackdate = None     # TODO
 
-        for prop in [ "cheque", "payee", "ackdate" ]:
-            if prop in y:
-                setattr( self, prop, y[prop] )
-            else:
-                setattr( self, prop, None )
-
-        self.bank_transfer = "bank-transfer" in y and y["bank-transfer"]
+        self.bank_transfer = False # TODO
 
         # Strip the '.yaml' off the end of the budget field if it's present
         if self.budget[-5:] == ".yaml":
@@ -94,16 +72,51 @@ def group_trans_by_budget_line(trans):
             transgrp[t.budget] = [t]
     return transgrp
 
+def budget_line_to_account(line):
+    "Convert a budget line to an account name"
+    if line[0] == "/":
+        line = line[1:]
+    line = line.replace("/", ":")
+    return "Expenses:{0}".format(line)
+
+def account_to_budget_line(account):
+    "Convert an account name to a budget line name"
+    line = account.replace(":", "/")
+    return line[len("Expenses/"):]
+
+def load_budget_spends(root):
+    p = os.path.join(root, "spending.dat")
+
+    balances = check_output( [ "ledger",
+                               "--file", p,
+                               "bal",
+                               "--format", "%A,%(display_total)\n",
+                               "^Expenses:" ] )
+
+    lines = {}
+
+    for line in balances.splitlines():
+        account, total = line.split(",")
+        if len(account) == 0:
+            continue
+
+        total = D(total.decode("utf-8")[1:])
+        line = account_to_budget_line(account)
+
+        lines[line] = total
+
+    return lines
+
 def load_budget_with_spending(root):
     bud = budget.load_budget( os.path.join( root, "budget/" ) )
-    trans = group_trans_by_budget_line(load_transactions(root))
-    
+    lines = load_budget_spends(root)
+
     for b in bud.walk():
-        if b.name in trans:
-            b.transactions = trans[b.name]
+        if b.name not in lines:
+            b.spent = D(0)
         else:
-            b.transactions = []
-    
+            b.spent = lines[b.name]
+
     return bud
 
 class NotSpendingRepo(Exception):
@@ -123,8 +136,8 @@ def find_root( path = os.getcwd() ):
 
         with open("/dev/null", "w") as n:
             check_call( ["git", "rev-list",
-                         # This is the first commit of spending.git
-                         "82ab25832fea63773e0f98f1e3a2a1424ed8af6f" ],
+                         # This is the first commit of spending2.git
+                         "2598375ea17a6bb2e26a8a35a48e2ae2eecadc73" ],
                         cwd = path,
                         stdout = n,
                         stderr = n )

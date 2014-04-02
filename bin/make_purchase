@@ -160,7 +160,7 @@ for purchase in spend_request.purchases:
         bl_request_total += item.cost
 
     # How much has already been spent against this budget line
-    spent = sum([x.cost for x in budget_line.transactions])
+    spent = budget_line.spent
 
     req_total = spent + bl_request_total
 

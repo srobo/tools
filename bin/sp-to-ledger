@@ -15,8 +15,8 @@ except ImportError:
 # TODO: Dates are not exactly correct
 print """
 
-1990/01/01 Initial Bank Balance
-	Assets:Barclays		£2130
+2011/11/15 Initial Bank Balance
+	Assets:Barclays		£2130.12
 	Equity:Opening Balance
 
 2012/04/01 Motorola Funding

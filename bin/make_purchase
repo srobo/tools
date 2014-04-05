@@ -2,6 +2,7 @@
 # coding=utf8
 
 import argparse
+import datetime
 import os
 import sr.spending.spending as srspending
 import sr.budget.budget as srbudget
@@ -216,26 +217,20 @@ else:
 print "Purchasing ticket created: https://{0}/trac/ticket/{1}".format(
     hostname, ticketNum )
 
+print "Spending Entries:"
 
 for purchase in spend_request.purchases:
+    print
+    today = datetime.date.today()
 
-    name = purchase.items[0].desc.replace(" ","-")
-    if len(purchase.items) > 1:
-        name += "-etc"
-    name += ".yaml"
+    i = "{date} ! {summary}\n"
+    i += "    {account}\t£{amount}\n"
+    i += "    Liabilities:{payee}\n"
+    i += "    ; trac: #{trac}"
 
-    fname = os.path.join("pending",name)
-
-    with open(fname, "w") as f:
-        print >>f, """summary: {summary}
-description: >-
-  {description}
-budget: {budgetline}
-cost: {total}
-trac: {ticket_num}""".format( summary = purchase.summary,
-                              description = ", ".join( [x.desc for x in purchase.items] ),
-                              budgetline = purchase.budget_line,
-                              total = sum([x.cost for x in purchase.items]),
-                              ticket_num = ticketNum )
-
-    print "Spending.git entry written to", fname
+    print i.format( date = today.isoformat(),
+                    summary = purchase.summary,
+                    account = srspending.budget_line_to_account(purchase.budget_line),
+                    amount = sum([x.cost for x in purchase.items]),
+                    payee = spend_request.username,
+                    trac = ticketNum )

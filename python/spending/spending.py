@@ -136,8 +136,9 @@ def find_root( path = os.getcwd() ):
 
         with open("/dev/null", "w") as n:
             check_call( ["git", "rev-list",
-                         # This is the first commit of spending2.git
-                         "2598375ea17a6bb2e26a8a35a48e2ae2eecadc73" ],
+                         # This is the commit that transitioned spending.git
+                         # over to ledger, which is required for this library
+                         "09d64df13422ac2fcf9bd17c00b1f66e9e78e912" ],
                         cwd = path,
                         stdout = n,
                         stderr = n )

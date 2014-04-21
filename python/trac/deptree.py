@@ -53,7 +53,7 @@ class Ticket(object):
         self.postscript = r.group("postscript")
 
         spacings = Counter()
-        
+
         for asterisk, ticket_num, desc in  re.findall( r"^(\s*\*\s*)#([0-9]+)\s*(.*)$",
                                                        self.deplist,
                                                        re.MULTILINE | re.IGNORECASE ):
@@ -115,3 +115,6 @@ class Ticket(object):
 
         return re.compile( reg,
                            re.MULTILINE | re.IGNORECASE | re.DOTALL )
+
+    def __str__(self):
+        return "{0}: {1}".format(self.num, self.summary)

@@ -23,11 +23,20 @@ except WrongServer:
 
 t = Ticket( args.ticket, server )
 
-for n in args.deps:
-    if n in t.deps:
+current = set(t.deps)
+new = set(args.deps)
+
+to_add = new - current
+already = new - to_add
+
+if len(already):
+    for n in already:
         print >>sys.stderr, "#{0} is already a dep of #{1}".format( n, args.ticket )
-        exit(1)
-    t.deps += args.deps
+
+if len(to_add) == 0:
+    exit("No new dependencies to add to #{0}".format(args.ticket))
+
+t.deps += to_add
 
 if args.m is not None:
     msg = args.m
@@ -36,7 +45,7 @@ else:
     msg = ""
 
 msg += "Adding dependencies:"
-for n in args.deps:
+for n in to_add:
     msg += "\n * #{0}".format( n )
 
 updated = t.cleanup( dry_run = args.dry_run,

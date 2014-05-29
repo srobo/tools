@@ -1,3 +1,23 @@
+_sr_ensure_repolist()
+{
+    local download
+    REPOLIST_FILE=~/.sr/repolist
+    if [ ! -f $REPOLIST_FILE ]
+	then
+	download=y
+    elif [ ! "`find $REPOLIST_FILE -mmin -120`" ]
+	then
+	download=y
+    fi
+
+    if [ "$download" ]
+	then
+	mkdir -p ~/.sr
+	sr repolist > $REPOLIST_FILE
+    fi
+    echo $REPOLIST_FILE
+}
+
 _sr()
 {
     local cur prev opts
@@ -17,22 +37,7 @@ _sr()
 
 	    # Repository listing
 	    cog)
-		REPOLIST_FILE=~/.sr/repolist
-		download=
-		if [ ! -f $REPOLIST_FILE ]
-		    then
-		    download=y
-		elif [ ! "`find $REPOLIST_FILE -mmin -120`" ]
-		    then
-		    download=y
-		fi
-
-		if [ "$download" ]
-		    then
-		    mkdir -p ~/.sr
-		    sr repolist > $REPOLIST_FILE
-		fi
-
+		REPOLIST_FILE=$(_sr_ensure_repolist)
 		COMPREPLY=( $(compgen -W "`cat $REPOLIST_FILE`" -- ${cur}) )
 		return 0;;
 

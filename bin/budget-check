@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from argparse import ArgumentParser
 import os
-from sr import budget, spending
+from sr import budget, spending, Config
 from subprocess import check_output
 import sys, yaml
 from decimal import Decimal as D, ROUND_UP
@@ -11,6 +11,8 @@ parser = ArgumentParser( description = "Check the budget is valid" )
 parser.add_argument( "-s", "--spending",
                      help = "The location of spending.git to check against" )
 args = parser.parse_args()
+
+config = Config()
 
 try:
     root = budget.find_root()
@@ -75,12 +77,16 @@ def list_referenced_lines(root):
 
     return lines
 
-if args.spending is not None:
+spending_root = args.spending
+if spending_root is None:
+    spending_root = os.path.expanduser(config["spending"])
+
+if spending_root is not None:
     "Check stuff with spending.git"
     inv_budget_lines = set()
 
     # Check that all transactions reference valid budget lines
-    for line in list_referenced_lines(args.spending):
+    for line in list_referenced_lines(spending_root):
         try:
             b.path(line)
 
@@ -102,7 +108,7 @@ if args.spending is not None:
     over_budget = {}
 
     # Load the budget again with spending information
-    b = spending.load_budget_with_spending(args.spending)
+    b = spending.load_budget_with_spending(spending_root)
 
     # Check that the spends line up with the budget moneywise
     for bline in b.walk():

@@ -3,6 +3,7 @@
 from argparse import ArgumentParser
 import os
 from sr import budget, spending
+from subprocess import check_output
 import sys, yaml
 from decimal import Decimal as D, ROUND_UP
 
@@ -18,7 +19,7 @@ except budget.NotBudgetRepo:
     exit(1)
 
 os.chdir( root )
-b = budget.load_budget( "./" )
+b = budget.load_budget("./")
 
 try:
     f = open( "funds-in.yaml", "r" )
@@ -60,37 +61,37 @@ if budgeted == MAX:
 else:
     print "Budget is £%s below maximum." % (MAX-budgeted)
 
+def list_referenced_lines(root):
+    "Return a list of budget lines referenced in spending.git"
+
+    o = check_output( [ "ledger",
+                        "--file", os.path.join(root, "spending.dat"),
+                        "reg", "^Expenses:",
+                        "--format", "%A\n" ] )
+
+    lines = []
+    for account in o.splitlines():
+        lines.append(spending.account_to_budget_line(account))
+
+    return lines
+
 if args.spending is not None:
     "Check stuff with spending.git"
-
-    inv_budget_lines = {}
-    grouped_trans = {}
-
-    transactions = spending.load_transactions( args.spending )
+    inv_budget_lines = set()
 
     # Check that all transactions reference valid budget lines
-    for trans in transactions:
+    for line in list_referenced_lines(args.spending):
         try:
-            b.path( trans.budget )
+            b.path(line)
+
         except budget.InvalidPath:
-
-            if trans.budget not in inv_budget_lines:
-                inv_budget_lines[trans.budget] = []
-
-            inv_budget_lines[trans.budget].append( trans )
-        else:
-            if trans.budget not in grouped_trans:
-                grouped_trans[trans.budget] = []
-            grouped_trans[trans.budget].append( trans )
+            inv_budget_lines.add(line)
 
     if len(inv_budget_lines):
         print "{0} non-existent budget lines referenced from spending.git:".format( len(inv_budget_lines) )
 
-        for line, tlist in inv_budget_lines.iteritems():
-            print " - {0} is referenced in:".format( line )
-
-            for t in tlist:
-                print "\t", t.fname
+        for line in inv_budget_lines:
+            print " -", line
     else:
         print "OK: All spending.git budget line references are valid."
 
@@ -100,22 +101,21 @@ if args.spending is not None:
     # Lines that are over budget
     over_budget = {}
 
-    # Check that the spends line up with the budget moneywise
-    for bpath, tlist in grouped_trans.iteritems():
-        spent = sum( [t.cost for t in tlist] )
-        bline = b.path( bpath )
+    # Load the budget again with spending information
+    b = spending.load_budget_with_spending(args.spending)
 
+    # Check that the spends line up with the budget moneywise
+    for bline in b.walk():
         if bline.closed:
             "Closed lines must match their spent amount"
-            if bline.cost != spent:
-                close_fail[bline] = spent
+            if bline.cost != bline.spent:
+                close_fail[bline] = bline.spent
 
             continue
 
         fudged = bline.cost * budget.FUDGE_FACTOR
-        if spent > fudged:
-            over_budget[bline] = spent
-
+        if bline.spent > fudged:
+            over_budget[bline] = bline.spent
 
     if len(close_fail):
         print "{0} closed lines do not match the amount spent against them:".format(

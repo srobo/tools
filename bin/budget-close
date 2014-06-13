@@ -15,13 +15,8 @@ except srspending.NotSpendingRepo:
     print >>sys.stderr, "Please run in spending.git repository"
     exit(1)
 
-try:
-    budget = srspending.load_budget_with_spending(spending_root)
-except KeyError:
-    print >>sys.stderr, "Budget line '" + args.LINE + "' not found"
-    exit(1)
+budget = srspending.load_budget_with_spending(spending_root)
 
-spends = srspending.group_trans_by_budget_line(srspending.load_transactions('.'))
 path = budget.path(args.LINE)
 
 if isinstance(path, srbudget.BudgetItem):
@@ -34,29 +29,24 @@ for item in items:
         "Line is already closed; nothing to do"
         continue
 
-    try:
-        spent = sum( [trans.cost for trans in spends[item.name]] )
-    except KeyError:
-        spent = 0
-
-    if spent > (item.cost * srbudget.FUDGE_FACTOR):
+    if item.spent > (item.cost * srbudget.FUDGE_FACTOR):
         "More has been spent than the budget line's value"
         print >>sys.stderr, \
             "Cannot close {0}: More has been spent than budgeted.".format( item.name )
         print >>sys.stderr, \
-            "\tSpent: £{0}\n\tBudgeted: £{1}".format( spent,
+            "\tSpent: £{0}\n\tBudgeted: £{1}".format( item.spent,
                                                       item.cost * srbudget.FUDGE_FACTOR )
         # Skip this item
         continue
 
     orig_contents = open(item.fname,'r').read()
     contents = re.sub( r'^(\s*cost\s*:\s*).+$',
-                       r'\g<1>{0}'.format(spent),
+                       r'\g<1>{0}'.format(item.spent),
                        orig_contents, 0, re.MULTILINE )
 
     # Check that the cost has actually been changed
     # within the string if it actually needed to be
-    if spent != item.cost and contents == orig_contents:
+    if item.spent != item.cost and contents == orig_contents:
         print >>sys.stderr, \
             "Warning: Failed to set the cost of {0} -- skipping it.".format( item.name )
         continue

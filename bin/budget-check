@@ -79,7 +79,9 @@ def list_referenced_lines(root):
 
 spending_root = args.spending
 if spending_root is None:
-    spending_root = os.path.expanduser(config["spending"])
+    spending_root_config = config.get("spending")
+    if spending_root_config is not None:
+        spending_root = os.path.expanduser(spending_root_config)
 
 if spending_root is not None:
     "Check stuff with spending.git"

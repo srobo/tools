@@ -24,6 +24,7 @@ else:
 
 total = D(0)
 spent = D(0)
+total_unspent = D(0)
 
 if isinstance(budline, BudgetTree):
     for line in budline.walk():
@@ -33,11 +34,12 @@ if isinstance(budline, BudgetTree):
 
         if unspent != D(0):
             print line.name, unspent
+        total_unspent += unspent
 
     print "-" * 10
 
 else:
-    unspent = budline.cost - budline.spent
+    total_unspent = budline.cost - budline.spent
 
 print "Total budget:\t", total
-print "Total unspent:\t", unspent
+print "Total unspent:\t", total_unspent

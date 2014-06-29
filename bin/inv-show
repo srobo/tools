@@ -5,7 +5,7 @@ then
 	exit 1
 fi
 
-# Mimic the pythong implementation of gettoplevel
+# Mimic the python implementation of gettoplevel
 # Figures out if we're in an inventory clone or not
 getTopLeve()
 {

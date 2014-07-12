@@ -379,3 +379,19 @@ sr-piezo-pkm13epy-4000-a0,murata,PKM13EPY-4000-A0,THT 12.6mm piezo sounder,11925
 
 # Fans
 sr-fan-40-10-12v,any,,40mmx40mmx10mm axial fan 12V,1924856,farnell,1,wire_ended
+
+# Mechanical - Screw
+sr-mech-screw-nylon-csk-m3-16,allthread,121030016,M3x16mm machine screw nylon csk,7071000,farnell,100,
+sr-mech-screw-nylon-csk-m3-6,allthread,121030006,M3x6mm machine screw nylon csk,7070974,farnell,100,
+sr-mech-screw-bzp-ch-m5-6,nettlefolds,MS01050006081FA,M5x6mm machine screw bzp cheese,149483,farnell,100,
+
+# Mechanical - Nut
+sr-mech-nut-nylon-m3,duratool,1110030,M3 nut nylon,7016943,farnell,50,
+
+# Mechanical - Washer
+sr-mech-washer-nylon-m3,richco,NWE 34815 M3,M3 washer nylon,1261652,farnell,100,
+sr-mech-washer-bzp-m5-spr,duratool,D01136,M3 spring washer bzp,1624028,farnell,100,
+
+# Mechanical - Misc
+sr-mech-bush-nylon-m3-8,allthread,164003008,M3x8mm bush 4mm/6.2mm o/d,891435,farnell,50,
+sr-mech-spacer-ni-m3-20,ettinger,05.03.203,M3x20mm hex spacer nickel,1466762,farnell,4,

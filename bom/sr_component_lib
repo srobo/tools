@@ -153,6 +153,7 @@ sr-fuse-r1850-2920,littelfuse,2920L185DR,1.85A 33V resettable fuse,1822228,farne
 sr-fuse-1000-sil,any,,1A PCB mount SIL fuse (5.08mm pitch),1566080,farnell,5,through_hole
 sr-fuse-5000-ato,any,,5A ATO automotive fuse (Orange),1586586,farnell,5,N/A
 sr-fuse-15000-ato,any,,15A ATO automotive fuse (Blue),1586589,farnell,5,N/A
+sr-fuse-40000-midi,littelfuse,0498040.M,40A MIDI fuse (Green),576-0498040.M,mouser,1,N/A
 
 # Connectors
 sr-cn-camcon2w,camdenboss,CTB9550/2,Pluggable terminal block 2way 7.5mm pitch male horiz,3882391,farnell,1,through_hole

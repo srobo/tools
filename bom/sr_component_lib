@@ -345,6 +345,7 @@ sr-fet-p-pmv65xp,nxp,"PMV65XP,215",PMV65XP p-channel mosfet 20V 3.9A,1758119,far
 #sr-fet-p-fds4435,FDS4435 - P-MOSFET-SO8,9846204,farnell,1,soic-8 NO LONGER STOCKED
 #sr-fet-p-nds8435a,NDS8435A p-channel mosfet,9846263,farnell,1,soic-8 NO LONGER STOCKED
 sr-fet-p-irf9328,international rectifier,IRF9328PBF,p-channel mosfet 30V 12A,1831076,farnell,1,soic-8
+sr-fet-p-si7655adn,vishay,Si7655ADN,p-channel mosfet 20V 30A,2400368,farnell,1,powerpak1212
 sr-fet-np-us6m1,rohm semiconductor,US6M1TR,US6M1TR n/p-channel mosfet 1A,US6M1CT-ND,digikey,1,sc70-6
 
 # Thyristors

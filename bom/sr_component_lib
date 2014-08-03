@@ -252,17 +252,19 @@ sr-d-82400102,wurth elektronik,82400102,Wurth 82400102 dual TVS diode array,1825
 sr-d-pesd5z12,nxp,PESD5Z12,12V unidirectional TVS diode 200W,1829227,farnell,1,sod523
 
 # ICs
-# SMPS/Linear Regs
-sr-ic-max1626,maxim,MAX1626ESA+,MAX1626ESA+ 5/3.3v switchmode controller,9725342,farnell,1,soic8
-sr-ic-tl494,ti,TL494CD,TL494CD PWM/switchmode controller,528-129,rs,40,soic16
-sr-ic-tb62752afug,toshiba,TB62752BFUG,TB62752BFUG boost convertor for backlight LEDs,TB62752BFUGCT-ND,digikey,1,ssop6
-#sr-ic-ts1935,TS1935 1.6MHz Boost Converter,1476681,farnell,1,sot25 NO LONGER STOCKED
+# Linear Regulators
 sr-ic-ua78l05,ti,UA78L05ACPKG3,UA78L05 5V linear voltage regulator,1236590,farnell,1,sot-89-3
 sr-ic-ld1117s50,stmicroelectronics,LD1117S50TR,LD1117S50TR 5V linear voltage reg 800mA,686-9379,rs,25,sot-223
 sr-ic-ld1117s33,stmicroelectronics,LD1117S33CTR,LD1117S33CTR 3.3V 800mA linear voltage reg - hefty,1467779,farnell,1,sot223
 sr-ic-ts5205cx533,taiwan semiconductor,TS5205CX533 RF,TS5205CX533 3.3V 150mA linear voltage reg - weedy,398-708,rs,50,sot23-5
 sr-ic-mcp1703at3302emb,microchip,MCP1703AT-3302E/MB,MCP1703AT-3302E/MB 3.3V 250mA linear voltage reg - middling,579-MCP1703AT3302EMB,mouser,1,sot-89
 sr-ic-tps73025,ti,LP5951MF-2.5,EQUIV(ish) LP5951MF-2.5 2.5V 150mA(NOT 200mA) linear voltage reg,1312655,farnell,1,sot23-5
+
+# SMPS
+sr-ic-max1626,maxim,MAX1626ESA+,MAX1626ESA+ 5/3.3v switchmode controller,9725342,farnell,1,soic8
+sr-ic-tl494,ti,TL494CD,TL494CD PWM/switchmode controller,528-129,rs,40,soic16
+sr-ic-tb62752afug,toshiba,TB62752BFUG,TB62752BFUG boost convertor for backlight LEDs,TB62752BFUGCT-ND,digikey,1,ssop6
+#sr-ic-ts1935,TS1935 1.6MHz Boost Converter,1476681,farnell,1,sot25 NO LONGER STOCKED
 sr-ic-tl5001acd,ti,TL5001ACD,TL5001ACD 20-500kHz PWM controller,1100958,farnell,1,soic8
 sr-ic-lm2704,ti,LM2704MF-ADJ,LM2704 step-up DC/DC converter,8207461,farnell,1,sot25
 #sr-ic-sc4524a,SC5424A step-down DC/DC converter,691-0600,rs,5,soic8 NO LONGER STOCKED

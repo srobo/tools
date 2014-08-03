@@ -68,6 +68,7 @@ sr-r-4700k-0402,any,,4.7M 0402 chip resistor 1%,2141492,farnell,1,0402
 sr-r-10000k,any,,10M 0603 1% chip resistor,1469750,farnell,50,0603
 
 # Resistory Arrays
+sr-ra-4-100-0402,bourns,CAY10-101J4LF,4pack of 100R resistors 0804 (0402 equiv),1770149,farnell,50,0804_res_arr
 sr-ra-4-330,bourns,CAY16-331J4LF,4pack of 330R resistors 1206 (0603 equiv),1770132,farnell,50,1206_res_arr
 sr-ra-4-1k,bourns,CAY16-102J4LF,4pack of 1k resistors 1206 (0603 equiv),1770133,farnell,50,1206_res_arr
 sr-ra-4-4k7-0402,bourns,CAY10-472J4LF,4pack of 4k7 resistors 0804 (0402 equiv),1770151,farnell,50,0804_res_arr
@@ -280,6 +281,7 @@ sr-ic-msp430f2122,ti,MSP430F2122IPW, MSP430F2122 16bit mcu,1753280,farnell,1,tss
 sr-ic-pic10f200,microchip,PIC10F200T-I/OT,PIC10F200T-I/OT 8bit mcu,1216921,farnell,1,sot-23-6
 sr-ic-stm32f100r6,stmicroelectronics,STM32F100R6T6B,STM32F100R6 32bit mcu 32k flash 4k ram,723-8889P,rs,1,lqfp64
 sr-ic-stm32f100r8,stmicroelectronics,STM32F100R8T6B,STM32F100R8 32bit mcu 64k flash 8k ram,1838508,farnell,1,lqfp64
+sr-ic-stm32f103c6u,stmicroelectronics,STM32F103C6U6A,STM32F103C6 32bit mcu 32k flash 10k ram,2333160,farnell,1,ufqfpn48
 sr-ic-stm32f103r6,stmicroelectronics,STM32F103R6T6A,STM32F103R6 32bit mcu 32k flash 10k ram,1899014,farnell,1,lqfp64
 
 # Logic-y

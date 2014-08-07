@@ -5,6 +5,7 @@ sr-code,manufacturer,part-number,description,order-number,supplier,per-reel,pack
 # Resistors:
 sr-r-1m-2512-1w,welwyn,ULR1-R001FT2,1m 2512 1W 50ppm,1292474,farnell,5,2512
 sr-r-1m-2512,any,,1m 2512 chip resistor 3W,1292506,farnell,5,2512
+sr-r-3m-1210-1w,welwyn,ULR1S-R003FT2,3m 1210 chip resistor 1W 50ppm,1621964,farnell,5,1210
 sr-r-3m5-2512,any,,3m5 2512 chip resistor,1292479,farnell,5,2512
 sr-r-10m-0805,any,,10m 0805 chip resistor,8067643,farnell,10,0805
 sr-r-15m-1206,any,,15m 1206 chip resistor,1099908,farnell,5,1206
@@ -19,6 +20,7 @@ sr-r-100-1206,any,,100 1206 chip resistor(500mW),1576615,farnell,50,1206
 sr-r-200-0402,any,,200 0402 chip resistor 1%,2072751,farnell,100,0402
 sr-r-330,any,,330 0603 chip resistor,9331018,farnell,50,0603
 sr-r-330-0402,any,,330 0402 chip resistor 1%,2072927,farnell,100,0402
+sr-r-390-0402,any,,390 0402 chip resistor 1%,2072990,farnell,100,0402
 sr-r-560-0402,any,,560 0402 chip resistor 1%,2073129,farnell,100,0402
 sr-r-560,any,,560 0603 chip resistor,9233342,farnell,50,0603
 sr-r-680-1206,any,,680 1206 chip resistor (0.5W),1739010,farnell,50,1206
@@ -27,8 +29,10 @@ sr-r-1k-0402,any,,1k 0402 chip resistor 1%,2072516,farnell,100,0402
 sr-r-1k-0805,any,,1k 0805 chip resistor 1%,2073606,farnell,100,0805
 sr-r-1k-1206,any,,1k 1206 chip resistor 1%,2073877,farnell,100,1206
 sr-r-1k1-0402,any,,1k1 0402 chip resistor 1%,2072548,farnell,100,0402
+sr-r-1k5-0402,any,,1k5 0402 chip resistor 1%,2072645,farnell,100,0402
 sr-r-2k2-1206,any,,2k2 1206 chip resistor,2073909,farnell,100,1206
 sr-r-2k4,any,,2k4 0603 chip resistor,9330879,farnell,50,0603
+sr-r-2k49-0402,any,,2k49 0402 chip resistor 1%,2072829,farnell,100,0402
 sr-r-2k7,any,,2k7 0603 chip resistor,2073452,farnell,100,0603
 sr-r-3k3,any,,3k3 0603 chip resistor,9331026,farnell,50,0603
 sr-r-3k3-0402,any,,3k3 0402 chip resistor 1%,2072928,farnell,100,0402
@@ -69,6 +73,7 @@ sr-r-10000k,any,,10M 0603 1% chip resistor,1469750,farnell,50,0603
 
 # Resistory Arrays
 sr-ra-4-100-0402,bourns,CAY10-101J4LF,4pack of 100R resistors 0804 (0402 equiv),1770149,farnell,50,0804_res_arr
+sr-ra-4-330-0402,bourns,CAY10-331J4LF,4pack of 330R resistors 0804 (0402 equiv),1770150,farnell,50,0804_res_arr
 sr-ra-4-330,bourns,CAY16-331J4LF,4pack of 330R resistors 1206 (0603 equiv),1770132,farnell,50,1206_res_arr
 sr-ra-4-1k,bourns,CAY16-102J4LF,4pack of 1k resistors 1206 (0603 equiv),1770133,farnell,50,1206_res_arr
 sr-ra-4-4k7-0402,bourns,CAY10-472J4LF,4pack of 4k7 resistors 0804 (0402 equiv),1770151,farnell,50,0804_res_arr
@@ -81,6 +86,7 @@ sr-c-27p-0402-50v,any,,27p capacitor 0402 50V C0G/NP0,1414584,farnell,10,0402
 sr-c-220p-50v,any,,220pF capacitor 0603 50V,1759070,farnell,100,0603
 sr-c-1n,any,,1n capacitor 0603,1759088,farnell,100,0603
 sr-c-1n-0402-50v,any,,1n capacitor 0402 50V X7R,1758991,farnell,100,0402
+sr-c-1n5-0402-50v,any,,1n5 capacitor 0402 50V X7R,1758993,farnell,10,0402
 sr-c-2n2,any,,2.2nF capacitor 0603,1759093,farnell,100,0603
 sr-c-10n,any,,10n capacitor 0603,1759104,farnell,100,0603
 sr-c-10n-0402-25v,any,,10n capacitor 0402 25V X7R,1758924,farnell,100,0402
@@ -109,6 +115,8 @@ sr-c-15u-7343,any,,15u tantalum capacitor 25V,1754110,farnell,5,7343
 sr-c-22u-0805-6v3,any,,22u capacitor 0805 6.3V X5R,1867955,farnell,10,0805
 sr-c-22u-0805-10v,any,,22u capacitor 0805 10V X5R,1867956,farnell,10,0805
 sr-c-22u-1210,any,,22u ceramic capacitor 1210 16V,1759466,farnell,10,1210
+sr-c-22u-1210-16v,any,,22u ceramic capacitor 1210 16V X5R,1759467,farnell,10,1210
+sr-c-47u-1206-6v3,murata,GRM31CR60J476KE19L,47u ceramic capacitor 1206 6.3V X5R,1828809,farnell,10,1206
 sr-c-47u,any,,47u electrolytic capacitor,9451072,farnell,10,through_hole
 sr-c-68u,any,,68u capacitor smt CPOL-EUE,9694390,farnell,10,smt_electrolytic_cap
 sr-c-100u,any,,100u capacitor smt CPOL-EUE,9694404,farnell,10,smt_electrolytic_cap
@@ -138,6 +146,8 @@ sr-l-330u,bourns,SDR0503-331KL,330u 280mA smt inductor,1612678,farnell,1,smt_ind
 # Ferrite Beads (value is current rating)
 sr-fb-200m-1k-0402,tdk,MMZ1005Y102C,200mA 1k @ 100MHz 0402,1669673,farnell,5,0402
 sr-fb-300m,fair-rite,2506031027Y0,300mA 1k @ 100MHz 0603,1463451,farnell,1,0603
+# Same as above but with package size specified in sr part code
+sr-fb-300m-0603,fair-rite,2506031027Y0,300mA 1k @ 100MHz 0603,1463451,farnell,1,0603
 sr-fb-3,fair-rite,2512067007Y3,3A 100R @ 100MHz 1206,1653393,farnell,1,1206
 
 # Common Mode Chokes
@@ -148,6 +158,7 @@ sr-fuse-r50-1206,bel fuse inc,0ZCA0005FF2E,50mA 60V resettable fuse,507-1476-1-N
 #sr-fuse-r100-1206,any,,100mA 30V resettable fuse,1861178,farnell,5,1206 ACTUALLY 1210 NOT 1206
 sr-fuse-r100-1210,te connectivity,MICROSMD010F,100mA 30V resettable fuse,1345917,farnell,5,1210
 sr-fuse-r125-1206,littelfuse,1206L012WR,125mA 30V resettable fuse,1596988,farnell,10,1206
+sr-fuse-r200-1206,any,,200mA 30V resettable fuse,1861187,farnell,5,1206
 sr-fuse-r200-1812,any,,200mA 30V resettable fuse,1800746,farnell,5,1812
 sr-fuse-r250-1206,littelfuse,1206L025YR,250mA 16V resettable fuse,1596990,farnell,10,1206
 sr-fuse-r1850-2920,littelfuse,2920L185DR,1.85A 33V resettable fuse,1822228,farnell,5,2920
@@ -184,6 +195,8 @@ sr-cn-header2x7-smt,amp,1241050-7,2x7 surface mount 2.5mm header,9689605,farnell
 sr-cn-header2x7-box,te connectivity,1-1634688-4,2x7 through-hole 2.5mm boxed header,8395926,farnell,1,through_hole
 sr-cn-header2x10-1.27mm,harwin,M50-3501042,2x10 through-hole 1.27mm header,1022306,farnell,5,through_hole
 sr-cn-header2-5a-ra,te connectivity,640389-2,2 way header right angle .156in pitch 5A,589184,farnell,5,through_hole
+sr-cn-header3x4-ra,samtec,TSW-108-04-L-T-RA,3x4 through-hole 2.54mm right angle header,2053141,farnell,5,through_hole
+sr-cn-header3x8-ra,samtec,TSW-108-08-L-T-RA,3x8 through-hole 2.54mm right angle header,2053145,farnell,5,through_hole
 sr-cn-plug2-5a,te connectivity,3-640427-2,2 way plug for sr-cn-header2-5a-ra,1098453,farnell,5,N/A
 sr-cn-idcsocket16,any,, 16Way IDC socket with wings,1099027,farnell,1,through_hole
 sr-cn-cageclamp,phoenix contact,1791826,1 way 2.54mm horizontal cage clamp,3041050,farnell,1,through_hole
@@ -223,17 +236,28 @@ sr-led-redgreen-0805,kingbright,KPHBM-2012SURKCGKC,Dual LED Red/Green,1686079,fa
 sr-nothing,nothing,,
 
 # Diodes
+# Signal P-N
 sr-d-ll4448,vishay,LL4448-GS08,signal diode 100mA 100V 1N4148 equiv,1617730,farnell,1,sod80
-sr-d-112cwq04fntrpbf,vishay,VS-12CWQ04FNTRPBF, schottky diode 12A D-PAK,1298442,farnell,1,d-pak
-sr-d-30bq040trpbf,taiwan semiconductor,SK56C,schottky diode 3a smc,1299292,farnell,1,do-214ab(smc)
-sr-d-15mq040n,vishay,VS-15MQ040NTRPBF,schottky diode 3A 40V SMA,1463215,farnell,1,do-214ac(sma)
-sr-d-v8p10,vishay,V8P10-M3/86A,schottky diode 8A 100V SMPC,V8P10-M3/86AGICT-ND,digikey,1,to-277a(smpc)
+
+# Signal Schottky
 sr-d-bat754s,nxp,BAT754S,schottky diode dual,1081206,farnell,5,sot23
 sr-d-bat754c,nxp,BAT754C,schottky diode dual,1081205,farnell,5,sot23
 sr-d-bat754a,nxp,BAT754A,Schottky diode dual,1081204,farnell,5,sot23
+sr-d-bat54c,stmicroelectronics,BAT54CFILM,schottky diode 30V 300mA dual common cathode,9801499,farnell,5,sot23
 sr-d-bas40h,nxp,BAS40H,Schottky diode 120mA 40V,1757749,farnell,1,sod123
+
+# Power Schottky
+sr-d-v8p10,vishay,V8P10-M3/86A,schottky diode 8A 100V SMPC,V8P10-M3/86AGICT-ND,digikey,1,to-277a(smpc)
+sr-d-112cwq04fntrpbf,vishay,VS-12CWQ04FNTRPBF, schottky diode 12A D-PAK,1298442,farnell,1,d-pak
+sr-d-30bq040trpbf,taiwan semiconductor,SK56C,schottky diode 3a smc,1299292,farnell,1,do-214ab(smc)
+sr-d-15mq040n,vishay,VS-15MQ040NTRPBF,schottky diode 3A 40V SMA,1463215,farnell,1,do-214ac(sma)
+
+# Zener
 sr-d-bzx384c3v3,nxp,BZX384-C3V3, zener diode 3.3V 5%,8735646,farnell,10,sod323
 sr-d-mmsz4689t1g,on semiconductor,MMSZ4689T1G,zener diode 5.1V 500mW,1459121,farnell,1,sod123
+sr-d-1sma5918bt3g,on semiconductor,1SMA5918BT3G,zener diode 5.1V 1.5W,1431140,farnell,10,do-214ac(sma)
+
+# TVS
 sr-d-smaj15ca,stmicroelectronics,SMAJ15CA-TR,15V bidirectional TVS diode 400W,9802789,farnell,5,do-214ac(sma)
 sr-d-tvs-16v-smcj16a,fairchild semiconductor,SMCJ16A,16v tvs diode 1500W,1470983,farnell,1,do-214ab(smc)
 sr-d-smaj16a,multicomp,SMAJ16A,16V unidirectional TVS diode 400W,1578964,farnell,5,do-214ac(sma)
@@ -251,6 +275,7 @@ sr-d-vbus052cd,vishay,VBUS052CD-FAH-GS08,VBUS052CD-FAH dual bus protection array
 sr-d-82400102,wurth elektronik,82400102,Wurth 82400102 dual TVS diode array,1825875,farnell,1,sot23-6
 sr-d-pesd5z12,nxp,PESD5Z12,12V unidirectional TVS diode 200W,1829227,farnell,1,sod523
 
+
 # ICs
 # Linear Regulators
 sr-ic-ua78l05,ti,UA78L05ACPKG3,UA78L05 5V linear voltage regulator,1236590,farnell,1,sot-89-3
@@ -259,6 +284,8 @@ sr-ic-ld1117s33,stmicroelectronics,LD1117S33CTR,LD1117S33CTR 3.3V 800mA linear v
 sr-ic-ts5205cx533,taiwan semiconductor,TS5205CX533 RF,TS5205CX533 3.3V 150mA linear voltage reg - weedy,398-708,rs,50,sot23-5
 sr-ic-mcp1703at3302emb,microchip,MCP1703AT-3302E/MB,MCP1703AT-3302E/MB 3.3V 250mA linear voltage reg - middling,579-MCP1703AT3302EMB,mouser,1,sot-89
 sr-ic-tps73025,ti,LP5951MF-2.5,EQUIV(ish) LP5951MF-2.5 2.5V 150mA(NOT 200mA) linear voltage reg,1312655,farnell,1,sot23-5
+sr-ic-mcp1700t3302emb,microchip,MCP1700T-3302E/MB,3.3V 250mA (6V Vin max) linear voltage reg,1439380,farnell,1,sot89
+sr-ic-mcp1703t5002emb,microchip,MCP1703T-5002E/MB,5V 250mA (16V Vin max) linear voltage reg,1851953,farnell,1,sot89
 
 # SMPS
 sr-ic-max1626,maxim,MAX1626ESA+,MAX1626ESA+ 5/3.3v switchmode controller,9725342,farnell,1,soic8
@@ -272,6 +299,7 @@ sr-ic-lm3489,ti,LM3489MM,LM3489 hysteretic step-down DC/DC controller,1312570,fa
 sr-ic-lmr14203,ti,LMR14203XMKE/NOPB,LMR14203XMK step-down DC/DC converter 42V 0.3A,2064680,farnell,1,sot23-6
 sr-ic-tps54327drc,ti,TPS54327DRCT,TPS54327DRC step-down DC/DC converter synchronous 18V 3A,2361237,farnell,1,son10
 sr-ic-tps62125dsg,ti,TPS62125DSGT,TPS62125DSG step-down DC/DC converter synchronous 17V 300mA,2144287,farnell,1,son8
+sr-ic-pvx012a0x3,ge critical power,PVX012A0X3-SRZ,3V-14.4V input 0.6V-5.5V output 12A non-isolated DC-DC module,2076909,farnell,1,smt_module
 
 # uC
 sr-ic-msp430f167,ti,MSP430F167IPM,MSP430F167IPM microcontroller,1471271,farnell,1,tqfp64
@@ -300,6 +328,7 @@ sr-ic-sn65lvds051,ti,SN65LVDS051PWG4,SN65LVDS051PW LVDS dual transceiver,1460775
 sr-ic-fxlp34,fairchild semiconductor,FXLP34P5X,FXLP34P5X 1-bit non-inverting level translator,1652415,farnell,1,sc70-5
 sr-ic-txs0102,ti,TXS0102DCTR,TXS0102DCT 2-bit non-inverting bi-directional level translator,2098018,farnell,1,ssop8
 sr-ic-adum3211arz,analog devices,ADUM3211ARZ,ADUM3211ARZ 2.5kV 10Mbps dual bi-directional isolator,2313635,farnell,1,soic8
+sr-ic-si8602ac,silicon labs,Si8602AC-B-IS,3.75kV I2C isolator with unidirectional SCL,634-SI8602AC-B-IS,mouser,1,soic8
 
 # Misc
 sr-ic-fan7380,fairchild semiconductor,FAN7380MX,FAN7380 dual MOSFET driver,1241880,farnell,1,soic8
@@ -326,11 +355,13 @@ sr-ic-vnh5019,stmicroelectronics,VNH5019A-E,VNH5019A-E 30A H-Bridge,511-VNH5019A
 sr-ic-vnd5012,stmicroelectronics,VND5012AK-E,VND5012AK-E 12mR dual MOSFET,445-781,rs,1,powersso-24
 sr-ic-mcp9701at,microchip,MCP9701AT-E/LT,Temperature sensor,1627203,farnell,1,sc70-5
 sr-ic-stf202,on semiconductor,STF202-22T1G,USB EMI/ESD protection and termination,1651958,farnell,1,sot23-6
+sr-ic-mcp23017ess,microchip,MCP23017-E/SS,16bit I2C I/O expander,1467674,farnell,1,ssop28
 
 # BJTs
 sr-npn-bc846b,nxp,BC846B,BC846B NPN BJT 65V 100mA,1081229,farnell,10,sot23
 
 # FETs
+# n-channel
 sr-fet-n-bss123,nxp,BSS123,BSS123 n-channel mosfet,1510764,farnell,5,sot-23
 sr-fet-n-sn7002w,nxp,2N7002PW,2N7002PW n-channel mosfet,1829184,farnell,1,sot323
 sr-fet-n-bsh121,nxp,BSH121,BSH121 n-channel mosfet very low Vt of 1V,1758072,farnell,1,sot323
@@ -342,6 +373,8 @@ sr-fet-n-irlml2030,international rectifier,IRLML2030TRPBF,IRLML2030TRPbF n-chann
 sr-fet-n-irlr8743,international rectifier,IRLR8743PBF,IRLR8743PBF n-channel mosfet 160A,1551908,farnell,1,d-pak
 #sr-fet-n-rtq020n03,RTQ020N03TR n-channel mosfet 1A,1525552,farnell,1,TSMT6 NO LONGER STOCKED
 sr-fet-n-irfh5301,international rectifier,IRFH5301TR2PBF,IRFH5301PBF n-channel mosfet 35A,1782047,farnell,1,pqfn8
+
+# p-channel
 sr-fet-p-mmbf2202pt1,nxp,NX3008PBKW,EQUIV NX3008PBKW p-channel mostfet 30V 200mA,2069551,farnell,1,sot323
 sr-fet-p-bss84lt1g,international rectifier,IRLML9303TRPBF,EQUIV IRLML9303 p-channel mosfet 30V 520mA,1831090,farnell,1,sot-23
 sr-fet-p-pmv65xp,nxp,"PMV65XP,215",PMV65XP p-channel mosfet 20V 3.9A,1758119,farnell,1,sot-23
@@ -350,6 +383,8 @@ sr-fet-p-pmv65xp,nxp,"PMV65XP,215",PMV65XP p-channel mosfet 20V 3.9A,1758119,far
 #sr-fet-p-nds8435a,NDS8435A p-channel mosfet,9846263,farnell,1,soic-8 NO LONGER STOCKED
 sr-fet-p-irf9328,international rectifier,IRF9328PBF,p-channel mosfet 30V 12A,1831076,farnell,1,soic-8
 sr-fet-p-si7655adn,vishay,Si7655ADN,p-channel mosfet 20V 30A,2400368,farnell,1,powerpak1212
+
+# multi
 sr-fet-np-us6m1,rohm semiconductor,US6M1TR,US6M1TR n/p-channel mosfet 1A,US6M1CT-ND,digikey,1,sc70-6
 
 # Thyristors

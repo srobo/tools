@@ -254,6 +254,7 @@ sr-d-15mq040n,vishay,VS-15MQ040NTRPBF,schottky diode 3A 40V SMA,1463215,farnell,
 
 # Zener
 sr-d-bzx384c3v3,nxp,BZX384-C3V3, zener diode 3.3V 5%,8735646,farnell,10,sod323
+sr-d-edz51v,rohm,EDZTE615.1B,zener diode 5.1V 150mW,1679978,farnell,1,sod523
 sr-d-mmsz4689t1g,on semiconductor,MMSZ4689T1G,zener diode 5.1V 500mW,1459121,farnell,1,sod123
 sr-d-1sma5918bt3g,on semiconductor,1SMA5918BT3G,zener diode 5.1V 1.5W,1431140,farnell,10,do-214ac(sma)
 

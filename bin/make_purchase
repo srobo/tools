@@ -31,6 +31,14 @@ except srspending.NotSpendingRepo:
     print >>sys.stderr, "Please run in spending.git top level directory"
     exit(1)
 
+try:
+    budget = srspending.load_budget_with_spending( spending_root )
+except srbudget.NoBudgetConfig as nbc:
+    print >>sys.stderr, "Error:", nbc.message
+    print >>sys.stderr, "Have you initialised the budget submodule?"
+    print >>sys.stderr, "If not, run 'git submodule update --init'."
+    exit(1)
+
 class PurchaseItem(object):
     def __init__(self, info ):
         self.desc = info["desc"]
@@ -123,8 +131,6 @@ if args.spend_file is not None:
     spend_request = SpendRequest( args.spend_file )
 else:
     spend_request = SpendRequest.from_editor()
-
-budget = srspending.load_budget_with_spending( spending_root )
 
 ticket_text = "Payee: {} \\\\\n".format( spend_request.username )
 

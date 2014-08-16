@@ -50,7 +50,7 @@ def diff_trees( a, b ):
     for i in added:
         changes.append( AddedItem( i ) )
 
-    return changes
+    return sorted(changes, key=lambda change: change.a.name)
 
 def changes_to_tree( changes ):
     "Convert a list of changes into a tree"

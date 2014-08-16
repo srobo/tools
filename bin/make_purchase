@@ -47,7 +47,7 @@ class Purchase(object):
                 continue
 
             i = PurchaseItem( item )
-            self.items.append(i)            
+            self.items.append(i)
 
 class SpendRequest(object):
     "Query the user for purchase information"
@@ -200,7 +200,7 @@ except WrongServer:
     exit(1)
 
 ticketNum = server.ticket.create( spend_request.summary,
-                                  ticket_text, 
+                                  ticket_text,
                                   { 'component': "Purchasing",
                                     'owner': "treasurer",
                                     'type': "task" } )

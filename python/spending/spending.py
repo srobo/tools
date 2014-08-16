@@ -45,7 +45,7 @@ def load_transactions(root):
             # The name of a transaction is not unique as multiple transactions
             # with the same file name can exist in the spending repository.
             name = fname[:-5]
-            
+
             # The date of the transaction if it has been reconciled. None if
             # it's still pending.
             topdir = fullp[len(root)+1:fullp.find('/',len(root)+1)]

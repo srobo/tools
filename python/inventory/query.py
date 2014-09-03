@@ -21,6 +21,15 @@ Match on a part code.
 * *Example:* `code:srEEN`
 
 
+### Serial:
+
+Match on a serial number.
+
+* *Keys:* `serial`
+* *Values:* *a valid serial number*
+* *Example:* `serial:D851F850`
+
+
 ### Condition:
 
 Match on the condition of a part/assembly.  An assembly is considered `working`

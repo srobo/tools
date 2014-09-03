@@ -23,6 +23,7 @@ BANG       = Literal("!")
 EQUALITY   = Or((EQUALS, COLON, IS))
 
 CODE       = Literal("code")
+SERIAL     = Literal("serial")
 TYPE       = Literal("type")
 COND       = Or((Literal("condition"), Literal("cond")))
 LABELLED   = Literal("labelled")
@@ -37,10 +38,11 @@ _TRI_STATE_KEY_NAMES = ("development", "v-sense-move-1213",
                         "battery-aa-mod-1270")
 TRI_STATE_KEYS = map(Literal, _TRI_STATE_KEY_NAMES)
 
-ASSET_CODE = Regex(r"(sr)?[a-zA-Z0-9]+")
-ASSET_NAME = Regex(r"[a-zA-Z0-9\.\*\-\?\[\]]+")
-PATH_RE    = Regex(r"[a-zA-Z0-9\.\*\-\?\[\]/]+")
-CONDITIONS = oneOf("working unknown broken")
+ASSET_CODE   = Regex(r"(sr)?[a-zA-Z0-9]+")
+ASSET_SERIAL = Regex(r"[a-zA-Z0-9\.\*\-\?\[\]]+")
+ASSET_NAME   = Regex(r"[a-zA-Z0-9\.\*\-\?\[\]]+")
+PATH_RE      = Regex(r"[a-zA-Z0-9\.\*\-\?\[\]/]+")
+CONDITIONS   = oneOf("working unknown broken")
 
 # pull registered function names from query_ast
 FUNCTIONS  = oneOf(' '.join(query_ast.Function.registered_names()))
@@ -53,6 +55,10 @@ def generate_in_expr(prop, val_type):
 code_single = CODE + EQUALITY + ASSET_CODE
 code_list   = generate_in_expr(CODE, ASSET_CODE)
 code_expr   = code_list | code_single
+
+serial_single = SERIAL + EQUALITY + ASSET_SERIAL
+serial_list   = generate_in_expr(SERIAL, ASSET_SERIAL)
+serial_expr   = serial_list | serial_single
 
 type_single = TYPE + EQUALITY + ASSET_NAME
 type_list   = generate_in_expr(TYPE, ASSET_NAME)
@@ -77,7 +83,7 @@ not_expr    = Forward()
 primary     = Forward()
 func_expr   = Forward()
 
-base_expr   = (not_expr | code_expr | type_expr | cond_expr |
+base_expr   = (not_expr | code_expr | serial_expr | type_expr | cond_expr |
                path_expr | label_expr | assy_expr | tristate_expr)
 paren_expr  = L_BRKT + or_expr + R_BRKT
 
@@ -113,6 +119,8 @@ def _pa_func_expr(x):
 
 code_single.setParseAction(lambda x: query_ast.Code(x[2]))
 code_list.setParseAction(lambda x: query_ast.Code(*x[3::2]))
+serial_single.setParseAction(lambda x: query_ast.Serial(x[2]))
+serial_list.setParseAction(lambda x: query_ast.Serial(*x[3::2]))
 type_single.setParseAction(lambda x: query_ast.Type(x[2]))
 type_list.setParseAction(lambda x: query_ast.Type(*x[3::2]))
 cond_single.setParseAction(lambda x: query_ast.Condition(x[2]))

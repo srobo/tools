@@ -185,6 +185,10 @@ class BudgetTree(object):
 
                 c.draw( fd = fd, prefix = child_prefix )
 
+class NoBudgetConfig(Exception):
+    def __init__(self):
+        super(NoBudgetConfig, self).__init__("No config file found")
+
 class BudgetConfig(object):
     def __init__(self, root):
         pypath = os.path.join( root, "config.py" )
@@ -197,7 +201,7 @@ class BudgetConfig(object):
             self._load_from_yaml( yamlpath )
             self.path = yamlpath
         else:
-            raise Exception("No config file found")
+            raise NoBudgetConfig
 
     def _load_from_py(self, fname):
         with open(fname, "r") as in_file:

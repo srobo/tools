@@ -226,6 +226,18 @@ class Code(Terminal):
         return "(Code {0})".format(list(self.codes))
 
 
+class Serial(Terminal):
+    def __init__(self, *serials):
+        self.serials = set(serials)
+
+    def match_single(self, inv_node):
+        serial = inv_node.info.get("serial", None)
+        return serial in self.serials
+
+    def sexpr(self):
+        return "(Serial {0})".format(list(self.serials))
+
+
 class Function(NonTerminal):
 
     _functions = {}

@@ -1,4 +1,5 @@
 "Library for accessing the spending files"
+import errno
 import os, sys, datetime, sr.budget as budget
 from subprocess import check_output, check_call, CalledProcessError
 from decimal import Decimal as D
@@ -45,7 +46,7 @@ def load_transactions(root):
             # The name of a transaction is not unique as multiple transactions
             # with the same file name can exist in the spending repository.
             name = fname[:-5]
-            
+
             # The date of the transaction if it has been reconciled. None if
             # it's still pending.
             topdir = fullp[len(root)+1:fullp.find('/',len(root)+1)]
@@ -84,14 +85,27 @@ def account_to_budget_line(account):
     line = account.replace(":", "/")
     return line[len("Expenses/"):]
 
+class LedgerNotFound(Exception):
+    def __init__(self):
+        super(LedgerNotFound, self).__init__(
+            "Unable to find 'ledger' which is required to operate the spending repo.")
+
 def load_budget_spends(root):
     p = os.path.join(root, "spending.dat")
 
-    balances = check_output( [ "ledger",
-                               "--file", p,
-                               "bal",
-                               "--format", "%A,%(display_total)\n",
-                               "^Expenses:" ] )
+    try:
+        balances = check_output( [ "ledger",
+                                   "--file", p,
+                                   "bal",
+                                   "--format", "%A,%(display_total)\n",
+                                   "^Expenses:" ] )
+    except OSError as oe:
+        if oe.errno == errno.ENOENT:
+            "A nicer error for the most likely case"
+            raise LedgerNotFound
+        else:
+            "Re-raise the underlying exception"
+            raise
 
     lines = {}
 

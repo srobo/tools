@@ -373,7 +373,7 @@ sr-fet-n-irf8734,international rectifier,IRF8734PBF,IRF8734PbF n-channel mosfet,
 sr-fet-n-irlml2030,international rectifier,IRLML2030TRPBF,IRLML2030TRPbF n-channel mosfet,1791568,farnell,1,sot-23
 sr-fet-n-irlr8743,international rectifier,IRLR8743PBF,IRLR8743PBF n-channel mosfet 160A,1551908,farnell,1,d-pak
 #sr-fet-n-rtq020n03,RTQ020N03TR n-channel mosfet 1A,1525552,farnell,1,TSMT6 NO LONGER STOCKED
-sr-fet-n-irfh5301,international rectifier,IRFH5301TR2PBF,IRFH5301PBF n-channel mosfet 35A,1782047,farnell,1,pqfn8
+sr-fet-n-irfh5301,international rectifier,IRFH5301TR2PBF,IRFH5301PBF n-channel mosfet 35A,942-IRFH5301TRPBF,mouser,1,pqfn8
 
 # p-channel
 sr-fet-p-mmbf2202pt1,nxp,NX3008PBKW,EQUIV NX3008PBKW p-channel mostfet 30V 200mA,2069551,farnell,1,sot323

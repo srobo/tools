@@ -74,8 +74,11 @@ class Item(distpart.DistItem):
 
             if q is not None:
                 q = q.contents[1]
+                qStr = q.string
+                if qStr is None:
+                    continue
 
-                quantity = int(q.text.replace(",", ""))
+                quantity = int(qStr.replace(",", ""))
 
                 ps = row.find( attrs = {"class": "PriceBreakPrice"} ).contents[1]
 

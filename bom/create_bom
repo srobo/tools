@@ -188,7 +188,7 @@ def writeHTML(lines, out_fn):
         if has_layout:
             pcodes = ["""<a onmouseover="highlight('%(x)s');return false" href="#">%(x)s</a>""" %
                   {'x': x} for x in pcodes]
-        outf.write( "<td>%s</td>" % ", ".join(pcodes) )
+        outf.write( "<td>%s</td>" % "|".join(pcodes) )
 
         outf.write("</tr>")
 

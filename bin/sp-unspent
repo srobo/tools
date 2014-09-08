@@ -11,6 +11,12 @@ p = argparse.ArgumentParser(description="Unspent things")
 p.add_argument("path", help="The budget tree to inspect")
 args = p.parse_args()
 
+try:
+    root = spending.find_root()
+except spending.NotSpendingRepo:
+    print >>sys.stderr, "Please run in spending.git"
+    exit(1)
+
 bud = spending.load_budget_with_spending(".")
 
 if args.path != "/":

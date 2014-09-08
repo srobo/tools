@@ -17,7 +17,7 @@ except spending.NotSpendingRepo:
     print >>sys.stderr, "Please run in spending.git"
     exit(1)
 
-bud = spending.load_budget_with_spending(".")
+bud = spending.load_budget_with_spending(root)
 
 if args.path != "/":
     try:

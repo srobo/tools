@@ -16,6 +16,8 @@ parser.add_argument( "--tree", "-t", action="store_true",
                      help = "Display the diff as a tree" )
 parser.add_argument( "--limit", "-l", type=str,
                      help = "Limit to the given subtree" )
+parser.add_argument( "--zero-hide", "-z", action="store_true",
+                     help = "Hide lines added or removed with 0 value" )
 args = parser.parse_args()
 
 try:
@@ -51,7 +53,14 @@ if args.limit is not None:
         # Create an empty tree
         b = budget.BudgetTree("")
 
-changes = diff_trees( a, b )
+changes = []
+for change in diff_trees( a, b ):
+    if args.zero_hide \
+       and ( isinstance(change, AddedItem) \
+             or isinstance(change, RemovedItem) ) \
+       and change.a.cost == 0:
+            continue
+    changes.append(change)
 
 if args.tree:
     tree = changes_to_tree( changes )

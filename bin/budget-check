@@ -31,27 +31,19 @@ except IOError:
     exit(1)
 
 funds_in = yaml.load( f )
-
 total_in = D(0)
 
 for i in funds_in["incoming"]:
     # Convert to str to avoid some rounding issues!
     total_in += D( str(i["amount"]) )
 
-MAX = total_in
+# All the lines in funds-in.yaml are divided by 1.1 at the moment
+MAX = total_in * budget.FUDGE_FACTOR
 
+# Calculate how much has been budgeted in total
 budgeted = D(0)
-
 for line in b.walk():
-    c = line.cost
-
-    if line.closed:
-        """Budget lines that are closed need no breathing space."""
-        c /= budget.FUDGE_FACTOR
-        # Round the result up for extra paranoia
-        c = c.quantize(D("0.01"), rounding=ROUND_UP)
-
-    budgeted += c
+    budgeted += (D(1) + line.uncertainty) * line.cost
 
 if budgeted > MAX:
     print >> sys.stderr, "Fail: Budget is £%s too high" % (budgeted - MAX)
@@ -121,8 +113,8 @@ if spending_root is not None:
 
             continue
 
-        fudged = bline.cost * budget.FUDGE_FACTOR
-        if bline.spent > fudged:
+        line_max = bline.cost * (D(1) + bline.uncertainty)
+        if bline.spent > line_max:
             over_budget[bline] = bline.spent
 
     if len(close_fail):

@@ -83,6 +83,14 @@ class BudgetItem(object):
         else:
             self.closed = False
 
+        if self.closed:
+            # Lines that are closed have no uncertainty
+            self.uncertainty = 0
+        elif "uncertainty" in y:
+            self.uncertainty = D(y["uncertainty"])
+        else:
+            self.uncertainty = FUDGE_FACTOR - 1
+
         if "consumable" in y:
             self.consumable = y["consumable"]
         else:

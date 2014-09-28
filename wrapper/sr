@@ -27,17 +27,17 @@ cmds = sr_commands.get_dict(TOOLS)
 #if no argument was passed or the command passed doesn't exist
 if len(sys.argv) == 1 or (len(sys.argv) > 1 and sys.argv[1] not in cmds.keys()):
     if len(sys.argv) > 1:
-        print "Invalid command '%s'" % sys.argv[1]
+        print("Invalid command '%s'" % sys.argv[1])
     else:
-        print "sr: The Student Robotics devtool wrapper script"
-    print "Usage: sr COMMAND"
-    print "Available commands:"
+        print("sr: The Student Robotics devtool wrapper script")
+    print("Usage: sr COMMAND")
+    print("Available commands:")
 
     k = cmds.keys()
     k.sort()
     for cmd in k:
         if cmd[0] != "_" and cmd[-1] != "~":
-            print "\t%s" % cmd
+            print("\t%s" % cmd)
     sys.exit(1)
 else:
     cmd = sys.argv[1]

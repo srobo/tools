@@ -11,8 +11,13 @@ Where SCRIPT is the name of an executable file with the path
 /tools/*/SCRIPT in tools.git.
 
 See http://trac.srobo.org/wiki/DevScripts for more details."""
-import sys, os, subprocess, sr_commands
+
+import os
+import sys
+
 import sitepackage
+import sr_commands
+
 sitepackage.check_installed()
 
 TOOLS = os.path.join( sys.path[0], ".." )

@@ -35,7 +35,7 @@ class Config(dict):
         root = check_output( [ "git", "rev-parse", "--show-toplevel" ],
                              cwd = mydir )
 
-        return root[0:-1].decode("utf-8")
+        return root.decode("utf-8").strip()
 
     def update_from_file(self, fname):
         "Update the config from the given YAML file"

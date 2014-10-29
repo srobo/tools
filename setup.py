@@ -14,7 +14,8 @@ setup(
         "console_scripts": ["sr = sr.tools.cli:main"]
     },
     install_requires=[
-        "PyYaml"
+        "PyYaml",
+        "sympy"
     ],
     include_package_data=True,
     zip_safe=False,

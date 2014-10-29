@@ -10,12 +10,13 @@ try:
 except ImportError:
     keyring = None
 
+
 class Config(dict):
     "Configuration reader for the SR tools"
 
     def __init__(self):
         # Load the config from ${THIS_REPO}/config.yaml
-        self.update_from_file( os.path.join( self.get_tools_root(), 
+        self.update_from_file( os.path.join( self.get_tools_root(),
                                              "config.yaml" ) )
 
         # Override with the local config
@@ -34,7 +35,7 @@ class Config(dict):
         root = check_output( [ "git", "rev-parse", "--show-toplevel" ],
                              cwd = mydir )
 
-        return root[0:-1]
+        return root[0:-1].decode("utf-8")
 
     def update_from_file(self, fname):
         "Update the config from the given YAML file"

@@ -1,1 +1,1 @@
-from config import Config
+from sr.config import Config

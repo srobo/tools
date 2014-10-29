@@ -4,6 +4,7 @@ import os
 import sys
 
 
+# THIS IS A HORRIBLE HACK IT MUST BE FIXED ASAP
 TOOLS = os.path.join( os.getenv("HOME"), ".sr", "tools" )
 
 def get_commands( TOOLS ):

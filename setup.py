@@ -8,7 +8,7 @@ setup(
     keywords="sr student robotics",
     packages=find_packages(),
     entry_points={
-        "console_scripts": ["sr = sr.cli:main"]
+        "console_scripts": ["sr = sr.tools.cli:main"]
     },
     install_requires=[
         "PyYaml"

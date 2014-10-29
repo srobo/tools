@@ -1,11 +1,13 @@
 #!/usr/bin/env python
+from __future__ import print_function
+
 import argparse
 import os
 import sys
 
 import sr.tools.inventory as srinv
-import sr.tools.inventory.assetcode as assetcode
-import sr.tools.inventory.oldinv as oldinv
+from sr.tools.inventory import assetcode
+from sr.tools.inventory import oldinv
 
 
 desc = "Move inventory items into the CWD."

@@ -1,8 +1,12 @@
 #!/usr/bin/env python
+import sys
+import argparse
+
 import sr.inventory as srinv
 import sr.inventory.assetcode as assetcode
-import sr.inventory.oldinv as oldinv
-import sys, os, argparse
+import sr.tools.inventory.oldinv as oldinv
+import os
+
 
 ASSET_CODE = 0
 PART_TYPE = 1

@@ -1,9 +1,10 @@
 #!/usr/bin/env python
-import sr.inventory as srinv
-import sr.inventory.oldinv as oldinv
+import argparse
+import sys
+
 import sr.inventory.query as query
-import argparse, sys
 from pyparsing import ParseException
+
 
 def _get_args():
     description = query.__doc__

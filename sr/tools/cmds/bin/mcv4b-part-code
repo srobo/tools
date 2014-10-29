@@ -1,13 +1,17 @@
 #!/usr/bin/env python
 
 import argparse
+
 import pyudev
 import re
 import os
+from sr.inventory import query
 
-from sr.inventory import assetcode, query
+
 
 # Motorobards have FTDI ICs on them
+from sr.tools.inventory import assetcode
+
 FTDI_ID_VENDOR  = '0403'  # Future Technology Devices International, Ltd
 FTDI_ID_PRODUCT = '6001'  # FT232 USB-Serial (UART) IC
 

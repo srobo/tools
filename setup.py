@@ -15,7 +15,8 @@ setup(
     },
     install_requires=[
         "PyYaml",
-        "sympy"
+        "sympy",
+        "pyparsing"
     ],
     include_package_data=True,
     zip_safe=False,

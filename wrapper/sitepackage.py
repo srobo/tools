@@ -1,4 +1,6 @@
 "Functions for checking/adjusting the configuration of the SR python user site package"
+from __future__ import print_function
+
 import site, os, sys
 
 def check_installed():
@@ -27,8 +29,8 @@ def check_installed():
             os.unlink( sym )
 
         except OSError:
-            print >>sys.stderr, "Error: %s is not a symlink.  Refusing to continue." % sym
+            print("Error: {} is not a symlink. Refusing to continue.".format(sym), file=sys.stderr)
             exit(1)
 
-    print >>sys.stderr, "Installing SR python usersitepackage"
+    print("Installing SR python usersitepackage", file=sys.stderr)
     os.symlink( target, sym )

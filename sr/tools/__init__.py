@@ -2,7 +2,7 @@ import os
 
 
 def get_commands_directory():
-    return os.path.join(os.path.dirname(__loader__.path), "cmds")
+    return os.path.join(__path__[0], "cmds")
 
 
 def find_commands():

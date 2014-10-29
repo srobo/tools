@@ -139,6 +139,7 @@ Examples
 * `siblings of code:srABC` - things at the same level in the hierarchy as srABC.
 
 """
+from __future__ import print_function
 import sys
 
 import sr.tools.inventory.inventory as inventory

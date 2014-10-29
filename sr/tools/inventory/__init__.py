@@ -1,1 +1,1 @@
-from sr.tools.inventory import *
+from sr.tools.inventory.inventory import *

@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import os
 import sys
+import subprocess
 
 from sr.tools import find_commands
 
@@ -26,4 +27,8 @@ def main():
 
     args = [cmd]
     args += sys.argv[2:]
-    os.execv( cmds[cmd], args )
+    if os.name == 'nt':
+        # this is hacky, and will be replaced with modules
+        subprocess.call( ["python", cmds[cmd]] + args[2:] )
+    else:
+        os.execv( cmds[cmd], args )

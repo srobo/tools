@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """Student Robotics inventory system asset code translation library"""
-import luhn
+from sr.tools.inventory import luhn
 
 # The characters used in asset codes. They have been chosen to avoid similar
 # looking characters to avoid errors when reading written codes.

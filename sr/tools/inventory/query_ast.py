@@ -1,5 +1,7 @@
-import inventory
 import fnmatch
+
+from sr.tools.inventory import inventory
+
 
 class ASTNode(object):
     pass

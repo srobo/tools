@@ -1,12 +1,16 @@
-import os, subprocess, yaml
-import assetcode
+import os
+import subprocess
 import sys
+
+import yaml
+
+from sr.tools.inventory import assetcode
 
 def gettoplevel():
     """Find the top level of the inventory repo"""
     tmp = subprocess.Popen(("git", "rev-parse", "--show-toplevel"), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-    gitdir = tmp.communicate()[0].strip()
+    gitdir = tmp.communicate()[0].strip().decode("utf-8")
 
     if tmp.returncode != 0:
         return None
@@ -31,7 +35,7 @@ def getusernumber(gitdir, user):
     f.close()
 
     if users == None or user not in users:
-        print "Inventory user \"%s\" not found.\nPlease see http://srobo.org/trac/wiki/Inventory for more information" % user
+        print('Inventory user "{}" not found.\nPlease see http://srobo.org/trac/wiki/Inventory for more information'.format(user))
         sys.exit(3)
 
     return users[user]

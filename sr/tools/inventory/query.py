@@ -139,16 +139,16 @@ Examples
 * `siblings of code:srABC` - things at the same level in the hierarchy as srABC.
 
 """
-
-import inventory
-import oldinv
-import query_parser
 import sys
+
+import sr.tools.inventory.inventory as inventory
+import sr.tools.inventory.oldinv as oldinv
+import sr.tools.inventory.query_parser as query_parser
 
 def _get_inv():
     top = oldinv.gettoplevel()
     if top is None:
-        print >>sys.stderr, "Error: Must be run from within the inventory."
+        print("Error: Must be run from within the inventory.", file=sys.stderr)
         exit(1)
     return inventory.Inventory(top).root
 

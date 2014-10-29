@@ -2,7 +2,7 @@
 import argparse
 
 from sr.tools.inventory.oldinv import *
-import sr.inventory.assetcode as assetcode
+import sr.tools.inventory.assetcode as assetcode
 
 
 desc = "Create a new instance of an asset with a unique asset code."
@@ -18,13 +18,13 @@ assetname = args.assetname
 # Check we're being run in the inventory repo
 gitdir = gettoplevel()
 if not gitdir:
-    print "This command must be run in the inventory git repository."
+    print("This command must be run in the inventory git repository.")
     sys.exit(2)
 
 # Check that a template for the new asset exists
 templatefn = os.path.join(gitdir, ".meta", "parts", assetname)
 if not os.path.isfile(templatefn):
-    print "A template for the asset \"%s\" could not be found. The default template will be used." % assetname
+    print('A template for the asset "{}" could not be found. The default template will be used.'.format(assetname))
     templatefn = os.path.join(gitdir, ".meta", "parts", "default")
 
 # Get the git name/email of the user
@@ -36,7 +36,8 @@ partno = getpartnumber(gitdir, userno)
 assetcd = assetcode.num_to_code(userno, partno)
 assetfn = "%s-sr%s" % (assetname, assetcd)
 
-print "Created new asset with name \"%s-\033[1msr%s\033[0m\"" % (assetname, assetcd)
+print('Created new asset with name "{0}-\033[1msr{1}\033[0m"'.format(assetname,
+                                                                     assetcd))
 
 # Copy the template to the actual asset file
 # Insert the asset code into the file while we're at it

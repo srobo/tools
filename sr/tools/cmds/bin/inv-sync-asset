@@ -15,7 +15,7 @@ args = aparser.parse_args()
 # Check we're being run in the inventory repo
 gitdir = gettoplevel()
 if not gitdir:
-    print "This command must be run in the inventory git repository."
+    print("This command must be run in the inventory git repository.")
     sys.exit(2)
 
 for assetfn in args.assetfnames:
@@ -24,7 +24,7 @@ for assetfn in args.assetfnames:
     # Check that a template for the asset exists
     templatefn = os.path.join(gitdir, ".meta", "parts", assetname)
     if not os.path.isfile(templatefn):
-        print "A template for the asset \"%s\" could not be found. Skipping." % assetname
+        print("A template for the asset \"%s\" could not be found. Skipping." % assetname)
         continue
 
     templatefile = open(templatefn)

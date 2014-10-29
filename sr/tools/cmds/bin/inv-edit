@@ -2,14 +2,14 @@
 import sys
 from subprocess import call
 
-import sr.inventory as srinv
-import sr.inventory.assetcode as assetcode
+import sr.tools.inventory as srinv
+import sr.tools.inventory.assetcode as assetcode
 import sr.tools.inventory.oldinv as oldinv
 import os
 
 
 if len(sys.argv) < 2:
-    print >>sys.stderr, "Usage: inv-edit PART_CODES"
+    print("Usage: inv-edit PART_CODES", file=sys.stderr)
     exit(1)
 
 top = oldinv.gettoplevel()

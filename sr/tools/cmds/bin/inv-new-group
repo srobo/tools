@@ -2,7 +2,7 @@
 import argparse
 
 from sr.tools.inventory.oldinv import *
-import sr.inventory.assetcode as assetcode
+import sr.tools.inventory.assetcode as assetcode
 
 
 desc = "Promote a directory to a tracked assembly."
@@ -19,7 +19,7 @@ dirname = args.dirname
 # Check we're being run in the inventory repo
 gitdir = gettoplevel()
 if not gitdir:
-    print "This command must be run in the inventory git repository."
+    print("This command must be run in the inventory git repository.")
     sys.exit(2)
 
 # Find out if there's a template for the 'info' file
@@ -40,7 +40,7 @@ if os.path.isdir(dirname):
 else:
     os.mkdir(groupname)
 
-print "Created new assembly with name \"%s\"" % groupname
+print("Created new assembly with name \"%s\"" % groupname)
 
 # Copy the group template to the group dir
 # Insert the asset code into the file while we're at it

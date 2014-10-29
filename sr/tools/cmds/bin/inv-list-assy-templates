@@ -13,4 +13,4 @@ for template in templates:
     if template in ["default"]:
         continue
 
-    print template
+    print(template)

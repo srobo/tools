@@ -1,7 +1,18 @@
 "API for the SR inventory"
-import os, sys, re, yaml
-import assetcode, codecs
-import cPickle, hashlib
+import codecs
+import hashlib
+import re
+import os
+import sys
+
+try:
+    import cPickle
+except ImportError:
+    import pickle as cPickle
+
+import yaml
+
+from sr.tools.inventory import assetcode
 
 try:
     from yaml import CLoader as YAML_Loader

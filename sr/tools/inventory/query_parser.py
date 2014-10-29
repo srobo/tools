@@ -1,5 +1,6 @@
 from pyparsing import *
-import query_ast
+
+from sr.tools.inventory import query_ast
 
 TRUE       = CaselessKeyword("true")
 FALSE      = CaselessKeyword("false")
@@ -138,4 +139,3 @@ paren_expr.setParseAction(lambda x: x[1])
 
 def search_tree(query):
     return root.parseString(query)[0]
-

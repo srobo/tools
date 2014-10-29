@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+from __future__ import print_function
+
 import os, sys, subprocess, re
 
 def git_get_config( name ):
@@ -7,32 +9,32 @@ def git_get_config( name ):
                           stdout = subprocess.PIPE )
     r = p.communicate()
     p.wait()
-    return r[0].strip() 
+    return r[0].strip().decode('utf-8')
 
 
 
 def main():
     if len(sys.argv) != 1:
-        print "Checks whether you have git configured sanely."
+        print("Checks whether you have git configured sanely.")
         sys.exit(1)
 
     if git_get_config( "user.name" ) == "":
-        print "You need to tell git who you are."
-        print "Run `git config --global user.name Your Name`"
+        print("You need to tell git who you are.")
+        print("Run `git config --global user.name Your Name`")
         sys.exit(1)
 
     ue = git_get_config( "user.email" )
     if ue == "":
-        print "You need to tell git your email address."
-        print "Run `git config --global user.email your@email.com`"
+        print("You need to tell git your email address.")
+        print("Run `git config --global user.email your@email.com`")
         sys.exit(1)
     elif re.match( "\\S+@\\S+\\.\\S+", ue ) == None:
-        print "user.email doesn't look like an email address."
-        print "Run `git config --global user.email your@email.com`"
+        print("user.email doesn't look like an email address.")
+        print("Run `git config --global user.email your@email.com`")
         sys.exit(1)
 
 
-    print "Your git is correctly configured :)"
+    print("Your git is correctly configured :)")
 
 if __name__ == "__main__":
     main()

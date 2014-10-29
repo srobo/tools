@@ -1,0 +1,235 @@
+#!/usr/bin/env python
+from __future__ import print_function
+
+import os, sys, re, fileinput
+from decimal import Decimal as D
+
+class Msg(object):
+    "A message sent by sricd"
+    READ, WRITE = "r", "w"
+    GW_FRAME, SRIC_FRAME = 0x8e, 0x7e
+
+    def __init__(self, line):
+        self.useful = False
+
+        if self._parse_line(line):
+            self.useful = True
+
+    def _parse_line(self, line):
+        r = re.match( """^([0-9]+\\.[0-9]+): ([rw]): (([0-9A-F]{2} ?)+)$""",
+                      line )
+
+        if r == None:
+            return False
+
+        g = r.groups()
+
+        self.time = D(g[0])
+        self.rw = g[1]
+
+        self.raw_data = []
+        for b in g[2].split():
+            self.raw_data.append( int(b,16) )
+
+        self.data = self._unescape(self.raw_data)
+
+        d = self.data
+        self.type = d[0]
+        self.dest = d[1] & 0x7f
+        if d[1] & 0x80:
+            self.ack = True
+        else:
+            self.ack = False
+
+        self.src = d[2]
+        self.len = d[3]
+        self.payload = d[4:-2]
+        self.crc = d[-2:]
+
+        if len(self.payload) != self.len:
+            print("Warning: Frame length differs from actual payload length")
+
+        return True
+
+    def _unescape(self, data):
+        "Return the given data in unescaped form"
+        escape_next = False
+        un = []
+
+        for b in data:
+            if b == 0x7d:
+                escape_next = True
+                continue
+
+            if escape_next:
+                escape_next = False
+                b ^= 0x20
+
+            un.append(b)
+        return un
+
+    def __repr__(self):
+        if not self.useful:
+            return "Unparsed log line (not useful)"
+
+        s = "%s: %s:" % (self.time, self.rw)
+        for b in self.data:
+            s += " %2.2X" % b
+        return s
+
+    def raw_repr(self):
+        if not self.useful:
+            return "Unparsed log line (not useful)"
+
+        s = "%s: %s:" % (self.time, self.rw)
+        for b in self.raw_data:
+            s += " %2.2X" % b
+        return s
+
+    def verb_repr(self):
+        if not self.useful:
+            return "Unparsed log line (not useful)"
+
+        s = "%s: %s:" % (self.time, self.rw)
+
+        if self.type == Msg.GW_FRAME:
+            if self.rw == Msg.READ:
+                i = "src=gw "
+            else:
+                i = "dest=gw"
+
+            if self.ack:
+                s += " %s (ACK)      " % i
+            else:
+                s += " %s            " % i
+
+        else:
+            if self.ack:
+                s += " dest=%u  (ACK)" % (self.dest)
+            else:
+                s += " dest=%u       " % (self.dest)
+
+            s += " src=%u" % (self.src)
+
+        for b in self.payload:
+            s += " %2.2X" % b
+        if len(self.payload) == 0:
+            s += " --"
+
+        return s
+
+class GwFrame(object):
+    GW_CMDS = [ "USE_TOKEN",
+                "REQ_TOKEN",
+                "HAVE_TOKEN",
+                "GEN_TOKEN" ]
+
+    def __init__(self, frame):
+        self._decode(frame)
+        self.frame = frame
+
+    def _decode(self, frame):
+        self.cmd = GwFrame.GW_CMDS[frame.payload[0]]
+
+        if len(frame.payload) == 1:
+            self.args = []
+        elif len(frame.payload) == 2:
+            self.args = [frame.payload[1]]
+        else:
+            self.args = []
+            print("Warning: Gateway commands with more than one byte argument are not supported")
+
+    def __repr__(self):
+        s = "%s: %s: GW:" % (self.frame.time, self.frame.rw)
+
+        s += " %s" % (self.cmd)
+        if len(self.args):
+            s += "("
+            for a in self.args:
+                s += "%u" % a
+            s += ")"
+
+        return s
+
+class SricFrame(object):
+    SYSCMDS = [ "RESET",
+                "TOK_ADVANCE",
+                "ADDR_ASSIGN",
+                "ADDR_INFO" ]
+
+    def __init__(self, frame):
+        self._decode(frame)
+        self.frame = frame
+
+    def _decode(self, frame):
+        cmd = frame.payload[0]
+
+        if not (cmd & 0x80):
+            "We don't decode device-specific commands"
+            self.cmd = None
+            return
+
+        self.cmd = SricFrame.SYSCMDS[cmd & 0x7f]
+
+        if len(frame.payload) == 1:
+            self.args = []
+        elif len(frame.payload) == 2:
+            self.args = [frame.payload[1]]
+        else:
+            print("Warning: Syscmds with more than one argument not supported")
+            self.args = []
+
+    def __repr__(self):
+        if self.cmd == None:
+            return Msg.verb_repr(self.frame)
+
+        s = "%s: %s:" % (self.frame.time, self.frame.rw)
+
+        s += " dest=%u" % (self.frame.dest)
+        if self.frame.ack:
+            s += "  (ACK)"
+        else:
+            s += "       "
+
+        s += " src=%u" % (self.frame.src)
+        s += " %s" % self.cmd
+
+        if len(self.args):
+            s += "("
+            for a in self.args:
+                s += "%u" % a
+            s += ")"
+
+        return s
+
+class MsgDecoder(Msg):
+    def __init__(self, line):
+        Msg.__init__(self,line)
+        self._decode()
+
+    def _decode(self):
+        if (not self.useful) or self.rw != Msg.WRITE:
+            self.frame = None
+            return
+
+        if self.type == Msg.GW_FRAME:
+            self.frame = GwFrame(self)
+        elif self.type == Msg.SRIC_FRAME:
+            self.frame = SricFrame(self)
+
+    def __repr__(self):
+        if self.frame == None:
+            return Msg.verb_repr(self)
+        else:
+            return self.frame.__repr__()
+
+if len(sys.argv) < 2:
+    print("Usage: decode LOGFILE")
+    exit(1)
+
+INFILE = sys.argv[1]
+
+for line in fileinput.input(INFILE):
+    m = MsgDecoder(line)
+    if m.useful:
+        print(m)

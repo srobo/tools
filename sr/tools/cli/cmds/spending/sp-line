@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+# coding=utf8
+from __future__ import print_function
+
+import argparse
+import os
+from subprocess import check_call
+import sys
+
+import sr.tools.spending as spending
+from sr.tools.budget import BudgetTree
+
+
+p = argparse.ArgumentParser()
+p.add_argument("budgetline", help="The budget line to inspect")
+args = p.parse_args()
+
+root = spending.find_root()
+budget = spending.load_budget_with_spending(root)
+line = budget.path(args.budgetline)
+
+if isinstance(line, BudgetTree):
+    print("Summary for tree", args.budgetline)
+    budgeted = sum([x.cost for x in line.walk()])
+    spent = sum([x.spent for x in line.walk()])
+else:
+    print("Summary for line", args.budgetline)
+    budgeted = line.cost
+    spent = line.spent
+
+print("Budgeted:\t", budgeted)
+print("Spent:\t\t", spent)
+
+if spent > budgeted:
+    print("OVER BUDGET")
+
+print("Transactions:")
+
+line = args.budgetline.replace("/", ":")
+if line[0] == ":":
+    line = account[1:]
+
+check_call(["ledger",
+            "--file", os.path.join(root, "spending.dat"),
+            "reg", "Expenses:{0}".format(line)])

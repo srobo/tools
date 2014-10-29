@@ -1,0 +1,25 @@
+#!/bin/env python
+from __future__ import print_function
+
+import argparse
+import os
+import subprocess
+import sys
+
+
+GIT_URL = 'https://www.studentrobotics.org/robogit/{team}/{project}.git'
+
+parser = argparse.ArgumentParser(description='Clone a team repository.')
+parser.add_argument('team', help='The identifier of the team.')
+parser.add_argument('project', help='The project of the team to clone.')
+parser.add_argument('dir', nargs='?', help='Where to put the clone.')
+args = parser.parse_args()
+
+
+command = ["git", "clone", GIT_URL.format(team=args.team.upper(),
+                                          project=args.project)]
+
+if args.dir is not None:
+    command.append(args.dir)
+
+sys.exit(subprocess.call(command))

@@ -18,20 +18,20 @@ os.rename(assetname, "{}-tmp".format(assetname))
 
 try:
     new = open(assetname, "w")
-    old = open("{}}-tmp".format(assetname))
+    old = open("{}-tmp".format(assetname))
 
     for line in old:
         revmatch = re.match("^[ ]*revision\\s*:\\s*([0-9]+)", line)
         if revmatch:
             rev = int(revmatch.group(1))
-            line = re.sub("([^0-9]*)[0-9]*([^0-9]*)", "\\g<1>%i\\g<2>".format(rev+1), line)
+            line = re.sub("([^0-9]*)[0-9]*([^0-9]*)", "\\g<1>{}\\g<2>".format(rev+1), line)
             
         new.write(line)
 except:
     print("Failed to update revision number:", sys.exc_info()[0])
-    os.rename("%s-tmp".format(assetname), assetname)
+    os.rename("{}-tmp".format(assetname), assetname)
 
 else:
-    os.remove("%s-tmp".format(assetname))
+    os.remove("{}-tmp".format(assetname))
     old.close()
     new.close()

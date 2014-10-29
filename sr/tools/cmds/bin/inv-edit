@@ -1,11 +1,12 @@
 #!/usr/bin/env python
+import os
 import sys
-from subprocess import call
+import subprocess
 
 import sr.tools.inventory as srinv
-import sr.tools.inventory.assetcode as assetcode
-import sr.tools.inventory.oldinv as oldinv
-import os
+from sr.tools.inventory import assetcode
+from sr.tools.inventory import oldinv
+from sr.tools.environment import open_editor
 
 
 if len(sys.argv) < 2:
@@ -14,7 +15,7 @@ if len(sys.argv) < 2:
 
 top = oldinv.gettoplevel()
 if top == None:
-    print >>sys.stderr, "Error: Must be run from within the inventory."
+    print("Error: Must be run from within the inventory.", file=sys.stderr)
     exit(1)
 inv = srinv.Inventory(top)
 
@@ -27,19 +28,18 @@ for c in sys.argv[1:]:
     try:
         assetcode.code_to_num(code)
     except:
-        print >>sys.stderr, "Error: %s is an invalid code." % code
+        print("Error: %s is an invalid code." % code, file=sys.stderr)
         exit(1)
 
     try:
         part = inv.root.parts[code]
     except KeyError:
-        print >>sys.stderr, "Error: There is no part with code %s." % code
+        print("Error: There is no part with code %s." % code, file=sys.stderr)
         exit(1)
 
     parts.append(part)
 
-editor = os.getenv( "EDITOR", "vi" )
+editor = os.environ.get("EDITOR", "vi")
 
 for part in parts:
-    r = call( "%s %s" % (editor, part.path),
-              shell = True )
+    open_editor(part.path)

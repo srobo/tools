@@ -48,7 +48,8 @@ def find_commands(filter_private=False, commands_dir=None):
 def main():
     commands = find_commands(filter_private=True)
 
-    parser = argparse.ArgumentParser(description='Student Robotics tools')
+    parser = argparse.ArgumentParser(description='Student Robotics tools',
+                                     prefix_chars=' ')
     parser.add_argument('command', choices=sorted(commands.keys()),
                         help='command to invoke')
     parser.add_argument('args', nargs='*',

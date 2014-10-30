@@ -203,7 +203,7 @@ try:
     server = TracProxy( server = args.server,
                         port = args.port )
 except WrongServer:
-    >>sys.stderr, "Error: The specified server is not a Trac instance"
+    print("Error: The specified server is not a Trac instance", file=sys.stderr)
     exit(1)
 
 ticketNum = server.ticket.create( spend_request.summary,

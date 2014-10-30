@@ -2,20 +2,25 @@
 
 import json
 import sys
-import urllib2
+
+try:
+	from urllib2 import urlopen
+except ImportError:
+	from urllib.request import urlopen
+
 
 baseURL = 'https://www.studentrobotics.org/.git/'
 quiet = False
 
 def fetch(url):
-	page = urllib2.urlopen(url)
+	page = urlopen(url)
 	data = page.read()
 
 	if data is None:
-		print "Failed to download from '%s'." % url
+		print("Failed to download from '%s'." % url)
 		exit(1)
 
-	return data
+	return data.decode('utf-8')
 
 if len(sys.argv) == 2 and sys.argv in ['-q', '--quiet']:
 	quiet = True
@@ -27,14 +32,14 @@ refBase = "ref: "
 
 # it's a hash
 if data[:len(refBase)] != refBase:
-	print data[:9]
+	print(data[:9])
 	exit(0)
 
 ref = data[len(refBase):]
 if not quiet:
-	print "On: " + ref
+	print("On: " + ref)
 
 url = baseURL + ref
 data = fetch(url).strip()
 
-print data
+print(data)

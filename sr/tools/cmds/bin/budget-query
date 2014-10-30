@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import print_function
+
 import sys
-import sr.budget as budget
+import sr.tools.budget as budget
 import numpy as np
 
 class Cmd(object):
@@ -75,4 +77,3 @@ if isinstance(sub, budget.BudgetItem):
     sub.add_child(i)
 
 commands[CMD](sub)
-

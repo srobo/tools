@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import commands, sys
 
 gsymoutput = []
@@ -15,7 +17,7 @@ def readfile(filename):
 
 # If the output line from gsymcheck gives the coordinates of the error, then use
 # this function to fix the line in symbolfile
-def fix_object_with_coords(line, firstchars, colour, elementno): 
+def fix_object_with_coords(line, firstchars, colour, elementno):
     x1 = ''
     y1 = ''
     x = line.find("x1=") + 3
@@ -54,13 +56,13 @@ def fix_colours():
             fix_object_with_coords(line, "A ", "3", 6)
         elif line.find("Circle with center") != -1:
             fix_object_with_coords(line, "C ", "3", 4)
-        elif (line.find("Text") != -1 and 
+        elif (line.find("Text") != -1 and
               line.find("not using text color") != -1):
             fix_object_with_coords(line, "T ", "9", 3)
         elif (line.find("refdes=") != -1 and
               line.find("detached attribute color") != -1):
             fix_line_colour("refdes=", "8", 3, -1)
-        elif (line.find("pinnumber=") != -1 and 
+        elif (line.find("pinnumber=") != -1 and
               line.find("attribute color") != -1):
             fix_line_colour(line[0:line.find(' ')], "5", 3, -1)
         elif (line.find("pinlabel=") != -1 and
@@ -74,7 +76,7 @@ def write_file(outputfile):
     output = open(outputfile, 'w')
     for item in symbolfile:
         output.write("%s\n" % item)
-    output.close()   
+    output.close()
 
 def gsymcheck(filename):
     command = "/home/andy/geda/geda-gaf/gsymcheck/src/gsymcheck -vv " + filename

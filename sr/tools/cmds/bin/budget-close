@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 
-import sr.spending.spending as srspending
-import sr.budget.budget as srbudget
+import sr.tools.spending.spending as srspending
+import sr.tools.budget.budget as srbudget
 import os, re, sys, yaml, argparse
 
 parser = argparse.ArgumentParser( description = "Close a budget line" )

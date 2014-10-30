@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # coding=utf8
+from __future__ import print_function
+
 from subprocess import check_output
 
 from decimal import Decimal as D
 import sys, os, argparse
-from sr import spending
-from sr.budget import BudgetTree, FUDGE_FACTOR
+from sr.tools import spending
+from sr.tools.budget import BudgetTree, FUDGE_FACTOR
 
 p = argparse.ArgumentParser(description="Unspent things")
 p.add_argument("path", help="The budget tree to inspect")

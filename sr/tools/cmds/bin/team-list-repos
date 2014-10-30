@@ -1,5 +1,7 @@
 #!/bin/env python
-import sr.teamgit as T
+from __future__ import print_function
+
+import sr.tools.teamgit as T
 import os, sys, argparse
 from datetime import datetime
 

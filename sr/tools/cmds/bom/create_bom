@@ -1,7 +1,9 @@
 #!/usr/bin/env python
-import sr.bom.parts_db as parts_db
-import sr.bom.bom as bom
-import sr.bom.geda as geda
+from __future__ import print_function
+
+import sr.tools.bom.parts_db as parts_db
+import sr.tools.bom.bom as bom
+import sr.tools.bom.geda as geda
 import os, sys, time, base64, json
 
 header_file = os.path.dirname(__file__) + "/bom_header.inc"

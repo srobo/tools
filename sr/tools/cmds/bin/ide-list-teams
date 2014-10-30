@@ -1,6 +1,8 @@
 #!/usr/bin/env python
+from __future__ import print_function
+
 import os, sys
-import sr.teamgit as T
+import sr.tools.teamgit as T
 
 teams = T.list_teams()
 teams.sort()

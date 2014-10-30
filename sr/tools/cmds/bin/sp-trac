@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # coding=utf8
-from sr import spending
-from sr.trac import TracProxy
+from __future__ import print_function
+
+from sr.tools import spending
+from sr.tools.trac import TracProxy
 import xmlrpclib, getpass, os, re, sys
 
 try:

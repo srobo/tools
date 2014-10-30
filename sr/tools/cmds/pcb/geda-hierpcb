@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+from __future__ import print_function
+
 import sys
 import os
 import re
@@ -65,7 +67,7 @@ for schematic_filename in schematic_filenames:
                     continue
                 else:
                     state = ParseState.IDLE
-            
+
             # Drop through to here straight after detecting a component with no extra info
             if state == ParseState.IDLE:
                 if line[0] == 'C':
@@ -73,7 +75,7 @@ for schematic_filename in schematic_filenames:
                     source = None
                     state = ParseState.STARTCOMP
                     continue
-            
+
             if state == ParseState.INCOMP:
                 if line[0] == 'T':
                     state = ParseState.STARTTEXT
@@ -84,7 +86,7 @@ for schematic_filename in schematic_filenames:
                         sub_schematic_components.append((refdes, source))
                     state = ParseState.IDLE
                     continue
-                    
+
             if state == ParseState.STARTTEXT:
                 kv = line.split('=')
                 key = kv[0]
@@ -94,7 +96,7 @@ for schematic_filename in schematic_filenames:
                 elif key == 'source':
                     source = value
                 state = ParseState.INCOMP
-                    
+
         schematic.close()
     except:
         print "Unable to open schematic '%s'" % schematic_filename
@@ -110,12 +112,12 @@ for sub_sche in sub_schematic_components:
     block_filename = sub_sche[1].rsplit('.', 1)[0]
     refdes = sub_sche[0]
     pcb_filename = None
-    
+
     for path in search_path:
         if os.path.exists(os.path.join(path, block_filename + ".pcb")):
             pcb_filename = os.path.join(path, block_filename + ".pcb")
             print "Found pre-existing PCB layout for %s in %s" % (refdes, pcb_filename)
-    
+
     if pcb_filename is None:
         # Did not find pre-existing PCB layout
         continue
@@ -126,16 +128,16 @@ for sub_sche in sub_schematic_components:
         src_pcb = open(pcb_filename, 'r')
         # Open the new PCB layout
         dst_pcb = open(dst_filename, 'w')
-        
+
         for line in src_pcb:
             if "Element[" in line:
                 dst_pcb.write(re.sub(r"(Element\[\".*?\" \".*?\" \")(.*)", r"\1" + refdes + r"/\2", line))
             else:
                 dst_pcb.write(line)
-        
+
         dst_pcb.close()
         src_pcb.close()
-        
+
         print "Created %s for %s" % (dst_filename, refdes)
 
     except:

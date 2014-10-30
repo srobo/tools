@@ -1,7 +1,9 @@
 #!/usr/bin/env python
-import sr.bom.bom as bom
-import sr.bom.schem as schem
-import sr.bom.parts_db as parts_db
+from __future__ import print_function
+
+import sr.tools.bom.bom as bom
+import sr.tools.bom.schem as schem
+import sr.tools.bom.parts_db as parts_db
 import os, sys
 
 if len(sys.argv) < 2:
@@ -42,6 +44,3 @@ if len(err_parts) > 0:
         print "\t'%s': %s" % (name, " ".join(components))
 
     sys.exit(2)
-
-
-

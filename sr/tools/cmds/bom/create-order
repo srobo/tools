@@ -1,7 +1,9 @@
 #!/usr/bin/env python
+from __future__ import print_function
+
 import sys, os
-import sr.bom.bom as bom
-import sr.bom.parts_db as parts_db
+import sr.tools.bom.bom as bom
+import sr.tools.bom.parts_db as parts_db
 
 if len(sys.argv) < 2:
    print "Usage: %s DIR -N SCHEMATIC1 -M SCHEMATIC2 ..." % os.path.basename( sys.argv[0] )

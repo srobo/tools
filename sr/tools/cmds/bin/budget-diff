@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import print_function
+
 from argparse import ArgumentParser
 from decimal import Decimal as D
 import sys
-import sr.budget as budget
-from sr.budget.diff import ( diff_trees, AddedItem, RemovedItem,
-                             ChangedItem, changes_to_tree )
+import sr.tools.budget as budget
+from sr.tools.budget.diff import ( diff_trees, AddedItem, RemovedItem,
+                                   ChangedItem, changes_to_tree )
 
 parser = ArgumentParser( description = "Diff two versions of the budget" )
 parser.add_argument( "old",

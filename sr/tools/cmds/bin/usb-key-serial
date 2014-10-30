@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # Displays the serial number of connected USB keys
+from __future__ import print_function
+
 import pyudev
 
 con = pyudev.Context()
 
 for dev in con.list_devices( subsystem = "usb", ID_DRIVE_THUMB="1" ):
     print dev["ID_SERIAL_SHORT"]
-

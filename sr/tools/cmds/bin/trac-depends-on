@@ -2,11 +2,12 @@
 """
 Show the items which have the given ticket as an immediate dependency.
 """
+from __future__ import print_function
 
 import argparse
 
-from sr.trac import TracProxy, WrongServer
-from sr.trac.deptree import Ticket
+from sr.tools.trac import TracProxy, WrongServer
+from sr.tools.trac.deptree import Ticket
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("ticket", type=int, help="Ticket number")

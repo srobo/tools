@@ -1,8 +1,11 @@
 #!/usr/bin/env python
+from __future__ import print_function
+
 import argparse
-from sr.trac import TracProxy, WrongServer
-from sr.trac.deptree import Ticket
+from sr.tools.trac import TracProxy, WrongServer
+from sr.tools.trac.deptree import Ticket
 import sys
+
 
 parser = argparse.ArgumentParser( description = "Add dependencies to a ticket" )
 parser.add_argument( "ticket", type = int,

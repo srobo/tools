@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import print_function
+
 from argparse import ArgumentParser
 import os
-from sr import budget, spending, Config
+from sr.tools import budget, spending, Config
 from subprocess import check_output
 import sys, yaml
 from decimal import Decimal as D, ROUND_UP

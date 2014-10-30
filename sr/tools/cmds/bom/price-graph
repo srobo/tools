@@ -1,7 +1,9 @@
 #!/usr/bin/env python
+from __future__ import print_function
+
 import sys, os
-import sr.bom.bom as bom
-import sr.bom.parts_db as parts_db
+import sr.tools.bom.bom as bom
+import sr.tools.bom.parts_db as parts_db
 from pylab import *
 
 if len(sys.argv) < 2:
@@ -37,4 +39,3 @@ yticks( arange(0, len(prices)) + 0.4 ,
 subplots_adjust( left = 0.35 )
 
 show()
-

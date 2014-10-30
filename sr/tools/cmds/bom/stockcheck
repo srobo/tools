@@ -1,8 +1,10 @@
 #!/usr/bin/env python
+from __future__ import print_function
+
 import sys, os, threading, Queue
-import sr.bom.bom as bom
-import sr.bom.parts_db as parts_db
-import sr.bom.schem as schem
+import sr.tools.bom.bom as bom
+import sr.tools.bom.parts_db as parts_db
+import sr.tools.bom.schem as schem
 NUM_THREADS = 3
 
 if len(sys.argv) < 2:

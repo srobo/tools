@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-import sr.bom.farnell as farnell
+from __future__ import print_function
+
+import sr.tools.bom.farnell as farnell
 import sys
 
 if len(sys.argv) > 1:

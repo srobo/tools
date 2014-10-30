@@ -1,4 +1,6 @@
 #!/bin/env python
+from __future__ import print_function
+
 import re, sys, os
 from decimal import Decimal
 
@@ -22,5 +24,3 @@ fcontent = f.read()
 f.close()
 f = open( PCB_FILE, "w" )
 f.write( re.sub( """(([0-9.]+)(mm)|".*?")""", conv_ht, fcontent ) )
-
-    

@@ -1,7 +1,9 @@
 #!/usr/bin/env python
+from __future__ import print_function
+
 import os
-from sr import spending, Config
-from sr.spending import NotSpendingRepo
+from sr.tools import spending, Config
+from sr.tools.spending import NotSpendingRepo
 from subprocess import check_call
 import sys
 
@@ -38,4 +40,3 @@ if "--file" not in sys.argv:
            args[1:]
 
 os.execvp( "ledger", args )
-

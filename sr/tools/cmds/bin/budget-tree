@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import print_function
+
 from argparse import ArgumentParser
-from sr import budget
+from sr.tools import budget
 import sys
 
 parser = ArgumentParser( description = "Draw (part of) the budget as an ascii tree" )

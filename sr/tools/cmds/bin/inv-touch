@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+from __future__ import print_function
+
 import sys, os, re
 
 if len(sys.argv) < 2:
@@ -25,7 +27,7 @@ try:
         if revmatch:
             rev = int(revmatch.group(1))
             line = re.sub("([^0-9]*)[0-9]*([^0-9]*)", "\\g<1>{}\\g<2>".format(rev+1), line)
-            
+
         new.write(line)
 except:
     print("Failed to update revision number:", sys.exc_info()[0])

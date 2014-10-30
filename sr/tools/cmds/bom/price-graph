@@ -9,7 +9,7 @@ from pylab import *
 if len(sys.argv) < 2:
    print("Usage: %s DIR -N SCHEMATIC1 -M SCHEMATIC2 ..." % os.path.basename( sys.argv[0] ))
    print("""
-	Where N and M are multipliers for the number of boards.""")
+    Where N and M are multipliers for the number of boards.""")
    sys.exit(1)
 
 db = parts_db.Db( bom.PARTS_DB )

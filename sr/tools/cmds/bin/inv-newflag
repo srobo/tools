@@ -1,8 +1,8 @@
 #!/bin/sh
 
 if test -z $3; then
-	echo "Usage: sr inv-newflag parttype flagname flagvalue" >&2;
-	exit 1;
+    echo "Usage: sr inv-newflag parttype flagname flagvalue" >&2;
+    exit 1;
 fi
 
 parttype=$1;
@@ -11,9 +11,9 @@ flagvalue=$3;
 
 list_of_parts=`sr inv-findpart $1`
 for i in $list_of_parts; do
-	grep -e "^${flagname}[ \t]*:" $i >/dev/null;
-	if test "$?" = 1; then
-		# No property; add it.
-		echo -e "\n${flagname} : ${flagvalue}" >> $i
-	fi
+    grep -e "^${flagname}[ \t]*:" $i >/dev/null;
+    if test "$?" = 1; then
+        # No property; add it.
+        echo -e "\n${flagname} : ${flagvalue}" >> $i
+    fi
 done

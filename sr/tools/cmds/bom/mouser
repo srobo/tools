@@ -5,12 +5,12 @@ import sr.tools.bom.mouser as mouser
 import sys
 
 if len(sys.argv) > 1:
-	id = sys.argv[1]
+    id = sys.argv[1]
 else:
-	print('Note: you can also specify a part number as a command line argument.')
-	id = ''
-	while id == '':
-		id = input('Enter part number: ')
+    print('Note: you can also specify a part number as a command line argument.')
+    id = ''
+    while id == '':
+        id = input('Enter part number: ')
 
 item = mouser.Item(id)
 item.print_info()

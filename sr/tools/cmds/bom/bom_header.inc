@@ -26,10 +26,10 @@ th {
 <script type="text/javascript">
 %(xy)s
 function highlight(refdes) {
-	ch = document.getElementById("crosshair");
-	var data = xy[refdes];
-	ch.style.bottom = data.y;
-	ch.style.left = data.x;
+    ch = document.getElementById("crosshair");
+    var data = xy[refdes];
+    ch.style.bottom = data.y;
+    ch.style.left = data.x;
 }
 </script>
 </head>

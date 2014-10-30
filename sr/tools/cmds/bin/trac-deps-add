@@ -34,7 +34,8 @@ already = new - to_add
 
 if len(already):
     for n in already:
-        >>sys.stderr, "#{0} is already a dep of #{1}".format( n, args.ticket )
+        print('#{0} is already a dep of #{1}'.format(n, args.ticket),
+              file=sys.stderr)
 
 if len(to_add) == 0:
     exit("No new dependencies to add to #{0}".format(args.ticket))

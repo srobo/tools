@@ -8,12 +8,12 @@ import sr.tools.bom.parts_db as parts_db
 if len(sys.argv) < 2:
    print("Usage: %s DIR -N SCHEMATIC1 -M SCHEMATIC2 ..." % os.path.basename( sys.argv[0] ))
    print("""
-	Where N and M are multipliers for the number of boards
+    Where N and M are multipliers for the number of boards
 
-	create-order generates the data to stick into a supplier's
-	website, or send to a supplier (if they don't support such
-	things), for an order made up of the given numbers of
-	schematics.""")
+    create-order generates the data to stick into a supplier's
+    website, or send to a supplier (if they don't support such
+    things), for an order made up of the given numbers of
+    schematics.""")
    sys.exit(1)
 
 db = parts_db.Db( bom.PARTS_DB )

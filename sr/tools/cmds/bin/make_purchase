@@ -149,7 +149,7 @@ for purchase in spend_request.purchases:
         budget_line = budget.path(purchase.budget_line)
     except KeyError:
         # TODO: Move this check up into the parser so it's caught and the user can fix it
-        >>sys.stderr, """Budget line "{0}" not found"""
+        print('Budget line "{0}" not found', file=sys.stderr)
         exit(1)
 
     bl_request_total = D(0)

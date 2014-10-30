@@ -1,1 +1,1 @@
-from sr.config import Config
+__import__('pkg_resources').declare_namespace(__name__)

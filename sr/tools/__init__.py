@@ -1,5 +1,7 @@
 import os
 
+from sr.tools.config import Config
+
 
 def get_commands_directory():
     return os.path.join(__path__[0], "cmds")

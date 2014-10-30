@@ -16,7 +16,7 @@ args = p.parse_args()
 try:
     root = spending.find_root()
 except spending.NotSpendingRepo:
-    >>sys.stderr, "Please run in spending.git"
+    print("Please run in spending.git", file=sys.stderr)
     exit(1)
 
 bud = spending.load_budget_with_spending(root)
@@ -25,7 +25,7 @@ if args.path != "/":
     try:
         budline = bud.path(args.path)
     except KeyError:
-        >>sys.stderr, "Budget line '" + args.path + "' not found"
+        print("Budget line '" + args.path + "' not found", file=sys.stderr)
         sys.exit(1)
 else:
     budline = bud

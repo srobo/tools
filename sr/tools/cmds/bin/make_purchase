@@ -29,15 +29,15 @@ args = parser.parse_args()
 try:
     spending_root = srspending.find_root()
 except srspending.NotSpendingRepo:
-    >>sys.stderr, "Please run in spending.git top level directory"
+    print("Please run in spending.git top level directory", file=sys.stderr)
     exit(1)
 
 try:
     budget = srspending.load_budget_with_spending( spending_root )
 except srbudget.NoBudgetConfig as nbc:
-    >>sys.stderr, "Error:", nbc.message
-    >>sys.stderr, "Have you initialised the budget submodule?"
-    >>sys.stderr, "If not, run 'git submodule update --init'."
+    print("Error:", nbc.message, file=sys.stderr)
+    print("Have you initialised the budget submodule?", file=sys.stderr)
+    print("If not, run 'git submodule update --init'.", file=sys.stderr)
     exit(1)
 
 class PurchaseItem(object):
@@ -90,14 +90,14 @@ class SpendRequest(object):
                                 delete_file = True )
 
             except KeyError as e:
-                >>sys.stderr, "Missing field:", e
-                raw_input( "Press return to try again" )
+                print("Missing field:", e, file=sys.stderr)
+                input( "Press return to try again" )
                 continue
 
             except yaml.parser.ParserError as e:
-                >>sys.stderr, "Error parsing your YAML"
-                >>sys.stderr, e
-                raw_input( "Press return to try again" )
+                print("Error parsing your YAML", file=sys.stderr)
+                print(e, file=sys.stderr)
+                input( "Press return to try again" )
                 continue
 
             break

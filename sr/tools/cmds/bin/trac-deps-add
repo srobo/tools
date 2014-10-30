@@ -21,7 +21,7 @@ args = parser.parse_args()
 try:
     server = TracProxy()
 except WrongServer:
-    >>sys.stderr, "Error: The specified server is not a Trac instance"
+    print("Error: The specified server is not a Trac instance", file=sys.stderr)
     exit(1)
 
 t = Ticket( args.ticket, server )

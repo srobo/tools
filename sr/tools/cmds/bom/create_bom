@@ -118,8 +118,8 @@ def convert_xy_to_json(xy):
         s = line.split(",")
         if len(s) != 7:
             continue
-	x = int(float(s[3])/1000 * res)
-	y = int(float(s[4])/1000 * res)
+        x = int(float(s[3])/1000 * res)
+        y = int(float(s[4])/1000 * res)
         parts[s[0]] = {'value': s[2][1:-1], 'x': x, 'y': y, 'side': s[6][0]}
 
     return json.dumps(parts)

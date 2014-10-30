@@ -10,7 +10,7 @@ else:
 	print('Note: you can also specify a part number as a command line argument.')
 	id = ''
 	while id == '':
-		id = raw_input('Enter part number: ')
+		id = input('Enter part number: ')
 
 item = mouser.Item(id)
 item.print_info()

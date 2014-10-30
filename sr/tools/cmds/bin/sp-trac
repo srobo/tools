@@ -9,7 +9,7 @@ import xmlrpclib, getpass, os, re, sys
 try:
     root = spending.find_root()
 except spending.NotSpendingRepo:
-    >>sys.stderr, "Please run in spending.git top level directory"
+    print("Please run in spending.git top level directory", file=sys.stderr)
     exit(1)
 
 spends = spending.load_transactions('.')

@@ -19,7 +19,8 @@ setup(
         "sympy",
         "pyparsing",
         "beautifulsoup4",
-        "numpy"
+        "numpy",
+        "pyudev"
     ],
     include_package_data=True,
     zip_safe=False,

@@ -3,7 +3,14 @@
 from __future__ import print_function
 
 import sr.tools.bom.geda as geda
-import sys, os, shutil, ConfigParser, subprocess
+import sys, os, shutil, subprocess
+
+try:
+    import ConfigParser
+except ImportError:
+    import configparser as ConfigParser
+
+
 OUTPUT_DIR = "./gerbers"
 
 FORMAT_RS274X = 1

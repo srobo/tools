@@ -121,11 +121,11 @@ for device in devices:
     serial = device.attributes['serial']
 
     if args.output == "code":
-        print serial
+        serial
 
     else:
         os.chdir(args.inv_dir)
         res = query.query("code:{0}".format(serial))[0]
 
         if args.output == "path":
-            print res.path
+            res.path

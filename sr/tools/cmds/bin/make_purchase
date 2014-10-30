@@ -29,15 +29,15 @@ args = parser.parse_args()
 try:
     spending_root = srspending.find_root()
 except srspending.NotSpendingRepo:
-    print >>sys.stderr, "Please run in spending.git top level directory"
+    >>sys.stderr, "Please run in spending.git top level directory"
     exit(1)
 
 try:
     budget = srspending.load_budget_with_spending( spending_root )
 except srbudget.NoBudgetConfig as nbc:
-    print >>sys.stderr, "Error:", nbc.message
-    print >>sys.stderr, "Have you initialised the budget submodule?"
-    print >>sys.stderr, "If not, run 'git submodule update --init'."
+    >>sys.stderr, "Error:", nbc.message
+    >>sys.stderr, "Have you initialised the budget submodule?"
+    >>sys.stderr, "If not, run 'git submodule update --init'."
     exit(1)
 
 class PurchaseItem(object):
@@ -90,13 +90,13 @@ class SpendRequest(object):
                                 delete_file = True )
 
             except KeyError as e:
-                print >>sys.stderr, "Missing field:", e
+                >>sys.stderr, "Missing field:", e
                 raw_input( "Press return to try again" )
                 continue
 
             except yaml.parser.ParserError as e:
-                print >>sys.stderr, "Error parsing your YAML"
-                print >>sys.stderr, e
+                >>sys.stderr, "Error parsing your YAML"
+                >>sys.stderr, e
                 raw_input( "Press return to try again" )
                 continue
 
@@ -149,7 +149,7 @@ for purchase in spend_request.purchases:
         budget_line = budget.path(purchase.budget_line)
     except KeyError:
         # TODO: Move this check up into the parser so it's caught and the user can fix it
-        print >>sys.stderr, """Budget line "{0}" not found"""
+        >>sys.stderr, """Budget line "{0}" not found"""
         exit(1)
 
     bl_request_total = D(0)
@@ -174,9 +174,9 @@ for purchase in spend_request.purchases:
 
     # It is over the limit?
     if req_total > budget_line.cost:
-        print "Warning: This purchase exceeds the budget line '{0}'".format( purchase.budget_line )
-        print "\tBudget line's value: £{0}".format( budget_line.cost )
-        print "\tRequested Expenditure: £{0} ({1}%)".format( req_total,
+        "Warning: This purchase exceeds the budget line '{0}'".format( purchase.budget_line )
+        "\tBudget line's value: £{0}".format( budget_line.cost )
+        "\tRequested Expenditure: £{0} ({1}%)".format( req_total,
                                                              100 * (req_total)/budget_line.cost )
         if not raw_input("Continue anyway? [y/N] ").lower() == 'y':
             exit()
@@ -193,17 +193,17 @@ for line, total in budget_line_totals.iteritems():
     ticket_text += """|| [budget:{line}] || £{total} ||\n""".format( line = line,
                                                                      total = total )
 
-print ticket_text
+ticket_text
 
 if args.dry_run:
-    print "Stopping before actually creating ticket."
+    "Stopping before actually creating ticket."
     exit(0)
 
 try:
     server = TracProxy( server = args.server,
                         port = args.port )
 except WrongServer:
-    print >>sys.stderr, "Error: The specified server is not a Trac instance"
+    >>sys.stderr, "Error: The specified server is not a Trac instance"
     exit(1)
 
 ticketNum = server.ticket.create( spend_request.summary,
@@ -213,7 +213,7 @@ ticketNum = server.ticket.create( spend_request.summary,
                                     'type': "task" } )
 
 if not ticketNum > 0:
-    print "Unable to create a valid ticket"
+    "Unable to create a valid ticket"
     exit()
 
 if args.port == 443:
@@ -221,10 +221,10 @@ if args.port == 443:
 else:
     hostname = "{0}:{1}".format( args.server, args.port )
 
-print "Purchasing ticket created: https://{0}/trac/ticket/{1}".format(
+"Purchasing ticket created: https://{0}/trac/ticket/{1}".format(
     hostname, ticketNum )
 
-print "Spending Entries:"
+"Spending Entries:"
 
 for purchase in spend_request.purchases:
     print
@@ -235,7 +235,7 @@ for purchase in spend_request.purchases:
     i += "    Liabilities:{payee}\n"
     i += "    ; trac: #{trac}"
 
-    print i.format( date = today.isoformat(),
+    i.format( date = today.isoformat(),
                     summary = purchase.summary,
                     account = srspending.budget_line_to_account(purchase.budget_line),
                     amount = sum([x.cost for x in purchase.items]),

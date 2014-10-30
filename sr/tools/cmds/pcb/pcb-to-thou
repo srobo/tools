@@ -5,8 +5,8 @@ import re, sys, os
 from decimal import Decimal
 
 if len(sys.argv) < 2:
-    print "Usage: %s PCB_FILE" % os.path.basename( sys.argv[0] )
-    print "Converts all units suffixed with mm to hundreths of thou."
+    print("Usage: %s PCB_FILE" % os.path.basename( sys.argv[0] ))
+    print("Converts all units suffixed with mm to hundreths of thou.")
     sys.exit(1)
 
 PCB_FILE = sys.argv[1]

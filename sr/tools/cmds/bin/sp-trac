@@ -9,7 +9,7 @@ import xmlrpclib, getpass, os, re, sys
 try:
     root = spending.find_root()
 except spending.NotSpendingRepo:
-    print >>sys.stderr, "Please run in spending.git top level directory"
+    >>sys.stderr, "Please run in spending.git top level directory"
     exit(1)
 
 spends = spending.load_transactions('.')
@@ -32,7 +32,7 @@ costsumgrp = {}
 for ticket in mserver():
     match = re.search('Total cost: \xa3([0-9.]+)',ticket[3]['description'])
     if match is None:
-        print "Unable to determine cost for ticket " + str(ticket[0]) + ". Invalid formatting"
+        "Unable to determine cost for ticket " + str(ticket[0]) + ". Invalid formatting"
         continue
     if ticket[0] in costsumgrp:
         costsumgrp[ticket[0]] += float(match.groups()[0])
@@ -41,6 +41,6 @@ for ticket in mserver():
 
 for val in costsumgrp:
     if spendsumgrp[val] != costsumgrp[val]:
-        print "Ticket " + str(val) + " does not match transactions"
-        print "\tTicket cost:  £" + str(costsumgrp[val])
-        print "\tTransactions: £" + str(spendsumgrp[val])
+        "Ticket " + str(val) + " does not match transactions"
+        "\tTicket cost:  £" + str(costsumgrp[val])
+        "\tTransactions: £" + str(spendsumgrp[val])

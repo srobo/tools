@@ -7,8 +7,8 @@ import sr.tools.bom.parts_db as parts_db
 import os, sys
 
 if len(sys.argv) < 2:
-    print "Usage: %s SCHEMATIC" % os.path.basename(sys.argv[0])
-    print "Checks that all the parts in a PCB's schematic are in the SR database"
+    print("Usage: %s SCHEMATIC" % os.path.basename(sys.argv[0]))
+    print("Checks that all the parts in a PCB's schematic are in the SR database")
     sys.exit(1)
 
 SCHEMATIC = sys.argv[1]
@@ -35,12 +35,12 @@ for id in parts.keys():
     else:
         found = found + 1
 
-print "%i correct parts found." % found
+print("%i correct parts found." % found)
 
 if len(err_parts) > 0:
-    print "The following %i parts are not in the SR parts database:" % error
+    print("The following %i parts are not in the SR parts database:" % error)
 
     for name, components in err_parts.iteritems():
-        print "\t'%s': %s" % (name, " ".join(components))
+        print("\t'%s': %s" % (name, " ".join(components)))
 
     sys.exit(2)

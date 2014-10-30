@@ -8,8 +8,8 @@ import sr.tools.bom.schem as schem
 NUM_THREADS = 3
 
 if len(sys.argv) < 2:
-    print "Usage: %s DIR -N SCHEMATIC1 -M SCHEMATIC2 ..." % os.path.basename( sys.argv[0] )
-    print "Where N and M are multipliers for the number of boards"
+    print("Usage: %s DIR -N SCHEMATIC1 -M SCHEMATIC2 ..." % os.path.basename( sys.argv[0] ))
+    print("Where N and M are multipliers for the number of boards")
     sys.exit(1)
 
 db = parts_db.Db( bom.PARTS_DB )
@@ -32,15 +32,15 @@ for x in boards.stockcheck():
 print
 
 if stock.has_key( bom.STOCK_UNKNOWN ):
-    print "Warning: Cannot check suppliers for these parts:"
+    print("Warning: Cannot check suppliers for these parts:")
     for part in stock[bom.STOCK_UNKNOWN]:
-        print "\t- %s %s(%s)" % ( part["sr-code"], part["supplier"], part["order-number"] )
+        print("\t- %s %s(%s)" % ( part["sr-code"], part["supplier"], part["order-number"] ))
 
 if stock.has_key( bom.STOCK_OUT ):
-    print "Out of stock:"
+    print("Out of stock:")
     for part in stock[bom.STOCK_OUT]:
-        print "\t- %s %s(%s)" % ( part["sr-code"], part["supplier"], part["order-number"] )
+        print("\t- %s %s(%s)" % ( part["sr-code"], part["supplier"], part["order-number"] ))
     sys.exit(1)
 
-print "All checkable parts are sufficiently in stock."
+print("All checkable parts are sufficiently in stock.")
 sys.exit(0)

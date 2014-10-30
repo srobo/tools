@@ -245,16 +245,16 @@ def writeXLS(lines, out_fn):
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print "Usage: %s [--layout=LAYOUT] SCHEMATIC(S) OUTFILE" % (os.path.basename(sys.argv[0]))
-        print "Where:"
-        print "	- LAYOUT is the PCB layout for a single design"
-        print "	- SCHEMATIC is the schematic to read from (can be more than one)"
-        print "	- OUTFILE is the output HTML/XLS file"
+        print("Usage: %s [--layout=LAYOUT] SCHEMATIC(S) OUTFILE" % (os.path.basename(sys.argv[0])))
+        print("Where:")
+        print("	- LAYOUT is the PCB layout for a single design")
+        print("	- SCHEMATIC is the schematic to read from (can be more than one)")
+        print("	- OUTFILE is the output HTML/XLS file")
         sys.exit(1)
 
     lib = parts_db.Db(bom.PARTS_DB)
     if sys.argv[-1].split('.')[-1] == "sch":
-        print "Output file has extension 'sch', aborting as this is almost certainly a mistake"
+        print("Output file has extension 'sch', aborting as this is almost certainly a mistake")
         sys.exit(1)
 
     has_layout = False
@@ -276,8 +276,8 @@ if __name__ == "__main__":
     lines = prep_parts(lines)
 
     if out_fn[-3:] == "xls":
-        print "Writing XLS BOM"
+        print("Writing XLS BOM")
         writeXLS(lines, out_fn)
     else:
-        print "Writing HTML BOM"
+        print("Writing HTML BOM")
         writeHTML(lines, out_fn)

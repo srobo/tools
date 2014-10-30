@@ -10,15 +10,15 @@ FORMAT_RS274X = 1
 FORMAT_EXCELLON = 2
 
 if len(sys.argv) != 2:
-    print "Usage: export-gerber BOARD"
-    print "Will output gerbers to directory %s" % OUTPUT_DIR
+    print("Usage: export-gerber BOARD")
+    print("Will output gerbers to directory %s" % OUTPUT_DIR)
     sys.exit(1)
 
 BOARD = sys.argv[1]
 
 if os.path.exists( OUTPUT_DIR ) and not os.path.isdir( OUTPUT_DIR ):
-    print "%s exists and is not a directory" % OUTPUT_DIR
-    print "Cowardly refusing to remove it!"
+    print("%s exists and is not a directory" % OUTPUT_DIR)
+    print("Cowardly refusing to remove it!")
     sys.exit(1)
 
 if not os.path.exists( OUTPUT_DIR ):
@@ -28,7 +28,7 @@ f = open(BOARD, "r")
 assert geda.file_is_geda_pcb(f)
 f.close()
 
-print "Generating gerbers from %s" % BOARD
+print("Generating gerbers from %s" % BOARD)
 # You can't specify the output dir and of the files created some
 # are in the cwd, others are in the same dir as the PCB file :S
 

@@ -47,14 +47,14 @@ for c in args.itemspecs:
         if c in inv.root.types:
             spec_type = PART_TYPE
         else:
-            print >>sys.stderr, "Error: %s is an invalid asset code or part type." % c
+            print("Error: %s is an invalid asset code or part type." % c, file=sys.stderr)
             exit(1)
 
     if spec_type == ASSET_CODE:
         try:
             part = inv.root.parts[code]
         except KeyError:
-            print >>sys.stderr, "Error: There is no part with code %s." % code
+            print("Error: There is no part with code %s." % code, file=sys.stderr)
             exit(1)
 
         parts.append(part)
@@ -62,7 +62,7 @@ for c in args.itemspecs:
         try:
             parts.extend(inv.root.types[c])
         except:
-            print >>sys.stderr, "Error: There is no part type %s." % c
+            print("Error: There is no part type %s." % c, file=sys.stderr)
             exit(1)
 
 stat_colour = ""

@@ -92,7 +92,7 @@ class Config(dict):
                 user = self["user"]
 
             if keyring is None:
-                print >>sys.stderr, "Warning: Cannot import keyring module."
+                print("Warning: Cannot import keyring module.", file=sys.stderr)
             else:
                 password = keyring.get_password( self["keyring_service"],
                                                  user )

@@ -29,11 +29,11 @@ try:
     project_file.close()
 
 except:
-    print "File not found: %s" % project_filename
+    print("File not found: %s" % project_filename)
     sys.exit(1)
 
 if schematic_filenames is None:
-    print "Did not find any schematics in project file."
+    print("Did not find any schematics in project file.")
     sys.exit(1)
 
 
@@ -49,7 +49,7 @@ try:
             search_path.append(value)
     gafrc.close()
 except:
-    print "Unable to open gafrc, will only look in the current directory for schematics."
+    print("Unable to open gafrc, will only look in the current directory for schematics.")
 
 
 
@@ -99,13 +99,13 @@ for schematic_filename in schematic_filenames:
 
         schematic.close()
     except:
-        print "Unable to open schematic '%s'" % schematic_filename
+        print("Unable to open schematic '%s'" % schematic_filename)
 
 if len(sub_schematic_components) == 0:
-    print "Did not find any sub-schematic components."
+    print("Did not find any sub-schematic components.")
     sys.exit(0)
 else:
-    print "Found %s sub-schematic components." % len(sub_schematic_components)
+    print("Found %s sub-schematic components." % len(sub_schematic_components))
 
 for sub_sche in sub_schematic_components:
     # Find out if a PCB layout already exists for the sub-schematic
@@ -116,7 +116,7 @@ for sub_sche in sub_schematic_components:
     for path in search_path:
         if os.path.exists(os.path.join(path, block_filename + ".pcb")):
             pcb_filename = os.path.join(path, block_filename + ".pcb")
-            print "Found pre-existing PCB layout for %s in %s" % (refdes, pcb_filename)
+            print("Found pre-existing PCB layout for %s in %s" % (refdes, pcb_filename))
 
     if pcb_filename is None:
         # Did not find pre-existing PCB layout
@@ -138,8 +138,8 @@ for sub_sche in sub_schematic_components:
         dst_pcb.close()
         src_pcb.close()
 
-        print "Created %s for %s" % (dst_filename, refdes)
+        print("Created %s for %s" % (dst_filename, refdes))
 
     except:
-        print "Failed to copy %s to %s" % (pcb_filename, dest)
+        print("Failed to copy %s to %s" % (pcb_filename, dest))
         continue

@@ -1,8 +1,11 @@
 "Library for accessing the spending files"
+from __future__ import print_function
+
 import errno
 import os, sys, datetime, sr.tools.budget as budget
 from subprocess import check_output, check_call, CalledProcessError
 from decimal import Decimal as D
+
 
 class Transaction(object):
     def __init__(self, name, date, fname):
@@ -58,7 +61,7 @@ def load_transactions(root):
                     tmp = repopath.split("/")
                     date = datetime.date(int(tmp[0]), int(tmp[1]), int(tmp[2]))
                 except:
-                    print >>sys.stderr, "Unable to determine the date of the transaction %s" % fullp
+                    print("Unable to determine the date of the transaction %s" % fullp, file=sys.stderr)
                     exit(1)
 
             transactions.append( Transaction(name, date, fullp) )

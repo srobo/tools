@@ -24,10 +24,10 @@ try:
     "Check that it's actually spending.git"
     root = spending.find_root( path = root )
 except NotSpendingRepo:
-    print >>sys.stderr, "This isn't SR spending.git"
-    print >>sys.stderr, "Solve this by either:"
-    print >>sys.stderr, " - Changing working directory to spending.git"
-    print >>sys.stderr, " - Set the 'spending' config option in ~/.sr/config.yaml"
+    >>sys.stderr, "This isn't SR spending.git"
+    >>sys.stderr, "Solve this by either:"
+    >>sys.stderr, " - Changing working directory to spending.git"
+    >>sys.stderr, " - Set the 'spending' config option in ~/.sr/config.yaml"
     exit(1)
 
 args = sys.argv

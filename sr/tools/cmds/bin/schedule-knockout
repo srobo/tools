@@ -60,5 +60,5 @@ if args.yaml:
     sys.stdout.write( yaml.dump( matches ) )
 else:
     for n, match in enumerate(matches):
-        print " {0}:\t{1}".format( n,
+        " {0}:\t{1}".format( n,
                                   "\t".join( [str(x) for x in match] ) )

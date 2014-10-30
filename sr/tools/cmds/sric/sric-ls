@@ -18,8 +18,8 @@ all_devs.sort(cmp = cmp_dev_address)
 padding = " "
 fields = ["Address", "Type"]
 title_line = padding + (padding * 2).join(fields)
-print title_line
-print "-" * len(title_line)
+print(title_line)
+print("-" * len(title_line))
 
 for dev in all_devs:
     vals = [ dev.address, pysric.sric_class_strings[dev.type] ]
@@ -31,5 +31,5 @@ for dev in all_devs:
         width = len(fields[i]) + len(padding)
         val = padding + vals[i]
 
-        print "%s%s" % (val, " " * (width-len(val))),
-    print
+        print("%s%s" % (val, " " * (width-len(val))), end='')
+    print()

@@ -5,8 +5,8 @@ import sr.tools.bom.eagle as eagle
 import sys
 
 if len(sys.argv) != 2:
-    print "Usage: eagle_ver.py SCH_FILE"
+    print("Usage: eagle_ver.py SCH_FILE")
     sys.exit(1)
 
 v = eagle.file_version( sys.argv[1] )
-print "%i.%i" % v
+print("%i.%i" % v)

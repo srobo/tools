@@ -35,10 +35,10 @@ def fix_line_colour(searchstring, colour, elementno, offset=0):
     for entryno in range(0,len(symbolfile)):
         if searchstring in symbolfile[entryno]:
             array = symbolfile[entryno+offset].split(' ')
-            print array
+            print(array)
             array[elementno] = colour
             s = ' '.join(array)
-            print s
+            print(s)
             symbolfile[entryno+offset] = s
 
 def fix_colours():
@@ -67,7 +67,7 @@ def fix_colours():
             fix_line_colour(line[0:line.find(' ')], "5", 3, -1)
         elif (line.find("pinlabel=") != -1 and
               line.find("text color") != -1):
-            print line[line.find("pinlabel"):line.find(' not')]
+            print(line[line.find("pinlabel"):line.find(' not')])
             fix_line_colour(line[line.find("pinlabel"):line.find(' not')], "9", 3, -1)
     return symbolfile
 
@@ -88,7 +88,7 @@ def gsymcheck(filename):
 
 gsymoutput = gsymcheck(inputfile)
 symbolfile = readfile(inputfile)
-print symbolfile
+print(symbolfile)
 symbolfile = fix_colours()
 write_file(outputfile)
-print symbolfile
+print(symbolfile)

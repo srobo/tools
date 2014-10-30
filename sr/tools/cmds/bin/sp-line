@@ -18,23 +18,23 @@ budget = spending.load_budget_with_spending(root)
 line = budget.path(args.budgetline)
 
 if isinstance(line, BudgetTree):
-    print "Summary for tree", args.budgetline
+    "Summary for tree", args.budgetline
     budgeted = sum([x.cost for x in line.walk()])
     spent = sum([x.spent for x in line.walk()])
 
 else:
-    print "Summary for line", args.budgetline
+    "Summary for line", args.budgetline
     budgeted = line.cost
     spent = line.spent
 
-print "Budgeted:\t", budgeted
-print "Spent:\t\t", spent
+"Budgeted:\t", budgeted
+"Spent:\t\t", spent
 
 if spent > budgeted:
-    print "OVER BUDGET"
+    "OVER BUDGET"
 
 print
-print "Transactions:"
+"Transactions:"
 
 sys.stdout.flush()
 

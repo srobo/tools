@@ -18,7 +18,7 @@ team = T.Team( args.teamno )
 
 if not args.timesort:
     for repo in team.repos:
-        print repo
+        repo
 
 else:
     repos = [(x.get_modtime(), x) for x in team.repos]
@@ -30,4 +30,4 @@ else:
     repos.reverse()
 
     for modtime, repo in repos:
-        print datetime.fromtimestamp(modtime), repo
+        datetime.fromtimestamp(modtime), repo

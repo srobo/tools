@@ -5,7 +5,7 @@ import sr.tools.teamgit as T
 import os, sys, subprocess
 
 if len(sys.argv) not in [3,4]:
-    print "Usage: cog-team TEAMNO REPOS [DIR]"
+    print("Usage: cog-team TEAMNO REPOS [DIR]")
     exit(1)
 
 TEAMNO = int(sys.argv[1])

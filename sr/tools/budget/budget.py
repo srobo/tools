@@ -1,4 +1,6 @@
 "Library for accessing the budget files"
+from __future__ import print_function
+
 import yaml, os, sys, logging
 import collections
 from decimal import ( Decimal as D, ROUND_CEILING, ROUND_FLOOR,
@@ -75,7 +77,7 @@ class BudgetItem(object):
         y = yaml.load( open(fname, "r"), Loader = YAML_Loader )
 
         if False in [x in y for x in ["cost", "summary", "description"]]:
-            print >>sys.stderr, "Error: %s does not match schema." % fname
+            print("Error: %s does not match schema." % fname, file=sys.stderr)
             exit(1)
 
         self.name = name

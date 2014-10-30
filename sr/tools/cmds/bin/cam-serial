@@ -25,4 +25,4 @@ for dev in con.list_devices( subsystem = "video4linux" ):
     if ident not in SR_CAMERA_IDS:
         continue
 
-    print a["serial"]
+    print(a["serial"])

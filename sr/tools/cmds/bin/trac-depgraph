@@ -13,7 +13,7 @@ args = parser.parse_args()
 try:
     server = TracProxy()
 except WrongServer:
-    print >>sys.stderr, "Error: The specified server is not a Trac instance"
+    >>sys.stderr, "Error: The specified server is not a Trac instance"
     exit(1)
 
 tickets = {}
@@ -21,8 +21,8 @@ tickets = {}
 done = set()
 todo = set([args.ticket])
 
-print "digraph G {"
-print "rankdir=LR;"
+"digraph G {"
+"rankdir=LR;"
 
 while len(todo):
     for num in list(todo):
@@ -33,7 +33,7 @@ while len(todo):
             if dep not in done:
                 todo.add(dep)
 
-            print "{0} -> {1};".format( dep, num )
+            "{0} -> {1};".format( dep, num )
 
         done.add(num)
         todo.remove(num)
@@ -49,6 +49,6 @@ for num, ticket in tickets.iteritems():
     for name, val in props.iteritems():
         propstr += """{0}="{1}" """.format( name, val )
 
-    print """{0} [{1}]""".format( num, propstr )
+    """{0} [{1}]""".format( num, propstr )
 
-print "}"
+"}"

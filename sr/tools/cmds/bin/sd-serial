@@ -7,4 +7,4 @@ import pyudev
 con = pyudev.Context()
 
 for dev in con.list_devices( subsystem = "mmc" ):
-    print dev.attributes["serial"]
+    dev.attributes["serial"]

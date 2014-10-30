@@ -19,7 +19,7 @@ args = parser.parse_args()
 try:
     server = TracProxy()
 except WrongServer:
-    print >>sys.stderr, "Error: The specified server is not a Trac instance"
+    >>sys.stderr, "Error: The specified server is not a Trac instance"
     exit(1)
 
 t = Ticket( args.ticket, server )
@@ -42,6 +42,6 @@ updated = t.cleanup( dry_run = args.dry_run,
 
 if updated:
     if args.dry_run:
-        print "Ticket would have been updated if not for --dry-run."
+        "Ticket would have been updated if not for --dry-run."
     else:
-        print "Ticket updated."
+        "Ticket updated."

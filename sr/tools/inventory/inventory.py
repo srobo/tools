@@ -1,4 +1,6 @@
 "API for the SR inventory"
+from __future__ import print_function
+
 import codecs
 import hashlib
 import re
@@ -71,10 +73,10 @@ class Item(object):
 
         # Verify that assetcode matches filename
         if self.info["assetcode"] != self.code:
-            print >>sys.stderr, "Code in asset filename does not match contents of file:"
-            print >>sys.stderr, "\t code in filename: '%s'" % self.code
-            print >>sys.stderr, "\t code in contents: '%s'" % self.info["assetcode"]
-            print >>sys.stderr, "\n\tOffending file:", self.path
+            print("Code in asset filename does not match contents of file:", file=sys.stderr)
+            print("\t code in filename: '%s'" % self.code, file=sys.stderr)
+            print("\t code in contents: '%s'" % self.info["assetcode"], file=sys.stderr)
+            print("\n\tOffending file:", self.path, file=sys.stderr)
             exit(1)
 
         # The mandatory properties
@@ -161,10 +163,10 @@ class ItemGroup(ItemTree):
         self.info = cached_yaml_load( os.path.join( path, "info" ) )
 
         if self.info["assetcode"] != self.code:
-            print >>sys.stderr, "Code in group directory name does not match info file:"
-            print >>sys.stderr, "\t code in directory name: '%s'" % self.code
-            print >>sys.stderr, "\t           code in info: '%s'" % self.info["assetcode"]
-            print >>sys.stderr, "\n\tOffending group:", self.path
+            print("Code in group directory name does not match info file:", file=sys.stderr)
+            print("\t code in directory name: '%s'" % self.code, file=sys.stderr)
+            print("\t           code in info: '%s'" % self.info["assetcode"], file=sys.stderr)
+            print("\n\tOffending group:", self.path, file=sys.stderr)
             exit(1)
 
         self.description = self.info["description"]

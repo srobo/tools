@@ -21,7 +21,7 @@ args = parser.parse_args()
 try:
     server = TracProxy()
 except WrongServer:
-    print >>sys.stderr, "Error: The specified server is not a Trac instance"
+    >>sys.stderr, "Error: The specified server is not a Trac instance"
     exit(1)
 
 t = Ticket( args.ticket, server )
@@ -34,7 +34,7 @@ already = new - to_add
 
 if len(already):
     for n in already:
-        print >>sys.stderr, "#{0} is already a dep of #{1}".format( n, args.ticket )
+        >>sys.stderr, "#{0} is already a dep of #{1}".format( n, args.ticket )
 
 if len(to_add) == 0:
     exit("No new dependencies to add to #{0}".format(args.ticket))
@@ -56,6 +56,6 @@ updated = t.cleanup( dry_run = args.dry_run,
 
 if updated:
     if args.dry_run:
-        print "Ticket would have been updated if not for --dry-run."
+        "Ticket would have been updated if not for --dry-run."
     else:
-        print "Ticket updated."
+        "Ticket updated."

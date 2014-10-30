@@ -47,7 +47,7 @@ class Msg(object):
         self.crc = d[-2:]
 
         if len(self.payload) != self.len:
-            print "Warning: Frame length differs from actual payload length"
+            print("Warning: Frame length differs from actual payload length")
 
         return True
 
@@ -137,7 +137,7 @@ class GwFrame(object):
             self.args = [frame.payload[1]]
         else:
             self.args = []
-            print "Warning: Gateway commands with more than one byte argument are not supported"
+            print("Warning: Gateway commands with more than one byte argument are not supported")
 
     def __repr__(self):
         s = "%s: %s: GW:" % (self.frame.time, self.frame.rw)
@@ -176,7 +176,7 @@ class SricFrame(object):
         elif len(frame.payload) == 2:
             self.args = [frame.payload[1]]
         else:
-            print "Warning: Syscmds with more than one argument not supported"
+            print("Warning: Syscmds with more than one argument not supported")
             self.args = []
 
     def __repr__(self):
@@ -224,7 +224,7 @@ class MsgDecoder(Msg):
             return self.frame.__repr__()
 
 if len(sys.argv) < 2:
-    print "Usage: decode LOGFILE"
+    print("Usage: decode LOGFILE")
     exit(1)
 
 INFILE = sys.argv[1]
@@ -232,4 +232,4 @@ INFILE = sys.argv[1]
 for line in fileinput.input(INFILE):
     m = MsgDecoder(line)
     if m.useful:
-        print m
+        print(m)

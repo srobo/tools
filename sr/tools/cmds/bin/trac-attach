@@ -25,13 +25,13 @@ try:
     server = TracProxy( server = args.server,
                         port = args.port )
 except WrongServer:
-    print >>sys.stderr, "Error: The specified server is not a Trac instance"
+    >>sys.stderr, "Error: The specified server is not a Trac instance"
     exit(1)
 
 with open( args.filename, "r" ) as f:
     content = f.read()
 
-print server.ticket.putAttachment( args.ticket,
+server.ticket.putAttachment( args.ticket,
                                    os.path.basename(args.filename),
                                    args.desc,
                                    Binary(content) )

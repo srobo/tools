@@ -48,7 +48,7 @@ for line in b.walk():
     budgeted += (D(1) + line.uncertainty) * line.cost
 
 if budgeted > MAX:
-    print >> sys.stderr, "Fail: Budget is £%s too high" % (budgeted - MAX)
+    print("Fail: Budget is £%s too high" % (budgeted - MAX), file=sys.stderr)
     exit (1)
 
 print("OK:", end='')

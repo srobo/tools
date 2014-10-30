@@ -51,10 +51,10 @@ def vbuf_dict(buf):
     return d
 
 def display_vbuf(dev, i):
-    print "%s[%i]:" % ( pysric.sric_class_strings[dev.type], i )
+    "%s[%i]:" % ( pysric.sric_class_strings[dev.type], i )
     vbuf = read_dev_vbuf(dev)
     for module, commit in vbuf_dict(vbuf).iteritems():
-        print "\t", commit, module
+        "\t", commit, module
 
 
 if len(sys.argv) == 1:
@@ -85,23 +85,23 @@ elif len(sys.argv) == 3:
             break
 
     if DEVTYPE == None:
-        print "Invalid device type \"%s\"" % (DEVNAME)
-        print "Valid types are:"
+        "Invalid device type \"%s\"" % (DEVNAME)
+        "Valid types are:"
         for devstr in pysric.sric_class_strings.values():
-            print "\t-",devstr
+            "\t-",devstr
         exit(1)
 
     avail_devs = len(p.devices[DEVTYPE])
     if avail_devs <= DEVNUM:
-        print "Device number %i too large -- only %i connected." % (DEVNUM, avail_devs)
+        "Device number %i too large -- only %i connected." % (DEVNUM, avail_devs)
         exit(1)
 
     display_vbuf( p.devices[DEVTYPE][DEVNUM], DEVNUM )
 
 else:
-    print "Usage:\tvbuf [DEVICE_TYPE DEVICE_NUM]"
-    print "\tReads and interprets the vbuf of a SRIC device"
+    "Usage:\tvbuf [DEVICE_TYPE DEVICE_NUM]"
+    "\tReads and interprets the vbuf of a SRIC device"
     print
-    print "\tWhen called with no arguments, will show *all* devices."
-    print "\te.g. `vbuf motor 0` will show the vbuf for motor[0]."
+    "\tWhen called with no arguments, will show *all* devices."
+    "\te.g. `vbuf motor 0` will show the vbuf for motor[0]."
     exit(1)

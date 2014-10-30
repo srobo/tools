@@ -35,16 +35,16 @@ for tnum, count in counts.iteritems():
 missing.sort()
 
 if len(missing):
-    print "{0} trac tickets with no spending.git entry:".format( len(missing) )
+    "{0} trac tickets with no spending.git entry:".format( len(missing) )
     for t in missing:
-        print "{0:10} -- http://srobo.org/trac/ticket/{0}".format(t)
+        "{0:10} -- http://srobo.org/trac/ticket/{0}".format(t)
 else:
-    print "All resolved purchasing tickets exist in spending.git :-)"
+    "All resolved purchasing tickets exist in spending.git :-)"
 
 if len(premature):
-    print "-" * 40
+    "-" * 40
 
-    print "Grabbing ticket information...",
+    "Grabbing ticket information...",
     sys.stdout.flush()
 
     states = {}
@@ -57,33 +57,33 @@ if len(premature):
 
         states[s].append( t )
 
-    print "done"
+    "done"
 
-    print "{0} purchasing tickets have been added to spending.git before being closed.".format( len(premature) )
+    "{0} purchasing tickets have been added to spending.git before being closed.".format( len(premature) )
     print
-    print "This is non-fatal, and generally means that there is more treasurer-related"
-    print "action to be taken on them (maybe the treasurer is waiting for some"
-    print "information)."
+    "This is non-fatal, and generally means that there is more treasurer-related"
+    "action to be taken on them (maybe the treasurer is waiting for some"
+    "information)."
     print
 
     for state, tickets in states.iteritems():
         tickets.sort()
 
-        print "{0} tickets in state {1}:{2}:".format( len(tickets),
+        "{0} tickets in state {1}:{2}:".format( len(tickets),
                                                       state[0],
                                                       state[1] )
         for t in tickets:
-            print "{0:10} -- http://srobo.org/trac/ticket/{0}".format(t)
+            "{0:10} -- http://srobo.org/trac/ticket/{0}".format(t)
         print
 
 open_tickets = set(p.ticket.query( "component=purchasing&max=0&status=new" ))
 
-print "There are {0} unresolved purchasing tickets in trac right now.".format(len(open_tickets))
-print "Here are the ones that don't exist in spending.git"
-print "(note that they don't need to yet)"
+"There are {0} unresolved purchasing tickets in trac right now.".format(len(open_tickets))
+"Here are the ones that don't exist in spending.git"
+"(note that they don't need to yet)"
 
 n = list(open_tickets.difference( premature ))
 n.sort()
 
 for t in n:
-    print "{0:10} -- http://srobo.org/trac/ticket/{0}".format(t)
+    "{0:10} -- http://srobo.org/trac/ticket/{0}".format(t)

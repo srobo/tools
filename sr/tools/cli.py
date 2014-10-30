@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import argparse
 import os
 import sys
 import subprocess
@@ -12,7 +13,7 @@ def get_commands_directory():
     return os.path.join(__path__[0], "cmds")
 
 
-def find_commands(commands_dir=None):
+def find_commands(filter_private=False, commands_dir=None):
     """
     Recursively find commands and return a dictionary mapping name to full file
     path.
@@ -36,34 +37,27 @@ def find_commands(commands_dir=None):
                 fp = os.path.join(path, f)
 
                 if os.path.isfile(fp) and os.access(fp, os.X_OK):
+                    if filter_private and (f[0] == "_" or f[-1] == "~"):
+                        continue
+
                     cmds[f] = fp
 
     return cmds
 
 
 def main():
-    cmds = find_commands()
+    commands = find_commands(filter_private=True)
 
-    if len(sys.argv) == 1 or (len(sys.argv) > 1 and sys.argv[1] not in cmds.keys()):
-        if len(sys.argv) > 1:
-            print("Invalid command '%s'" % sys.argv[1])
-        else:
-            print("sr: The Student Robotics devtool wrapper script")
-        print("Usage: sr COMMAND")
-        print("Available commands:")
+    parser = argparse.ArgumentParser(description='Student Robotics tools')
+    parser.add_argument('command', choices=sorted(commands.keys()),
+                        help='command to invoke')
+    parser.add_argument('args', nargs='*',
+                        help='arguments to pass to the command')
+    args = parser.parse_args()
 
-        k = sorted(cmds.keys())
-        for cmd in k:
-            if cmd[0] != "_" and cmd[-1] != "~":
-                print("\t%s" % cmd)
-        sys.exit(1)
-    else:
-        cmd = sys.argv[1]
-
-    args = [cmd]
-    args += sys.argv[2:]
+    cmdline = [args.command] + args.args
     if os.name == 'nt':
         # this is hacky, and will be replaced with modules
-        subprocess.call( ["python", cmds[cmd]] + args[2:] )
+        subprocess.call(["python", commands[args.command]] + cmdline[2:])
     else:
-        os.execv( cmds[cmd], args )
+        os.execv(commands[args.command], cmdline)

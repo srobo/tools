@@ -10,7 +10,6 @@ Subpackages
     sr.tools.budget
     sr.tools.inventory
     sr.tools.spending
-    sr.tools.teamgit
     sr.tools.trac
 
 Submodules
@@ -44,6 +43,14 @@ sr.tools.gerrit module
 ----------------------
 
 .. automodule:: sr.tools.gerrit
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sr.tools.teamgit module
+-----------------------
+
+.. automodule:: sr.tools.teamgit
     :members:
     :undoc-members:
     :show-inheritance:

@@ -53,7 +53,7 @@ def py_translate_to_decimals(s):
     # Parse numbers in the string as Decimals
     # based on example from http://docs.python.org/2.7/library/tokenize.html
     result = []
-    g = tokenize.generate_tokens(StringIO(s).readline)
+    g = tokenize.generate_tokens(StringIO(str(s)).readline)
     for toknum, tokval, _, _, _  in g:
         if toknum == tokenize.NUMBER and '.' in tokval:
             result.extend([
@@ -170,9 +170,9 @@ class BudgetTree(object):
     def draw(self, fd = sys.stdout, space = "  ", prefix = "" ):
         "Draw a text-representation of the tree"
 
-        print >>fd, "{prefix}--{name} ({cost})".format(prefix = prefix,
-                                                      name = os.path.basename(self.name),
-                                                      cost = self.total() )
+        print("{prefix}--{name} ({cost})".format(prefix = prefix,
+                                                 name = os.path.basename(self.name),
+                                                 cost = self.total() ), file=fd)
 
         for n, c in enumerate(self.children.values()):
             child_prefix = prefix + space
@@ -183,9 +183,9 @@ class BudgetTree(object):
                 else:
                     child_prefix += "|"
 
-                print >>fd, "{prefix}--{name} ({cost})".format(prefix = child_prefix,
-                                                              name = os.path.basename(c.name),
-                                                              cost = c.cost )
+                print("{prefix}--{name} ({cost})".format(prefix = child_prefix,
+                                                         name = os.path.basename(c.name),
+                                                         cost = c.cost ), file=fd)
 
             elif isinstance(c, BudgetTree):
                 child_prefix = prefix + space
@@ -219,7 +219,7 @@ class BudgetConfig(object):
         with open(fname, "r") as in_file:
             in_src = in_file.read()
 
-        with NamedTemporaryFile() as f:
+        with NamedTemporaryFile('w', encoding='utf-8') as f:
             trans_src = py_translate_to_decimals(in_src)
             f.write(trans_src)
             f.flush()
@@ -240,7 +240,7 @@ class BudgetConfig(object):
 
         self.vars = conf
 
-        for vname in self.vars.keys():
+        for vname in list(self.vars.keys()):
             val = self.vars[vname]
             if type(val) not in [int, D, float]:
                 self.vars.pop(vname)
@@ -250,9 +250,9 @@ class BudgetConfig(object):
         # Use the python loader to make ordered dicts work
         y = yaml.load(open(fname, "r"), Loader = YAML_Loader)
 
-        with NamedTemporaryFile() as f:
-            for vname, val in y["vars"].iteritems():
-                print >>f, "{0} = {1}".format( vname, val )
+        with NamedTemporaryFile('w', encoding='utf-8') as f:
+            for vname, val in y["vars"].items():
+                print("{0} = {1}".format(vname, val), file=f)
 
             f.flush()
             self._load_from_py(f.name)
@@ -348,5 +348,4 @@ def find_root( path = os.getcwd() ):
     root = check_output( [ "git", "rev-parse", "--show-toplevel" ],
                          cwd = path )
 
-    # Remove newline
-    return root[0:-1]
+    return root.strip().decode('utf-8')

@@ -13,7 +13,7 @@ args = parser.parse_args()
 try:
     spending_root = srspending.find_root()
 except srspending.NotSpendingRepo:
-    print >>sys.stderr, "Please run in spending.git repository"
+    print("Please run in spending.git repository", file=sys.stderr)
     exit(1)
 
 budget = srspending.load_budget_with_spending(spending_root)

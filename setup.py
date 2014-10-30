@@ -15,10 +15,11 @@ setup(
         "console_scripts": ["sr = sr.tools.cli:main"]
     },
     install_requires=[
-        "PyYaml",
+        "pyyaml",
         "sympy",
         "pyparsing",
-        "beautifulsoup4"
+        "beautifulsoup4",
+        "numpy"
     ],
     include_package_data=True,
     zip_safe=False,

@@ -80,11 +80,11 @@ summary = Summary()
 for x in changes:
 
     if isinstance(x, AddedItem):
-        print "A", x.a.name, "({0})".format(x.a.cost)
+        print("A", x.a.name, "({0})".format(x.a.cost))
         summary.added += x.a.cost
 
     if isinstance(x, RemovedItem):
-        print "D", x.a.name, "({0})".format(x.a.cost)
+        print("D", x.a.name, "({0})".format(x.a.cost))
         summary.removed += x.a.cost
 
     if isinstance(x, ChangedItem):
@@ -97,10 +97,10 @@ for x in changes:
         else:
             summary.removed += -d
 
-        print "M", x.a.name, "({0}{1})".format( s,d )
+        print("M", x.a.name, "({0}{1})".format( s,d ))
 
-print "---"
-print " Summary"
-print "      Added: £{0}".format(summary.added)
-print "    Removed: £{0}".format(summary.removed)
-print " Net change: {0:+}".format(summary.added - summary.removed)
+print("---")
+print(" Summary")
+print("      Added: £{0}".format(summary.added))
+print("    Removed: £{0}".format(summary.removed))
+print(" Net change: {0:+}".format(summary.added - summary.removed))

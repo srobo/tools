@@ -6,8 +6,9 @@ import sys, sympy
 import sr.tools.budget as budget
 from decimal import Decimal as D
 
+
 def usage():
-    print "Usage: budget-eval EXPRESSION"
+    print("Usage: budget-eval EXPRESSION")
 
 if len(sys.argv) != 2:
     usage()
@@ -18,7 +19,7 @@ EXPR = sys.argv[1]
 try:
     root = budget.find_root()
 except budget.NotBudgetRepo:
-    print >>sys.stderr, "Error: Please run in budget.git"
+    print("Error: Please run in budget.git", file=sys.stderr)
     exit(1)
 
 t = budget.load_budget( root )
@@ -36,4 +37,4 @@ assert config != None
 r = sympy.S( EXPR )
 r = D( "%.2f" % r.evalf( subs = config.vars ) )
 
-print r
+print(r)

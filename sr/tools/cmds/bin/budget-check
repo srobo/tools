@@ -19,7 +19,7 @@ config = Config()
 try:
     root = budget.find_root()
 except budget.NotBudgetRepo:
-    print >>sys.stderr, "Error: Please run in budget.git"
+    print("Error: Please run in budget.git", file=sys.stderr)
     exit(1)
 
 os.chdir( root )
@@ -51,11 +51,11 @@ if budgeted > MAX:
     print >> sys.stderr, "Fail: Budget is £%s too high" % (budgeted - MAX)
     exit (1)
 
-print "OK:",
+print("OK:", end='')
 if budgeted == MAX:
-    print "Budget is at maximum."
+    print("Budget is at maximum.")
 else:
-    print "Budget is £%s below maximum." % (MAX-budgeted)
+    print("Budget is £%s below maximum." % (MAX-budgeted))
 
 def list_referenced_lines(root):
     "Return a list of budget lines referenced in spending.git"
@@ -90,12 +90,12 @@ if spending_root is not None:
             inv_budget_lines.add(line)
 
     if len(inv_budget_lines):
-        print "{0} non-existent budget lines referenced from spending.git:".format( len(inv_budget_lines) )
+        print("{0} non-existent budget lines referenced from spending.git:".format(len(inv_budget_lines)))
 
         for line in inv_budget_lines:
-            print " -", line
+            print(" -", line)
     else:
-        print "OK: All spending.git budget line references are valid."
+        print("OK: All spending.git budget line references are valid.")
 
     # Lines that have been closed but don't match their spends
     close_fail = {}
@@ -120,23 +120,23 @@ if spending_root is not None:
             over_budget[bline] = bline.spent
 
     if len(close_fail):
-        print "{0} closed lines do not match the amount spent against them:".format(
-            len( close_fail ) )
+        print("{0} closed lines do not match the amount spent against them:".format(
+            len( close_fail ) ))
         for line, spent in close_fail.iteritems():
-            print " - {0}: £{1} spent, £{2} allocated".format(
+            print(" - {0}: £{1} spent, £{2} allocated".format(
                 line.name,
                 spent,
-                line.cost )
+                line.cost ))
     else:
-        print "OK: All closed lines have the correct value."
+        print("OK: All closed lines have the correct value.")
 
     if len(over_budget):
-        print "{0} lines are over budget:".format( len(over_budget) )
+        print("{0} lines are over budget:".format( len(over_budget) ))
         for line, spent in over_budget.iteritems():
 
-            print " - {0}: £{1} spent, £{2} allocated (including fudge)".format(
+            print(" - {0}: £{1} spent, £{2} allocated (including fudge)".format(
                 line.name,
                 spent,
-                line.cost * budget.FUDGE_FACTOR )
+                line.cost * budget.FUDGE_FACTOR ))
     else:
-        print "OK: No open budget lines are overspent."
+        print("OK: No open budget lines are overspent.")

@@ -14,7 +14,7 @@ args = parser.parse_args()
 try:
     root = budget.find_root()
 except budget.NotBudgetRepo:
-    print >>sys.stderr, "Error: Please run in budget.git"
+    print("Error: Please run in budget.git", file=sys.stderr)
     exit(1)
 
 b = budget.load_budget( root )

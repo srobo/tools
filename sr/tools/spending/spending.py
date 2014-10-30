@@ -121,8 +121,9 @@ def load_budget_spends(root):
 
     return lines
 
+
 def load_budget_with_spending(root):
-    bud = budget.load_budget( os.path.join( root, "budget/" ) )
+    bud = budget.load_budget(os.path.join(root, "budget/"))
     lines = load_budget_spends(root)
 
     for b in bud.walk():
@@ -133,10 +134,12 @@ def load_budget_with_spending(root):
 
     return bud
 
+
 class NotSpendingRepo(Exception):
     pass
 
-def find_root( path = os.getcwd() ):
+
+def find_root(path=None):
     """Find the root directory of the spending repository
 
     Checks that the repository is spending.git too
@@ -144,6 +147,9 @@ def find_root( path = os.getcwd() ):
     Arguments:
     path -- if provided is a path within the spending.git repository
             (defaults to working directory)"""
+
+    if path is None:
+        path = os.getcwd()
 
     try:
         "Check that we're in spending.git"
@@ -163,5 +169,4 @@ def find_root( path = os.getcwd() ):
     root = check_output( [ "git", "rev-parse", "--show-toplevel" ],
                          cwd = path )
 
-    # Remove newline
-    return root[0:-1]
+    return root.strip().decode('utf-8')

@@ -189,7 +189,7 @@ ticket_text += """
 === Budget Line Totals ===
 ||= '''Budget Line''' =||= '''Total''' =||
 """
-for line, total in budget_line_totals.iteritems():
+for line, total in budget_line_totals.items():
     ticket_text += """|| [budget:{line}] || £{total} ||\n""".format( line = line,
                                                                      total = total )
 

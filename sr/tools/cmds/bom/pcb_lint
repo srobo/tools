@@ -40,7 +40,7 @@ print("%i correct parts found." % found)
 if len(err_parts) > 0:
     print("The following %i parts are not in the SR parts database:" % error)
 
-    for name, components in err_parts.iteritems():
+    for name, components in err_parts.items():
         print("\t'%s': %s" % (name, " ".join(components)))
 
     sys.exit(2)

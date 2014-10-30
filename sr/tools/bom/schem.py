@@ -34,7 +34,7 @@ def open_schem(fname):
     rem_keys = []
 
     # Expand all assemblies into their component parts:
-    for des, srcode in schem.iteritems():
+    for des, srcode in schem.items():
         num = 1
 
         if srcode[0:len("sr-asm-")] == "sr-asm-":

@@ -124,7 +124,7 @@ class BoardBom(Bom):
 
         s = schem.open_schem(fname)
 
-        for des,srcode in s.iteritems():
+        for des,srcode in s.items():
             if srcode == "unknown":
                 print("No value set for %s" % des)
                 continue
@@ -177,7 +177,7 @@ class MultiBoardBom(Bom):
 
             # Mmmmm.  Horrible.
             for i in range(num):
-                for srcode, bpg in board.iteritems():
+                for srcode, bpg in board.items():
 
                     if not self.has_key( srcode ):
                         self[srcode] = PartGroup( bpg.part )
@@ -192,7 +192,7 @@ class MultiBoardBom(Bom):
         print("Getting data for parts from suppliers' websites")
         pool = ThreadPool(NUM_THREADS)
 
-        for srcode, pg in self.iteritems():
+        for srcode, pg in self.items():
             print(srcode)
             pool.add_task(pg.get_price)
 

@@ -19,7 +19,7 @@ m.prime_cache()
 
 prices = []
 
-for srcode, pg in m.iteritems():
+for srcode, pg in m.items():
    if srcode == "sr-nothing":
       continue
 

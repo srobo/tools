@@ -38,7 +38,7 @@ while len(todo):
         done.add(num)
         todo.remove(num)
 
-for num, ticket in tickets.iteritems():
+for num, ticket in tickets.items():
     props = {}
 
     if ticket.status == "closed":
@@ -46,7 +46,7 @@ for num, ticket in tickets.iteritems():
         props["color"] = "grey"
 
     propstr = ""
-    for name, val in props.iteritems():
+    for name, val in props.items():
         propstr += """{0}="{1}" """.format( name, val )
 
     """{0} [{1}]""".format( num, propstr )

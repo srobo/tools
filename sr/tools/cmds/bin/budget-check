@@ -122,7 +122,7 @@ if spending_root is not None:
     if len(close_fail):
         print("{0} closed lines do not match the amount spent against them:".format(
             len( close_fail ) ))
-        for line, spent in close_fail.iteritems():
+        for line, spent in close_fail.items():
             print(" - {0}: £{1} spent, £{2} allocated".format(
                 line.name,
                 spent,
@@ -132,7 +132,7 @@ if spending_root is not None:
 
     if len(over_budget):
         print("{0} lines are over budget:".format( len(over_budget) ))
-        for line, spent in over_budget.iteritems():
+        for line, spent in over_budget.items():
 
             print(" - {0}: £{1} spent, £{2} allocated (including fudge)".format(
                 line.name,

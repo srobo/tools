@@ -27,7 +27,7 @@ m.prime_cache()
 # Keys of ths dictionary are the distributor
 dist = {}
 
-for srcode, pg in m.iteritems():
+for srcode, pg in m.items():
    if srcode == "sr-nothing":
       continue
 
@@ -38,7 +38,7 @@ for srcode, pg in m.iteritems():
 
    dist[supplier].append( pg )
 
-for d, partgroups in dist.iteritems():
+for d, partgroups in dist.items():
    print("Distributor: %s" % d)
    for pg in partgroups:
       n = pg.order_num()

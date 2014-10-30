@@ -28,7 +28,7 @@ for t in transactions:
     counts[t.trac] += 1
 
 missing = []
-for tnum, count in counts.iteritems():
+for tnum, count in counts.items():
     if count == 0:
         missing.append( tnum )
 
@@ -66,7 +66,7 @@ if len(premature):
     "information)."
     print
 
-    for state, tickets in states.iteritems():
+    for state, tickets in states.items():
         tickets.sort()
 
         "{0} tickets in state {1}:{2}:".format( len(tickets),

@@ -80,7 +80,7 @@ def pcode_find_ranges(pcodes):
 
         pr[cs].append(n)
 
-    for prefix, nums in pr.iteritems():
+    for prefix, nums in pr.items():
         while len(nums):
             start = end = min(nums)
             while end in nums:

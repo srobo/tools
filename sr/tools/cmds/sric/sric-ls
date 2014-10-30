@@ -9,7 +9,7 @@ def cmp_dev_address(x,y):
 p = pysric.PySric()
 
 all_devs = []
-for devtype, devs in p.devices.iteritems():
+for devtype, devs in p.devices.items():
     for dev in devs:
         all_devs += [dev]
 

@@ -22,7 +22,7 @@ class Part(dict):
             if isinstance(d[k], str):
                 d[k] = d[k].strip()
 
-        for k,v in d.iteritems():
+        for k,v in d.items():
             self[k] = v
 
         self.loaded = False

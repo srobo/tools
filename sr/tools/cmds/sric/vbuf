@@ -53,7 +53,7 @@ def vbuf_dict(buf):
 def display_vbuf(dev, i):
     "%s[%i]:" % ( pysric.sric_class_strings[dev.type], i )
     vbuf = read_dev_vbuf(dev)
-    for module, commit in vbuf_dict(vbuf).iteritems():
+    for module, commit in vbuf_dict(vbuf).items():
         "\t", commit, module
 
 
@@ -79,7 +79,7 @@ elif len(sys.argv) == 3:
     DEVNUM = int(sys.argv[2])
 
     DEVTYPE = None
-    for devtype, devstr in pysric.sric_class_strings.iteritems():
+    for devtype, devstr in pysric.sric_class_strings.items():
         if DEVNAME == devstr:
             DEVTYPE = devtype
             break

@@ -4,11 +4,46 @@ import os
 import sys
 import subprocess
 
-from sr.tools import find_commands
+from sr.tools import __path__
 
-cmds = find_commands()
+
+def get_commands_directory():
+    """Return the directory at which commands will be found."""
+    return os.path.join(__path__[0], "cmds")
+
+
+def find_commands(commands_dir=None):
+    """
+    Recursively find commands and return a dictionary mapping name to full file
+    path.
+    """
+    if commands_dir is None:
+        commands_dir = get_commands_directory()
+
+    cmds = {}
+    for d in os.listdir(commands_dir):
+        if d in [".git"]:
+            continue
+
+        path = os.path.join(commands_dir, d)
+
+        if os.path.isdir(path):
+            # Go through the files in this subdir
+            for f in os.listdir(path):
+                if f == "sr":
+                    continue
+
+                fp = os.path.join(path, f)
+
+                if os.path.isfile(fp) and os.access(fp, os.X_OK):
+                    cmds[f] = fp
+
+    return cmds
+
 
 def main():
+    cmds = find_commands()
+
     if len(sys.argv) == 1 or (len(sys.argv) > 1 and sys.argv[1] not in cmds.keys()):
         if len(sys.argv) > 1:
             print("Invalid command '%s'" % sys.argv[1])

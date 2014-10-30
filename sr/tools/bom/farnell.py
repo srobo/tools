@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Routines for scraping data about parts from Farnell"""
 from bs4 import BeautifulSoup
-import distpart
-from cachedfetch import grab_url_cached
+from sr.tools.bom import distpart
+from sr.tools.bom.cachedfetch import grab_url_cached
 from decimal import Decimal as D
 import re
 
@@ -55,7 +55,7 @@ class Item(distpart.DistItem):
             details[key] = val
 
         return details
-    
+
     def _soup_check_part(self, soup):
         "Check the part in the soup is the one we wanted"
         details = self._soup_get_pddict(soup)

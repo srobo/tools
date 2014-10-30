@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 """Routines for grabbing a page, with caching"""
-from urllib import urlopen
+
+try:
+    from urllib import urlopen
+except ImportError:
+    from urllib.request import urlopen
+
 import os, hashlib, time
 
 # Number of seconds for the cache to last for

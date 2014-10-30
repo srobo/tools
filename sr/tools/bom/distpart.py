@@ -25,7 +25,7 @@ class DistItem(object):
         self.min_order = None
 
         # The number of components per item
-        # e.g. for an item that's a 5000 component reel, this 
+        # e.g. for an item that's a 5000 component reel, this
         # number is 5000.
         # (None <- Unknown)
         self.price_for = None
@@ -39,17 +39,17 @@ class DistItem(object):
         self.prices = None
 
     def print_info(self):
-        print "Part", self.part_number
+        print("Part", self.part_number)
 
-        print "\tStock:",
+        print("\tStock:", end="")
         if self.avail == None:
-            print "Unknown"
+            print("Unknown")
         elif isinstance(self.avail, bool) and self.avail == False:
-            print "Discontinued"
+            print("Discontinued")
         elif self.avail == True:
-            print "In stock"
+            print("In stock")
         else:
-            print "%i in stock" % self.avail
+            print("%i in stock" % self.avail)
 
         def f(n):
             if n == None:
@@ -57,16 +57,16 @@ class DistItem(object):
             else:
                 return n
 
-        print "\tMinimum order:", f(self.min_order)
+        print("\tMinimum order:", f(self.min_order))
 
-        print "\tComponents per item:", f(self.price_for)
+        print("\tComponents per item:", f(self.price_for))
 
-        print "\tOrder multiple:", f(self.multi)
+        print("\tOrder multiple:", f(self.multi))
 
-        print "\tPricing:"
+        print("\tPricing:")
 
         if self.prices == None:
-            print "\t\tUnknown"
+            print("\t\tUnknown")
         else:
             for i in range(0, len(self.prices)):
 
@@ -75,6 +75,6 @@ class DistItem(object):
                 if i+1 < len(self.prices):
                     n_quant = self.prices[i+1][0]
 
-                    print "\t\t %i - %i: £%s" % (quantity, n_quant - self.multi, price)
+                    print("\t\t %i - %i: £%s" % (quantity, n_quant - self.multi, price))
                 else:
-                    print "\t\t %i+: £%s" % (quantity, price)
+                    print("\t\t %i+: £%s" % (quantity, price))

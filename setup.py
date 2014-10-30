@@ -17,7 +17,8 @@ setup(
     install_requires=[
         "PyYaml",
         "sympy",
-        "pyparsing"
+        "pyparsing",
+        "beautifulsoup4"
     ],
     include_package_data=True,
     zip_safe=False,

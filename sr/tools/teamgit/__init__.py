@@ -1,1 +1,1 @@
-from team import *
+from sr.tools.teamgit import *

@@ -1,9 +1,14 @@
 """Student Robotics parts database access library"""
-import csv, farnell, rs, digikey, mouser, os, sys
+import csv
+import os
+import sys
+
+from sr.tools.bom import farnell, rs, digikey, mouser
+
 
 PARTS_DB = os.path.expanduser("~/.sr/tools/bom/sr_component_lib")
 if not os.path.exists( PARTS_DB ):
-    print "Parts DB not found at \"%s\"" % PARTS_DB
+    print("Parts DB not found at \"%s\"" % PARTS_DB)
     sys.exit(1)
 
 def get_db():
@@ -49,19 +54,19 @@ class Part(dict):
         """Number of components per distributor unit"""
         if not self.loaded:
             self.__load_data()
-        
+
         return self.dist_unit
 
     def get_min_order(self):
         if not self.loaded:
             self.__load_data()
-        
+
         return self.min_order
 
     def get_increments(self):
         if not self.loaded:
             self.__load_data()
-        
+
         return self.increments
 
     def get_url(self):

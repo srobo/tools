@@ -1,10 +1,16 @@
-# Simple python threadpool implementation from                                                                                                      
+# Simple python threadpool implementation from
 # http://code.activestate.com/recipes/577187-python-thread-pool/
 
 
 
 ## {{{ http://code.activestate.com/recipes/577187/ (r9)
-from Queue import Queue
+from __future__ import print_function
+
+try:
+    from Queue import Queue
+except ImportError:
+    from queue import Queue
+
 from threading import Thread
 
 class Worker(Thread):
@@ -14,12 +20,12 @@ class Worker(Thread):
         self.tasks = tasks
         self.daemon = True
         self.start()
-    
+
     def run(self):
         while True:
             func, args, kargs = self.tasks.get()
             try: func(*args, **kargs)
-            except Exception, e: print e
+            except Exception as e: print(e)
             self.tasks.task_done()
 
 class ThreadPool:
@@ -37,4 +43,3 @@ class ThreadPool:
         self.tasks.join()
 
 ## end of http://code.activestate.com/recipes/577187/ }}}
-

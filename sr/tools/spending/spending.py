@@ -1,6 +1,6 @@
 "Library for accessing the spending files"
 import errno
-import os, sys, datetime, sr.budget as budget
+import os, sys, datetime, sr.tools.budget as budget
 from subprocess import check_output, check_call, CalledProcessError
 from decimal import Decimal as D
 

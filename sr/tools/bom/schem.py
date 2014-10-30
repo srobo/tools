@@ -1,5 +1,7 @@
 """Routines for extracting information from schematics"""
-import eagle, geda, parts_db, re
+import re
+
+from sr.tools.bom import eagle, geda, parts_db
 
 EAGLE = 0
 GSCHEM = 1

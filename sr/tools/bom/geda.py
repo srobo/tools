@@ -48,8 +48,8 @@ class GSchem(dict):
         if not cache_good:
             self.__export_bom(cfname)
         else:
-            print "Using cached BOM for %s." % os.path.basename(self.fname)
-        
+            print("Using cached BOM for %s." % os.path.basename(self.fname))
+
         self.__parse_bom_fname( cfname )
 
     def __parse_bom_fname( self, fname ):
@@ -114,7 +114,7 @@ class PCB:
         if not cache_good:
             self.__export_image(res, cfname)
         else:
-            print "Using cached PCB image for %s" % os.path.basename(self.fname)
+            print("Using cached PCB image for %s" % os.path.basename(self.fname))
 
         f = open(cfname, "r")
         img = f.read()
@@ -144,7 +144,7 @@ class PCB:
         if not cache_good:
             self.__export_xy(cfname)
         else:
-            print "Using cached PCB xy-data for %s" % os.path.basename(self.fname)
+            print("Using cached PCB xy-data for %s" % os.path.basename(self.fname))
 
         f = open(cfname, "r")
         xy = f.read()

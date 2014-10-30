@@ -1,5 +1,5 @@
 "Functions for diffing BudgetTrees"
-import budget
+from sr.tools.budget import budget
 import sys, subprocess, tempfile, shutil, os
 from subprocess import check_call
 

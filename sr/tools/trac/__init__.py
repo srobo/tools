@@ -1,1 +1,1 @@
-from trac import *
+from sr.tools.trac.trac import *

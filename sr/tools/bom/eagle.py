@@ -59,7 +59,7 @@ class EagleSchem(dict):
         if not cache_good:
             self.__export_bom(cfname)
         else:
-            print "Using cached BOM for %s." % os.path.basename(self.fname)
+            print("Using cached BOM for %s." % os.path.basename(self.fname))
 
         self.__parse_bom_fname( cfname )
 
@@ -71,14 +71,14 @@ class EagleSchem(dict):
             l = f.readline()
             # line 5 starts with "EAGLE" in EAGLE parts lists.
             if i == 4 and l[0:5] != "EAGLE":
-                raise Exception, "Parts list '%s' is not an EAGLE parts list" % self.fname
-    
+                raise Exception("Parts list '%s' is not an EAGLE parts list" % self.fname)
+
         for line in f:
             fields = line.split()
 
             value = fields[1].strip().lower() # e.g. sr-r-10k
             id = fields[0].strip().upper() # e.g. R1
-            
+
             self[id] = value
 
         f.close()
@@ -88,5 +88,3 @@ class EagleSchem(dict):
                               shell = True )
         p.communicate()
         p.wait()
-
-

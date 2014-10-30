@@ -10,7 +10,11 @@ from subprocess import ( check_call, check_output,
                          CalledProcessError )
 from tempfile import NamedTemporaryFile
 import tokenize
-from StringIO import StringIO
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 # Spending against a budget line is allowed to go over its value by
 # this factor

@@ -1,7 +1,12 @@
 from collections import Counter
 import re
-from trac import TracProxy, WrongServer
-import xmlrpclib
+from sr.tools.trac import TracProxy, WrongServer
+
+try:
+    import xmlrpclib
+except ImportError:
+    import xmlrpc.client as xmlrpclib
+
 
 class Ticket(object):
     "A ticket that may have dependencies"

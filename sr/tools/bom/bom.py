@@ -1,11 +1,12 @@
 # Routines for extracting BOMs from schematics
-import subprocess, tempfile, os, sys, parts_db, schem
+import subprocess, tempfile, os, sys
+from sr.tools.bom import parts_db, schem
 from decimal import Decimal
-from threadpool import ThreadPool
+from sr.tools.bom.threadpool import ThreadPool
 
 PARTS_DB = os.path.expanduser("~/.sr/tools/bom/sr_component_lib")
 if not os.path.exists( PARTS_DB ):
-    print "Parts DB not found at \"%s\"" % PARTS_DB
+    print("Parts DB not found at \"%s\"" % PARTS_DB)
     sys.exit(1)
 
 STOCK_OUT = 0
@@ -83,7 +84,7 @@ class PartGroup(list):
 
         p = self.part.get_price( n )
         if p == None:
-            print "Warning: couldn't get price for %s (%s)" % (self.part["sr-code"], self.part["supplier"])
+            print("Warning: couldn't get price for %s (%s)" % (self.part["sr-code"], self.part["supplier"]))
             return Decimal(0)
 
         return p * n
@@ -114,7 +115,7 @@ class BoardBom(Bom):
     Groups parts with the same srcode into PartGroups.
     Dictionary keys are sr codes."""
     def __init__(self, db, fname, name ):
-        """fname is the schematic to load from.  
+        """fname is the schematic to load from.
         db is the parts database object.
         name is the name to give the schematic."""
         Bom.__init__(self)
@@ -125,7 +126,7 @@ class BoardBom(Bom):
 
         for des,srcode in s.iteritems():
             if srcode == "unknown":
-                print "No value set for %s" % des
+                print("No value set for %s" % des)
                 continue
             if not self.has_key(srcode):
                 self[srcode] = PartGroup( db[srcode], name )
@@ -160,7 +161,7 @@ class MultiBoardBom(Bom):
         # Already part of this collection?
         found = False
         for n in xrange(len(self.boards)):
-            t = self.boards[n] 
+            t = self.boards[n]
             if t[1] == board:
                 t[0] = t[0] + num
                 found = True
@@ -171,9 +172,9 @@ class MultiBoardBom(Bom):
 
         #### Update our PartGroup dictionary
         self.clear()
-        
+
         for num, board in self.boards:
-            
+
             # Mmmmm.  Horrible.
             for i in range(num):
                 for srcode, bpg in board.iteritems():
@@ -188,12 +189,11 @@ class MultiBoardBom(Bom):
         quickest time possible by making many requests in
         parallel"""
 
-	print "Getting data for parts from suppliers' websites"
+        print("Getting data for parts from suppliers' websites")
         pool = ThreadPool(NUM_THREADS)
 
         for srcode, pg in self.iteritems():
-            print srcode
+            print(srcode)
             pool.add_task(pg.get_price)
-        
-        pool.wait_completion()
 
+        pool.wait_completion()

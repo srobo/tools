@@ -1,10 +1,16 @@
-from sr import Config
+from sr.tools import Config
 import sys
-from xmlrpclib import ServerProxy
+
+try:
+    from xmlrpclib import ServerProxy
+except ImportError:
+    from xmlrpc.client import ServerProxy
+
 
 class WrongServer(Exception):
     "The RPC server specified isn't a trac instance"
     pass
+
 
 class TracProxy(ServerProxy):
     "An XML-RPC proxy for SR Trac"

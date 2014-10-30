@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """Routines for scraping data about parts from RS"""
 from bs4 import BeautifulSoup
-from cachedfetch import grab_url_cached
+from sr.tools.bom.cachedfetch import grab_url_cached
 from decimal import Decimal as D
-import distpart
+from sr.tools.bom import distpart
 
 class Item(distpart.DistItem):
     "An item sold by RS"
 
     def __init__(self, part_number):
-        distpart.DistItem.__init__(self, part_number)        
+        distpart.DistItem.__init__(self, part_number)
 
         self._getinfo()
 
@@ -104,5 +104,3 @@ class Item(distpart.DistItem):
             self.min_order = prices[0][0]
 
         self.prices = prices
-
-

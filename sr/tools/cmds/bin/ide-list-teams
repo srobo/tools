@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 from __future__ import print_function
 
-import os, sys
-import sr.tools.teamgit as T
+import os
+import sys
 
-teams = T.list_teams()
-teams.sort()
+from sr.tools import teamgit
 
-for team in teams:
-    print team
+
+if __name__ == '__main__':
+    teams = teamgit.list_teams()
+    for team in sorted(teams):
+        print(team)

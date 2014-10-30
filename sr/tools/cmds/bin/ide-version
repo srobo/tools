@@ -2,16 +2,21 @@
 from __future__ import print_function
 
 import json
-import urllib2
+try:
+    from urllib2 import urlopen
+except ImportError:
+    from urllib.request import urlopen
+
 
 url = 'https://www.studentrobotics.org/ide/control.php/info/about'
 
-page = urllib2.urlopen(url)
-data = json.load(page)
 
-if data is None:
-	print "Failed to download from '%s'." % url
-	exit(1)
+if __name__ == '__main__':
+    page = urlopen(url).read()
+    data = json.loads(page.decode('utf-8'))
 
-#print data
-print data['info']['Version']
+    if data is None:
+        print('Failed to download from: {url}.'.format(url=url))
+        exit(1)
+
+    print(data['info']['Version'])

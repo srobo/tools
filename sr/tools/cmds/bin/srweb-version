@@ -1,45 +1,50 @@
 #!/usr/bin/env python
-
 import json
+try:
+    from urllib2 import urlopen
+except ImportError:
+    from urllib.request import urlopen
 import sys
 
-try:
-	from urllib2 import urlopen
-except ImportError:
-	from urllib.request import urlopen
 
+base_url = 'https://www.studentrobotics.org/.git/'
 
-baseURL = 'https://www.studentrobotics.org/.git/'
-quiet = False
 
 def fetch(url):
-	page = urlopen(url)
-	data = page.read()
+    page = urlopen(url)
+    data = page.read()
 
-	if data is None:
-		print("Failed to download from '%s'." % url)
-		exit(1)
+    if data is None:
+        print('Failed to download from: {url}.'.format(url=url),
+              file=sys.stderr)
+        exit(1)
 
-	return data.decode('utf-8')
+    return data.strip().decode('utf-8')
 
-if len(sys.argv) == 2 and sys.argv in ['-q', '--quiet']:
-	quiet = True
 
-url = baseURL + "HEAD"
-data = fetch(url).strip()
+def main():
+    quiet = False
+    if any(True for arg in sys.argv if arg in ['-q', '--quiet']):
+        quiet = True
 
-refBase = "ref: "
+    url = base_url + "HEAD"
+    data = fetch(url)
 
-# it's a hash
-if data[:len(refBase)] != refBase:
-	print(data[:9])
-	exit(0)
+    ref_base = 'ref: '
 
-ref = data[len(refBase):]
-if not quiet:
-	print("On: " + ref)
+    # it's a hash
+    if data[:len(ref_base)] != ref_base:
+        print(data[:9])
+        exit(0)
 
-url = baseURL + ref
-data = fetch(url).strip()
+    ref = data[len(ref_base):]
+    if not quiet:
+        print('On:', ref)
 
-print(data)
+    url = base_url + ref
+    data = fetch(url)
+    print(data)
+
+
+if __name__ == '__main__':
+    main()

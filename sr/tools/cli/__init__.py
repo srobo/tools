@@ -4,6 +4,7 @@ import argparse
 import pkg_resources
 
 from sr.tools.cli import inventory
+from sr.tools.cli import misc
 from sr.tools.cli import oldstyle
 
 
@@ -19,6 +20,7 @@ def main():
 
     subparsers = parser.add_subparsers()
     inventory.add_subparsers(subparsers)
+    misc.add_subparsers(subparsers)
     oldstyle.add_subparsers(subparsers)
 
     args = parser.parse_args()

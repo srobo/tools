@@ -6,26 +6,26 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name="sr-tools",
-    version="1.0.0-dev",
-    keywords="sr student robotics",
+    name='sr.tools',
+    version='1.0.0-dev',
+    keywords='sr student robotics',
     namespace_packages=['sr'],
     packages=find_packages(),
     entry_points={
-        "console_scripts": ["sr = sr.tools.cli:main"]
+        'console_scripts': ['sr = sr.tools.cli:main']
     },
     install_requires=[
-        "pyyaml",
-        "sympy",
-        "pyparsing",
-        "beautifulsoup4",
-        "numpy",
-        "pyudev"
+        'pyyaml',
+        'sympy',
+        'pyparsing',
+        'beautifulsoup4',
+        'numpy',
+        'pyudev'
     ],
     include_package_data=True,
     zip_safe=False,
     classifiers=[
-        "Development Status :: 5 - Production/Stable",
-        "Topic :: Utilities"
+        'Development Status :: 5 - Production/Stable',
+        'Topic :: Utilities'
     ]
 )

@@ -8,20 +8,12 @@ Subpackages
 
     sr.tools.bom
     sr.tools.budget
+    sr.tools.cli
     sr.tools.inventory
-    sr.tools.spending
     sr.tools.trac
 
 Submodules
 ----------
-
-sr.tools.cli module
--------------------
-
-.. automodule:: sr.tools.cli
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
 sr.tools.config module
 ----------------------
@@ -43,6 +35,14 @@ sr.tools.gerrit module
 ----------------------
 
 .. automodule:: sr.tools.gerrit
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sr.tools.spending module
+------------------------
+
+.. automodule:: sr.tools.spending
     :members:
     :undoc-members:
     :show-inheritance:

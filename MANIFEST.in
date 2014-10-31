@@ -1,1 +1,1 @@
-recursive-include sr/tools/cmds *
+recursive-include sr/tools/cli/oldstyle_cmds *

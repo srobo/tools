@@ -1,4 +1,6 @@
 "Config for the SR tools"
+from __future__ import print_function
+
 import getpass
 import os
 from subprocess import check_output

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 # Superclass for distributor items
+from __future__ import print_function
+
 
 class NonExistentPart(Exception):
     pass

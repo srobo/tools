@@ -5,9 +5,9 @@ from __future__ import print_function
 import argparse
 import datetime
 import os
-import sr.tools.spending.spending as srspending
-import sr.tools.budget.budget as srbudget
-from sr.trac import TracProxy, WrongServer
+import sr.tools.spending as srspending
+import sr.tools.budget as srbudget
+from sr.tools.trac import TracProxy, WrongServer
 from decimal import Decimal as D
 import tempfile
 from subprocess import check_call, check_output, CalledProcessError

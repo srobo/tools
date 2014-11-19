@@ -4,6 +4,14 @@ sr.tools.cli package
 Submodules
 ----------
 
+sr.tools.cli.git module
+-----------------------
+
+.. automodule:: sr.tools.cli.git
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 sr.tools.cli.inventory module
 -----------------------------
 

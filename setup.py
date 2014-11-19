@@ -20,7 +20,8 @@ setup(
         'pyparsing',
         'beautifulsoup4',
         'numpy',
-        'pyudev'
+        'pyudev',
+        'pygit2'
     ],
     include_package_data=True,
     zip_safe=False,

@@ -28,7 +28,4 @@ def main():
     if args.version:
         print_version()
     else:
-        try:
-            args.func(args)
-        except AttributeError:
-            parser.print_help()
+        args.func(args)

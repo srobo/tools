@@ -40,7 +40,7 @@ def cached_yaml_load( path ):
     path = os.path.abspath( path )
 
     ho = hashlib.sha256()
-    ho.update( path )
+    ho.update(path.encode('UTF-8'))
     h = ho.hexdigest()
 
     if not os.path.exists( CACHE_DIR ):
@@ -52,11 +52,13 @@ def cached_yaml_load( path ):
         "Cache has file"
         if os.path.getmtime(p) >= os.path.getmtime(path):
             "Check that it's newer"
-            return cPickle.load( open(p, "r") )
+            with open(p, 'rb') as file:
+                return cPickle.load(file)
 
     y = yaml.load( codecs.open(path, "r", encoding="utf-8"),
                    Loader = YAML_Loader )
-    cPickle.dump(y, open(p, "w"))
+    with open(p, 'wb') as file:
+        cPickle.dump(y, file)
     return y
 
 class Item(object):

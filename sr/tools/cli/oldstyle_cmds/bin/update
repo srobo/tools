@@ -1,4 +1,0 @@
-#!/usr/bin/env python
-print("Please upgrade with Pip or Setuptools:")
-print(" $ pip install --upgrade sr-tools")
-print(" $ git pull && ./setup.py --user install")

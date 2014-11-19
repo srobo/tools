@@ -11,8 +11,7 @@ def get_commands_directory():
 
 def find_commands(filter_private=False, commands_dir=None):
     """
-    Recursively find commands and return a dictionary mapping name to full file
-    path.
+    Find commands and return a dictionary mapping name to full file path.
     """
     if commands_dir is None:
         commands_dir = get_commands_directory()
@@ -41,10 +40,10 @@ def find_commands(filter_private=False, commands_dir=None):
     return cmds
 
 
-def _run_command(command, path, args):
+def run_command(command, path, args):
     cmdline = [command] + args.args
     if os.name == 'nt':
-        # this is hacky, and will be replaced with modules
+        # this is a bit hacky
         subprocess.call(["python", path] + cmdline[2:])
     else:
         os.execv(path, cmdline)
@@ -57,5 +56,5 @@ def add_subparsers(subparsers):
         parser = subparsers.add_parser(command, help=command, prefix_chars=' ')
         parser.add_argument('args', nargs='*',
                             help='arguments to pass to the command')
-        parser.set_defaults(func=functools.partial(_run_command, command,
+        parser.set_defaults(func=functools.partial(run_command, command,
                                                    commands[command]))

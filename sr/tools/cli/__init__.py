@@ -3,6 +3,7 @@ from __future__ import print_function
 import argparse
 import pkg_resources
 
+from sr.tools.cli import git
 from sr.tools.cli import inventory
 from sr.tools.cli import misc
 from sr.tools.cli import oldstyle
@@ -19,6 +20,7 @@ def main():
                         action='store_true')
 
     subparsers = parser.add_subparsers()
+    git.add_subparsers(subparsers)
     inventory.add_subparsers(subparsers)
     misc.add_subparsers(subparsers)
     oldstyle.add_subparsers(subparsers)

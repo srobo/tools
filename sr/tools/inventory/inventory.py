@@ -35,6 +35,20 @@ def should_ignore(path):
 
     return False
 
+
+def normalise_partcode(partcode):
+    """
+    Take a part code from user input and normalise it to one that is compatible
+    with the inventory. Generally this just involves removing the 'sr' from
+    the front.
+    """
+    partcode = partcode.strip()
+    if partcode.lower().startswith('sr'):
+        return partcode[2:]
+    else:
+        return partcode
+
+
 def cached_yaml_load( path ):
     "Load the pickled YAML file from cache"
     path = os.path.abspath( path )

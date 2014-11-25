@@ -18,7 +18,7 @@ def grab_url_cached(url):
         os.makedirs( cache_dir )
 
     h = hashlib.sha1()
-    h.update(url)
+    h.update(url.encode('UTF-8'))
 
     F = os.path.join( cache_dir, h.hexdigest() )
 

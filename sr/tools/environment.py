@@ -1,6 +1,11 @@
+"""
+A set of utilities that provide cross-platform support for a few basic
+features.
+"""
 import os
 import shlex
 import subprocess
+import sys
 
 
 def open_editor(filename):
@@ -21,15 +26,22 @@ def get_cache_dir(*components):
     If the environment variable 'SR_CACHE_DIR' is set, that takes precedence as
     the root of the cache directory.
     """
-    root_path = os.environ.get('SR_CACHE_DIR',
-                               os.path.expanduser('~/.sr/cache'))
+    default_path = os.path.expanduser('~/.sr/cache')
+    if sys.platform == 'win32':
+        default_path = os.path.join(os.environ['APPDATA'], 'SR', 'cache')
+
+    root_path = os.environ.get('SR_CACHE_DIR', default_path)
 
     path = os.path.join(root_path, *components)
     if not os.path.exists(path):
         os.makedirs(path)
     return path
 
+
 def get_config_filename():
     """Return the filename for the configuration file."""
-    return os.environ.get('SR_CONFIG',
-                          os.path.expanduser('~/.sr/config.yaml'))
+    default_path = os.path.expanduser('~/.sr/config.yaml')
+    if sys.platform == 'win32':
+        default_path = os.path.join(os.environ['APPDATA'], 'SR', 'config.yaml')
+
+    return os.environ.get('SR_CONFIG', default_path)

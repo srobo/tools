@@ -65,13 +65,14 @@ times; `?` matches a single character; `[ab]` matches one of the characters
 
 ### Path:
 
-Match on the path to the part in the inventory.  Python's `fnmatch` is used here
-too, but with an implicit `*` at the end.  This makes path searching more
+Match on the path to the part in the inventory.  Python's `fnmatch` is used
+here too, but with an implicit `*` at the end.  This makes path searching more
 intuitive.
 
 * *Keys:* `path`
 * *Values:* *a valid glob-like pattern*
-* *Example:* `path:vault`, for all parts under any path, relative to the inventory root, that begins with '`vault`'
+* *Example:* `path:vault`, for all parts under any path, relative to the
+             inventory root, that begins with '`vault`'
 
 
 ### Assembly:
@@ -106,8 +107,8 @@ the input expression) using some named function.  The current functions are:
 power boards.  (Note that this particular example doesn't guarantee the
 parents are assemblies, they could be boxes for example.  One can fix this
 by adding `assy:true`.)  Function expressions bind tighter than `AND`, so
-`parent of type:power-board-sr13.f AND assy:true`, with parentheses for clarity,
-means `(parent of type:power-board-sr13.f) AND assy:true`.
+`parent of type:power-board-sr13.f AND assy:true`, with parentheses for
+clarity, means `(parent of type:power-board-sr13.f) AND assy:true`.
 
 
 
@@ -135,7 +136,8 @@ Examples
 * `descendants of code:srBOX and cond:broken` - return all the broken things
   in srBOX.
 
-* `siblings of code:srABC` - things at the same level in the hierarchy as srABC.
+* `siblings of code:srABC` - things at the same level in the hierarchy as
+                             srABC.
 
 """
 from __future__ import print_function
@@ -145,12 +147,14 @@ import sr.tools.inventory.inventory as inventory
 import sr.tools.inventory.oldinv as oldinv
 import sr.tools.inventory.query_parser as query_parser
 
+
 def _get_inv():
     top = oldinv.gettoplevel()
     if top is None:
         print("Error: Must be run from within the inventory.", file=sys.stderr)
         exit(1)
     return inventory.Inventory(top).root
+
 
 def query(query_str, inv=None):
     if inv is None:

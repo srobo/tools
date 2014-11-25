@@ -7,22 +7,26 @@ from sr.tools.bom import farnell, rs, digikey, mouser
 
 
 PARTS_DB = os.path.expanduser("~/.sr/tools/bom/sr_component_lib")
-if not os.path.exists( PARTS_DB ):
+if not os.path.exists(PARTS_DB):
     print("Parts DB not found at \"%s\"" % PARTS_DB)
     sys.exit(1)
+
 
 def get_db():
     return Db(PARTS_DB)
 
+
 class Part(dict):
+
     """Represents a part"""
+
     def __init__(self, d):
         """Initialise with a dict from the DB"""
         for k in d.keys():
             if isinstance(d[k], str):
                 d[k] = d[k].strip()
 
-        for k,v in d.items():
+        for k, v in d.items():
             self[k] = v
 
         self.loaded = False
@@ -39,7 +43,7 @@ class Part(dict):
         if not self.loaded:
             self.__load_data()
 
-        if self.stock == None:
+        if self.stock is None:
             return None
 
         price = None
@@ -85,13 +89,13 @@ class Part(dict):
         o = None
 
         if self["supplier"] == "farnell":
-            o = farnell.Item( self["order-number"] )
+            o = farnell.Item(self["order-number"])
         elif self["supplier"] == "rs":
-            o = rs.Item( self["order-number"] )
+            o = rs.Item(self["order-number"])
         elif self["supplier"] == "digikey":
-            o = digikey.Item( self["order-number"] )
+            o = digikey.Item(self["order-number"])
         elif self["supplier"] == "mouser":
-            o = mouser.Item( self["order-number"] )
+            o = mouser.Item(self["order-number"])
         else:
             self.stock = None
             return
@@ -104,7 +108,9 @@ class Part(dict):
 
         self.loaded = True
 
+
 class Db(dict):
+
     def __init__(self, fname):
         f = open(fname, "r")
         r = csv.DictReader(f)
@@ -115,4 +121,4 @@ class Db(dict):
                 continue
 
             part = Part(line)
-            self[ part["sr-code"] ] = part
+            self[part["sr-code"]] = part

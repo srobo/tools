@@ -1,13 +1,18 @@
 "Library for accessing the spending files"
 from __future__ import print_function
 
-import errno
-import os, sys, datetime, sr.tools.budget as budget
-from subprocess import check_output, check_call, CalledProcessError
+import datetime
 from decimal import Decimal as D
+import errno
+import os
+from subprocess import check_output, check_call, CalledProcessError
+import sys
+
+import sr.tools.budget as budget
 
 
 class Transaction(object):
+
     def __init__(self, name, date, fname):
 
         self.name = "TODO"
@@ -22,11 +27,12 @@ class Transaction(object):
         self.payee = None       # TODO
         self.ackdate = None     # TODO
 
-        self.bank_transfer = False # TODO
+        self.bank_transfer = False  # TODO
 
         # Strip the '.yaml' off the end of the budget field if it's present
         if self.budget[-5:] == ".yaml":
             self.budget = self.budget[:-5]
+
 
 def load_transactions(root):
     root = os.path.abspath(root)
@@ -41,7 +47,7 @@ def load_transactions(root):
             pass
 
         for fname in filenames:
-            fullp = os.path.abspath( os.path.join(dirpath, fname) )
+            fullp = os.path.abspath(os.path.join(dirpath, fname))
 
             if fname[-5:] != ".yaml":
                 continue
@@ -52,8 +58,8 @@ def load_transactions(root):
 
             # The date of the transaction if it has been reconciled. None if
             # it's still pending.
-            topdir = fullp[len(root)+1:fullp.find('/',len(root)+1)]
-            repopath = fullp[len(root)+1:-(len(fname)+1)]
+            topdir = fullp[len(root) + 1:fullp.find('/', len(root) + 1)]
+            repopath = fullp[len(root) + 1:-(len(fname) + 1)]
             if topdir == "pending":
                 date = None
             else:
@@ -61,11 +67,13 @@ def load_transactions(root):
                     tmp = repopath.split("/")
                     date = datetime.date(int(tmp[0]), int(tmp[1]), int(tmp[2]))
                 except:
-                    print("Unable to determine the date of the transaction %s" % fullp, file=sys.stderr)
+                    print("Unable to determine the date of the transaction "
+                          "%s." % fullp, file=sys.stderr)
                     exit(1)
 
-            transactions.append( Transaction(name, date, fullp) )
+            transactions.append(Transaction(name, date, fullp))
     return transactions
+
 
 def group_trans_by_budget_line(trans):
     transgrp = {}
@@ -76,6 +84,7 @@ def group_trans_by_budget_line(trans):
             transgrp[t.budget] = [t]
     return transgrp
 
+
 def budget_line_to_account(line):
     "Convert a budget line to an account name"
     if line[0] == "/":
@@ -83,25 +92,30 @@ def budget_line_to_account(line):
     line = line.replace("/", ":")
     return "Expenses:{0}".format(line)
 
+
 def account_to_budget_line(account):
     "Convert an account name to a budget line name"
     line = account.replace(":", "/")
     return line[len("Expenses/"):]
 
+
 class LedgerNotFound(Exception):
+
     def __init__(self):
-        super(LedgerNotFound, self).__init__(
-            "Unable to find 'ledger' which is required to operate the spending repo.")
+        super(LedgerNotFound, self).__init__("Unable to find 'ledger' which "
+                                             "is required to operate the "
+                                             "spending repo.")
+
 
 def load_budget_spends(root):
     p = os.path.join(root, "spending.dat")
 
     try:
-        balances = check_output( [ "ledger",
-                                   "--file", p,
-                                   "bal",
-                                   "--format", "%A,%(display_total)\n",
-                                   "^Expenses:" ] )
+        balances = check_output(["ledger",
+                                 "--file", p,
+                                 "bal",
+                                 "--format", "%A,%(display_total)\n",
+                                 "^Expenses:"])
     except OSError as oe:
         if oe.errno == errno.ENOENT:
             "A nicer error for the most likely case"
@@ -148,7 +162,8 @@ def find_root(path=None):
 
     Checks that the repository is spending.git too.
 
-    :param path: if provided, is a path within the spending.git repository (defaults to working directory)
+    :param path: if provided, is a path within the spending.git repository
+                 (defaults to working directory)
     """
     if path is None:
         path = os.getcwd()
@@ -157,18 +172,18 @@ def find_root(path=None):
         "Check that we're in spending.git"
 
         with open("/dev/null", "w") as n:
-            check_call( ["git", "rev-list",
-                         # This is the commit that transitioned spending.git
-                         # over to ledger, which is required for this library
-                         "09d64df13422ac2fcf9bd17c00b1f66e9e78e912" ],
-                        cwd = path,
-                        stdout = n,
-                        stderr = n )
+            check_call(["git", "rev-list",
+                        # This is the commit that transitioned spending.git
+                        # over to ledger, which is required for this library
+                        "09d64df13422ac2fcf9bd17c00b1f66e9e78e912"],
+                       cwd=path,
+                       stdout=n,
+                       stderr=n)
     except CalledProcessError:
         "It's not the spending repository"
         raise NotSpendingRepo
 
-    root = check_output( [ "git", "rev-parse", "--show-toplevel" ],
-                         cwd = path )
+    root = check_output(["git", "rev-parse", "--show-toplevel"],
+                        cwd=path)
 
     return root.strip().decode('utf-8')

@@ -1,48 +1,52 @@
 from __future__ import print_function
 
-import commands, sys
+import commands
+import sys
+
 
 gsymoutput = []
 symbolfile = []
 inputfile = sys.argv[1]
 outputfile = sys.argv[2]
 
+
 def readfile(filename):
     with open(filename, 'r') as f:
         symbolfile = [line.strip() for line in f]
     return symbolfile
 
-#def writefile(filename):
-#    open(
+# If the output line from gsymcheck gives the coordinates of the error, then
+# use this function to fix the line in symbolfile
 
-# If the output line from gsymcheck gives the coordinates of the error, then use
-# this function to fix the line in symbolfile
+
 def fix_object_with_coords(line, firstchars, colour, elementno):
     x1 = ''
     y1 = ''
     x = line.find("x1=") + 3
     y = line.find("y1=") + 3
     while line[x] != ',':
-        x1=x1+line[x]
-        x=x+1
+        x1 = x1 + line[x]
+        x = x + 1
     while line[y] != ')':
-        y1=y1+line[y]
-        y=y+1
-    search = firstchars+x1+" "+y1
+        y1 = y1 + line[y]
+        y = y + 1
+    search = firstchars + x1 + " " + y1
     return fix_line_colour(search, colour, elementno)
 
+
 def fix_line_colour(searchstring, colour, elementno, offset=0):
-    for entryno in range(0,len(symbolfile)):
+    for entryno in range(0, len(symbolfile)):
         if searchstring in symbolfile[entryno]:
-            array = symbolfile[entryno+offset].split(' ')
+            array = symbolfile[entryno + offset].split(' ')
             print(array)
             array[elementno] = colour
             s = ' '.join(array)
             print(s)
-            symbolfile[entryno+offset] = s
+            symbolfile[entryno + offset] = s
+
 
 def fix_colours():
-    for i in range(0,len(gsymoutput)):
+    for i in range(0, len(gsymoutput)):
         line = gsymoutput[i]
         if line.find("pin color") != -1:
             fix_object_with_coords(line, "P ", "1", 5)
@@ -68,23 +72,27 @@ def fix_colours():
         elif (line.find("pinlabel=") != -1 and
               line.find("text color") != -1):
             print(line[line.find("pinlabel"):line.find(' not')])
-            fix_line_colour(line[line.find("pinlabel"):line.find(' not')], "9", 3, -1)
+            fix_line_colour(line[line.find("pinlabel"):line.find(' not')],
+                            "9", 3, -1)
     return symbolfile
 
 # Write modified symbol file to a new file.
+
+
 def write_file(outputfile):
     output = open(outputfile, 'w')
     for item in symbolfile:
         output.write("%s\n" % item)
     output.close()
 
+
 def gsymcheck(filename):
-    command = "/home/andy/geda/geda-gaf/gsymcheck/src/gsymcheck -vv " + filename
+    command = "/home/andy/geda/geda-gaf/gsymcheck/src/gsymcheck -vv " \
+              + filename
     gsymoutput = commands.getoutput(command).splitlines()
-    gsymoutput.pop(0) #First line of output is always blank.
+    gsymoutput.pop(0)  # first line of output is always blank
     return gsymoutput
-    #Print error and warning messages associated with a symbol
-    #file.
+    # print error and warning messages associated with a symbol file
 
 gsymoutput = gsymcheck(inputfile)
 symbolfile = readfile(inputfile)

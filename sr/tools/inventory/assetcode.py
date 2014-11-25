@@ -9,20 +9,22 @@ alphabet_lut = ["0", "1", "2", "3", "4", "5", "6", "7",
                 "G", "H", "J", "K", "L", "M", "N", "P",
                 "Q", "R", "T", "U", "V", "W", "X", "Y"]
 
+
 def num_to_code(uid, pid):
     """Convert a uid/pid number combo to an alphanumeric asset code"""
     uid = int(uid)
     pid = int(pid)
     if uid < 0 or pid < 0:
-        raise ValueError("""User/Part ID cannot be negative. UID: %i, PID: %i""" % (uid, pid))
+        raise ValueError("User/Part ID cannot be negative. "
+                         "UID: %i, PID: %i." % (uid, pid))
 
     assetno = ""
     for num in (uid, pid):
         while 1:
             if num > 15:
                 r = num % 16
-                assetno = assetno + alphabet_lut[r+16]
-                num = num/16
+                assetno = assetno + alphabet_lut[r + 16]
+                num = num / 16
             else:
                 assetno = assetno + alphabet_lut[num]
                 break
@@ -30,6 +32,7 @@ def num_to_code(uid, pid):
     assetno = assetno + checkdigit
     assert(luhn.is_valid(assetno, alphabet_lut))
     return assetno
+
 
 def code_to_num(assetno):
     """Convert an alphanumeric asset code to a uid/pid combo"""
@@ -45,12 +48,13 @@ def code_to_num(assetno):
     i = 0
     for c in assetno:
         if fieldno == 2:
-            raise Exception("""Error in asset code "%s", too many fields""" % assetno)
+            raise Exception("Error in asset code '%s', too many fields" %
+                            assetno)
         num = alphabet_lut.index(c)
         if num > 15:
-            field[fieldno] = field[fieldno] + (num-16)*(16**i)
+            field[fieldno] = field[fieldno] + (num - 16) * (16 ** i)
         else:
-            field[fieldno] = field[fieldno] + num*(16**i)
+            field[fieldno] = field[fieldno] + num * (16 ** i)
             fieldno += 1
             i = -1
         i += 1

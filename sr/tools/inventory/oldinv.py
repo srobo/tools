@@ -6,9 +6,11 @@ import yaml
 
 from sr.tools.inventory import assetcode
 
+
 def gettoplevel():
     """Find the top level of the inventory repo"""
-    tmp = subprocess.Popen(("git", "rev-parse", "--show-toplevel"), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    tmp = subprocess.Popen(("git", "rev-parse", "--show-toplevel"),
+                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     gitdir = tmp.communicate()[0].strip().decode("utf-8")
 
@@ -19,13 +21,16 @@ def gettoplevel():
 
     if not os.path.isfile(usersfn):
         return None
+
     return gitdir
 
+
 def getusername():
-    gitname = subprocess.Popen(("git", "config", "user.name"), stdout=subprocess.PIPE).communicate()[0].strip()
-    gitemail = subprocess.Popen(("git", "config", "user.email"), stdout=subprocess.PIPE).communicate()[0].strip()
+    gitname = subprocess.check_output(("git", "config", "user.name"))
+    gitemail = subprocess.check_output(("git", "config", "user.email"))
 
     return "%s <%s>" % (gitname, gitemail)
+
 
 def getusernumber(gitdir, user):
     """Get the ID number of user"""
@@ -34,11 +39,14 @@ def getusernumber(gitdir, user):
     users = yaml.load(f)
     f.close()
 
-    if users == None or user not in users:
-        print('Inventory user "{}" not found.\nPlease see http://srobo.org/trac/wiki/Inventory for more information'.format(user))
+    if users is None or user not in users:
+        print('Inventory user "{}" not found.\n'
+              'Please see http://srobo.org/trac/wiki/Inventory for more '
+              'information.'.format(user))
         sys.exit(3)
 
     return users[user]
+
 
 def getpartnumbers(topd):
     """Recursively get a list of all part numbers"""
@@ -53,7 +61,7 @@ def getpartnumbers(topd):
         if os.path.isdir(path):
             parts.extend(getpartnumbers(path))
             try:
-                acode = d[d.rindex("-sr")+3:]
+                acode = d[d.rindex("-sr") + 3:]
             except:
                 continue
             parts.append(assetcode.code_to_num(acode))
@@ -65,12 +73,13 @@ def getpartnumbers(topd):
 
             fname = os.path.basename(path)
             try:
-                acode = fname[fname.rindex("-sr")+3:]
+                acode = fname[fname.rindex("-sr") + 3:]
             except:
                 continue
             parts.append(assetcode.code_to_num(acode))
 
     return parts
+
 
 def getpartnumber(gitdir, userno):
     """Get the next available part number"""
@@ -80,4 +89,4 @@ def getpartnumber(gitdir, userno):
     for p in partnos:
         if p[0] == userno:
             maxno = max(maxno, p[1])
-    return maxno+1
+    return maxno + 1

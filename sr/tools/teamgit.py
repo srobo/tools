@@ -21,17 +21,17 @@ def list_teams():
     so, se = remote_cmd("ls {0}".format(REPOROOT))
 
     r = re.compile("^[0-9]+$")
-    teams = [x for x in so.splitlines() if r.match(x) != None]
-
+    teams = [x for x in so.splitlines() if r.match(x) is not None]
     return [int(x) for x in teams]
 
 
 class Repo(object):
+
     def __init__(self, path):
         self.path = path
 
-    def get_modtime( self ):
-        "Get the time of the last commit"
+    def get_modtime(self):
+        """Get the time of the last commit"""
 
         cmd = 'cd {path}; git log -1 --format="format:%ct"'.format(
             path=pipes.quote(self.path)
@@ -44,6 +44,7 @@ class Repo(object):
 
 
 class Team(object):
+
     def __init__(self, teamno):
         self.teamno = int(teamno)
         self._pop_repos()

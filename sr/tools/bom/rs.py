@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """Routines for scraping data about parts from RS"""
 from bs4 import BeautifulSoup
-from sr.tools.bom.cachedfetch import grab_url_cached
 from decimal import Decimal as D
+
 from sr.tools.bom import distpart
+from sr.tools.bom.cachedfetch import grab_url_cached
+
 
 class Item(distpart.DistItem):
+
     "An item sold by RS"
 
     def __init__(self, part_number):
@@ -20,8 +23,9 @@ class Item(distpart.DistItem):
         self.multi = 1
 
     def _getinfo(self):
-        "Load information from the distributor"
-        page = grab_url_cached( 'http://uk.rs-online.com/web/p/products/{0}/'.format(self.part_number) )
+        """Load information from the distributor."""
+        rs_url = 'http://uk.rs-online.com/web/p/products/{part_number}/'
+        page = grab_url_cached(rs_url.format(part_number=self.part_number))
 
         soup = BeautifulSoup(page)
 
@@ -42,15 +46,15 @@ class Item(distpart.DistItem):
         "Work out whether the part exists based on the soup"
 
         # Simple test: is this div present?
-        if soup.find( attrs = {"class": "keyDetailsDiv"} ) == None:
+        if soup.find(attrs={"class": "keyDetailsDiv"}) is None:
             return False
         return True
 
     def _cmp_part_numbers(self, a, b):
         "Return True if the two part numbers are the same"
 
-        a = a.replace( "-", "" )
-        b = b.replace( "-", "" )
+        a = a.replace("-", "")
+        b = b.replace("-", "")
 
         return a == b
 
@@ -58,20 +62,20 @@ class Item(distpart.DistItem):
         "Work out whether the info we've retrieved is for the right part"
 
         # This div contains availability
-        kd = soup.find( attrs = { "class": "keyDetailsDiv" } )
+        kd = soup.find(attrs={"class": "keyDetailsDiv"})
 
         # The label for the stock number field
-        sl = kd.find( attrs = {"class":"keyLabel"}, text="RS Stock No." )
+        sl = kd.find(attrs={"class": "keyLabel"}, text="RS Stock No.")
 
         # And the value for that field
-        sn = sl.find_next( attrs = {"class":"keyValue"} ).text
+        sn = sl.find_next(attrs={"class": "keyValue"}).text
 
-        return self._cmp_part_numbers( self.part_number, sn )
+        return self._cmp_part_numbers(self.part_number, sn)
 
     def _get_availability(self, soup):
         "Extract the part availability from the soup"
 
-        av = soup.find( attrs = {"class":"instockMessage"} )
+        av = soup.find(attrs={"class": "instockMessage"})
 
         if "In stock for next working day delivery" in av.text:
             self.avail = True
@@ -84,20 +88,20 @@ class Item(distpart.DistItem):
         "Extract pricing information from the soup"
 
         # The pricing table
-        pt = soup.find( attrs = { "class": "priceTable" } )
+        pt = soup.find(attrs={"class": "priceTable"})
 
         prices = []
 
         # There are multiple rows with availability and prices in
         for row in pt.find("tbody").find_all("tr"):
 
-            quantity = int( row.find( attrs = {"class": "quantity"} ).text )
+            quantity = int(row.find(attrs={"class": "quantity"}).text)
 
-            ps = row.find( attrs = {"class": "unitprice"} ).text
+            ps = row.find(attrs={"class": "unitprice"}).text
             # The first character is a '£'
             price = D(ps[1:])
 
-            prices.append( (quantity, price) )
+            prices.append((quantity, price))
 
         if len(prices):
             "The minimum order is the smallest quantity from this table"

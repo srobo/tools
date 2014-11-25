@@ -1,15 +1,10 @@
 from collections import Counter
 import re
-from sr.tools.trac import TracProxy, WrongServer
-
-try:
-    import xmlrpclib
-except ImportError:
-    import xmlrpc.client as xmlrpclib
 
 
 class Ticket(object):
-    "A ticket that may have dependencies"
+
+    """A ticket that may have dependencies."""
 
     def __init__(self, num, proxy):
         self.proxy = proxy
@@ -17,8 +12,8 @@ class Ticket(object):
         self.refresh()
 
     def refresh(self):
-        "Refresh with data from trac"
-        _, _, _, ticket = self.proxy.ticket.get( self.num )
+        """Refresh with data from trac."""
+        _, _, _, ticket = self.proxy.ticket.get(self.num)
         desc = self.desc = ticket["description"]
         self.status = ticket["status"]
         self.resolution = ticket["resolution"]
@@ -39,7 +34,7 @@ class Ticket(object):
 
         self.deps = []
 
-        r = reg.match( desc )
+        r = reg.match(desc)
         if r is None:
             "Ticket has no dependencies"
             self.prelude = desc
@@ -59,17 +54,20 @@ class Ticket(object):
 
         spacings = Counter()
 
-        for asterisk, ticket_num, desc in  re.findall( r"^(\s*\*\s*)#([0-9]+)\s*(.*)$",
-                                                       self.deplist,
-                                                       re.MULTILINE | re.IGNORECASE ):
-            spacings.update( [asterisk] )
-            self.deps.append( int(ticket_num) )
+        regex = r"^(\s*\*\s*)#([0-9]+)\s*(.*)$"
+        opts = re.MULTILINE | re.IGNORECASE
+        for asterisk, ticket_num, desc in re.findall(regex, self.deplist,
+                                                     opts):
+            spacings.update([asterisk])
+            self.deps.append(int(ticket_num))
 
         self.list_prefix = spacings.most_common(1)[0][0]
         self.deplist_ends_in_newline = (self.deplist[-1] == "\n")
 
-    def cleanup(self, dry_run = False, msg = "Synchronise dependency summaries with dependencies (automated edit)"):
-        "Clean-up the ticket's description"
+    def cleanup(self, dry_run=False,
+                msg="Synchronise dependency summaries with dependencies "
+                    "(automated edit)"):
+        """Clean-up the ticket's description."""
 
         # Rebuild the deplist:
         if len(self.deps) != 0 and self.deptitle == "":
@@ -81,22 +79,21 @@ class Ticket(object):
         for i, ticket_num in enumerate(self.deps):
             _, _, _, dep = self.proxy.ticket.get(ticket_num)
 
-            d += "{prefix}#{num} {summary}".format( prefix = self.list_prefix,
-                                                    num = ticket_num,
-                                                    summary = dep["summary"] )
+            d += "{prefix}#{num} {summary}".format(prefix=self.list_prefix,
+                                                   num=ticket_num,
+                                                   summary=dep["summary"])
 
-            if i != len(self.deps)-1 or self.deplist_ends_in_newline:
+            if i != len(self.deps) - 1 or self.deplist_ends_in_newline:
                 d += "\n"
 
         d += self.postscript
 
         if d == self.desc:
-            "Description has not changed"
+            # description has not changed
             return False
 
         if not dry_run:
-            self.proxy.ticket.update( self.num, msg,
-                                      { "description": d } )
+            self.proxy.ticket.update(self.num, msg, {"description": d})
 
         self.refresh()
         return True
@@ -118,8 +115,7 @@ class Ticket(object):
         # Postscript after the dependency list:
         reg += r"(?P<postscript>.*)"
 
-        return re.compile( reg,
-                           re.MULTILINE | re.IGNORECASE | re.DOTALL )
+        return re.compile(reg, re.MULTILINE | re.IGNORECASE | re.DOTALL)
 
     def __str__(self):
         return "{0}: {1}".format(self.num, self.summary)

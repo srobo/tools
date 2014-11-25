@@ -3,6 +3,7 @@ import subprocess
 
 from sr.tools import Config
 
+
 def cmd(args):
     """Run the given gerrit command and return the response"""
 

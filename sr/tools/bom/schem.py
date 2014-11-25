@@ -7,10 +7,11 @@ EAGLE = 0
 GSCHEM = 1
 UNKNOWN = 2
 
+
 def schem_type(fname):
     """Returns the type of file.
     At the moment it'll return EAGLE or UNKNOWN."""
-    f = open( fname, "r" )
+    f = open(fname, "r")
 
     if eagle.file_is_eagle(f):
         return EAGLE
@@ -19,6 +20,7 @@ def schem_type(fname):
 
     return UNKNOWN
 
+
 def open_schem(fname):
     s = schem_type(fname)
     if s == EAGLE:
@@ -26,7 +28,8 @@ def open_schem(fname):
     elif s == GSCHEM:
         schem = geda.GSchem(fname)
     else:
-        raise "We don't yet support exporting BOMs from non-EAGLE or gschem things"
+        raise Exception("We don't yet support exporting BOMs from "
+                        "non-EAGLE or gschem things.")
 
     # New items to add to the schematic
     new_items = {}
@@ -55,7 +58,7 @@ def open_schem(fname):
                     code = m.group(2)
 
                     for x in range(quantity):
-                        newdes = "%s.%i" % (des,num)
+                        newdes = "%s.%i" % (des, num)
 
                         new_items[newdes] = code
                         num = num + 1

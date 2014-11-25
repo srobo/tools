@@ -1,6 +1,5 @@
 from __future__ import print_function
 
-import argparse
 import functools
 
 
@@ -18,7 +17,7 @@ def update(args):
 
 def add_subparsers(subparsers):
     parser_list_commands = subparsers.add_parser('list-cmds',
-                                                 help='List all available ' \
+                                                 help='List all available '
                                                       'commands.')
     parser_list_commands.set_defaults(func=functools.partial(list_commands,
                                                              subparsers))

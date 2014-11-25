@@ -24,7 +24,8 @@ except ImportError:
 
 CACHE_DIR = get_cache_dir('inventory')
 
-RE_PART = re.compile( "^(.+)-sr([%s]+)$" % "".join(assetcode.alphabet_lut) )
+RE_PART = re.compile("^(.+)-sr([%s]+)$" % "".join(assetcode.alphabet_lut))
+
 
 def should_ignore(path):
     "Return True if the path should be ignored"
@@ -50,35 +51,38 @@ def normalise_partcode(partcode):
         return partcode
 
 
-def cached_yaml_load( path ):
+def cached_yaml_load(path):
     "Load the pickled YAML file from cache"
-    path = os.path.abspath( path )
+    path = os.path.abspath(path)
 
     ho = hashlib.sha256()
     ho.update(path.encode('UTF-8'))
     h = ho.hexdigest()
 
-    if not os.path.exists( CACHE_DIR ):
-        os.makedirs( CACHE_DIR )
+    if not os.path.exists(CACHE_DIR):
+        os.makedirs(CACHE_DIR)
 
-    p = os.path.join( CACHE_DIR, h )
+    p = os.path.join(CACHE_DIR, h)
 
-    if os.path.exists( p ):
+    if os.path.exists(p):
         "Cache has file"
         if os.path.getmtime(p) >= os.path.getmtime(path):
             "Check that it's newer"
             with open(p, 'rb') as file:
                 return cPickle.load(file)
 
-    y = yaml.load( codecs.open(path, "r", encoding="utf-8"),
-                   Loader = YAML_Loader )
+    y = yaml.load(codecs.open(path, "r", encoding="utf-8"),
+                  Loader=YAML_Loader)
     with open(p, 'wb') as file:
         cPickle.dump(y, file)
     return y
 
+
 class Item(object):
+
     "An item in the inventory"
-    def __init__(self, path, parent = None):
+
+    def __init__(self, path, parent=None):
         self.path = path
         self.parent = parent
         m = RE_PART.match(os.path.basename(path))
@@ -86,13 +90,15 @@ class Item(object):
         self.code = m.group(2)
 
         # Load data from yaml file
-        self.info = cached_yaml_load( path )
+        self.info = cached_yaml_load(path)
 
         # Verify that assetcode matches filename
         if self.info["assetcode"] != self.code:
-            print("Code in asset filename does not match contents of file:", file=sys.stderr)
+            print("Code in asset filename does not match contents of file:",
+                  file=sys.stderr)
             print("\t code in filename: '%s'" % self.code, file=sys.stderr)
-            print("\t code in contents: '%s'" % self.info["assetcode"], file=sys.stderr)
+            print("\t code in contents: '%s'" % self.info["assetcode"],
+                  file=sys.stderr)
             print("\n\tOffending file:", self.path, file=sys.stderr)
             exit(1)
 
@@ -101,13 +107,15 @@ class Item(object):
 
         for pname in mand:
             try:
-                setattr( self, pname, self.info[pname] )
+                setattr(self, pname, self.info[pname])
             except KeyError:
-                raise Exception( "Part sr{0} is missing '{1}' property".format( self.code,
-                                                                                pname ) )
+                raise Exception("Part sr{} is missing '{}' "
+                                "property".format(self.code, pname))
+
 
 class ItemTree(object):
-    def __init__(self, path, parent = None):
+
+    def __init__(self, path, parent=None):
         self.name = os.path.basename(path)
         self.path = path
         self.parent = parent
@@ -133,17 +141,17 @@ class ItemTree(object):
 
             if os.path.isfile(p):
                 "It's got to be an item"
-                i = Item(p, parent = self)
+                i = Item(p, parent=self)
                 self.children[i.code] = i
 
             elif os.path.isdir(p):
                 "Could either be a group or a collection"
 
-                if RE_PART.match(p) != None:
-                    a = ItemGroup(p, parent = self)
+                if RE_PART.match(p) is not None:
+                    a = ItemGroup(p, parent=self)
                     self.children[a.code] = a
                 else:
-                    t = ItemTree(p, parent = self)
+                    t = ItemTree(p, parent=self)
                     self.children[t.name] = t
 
     def walk(self):
@@ -167,22 +175,28 @@ class ItemTree(object):
 
         return pos
 
+
 class ItemGroup(ItemTree):
+
     "A group of items"
-    def __init__(self, path, parent = None):
-        ItemTree.__init__(self, path, parent = parent)
+
+    def __init__(self, path, parent=None):
+        ItemTree.__init__(self, path, parent=parent)
 
         m = RE_PART.match(os.path.basename(path))
         self.name = m.group(1)
         self.code = m.group(2)
 
         # Load info from 'info' file
-        self.info = cached_yaml_load( os.path.join( path, "info" ) )
+        self.info = cached_yaml_load(os.path.join(path, "info"))
 
         if self.info["assetcode"] != self.code:
-            print("Code in group directory name does not match info file:", file=sys.stderr)
-            print("\t code in directory name: '%s'" % self.code, file=sys.stderr)
-            print("\t           code in info: '%s'" % self.info["assetcode"], file=sys.stderr)
+            print("Code in group directory name does not match info file:",
+                  file=sys.stderr)
+            print("\t code in directory name: '%s'" % self.code,
+                  file=sys.stderr)
+            print("\t           code in info: '%s'" % self.info["assetcode"],
+                  file=sys.stderr)
             print("\n\tOffending group:", self.path, file=sys.stderr)
             exit(1)
 
@@ -193,7 +207,9 @@ class ItemGroup(ItemTree):
 
         self.elements = self.info["elements"]
 
+
 class Inventory(object):
+
     def __init__(self, rootpath):
         self.rootpath = rootpath
         self.root = ItemTree(rootpath)

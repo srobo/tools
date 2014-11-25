@@ -1,14 +1,10 @@
 # Routines for extracting BOMs from schematics
-import subprocess, tempfile, os, sys
-from sr.tools.bom import parts_db, schem
 from decimal import Decimal
+import os
+
+from sr.tools.bom import schem
 from sr.tools.bom.threadpool import ThreadPool
 
-
-PARTS_DB = os.path.expanduser("~/.sr/tools/bom/sr_component_lib")
-if not os.path.exists( PARTS_DB ):
-    print("Parts DB not found at \"%s\"" % PARTS_DB)
-    sys.exit(1)
 
 STOCK_OUT = 0
 STOCK_OK = 1
@@ -16,14 +12,19 @@ STOCK_UNKNOWN = 2
 
 NUM_THREADS = 4
 
+
 class PartGroup(list):
-    """A set of parts
-    One might call this a "BOM line" """
-    def __init__(self, part, name = "", designators = [] ):
+
+    """
+    A set of parts
+    One might call this a "BOM line"
+    """
+
+    def __init__(self, part, name="", designators=[]):
         list.__init__(self)
 
         for x in designators:
-            self.append( (name, designators) )
+            self.append((name, designators))
 
         self.part = part
         self.name = name
@@ -31,10 +32,10 @@ class PartGroup(list):
     def stockcheck(self):
         """Check the distributor has enough parts in stock."""
         s = self.part.stockcheck()
-        if s == None:
+        if s is None:
             return None
 
-        if isinstance(s, bool) and s:
+        if s is True:
             # There are some in stock, but we don't know how many
             return None
 
@@ -43,16 +44,18 @@ class PartGroup(list):
         return True
 
     def order_num(self):
-        """Returns the number of parts to order from the distributor.
+        """
+        Returns the number of parts to order from the distributor.
         e.g. if we need 5002 components from a 5000 component reel, this
-        will return 2."""
+        will return 2.
+        """
 
-        if self.part.stockcheck() == None:
+        if self.part.stockcheck() is None:
             "Unable to discover details from distributor..."
             # Assume one part per distributor unit
             return len(self)
 
-        if self.part.get_dist_units() == None:
+        if self.part.get_dist_units() is None:
             "Same as above"
             return len(self)
 
@@ -71,7 +74,8 @@ class PartGroup(list):
             "Round up to minimum order"
             n = self.part.get_min_order()
         elif (n % self.part.get_increments()) != 0:
-            n = n + (self.part.get_increments() - (n % self.part.get_increments()))
+            n = n + (self.part.get_increments() -
+                     (n % self.part.get_increments()))
 
         # Some (hopefully) sane assertions
         assert n % self.part.get_increments() == 0
@@ -80,17 +84,20 @@ class PartGroup(list):
         return n
 
     def get_price(self):
-        """Returns the price"""
+        """Returns the price."""
         n = self.order_num()
 
-        p = self.part.get_price( n )
-        if p == None:
-            print("Warning: couldn't get price for %s (%s)" % (self.part["sr-code"], self.part["supplier"]))
+        p = self.part.get_price(n)
+        if p is None:
+            print("Warning: couldn't get price for %s (%s)" %
+                  (self.part["sr-code"], self.part["supplier"]))
             return Decimal(0)
 
         return p * n
 
+
 class Bom(dict):
+
     def stockcheck(self):
         """Check that all items in the schematic are in stock.
         Returns list of things that aren't in stock."""
@@ -98,7 +105,7 @@ class Bom(dict):
         for pg in self.values():
             a = pg.stockcheck()
 
-            if a == None:
+            if a is None:
                 yield (STOCK_UNKNOWN, pg.part)
             elif not a:
                 yield (STOCK_OUT, pg.part)
@@ -111,11 +118,14 @@ class Bom(dict):
             tot = tot + pg.get_price()
         return tot
 
+
 class BoardBom(Bom):
+
     """BOM object.
     Groups parts with the same srcode into PartGroups.
     Dictionary keys are sr codes."""
-    def __init__(self, db, fname, name ):
+
+    def __init__(self, db, fname, name):
         """fname is the schematic to load from.
         db is the parts database object.
         name is the name to give the schematic."""
@@ -125,16 +135,17 @@ class BoardBom(Bom):
 
         s = schem.open_schem(fname)
 
-        for des,srcode in s.items():
+        for des, srcode in s.items():
             if srcode == "unknown":
                 print("No value set for %s" % des)
                 continue
-            if not self.has_key(srcode):
-                self[srcode] = PartGroup( db[srcode], name )
-            self[srcode].append((name,des))
+            if srcode not in self:
+                self[srcode] = PartGroup(db[srcode], name)
+            self[srcode].append((name, des))
 
 
 class MultiBoardBom(Bom):
+
     def __init__(self, db):
         Bom.__init__(self)
 
@@ -145,15 +156,15 @@ class MultiBoardBom(Bom):
         # 1: Board
         self.boards = []
 
-    def load_boards_args(self, args, allow_multipliers = True):
+    def load_boards_args(self, args, allow_multipliers=True):
         mul = 1
 
         for arg in args:
-           if arg[0] == '-' and allow_multipliers:
-              mul = int(arg[1:])
-           else:
-              board = BoardBom( self.db, arg, os.path.basename( arg ) )
-              self.add_boards(board, mul)
+            if arg[0] == '-' and allow_multipliers:
+                mul = int(arg[1:])
+            else:
+                board = BoardBom(self.db, arg, os.path.basename(arg))
+                self.add_boards(board, mul)
 
     def add_boards(self, board, num):
         """Add num boards to the collection.
@@ -161,7 +172,7 @@ class MultiBoardBom(Bom):
 
         # Already part of this collection?
         found = False
-        for n in xrange(len(self.boards)):
+        for n in range(len(self.boards)):
             t = self.boards[n]
             if t[1] == board:
                 t[0] = t[0] + num
@@ -169,26 +180,27 @@ class MultiBoardBom(Bom):
                 break
 
         if not found:
-            self.boards.append( [num, board] )
+            self.boards.append([num, board])
 
-        #### Update our PartGroup dictionary
+        # update our PartGroup dictionary
         self.clear()
 
         for num, board in self.boards:
 
-            # Mmmmm.  Horrible.
+            # Mmmmm. Horrible.
             for i in range(num):
                 for srcode, bpg in board.items():
 
-                    if not self.has_key( srcode ):
-                        self[srcode] = PartGroup( bpg.part )
+                    if srcode not in self:
+                        self[srcode] = PartGroup(bpg.part)
 
                     self[srcode] += bpg
 
     def prime_cache(self):
-        """Ensures that the webpage cache is filled in the
-        quickest time possible by making many requests in
-        parallel"""
+        """
+        Ensures that the webpage cache is filled in the quickest time possible
+        by making many requests in parallel.
+        """
 
         print("Getting data for parts from suppliers' websites")
         pool = ThreadPool(NUM_THREADS)

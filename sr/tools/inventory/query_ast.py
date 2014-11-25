@@ -1,6 +1,7 @@
 import fnmatch
 
 from sr.tools.inventory import inventory
+from functools import reduce
 
 
 class ASTNode(object):
@@ -8,12 +9,14 @@ class ASTNode(object):
 
 
 class NonTerminal(ASTNode):
+
     def match(self, inv_nodes):
         raise NotImplementedError("match(...) not implemented"
                                   " for {}".format(self.__class__))
 
 
 class Terminal(ASTNode):
+
     def match_single(self, inv_node):
         raise NotImplementedError("match_single(...) not implemented"
                                   " for {}".format(self.__class__))
@@ -22,8 +25,8 @@ class Terminal(ASTNode):
         return filter(self.match_single, inv_nodes)
 
 
-
 class Not(NonTerminal):
+
     def __init__(self, node):
         super(Not, self).__init__()
         self.node = node
@@ -37,6 +40,7 @@ class Not(NonTerminal):
 
 
 class And(NonTerminal):
+
     def __init__(self, left, right):
         super(And, self).__init__()
         self.left = left
@@ -45,13 +49,15 @@ class And(NonTerminal):
     def match(self, inv_nodes):
         left_matches = self.left.match(inv_nodes)
         right_matches = self.right.match(inv_nodes)
-        return list(set([x for x in inv_nodes if (x in left_matches and x in right_matches)]))
+        return list({x for x in inv_nodes
+                     if (x in left_matches and x in right_matches)})
 
     def sexpr(self):
         return "(AND {0} {1})".format(self.left.sexpr(), self.right.sexpr())
 
 
 class Or(NonTerminal):
+
     def __init__(self, left, right):
         super(Or, self).__init__()
         self.left = left
@@ -60,20 +66,22 @@ class Or(NonTerminal):
     def match(self, inv_nodes):
         left_matches = self.left.match(inv_nodes)
         right_matches = self.right.match(inv_nodes)
-        return list(set([x for x in inv_nodes if (x in left_matches or x in right_matches)]))
+        return list({x for x in inv_nodes
+                     if (x in left_matches or x in right_matches)})
 
     def sexpr(self):
         return "(OR {0} {1})".format(self.left.sexpr(), self.right.sexpr())
 
 
 class Condition(Terminal):
+
     def __init__(self, *conditions):
         super(Condition, self).__init__()
         self.conditions = set(conditions)
 
     def _flatten(self, l):
         if type(l) not in (list, tuple):
-           return l
+            return l
         ret = []
         for i in l:
             if type(i) in (list, tuple):
@@ -93,10 +101,10 @@ class Condition(Terminal):
             ret = []
             for name in expected:
                 count = 1
-                if type(name) == dict:
+                if isinstance(name, dict):
                     count = name.values()[0]
                     name = name.keys()[0]
-                if not name in inv_node.types:
+                if name not in inv_node.types:
                     ret.append('broken')
                 if name in inv_node.types:
                     c = 0
@@ -124,6 +132,7 @@ class Condition(Terminal):
 
 
 class Type(Terminal):
+
     def __init__(self, *types):
         super(Type, self).__init__()
         self.types = types
@@ -140,6 +149,7 @@ class Type(Terminal):
 
 
 class Labelled(Terminal):
+
     def __init__(self, labelled):
         super(Labelled, self).__init__()
         self.labelled = labelled.lower() in ('true', '1')
@@ -154,6 +164,7 @@ class Labelled(Terminal):
 
 
 class Assy(Terminal):
+
     def __init__(self, assy):
         super(Assy, self).__init__()
         self.assy = assy.lower() in ('true', '1')
@@ -167,6 +178,7 @@ class Assy(Terminal):
 
 
 class TriState(Terminal):
+
     def __init__(self, key, desired_val):
         super(TriState, self).__init__()
         self.key = key
@@ -179,7 +191,7 @@ class TriState(Terminal):
             if self.desired_val == "true":
                 return inv_node.info[self.key]
             else:
-                return inv_node.info[self.key] == False
+                return inv_node.info[self.key] is False
         return False
 
     def sexpr(self):
@@ -187,6 +199,7 @@ class TriState(Terminal):
 
 
 class Path(Terminal):
+
     def __init__(self, *paths):
         super(Path, self).__init__()
         paths = [path[1:] if path[0] == '/' else path for path in paths]
@@ -203,7 +216,7 @@ class Path(Terminal):
         root_path = self._root_path(inv_node)
         if hasattr(inv_node, 'path'):
             for path in self.paths:
-                if fnmatch.fnmatch(inv_node.path[len(root_path)+1:], path):
+                if fnmatch.fnmatch(inv_node.path[len(root_path) + 1:], path):
                     return True
         return False
 
@@ -212,6 +225,7 @@ class Path(Terminal):
 
 
 class Code(Terminal):
+
     def __init__(self, *codes):
         self.codes = set(map(self._tidy, codes))
 
@@ -229,6 +243,7 @@ class Code(Terminal):
 
 
 class Serial(Terminal):
+
     def __init__(self, *serials):
         self.serials = set(serials)
 
@@ -260,7 +275,6 @@ class Function(NonTerminal):
         self.node = node
 
     def match(self, inv_nodes):
-        ret = []
         return list(set(reduce(lambda x, y: list(x) + list(y),
                                map(self._functions[self.func_name],
                                    self.node.match(inv_nodes)), [])))
@@ -268,9 +282,11 @@ class Function(NonTerminal):
     def sexpr(self):
         return "(Function '{0}' {1})".format(self.func_name, self.node.sexpr())
 
+
 @Function.register('parent')
 def _parent(inv_node):
     return [inv_node.parent]
+
 
 @Function.register('children')
 def _children(inv_node):
@@ -278,10 +294,12 @@ def _children(inv_node):
         return []
     return inv_node.children.values()
 
+
 @Function.register('siblings')
 def _siblings(inv_node):
     return filter(lambda x: x is not inv_node,
                   inv_node.parent.children.values())
+
 
 @Function.register('descendants')
 def _descendants(inv_node):

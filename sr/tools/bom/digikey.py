@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Routines for scraping data about parts from digikey"""
 from sr.tools.bom.cachedfetch import grab_url_cached
-from sr.tools.bom.srBeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 from decimal import Decimal
 from sr.tools.bom import distpart
 import re

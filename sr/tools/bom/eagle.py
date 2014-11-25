@@ -2,6 +2,8 @@
 You probably always want to import schem instead of this."""
 import os, subprocess, hashlib
 
+from sr.tools.environment import get_cache_dir
+
 def file_is_eagle(f):
     """Return true if the file is an EAGLE file"""
     f.seek(0)
@@ -35,9 +37,7 @@ class EagleSchem(dict):
 
     def __load_bom_cached(self):
         "Load the BOM from cache if possible."
-        cache_dir = os.path.expanduser( "~/.sr/cache/eagle_bom" )
-        if not os.path.exists( cache_dir ):
-            os.makedirs( cache_dir )
+        cache_dir = get_cache_dir('bom', 'eagle')
 
         ab = os.path.abspath( self.fname )
 

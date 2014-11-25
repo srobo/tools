@@ -1,5 +1,7 @@
 import hashlib, os, subprocess, re
 
+from sr.tools.environment import get_cache_dir
+
 def file_is_geda_pcb(f):
     """Return true if the file is a gEDA PCB file"""
     f.seek(0)
@@ -24,9 +26,7 @@ class GSchem(dict):
         p.wait()
 
     def __load_bom(self):
-        cache_dir = os.path.expanduser("~/.sr/cache/geda_bom")
-        if not os.path.exists( cache_dir ):
-            os.makedirs( cache_dir )
+        cache_dir = get_cache_dir('bom', 'geda', 'bom')
 
         ab = os.path.abspath( self.fname )
 
@@ -92,9 +92,7 @@ class PCB:
         p.wait()
 
     def get_image(self, res):
-        cache_dir = os.path.expanduser("~/.sr/cache/geda_pcbimg")
-        if not os.path.exists(cache_dir):
-            os.makedirs(cache_dir)
+        cache_dir = get_cache_dir('bom', 'geda', 'pcbimg')
 
         ab = os.path.abspath(self.fname)
 
@@ -122,9 +120,7 @@ class PCB:
         return img
 
     def get_xy(self):
-        cache_dir = os.path.expanduser("~/.sr/cache/geda_pcbxy")
-        if not os.path.exists(cache_dir):
-            os.makedirs(cache_dir)
+        cache_dir = get_cache_dir('bom', 'geda', 'pcbxy')
 
         ab = os.path.abspath(self.fname)
 

@@ -15,13 +15,14 @@ except ImportError:
 import yaml
 
 from sr.tools.inventory import assetcode
+from sr.tools.environment import get_cache_dir
 
 try:
     from yaml import CLoader as YAML_Loader
 except ImportError:
     from yaml import Loader as YAML_Loader
 
-CACHE_DIR = os.path.expanduser( "~/.sr/cache/inventory" )
+CACHE_DIR = get_cache_dir('inventory')
 
 RE_PART = re.compile( "^(.+)-sr([%s]+)$" % "".join(assetcode.alphabet_lut) )
 

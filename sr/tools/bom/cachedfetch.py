@@ -8,14 +8,13 @@ except ImportError:
 
 import os, hashlib, time
 
+from sr.tools.environment import get_cache_dir
+
 # Number of seconds for the cache to last for
 CACHE_LIFE = 36000
 
 def grab_url_cached(url):
-    cache_dir = os.path.expanduser( "~/.sr/cache/rs" )
-
-    if not os.path.exists( cache_dir ):
-        os.makedirs( cache_dir )
+    cache_dir = get_cache_dir('rs')
 
     h = hashlib.sha1()
     h.update(url.encode('UTF-8'))

@@ -94,13 +94,12 @@ def budget_line_to_account(line):
 
 
 def account_to_budget_line(account):
-    "Convert an account name to a budget line name"
+    """Convert an account name to a budget line name"""
     line = account.replace(":", "/")
     return line[len("Expenses/"):]
 
 
 class LedgerNotFound(Exception):
-
     def __init__(self):
         super(LedgerNotFound, self).__init__("Unable to find 'ledger' which "
                                              "is required to operate the "
@@ -111,11 +110,12 @@ def load_budget_spends(root):
     p = os.path.join(root, "spending.dat")
 
     try:
-        balances = check_output(["ledger",
-                                 "--file", p,
-                                 "bal",
-                                 "--format", "%A,%(display_total)\n",
-                                 "^Expenses:"])
+        cmd = ["ledger",
+               "--file", p,
+               "bal",
+               "--format", "%A,%(display_total)\n",
+               "^Expenses:"]
+        balances = check_output(cmd, universal_newlines=True).strip()
     except OSError as oe:
         if oe.errno == errno.ENOENT:
             "A nicer error for the most likely case"
@@ -131,7 +131,7 @@ def load_budget_spends(root):
         if len(account) == 0:
             continue
 
-        total = D(total.decode("utf-8")[1:])
+        total = D(total[1:])
         line = account_to_budget_line(account)
 
         lines[line] = total

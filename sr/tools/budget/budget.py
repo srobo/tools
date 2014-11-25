@@ -7,6 +7,7 @@ import collections
 from decimal import Decimal as D, ROUND_CEILING, ROUND_FLOOR, ROUND_UP
 import runpy
 import tempfile
+import shutil
 from subprocess import check_call, check_output, CalledProcessError
 from tempfile import NamedTemporaryFile
 import tokenize
@@ -315,7 +316,6 @@ def load_budget(root):
 
 
 class TmpBudgetExport(object):
-
     def __init__(self, root, rev):
         self.rev = rev
         self.tmpdir = tempfile.mkdtemp()
@@ -325,11 +325,9 @@ class TmpBudgetExport(object):
 
     def _export(self, root, rev, path):
         check_call("git archive {0} | tar -x -C {1}".format(rev, path),
-                   cwd=root,
-                   shell=True)
+                   cwd=root, shell=True)
 
     def __del__(self):
-        import shutil
         shutil.rmtree(self.tmpdir)
 
 

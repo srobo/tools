@@ -60,16 +60,12 @@ else:
 def list_referenced_lines(root):
     "Return a list of budget lines referenced in spending.git"
 
-    o = check_output( [ "ledger",
-                        "--file", os.path.join(root, "spending.dat"),
-                        "reg", "^Expenses:",
-                        "--format", "%A\n" ] )
-
-    lines = []
-    for account in o.splitlines():
-        lines.append(spending.account_to_budget_line(account))
-
-    return lines
+    cmd = ["ledger",
+           "--file", os.path.join(root, "spending.dat"),
+           "reg", "^Expenses:",
+           "--format", "%A\n"]
+    o = check_output(cmd, universal_newlines=True).strip()
+    return [spending.account_to_budget_line(line) for line in o.splitlines()]
 
 spending_root = args.spending
 if spending_root is None:

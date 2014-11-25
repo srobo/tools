@@ -62,4 +62,5 @@ for item in items:
     else:
         contents += "\nclosed: true\n"
 
-    open(item.fname,'w').write(contents)
+    with open(item.fname, 'w') as file:
+        file.write(contents)

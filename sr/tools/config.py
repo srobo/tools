@@ -44,7 +44,7 @@ class Config(dict):
     def update_from_file(self, fname):
         """Update the config from the given YAML file"""
         with open(fname) as file:
-            d = yaml.saafe_load(file, Loader=yaml.CLoader)
+            d = yaml.safe_load(file)
         self.update(d)
 
     def get_user(self, *args):

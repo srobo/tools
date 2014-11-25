@@ -12,6 +12,8 @@ try:
 except ImportError:
     keyring = None
 
+from sr.tools.environment import get_config_filename
+
 
 class Config(dict):
     "Configuration reader for the SR tools"
@@ -22,9 +24,10 @@ class Config(dict):
                                              "config.yaml" ) )
 
         # Override with the local config
-        local_fname = os.path.expanduser( "~/.sr/config.yaml" )
-        if os.path.exists( local_fname ):
-            self.update_from_file( local_fname )
+        try:
+            self.update_from_file(get_config_filename())
+        except FileNotFoundError:
+            pass
 
     @staticmethod
     def get_tools_root():
@@ -42,7 +45,7 @@ class Config(dict):
     def update_from_file(self, fname):
         "Update the config from the given YAML file"
 
-        with open(fname, "r") as f:
+        with open(fname) as f:
             d = yaml.load(f, Loader = yaml.CLoader )
 
         self.update(d)

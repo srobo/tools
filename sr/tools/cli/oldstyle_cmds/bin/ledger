@@ -7,6 +7,8 @@ from sr.tools.spending import NotSpendingRepo
 from subprocess import check_call
 import sys
 
+from sr.tools.environment import get_config_filename
+
 # Invoke ledger on the SR spending repo
 # Check that we are indeed invoking it on spending.git
 
@@ -27,7 +29,7 @@ except NotSpendingRepo:
     print("This isn't SR spending.git", file=sys.stderr)
     print("Solve this by either:", file=sys.stderr)
     print(" - Changing working directory to spending.git", file=sys.stderr)
-    print(" - Set the 'spending' config option in ~/.sr/config.yaml", file=sys.stderr)
+    print(" - Set the 'spending' config option in {}".format(get_config_filename()), file=sys.stderr)
     exit(1)
 
 args = sys.argv

@@ -21,10 +21,15 @@ def get_cache_dir(*components):
     If the environment variable 'SR_CACHE_DIR' is set, that takes precedence as
     the root of the cache directory.
     """
-    root_path = os.path.expanduser(os.environ.get('SR_CACHE_DIR',
-                                                  '~/.sr/cache'))
+    root_path = os.environ.get('SR_CACHE_DIR',
+                               os.path.expanduser('~/.sr/cache'))
 
     path = os.path.join(root_path, *components)
     if not os.path.exists(path):
         os.makedirs(path)
     return path
+
+def get_config_filename():
+    """Return the filename for the configuration file."""
+    return os.environ.get('SR_CONFIG',
+                          os.path.expanduser('~/.sr/config.yaml'))

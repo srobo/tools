@@ -71,8 +71,7 @@ intuitive.
 
 * *Keys:* `path`
 * *Values:* *a valid glob-like pattern*
-* *Example:* `path:vault`, for all parts under any path, relative to the
-inventory root, that begins with '`vault`'
+* *Example:* `path:vault`, for all parts under any path, relative to the inventory root, that begins with '`vault`'
 
 
 ### Assembly:

@@ -15,7 +15,7 @@ API Documentation
 -----------------
 
 .. toctree::
-   api/sr.tools
+   api/modules
 
 Indices and tables
 ==================

@@ -4,6 +4,7 @@ from sr.tools.bom import parts_db, schem
 from decimal import Decimal
 from sr.tools.bom.threadpool import ThreadPool
 
+
 PARTS_DB = os.path.expanduser("~/.sr/tools/bom/sr_component_lib")
 if not os.path.exists( PARTS_DB ):
     print("Parts DB not found at \"%s\"" % PARTS_DB)

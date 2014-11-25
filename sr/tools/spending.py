@@ -143,14 +143,13 @@ class NotSpendingRepo(Exception):
 
 
 def find_root(path=None):
-    """Find the root directory of the spending repository
+    """
+    Find the root directory of the spending repository.
 
-    Checks that the repository is spending.git too
+    Checks that the repository is spending.git too.
 
-    Arguments:
-    path -- if provided is a path within the spending.git repository
-            (defaults to working directory)"""
-
+    :param path: if provided, is a path within the spending.git repository (defaults to working directory)
+    """
     if path is None:
         path = os.getcwd()
 

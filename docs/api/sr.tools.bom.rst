@@ -92,14 +92,6 @@ sr.tools.bom.schem module
     :undoc-members:
     :show-inheritance:
 
-sr.tools.bom.srBeautifulSoup module
------------------------------------
-
-.. automodule:: sr.tools.bom.srBeautifulSoup
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 sr.tools.bom.threadpool module
 ------------------------------
 

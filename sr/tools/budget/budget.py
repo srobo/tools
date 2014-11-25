@@ -325,14 +325,13 @@ class NotBudgetRepo(Exception):
     pass
 
 def find_root( path = os.getcwd() ):
-    """Find the root directory of the budget repository
+    """
+    Find the root directory of the budget repository.
 
-    Checks that the repository is budget.git too
+    Checks that the repository is budget.git too.
 
-    Arguments:
-    path -- if provided is a path within the budget.git repository
-            (defaults to working directory)"""
-
+    :param path: if provided is a path within the budget.git repository (defaults to working directory)
+    """
     try:
         "Check that we're in budget.git"
 

@@ -18,8 +18,8 @@ def _get_args():
     parser.add_argument('-v', action='store_true')
     parser.add_argument('query')
     args = parser.parse_args()
-    style = 'codes' if args.codes else 'paths'
-    return (args.query, style, args.v)
+    query_style = 'codes' if args.codes else 'paths'
+    return args.query, query_style, args.v
 
 query_str, style, verbose = _get_args()
 

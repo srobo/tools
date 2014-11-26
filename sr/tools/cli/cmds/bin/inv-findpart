@@ -21,14 +21,17 @@ COLOUR_YELLOW = "\033[1;33m"
 desc = "Find the location of a specific item in the inventory."
 
 aparser = argparse.ArgumentParser(description=desc)
-aparser.add_argument("-s", "--stat", action="store_true", default=False, dest="asset_stat", help="Show the status of each asset listed based upon the 'condition' field.")
-aparser.add_argument("-r", "--relpath", action="store_true", default=False, dest="relpath", help="Print relative, rather than absolute, paths.")
-aparser.add_argument("itemspecs", metavar="ITEM_SPEC", nargs="+", help="Either an SR asset code or part type. The nature of the specifier is auto-detected and asset codes/part types can be mixed.")
+aparser.add_argument("-s", "--stat", action="store_true", default=False, dest="asset_stat",
+                     help="Show the status of each asset listed based upon the 'condition' field.")
+aparser.add_argument("-r", "--relpath", action="store_true", default=False, dest="relpath",
+                     help="Print relative, rather than absolute, paths.")
+aparser.add_argument("itemspecs", metavar="ITEM_SPEC", nargs="+",
+                     help="Either an SR asset code or part type. The nature of the specifier is auto-detected and asset codes/part types can be mixed.")
 
 args = aparser.parse_args()
 
 top = oldinv.gettoplevel()
-if top == None:
+if top is None:
     print("Error: Must be run from within the inventory.", file=sys.stderr)
     exit(1)
 inv = srinv.Inventory(top)

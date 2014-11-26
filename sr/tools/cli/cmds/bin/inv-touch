@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 from __future__ import print_function
 
-import sys, os, re
+import sys
+import os
+import re
 
 if len(sys.argv) < 2:
     print("Usage: {} ASSET".format(os.path.basename(sys.argv[0])))
@@ -26,7 +28,7 @@ try:
         revmatch = re.match("^[ ]*revision\\s*:\\s*([0-9]+)", line)
         if revmatch:
             rev = int(revmatch.group(1))
-            line = re.sub("([^0-9]*)[0-9]*([^0-9]*)", "\\g<1>{}\\g<2>".format(rev+1), line)
+            line = re.sub("([^0-9]*)[0-9]*([^0-9]*)", "\\g<1>{}\\g<2>".format(rev + 1), line)
 
         new.write(line)
 except:

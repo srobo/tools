@@ -14,7 +14,7 @@ if len(sys.argv) < 2:
     exit(1)
 
 top = oldinv.gettoplevel()
-if top == None:
+if top is None:
     print("Error: Must be run from within the inventory.", file=sys.stderr)
     exit(1)
 inv = srinv.Inventory(top)
@@ -39,13 +39,13 @@ for c in sys.argv[1:]:
 
     parts.append(part)
 
-editor = os.getenv( "EDITOR", "vi" )
+editor = os.getenv("EDITOR", "vi")
 
 for part in parts:
     print("# item -> parent")
 
-    if hasattr( part.parent, "code" ):
+    if hasattr(part.parent, "code"):
         print("%s -> %s" % (part.code, part.parent.code))
 
-    elif hasattr( part.parent, "name" ):
-        print("%s -> dir(%s)" % (part.code, part.parent.name ))
+    elif hasattr(part.parent, "name"):
+        print("%s -> dir(%s)" % (part.code, part.parent.name))

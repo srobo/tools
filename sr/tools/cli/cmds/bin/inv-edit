@@ -3,7 +3,6 @@ from __future__ import print_function
 
 import os
 import sys
-import subprocess
 
 import sr.tools.inventory as srinv
 from sr.tools.inventory import assetcode
@@ -16,7 +15,7 @@ if len(sys.argv) < 2:
     exit(1)
 
 top = oldinv.gettoplevel()
-if top == None:
+if top is None:
     print("Error: Must be run from within the inventory.", file=sys.stderr)
     exit(1)
 inv = srinv.Inventory(top)

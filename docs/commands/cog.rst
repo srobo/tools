@@ -3,4 +3,8 @@ cog
 
 Clone a Student Robotics git repository.
 
-``Usage: sr cog [-h] [-a] repo [dir]``
+.. code::
+
+    Usage: sr cog [-h] [-a] repo [dir]
+
+Use the ``-a`` or ``--anonymous`` flag to clone anonymously.

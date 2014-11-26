@@ -10,3 +10,4 @@ List all the available commands in the SR tools.
     repolist
     cog
     ...
+    $

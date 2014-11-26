@@ -2,13 +2,13 @@
 from __future__ import print_function
 
 import json
+import re
+import sys
 
 try:
     import urllib.request as urllib
 except ImportError:
     import urllib
-
-import sys, re
 
 
 if len(sys.argv) > 2 or (len(sys.argv) == 2 and sys.argv[1] == '--help'):

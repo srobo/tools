@@ -19,11 +19,13 @@ setup(
         'sympy',
         'pyparsing',
         'beautifulsoup4',
-        'numpy',
-        'pyudev',
-        'pygit2',
-        'matplotlib'
+        'numpy'
     ],
+    extras_require={
+        'inv-history': ['pygit2'],
+        'linux': ['pyudev'],
+        'price-graph': ['matplotlib']
+    },
     include_package_data=True,
     zip_safe=False,
     classifiers=[

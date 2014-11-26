@@ -6,19 +6,15 @@ import pydoc
 import subprocess
 
 import sr.tools.inventory as srinv
+from sr.tools.inventory import get_inventory
 from sr.tools.inventory import normalise_partcode
-from sr.tools.inventory import oldinv
 
 parser = argparse.ArgumentParser(
     description="Show the metadata of a given part, and its git history.")
 parser.add_argument('partcode', type=str, help="The part code to look up.")
 args = parser.parse_args()
 
-top = oldinv.gettoplevel()
-if top is None:
-    print("Error: Must be run from within the inventory.", file=sys.stderr)
-    exit(1)
-inv = srinv.Inventory(top)
+inv = get_inventory()
 
 partcode = normalise_partcode(args.partcode)
 part = inv.root.parts[partcode]

@@ -15,6 +15,7 @@ except ImportError:
 import yaml
 
 from sr.tools.inventory import assetcode
+from sr.tools.inventory import oldinv
 from sr.tools.environment import get_cache_dir
 
 try:
@@ -25,6 +26,16 @@ except ImportError:
 CACHE_DIR = get_cache_dir('inventory')
 
 RE_PART = re.compile("^(.+)-sr([%s]+)$" % "".join(assetcode.alphabet_lut))
+
+
+def get_inventory():
+    """Return an Inventory object if in an inventory directory; else exit."""
+    top = oldinv.gettoplevel()
+    if top is None:
+        print("Error: Must be run from within the inventory.", file=sys.stderr)
+        exit(1)
+
+    return Inventory(top)
 
 
 def should_ignore(path):

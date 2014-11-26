@@ -31,7 +31,7 @@ class Config(dict):
         # Override with the local config
         try:
             self.update_from_file(get_config_filename())
-        except FileNotFoundError:
+        except IOError:
             pass
 
     @staticmethod
@@ -49,7 +49,8 @@ class Config(dict):
         """Update the config from the given YAML file"""
         with open(fname) as file:
             d = yaml.safe_load(file)
-        self.update(d)
+        if d is not None:
+            self.update(d)
 
     def get_user(self, *args):
         """

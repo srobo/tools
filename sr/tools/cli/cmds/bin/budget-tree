@@ -3,12 +3,13 @@
 from __future__ import print_function
 
 from argparse import ArgumentParser
-from sr.tools import budget
 import sys
 
-parser = ArgumentParser( description = "Draw (part of) the budget as an ascii tree" )
-parser.add_argument( "path", nargs = "?",
-                     help = "The subtree to draw" )
+from sr.tools import budget
+
+
+parser = ArgumentParser(description="Draw (part of) the budget as an ascii tree")
+parser.add_argument("path", nargs="?", help="The subtree to draw" )
 args = parser.parse_args()
 
 try:
@@ -17,9 +18,9 @@ except budget.NotBudgetRepo:
     print("Error: Please run in budget.git", file=sys.stderr)
     exit(1)
 
-b = budget.load_budget( root )
+b = budget.load_budget(root)
 
 if args.path is not None:
-    b = b.path( args.path )
+    b = b.path(args.path)
 
 b.draw()

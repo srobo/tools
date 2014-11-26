@@ -3,8 +3,9 @@
 from __future__ import print_function
 
 import sys
-import sr.tools.budget as budget
 import numpy as np
+
+import sr.tools.budget as budget
 
 
 class Cmd(object):
@@ -13,40 +14,36 @@ class Cmd(object):
 
 
 class TotalCmd(object):
-    "Calculate the total cost of the items in the tree."
+    """Calculate the total cost of the items in the tree."""
     def __init__(self, tree):
         print("Total: £%s" % tree.total())
 
 
 class HistCmd(object):
-    "Display a histogram of the items in the tree."
+    """Display a histogram of the items in the tree."""
     def __init__(self, tree):
         import pylab
         costs = []
         items = list(tree.walk())
-        items.sort( cmp = self.cmp_item_cost )
+        items.sort(key=lambda x: x.cost)
 
         costs = [x.cost for x in items]
         names = [x.name for x in items]
 
         pos = np.arange(0, len(costs)) + 0.5
-        pylab.barh(pos, costs, align = "center" )
+        pylab.barh(pos, costs, align="center")
         pylab.yticks(pos, names)
-        pylab.subplots_adjust( left=0.5 )
+        pylab.subplots_adjust(left=0.5)
         pylab.show()
 
-    def cmp_item_cost(self, x, y):
-        return cmp(x.cost, y.cost)
-
-commands = { "total": TotalCmd,
-             "hist": HistCmd }
+commands = {"total": TotalCmd, "hist": HistCmd}
 
 def usage():
     global commands
 
     print("Usage: query CMD SUBTREE_PATH")
     print("\nWhere CMD is one of:")
-    for name,cmd in commands.items():
+    for name, cmd in commands.items():
         print("  -%s: %s" % (name, cmd.__doc__))
 
 if len(sys.argv) != 3:

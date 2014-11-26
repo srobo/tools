@@ -2,11 +2,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 
+import argparse
+import re
+import os
+import sys
+
+import yaml
+
 import sr.tools.spending as srspending
 import sr.tools.budget as srbudget
-import os, re, sys, yaml, argparse
 
-parser = argparse.ArgumentParser( description = "Close a budget line" )
+
+parser = argparse.ArgumentParser(description="Close a budget line")
 parser.add_argument("LINE", help="Budget line to close")
 args = parser.parse_args()
 
@@ -27,13 +34,13 @@ else:
 
 for item in items:
     if item.closed:
-        "Line is already closed; nothing to do"
+        # Line is already closed; nothing to do
         continue
 
     if item.spent > (item.cost * srbudget.FUDGE_FACTOR):
-        "More has been spent than the budget line's value"
-        print("Cannot close {0}: More has been spent than budgeted.".format( item.name ), file=sys.stderr)
-        print("\tSpent: £{0}\n\tBudgeted: £{1}".format( item.spent, item.cost * srbudget.FUDGE_FACTOR ), file=sys.stderr)
+        # More has been spent than the budget line's value
+        print("Cannot close {0}: More has been spent than budgeted.".format(item.name), file=sys.stderr)
+        print("\tSpent: £{0}\n\tBudgeted: £{1}".format(item.spent, item.cost * srbudget.FUDGE_FACTOR ), file=sys.stderr)
         # Skip this item
         continue
 
@@ -49,16 +56,13 @@ for item in items:
         continue
 
     # Mark as closed
-    m = re.search( r"^\s*closed\s*:.*$", contents,
-                   flags = re.MULTILINE )
+    m = re.search(r"^\s*closed\s*:.*$", contents, flags=re.MULTILINE)
     if m is not None:
-        "There's a closed line in there already"
-
-        contents = re.sub( r"^(\s*closed\s*:\s*).*$",
-                           r"\1true",
-                           contents,
-                           flags = re.MULTILINE )
-
+        # There's a closed line in there already
+        contents = re.sub(r"^(\s*closed\s*:\s*).*$",
+                          r"\1true",
+                          contents,
+                          flags=re.MULTILINE)
     else:
         contents += "\nclosed: true\n"
 

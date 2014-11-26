@@ -338,18 +338,11 @@ class TmpBudgetExport(object):
         check_call("git archive {0} | tar -x -C {1}".format(rev, path),
                    cwd=root, shell=True)
 
-    def __del__(self):
-        shutil.rmtree(self.tmpdir)
 
-
-def load_budget_rev(root, rev, keep_around=False):
-    "Load a named revision of the budget"
+def load_budget_rev(root, rev):
+    # Load a named revision of the budget
     t = TmpBudgetExport(root, rev)
-
-    if not keep_around:
-        return t.btree
-
-    return t.btree, t
+    return t.btree
 
 
 class NotBudgetRepo(Exception):

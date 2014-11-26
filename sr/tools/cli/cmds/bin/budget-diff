@@ -5,21 +5,21 @@ from __future__ import print_function
 from argparse import ArgumentParser
 from decimal import Decimal as D
 import sys
-import sr.tools.budget as budget
-from sr.tools.budget.diff import ( diff_trees, AddedItem, RemovedItem,
-                                   ChangedItem, changes_to_tree )
 
-parser = ArgumentParser( description = "Diff two versions of the budget" )
-parser.add_argument( "old",
-                     help = "Old git commit to compare against." )
-parser.add_argument( "new", nargs="?", default = None,
-                     help = "New git commit to act as reference (default HEAD)." )
-parser.add_argument( "--tree", "-t", action="store_true",
-                     help = "Display the diff as a tree" )
-parser.add_argument( "--limit", "-l", type=str,
-                     help = "Limit to the given subtree" )
-parser.add_argument( "--zero-hide", "-z", action="store_true",
-                     help = "Hide lines added or removed with 0 value" )
+import sr.tools.budget as budget
+from sr.tools.budget.diff import diff_trees, AddedItem, RemovedItem, \
+                                 ChangedItem, changes_to_tree
+
+parser = ArgumentParser(description="Diff two versions of the budget")
+parser.add_argument("old", help="Old git commit to compare against.")
+parser.add_argument("new", nargs="?", default=None,
+                    help="New git commit to act as reference (default HEAD).")
+parser.add_argument("--tree", "-t", action="store_true",
+                    help = "Display the diff as a tree")
+parser.add_argument("--limit", "-l", type=str,
+                    help = "Limit to the given subtree")
+parser.add_argument("--zero-hide", "-z", action="store_true",
+                    help = "Hide lines added or removed with 0 value")
 args = parser.parse_args()
 
 try:
@@ -29,43 +29,43 @@ except budget.NotBudgetRepo:
     exit(1)
 
 # Build the two trees
-a, tree_a = budget.load_budget_rev( root, args.old, keep_around = True )
+a = budget.load_budget_rev(root, args.old)
 
 if args.new is None:
-    "Use current working copy"
-    b = budget.load_budget( root )
+    # Use current working copy
+    b = budget.load_budget(root)
 else:
-    "Use specified revision"
-    b, tree_b = budget.load_budget_rev( root, args.new, keep_around = True )
+    # Use specified revision
+    b = budget.load_budget_rev(root, args.new)
 
 if args.limit is not None:
-    "Limit the diff to the given subtree"
+    # Limit the diff to the given subtree
 
     try:
-        a = a.path( args.limit )
+        a = a.path(args.limit)
     except budget.InvalidPath:
         # Tree wasn't present in the original
         # Create an empty tree
         a = budget.BudgetTree("")
 
     try:
-        b = b.path( args.limit )
+        b = b.path(args.limit)
     except budget.InvalidPath:
         # Tree isn't present in the other
         # Create an empty tree
         b = budget.BudgetTree("")
 
 changes = []
-for change in diff_trees( a, b ):
+for change in diff_trees(a, b):
     if args.zero_hide \
-       and ( isinstance(change, AddedItem) \
-             or isinstance(change, RemovedItem) ) \
+       and (isinstance(change, AddedItem) \
+             or isinstance(change, RemovedItem)) \
        and change.a.cost == 0:
             continue
     changes.append(change)
 
 if args.tree:
-    tree = changes_to_tree( changes )
+    tree = changes_to_tree(changes)
 
     tree.draw()
     exit(0)

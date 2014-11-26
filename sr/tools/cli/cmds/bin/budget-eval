@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 
-import sys, sympy
-import sr.tools.budget as budget
+import sympy
+import sys
 from decimal import Decimal as D
+
+import sr.tools.budget as budget
 
 
 def usage():
@@ -22,7 +24,7 @@ except budget.NotBudgetRepo:
     print("Error: Please run in budget.git", file=sys.stderr)
     exit(1)
 
-t = budget.load_budget( root )
+t = budget.load_budget(root)
 
 config = None
 
@@ -34,7 +36,7 @@ for i in t.walk():
 
 assert config != None
 
-r = sympy.S( EXPR )
-r = D( "%.2f" % r.evalf( subs = config.vars ) )
+r = sympy.S(EXPR)
+r = D("%.2f" % r.evalf(subs = config.vars))
 
 print(r)

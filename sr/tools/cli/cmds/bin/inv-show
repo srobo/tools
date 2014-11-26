@@ -1,70 +1,35 @@
-#!/bin/sh
-if [ -z "$1" ]
-then
-    echo "Usage: sr `basename \"$0\"` PART_ID"
-    exit 1
-fi
+#!/usr/bin/env python
+from __future__ import print_function
 
-# Mimic the python implementation of gettoplevel
-# Figures out if we're in an inventory clone or not
-getTopLeve()
-{
-    top=`git rev-parse --show-toplevel 2>/dev/null`
-    if [ $? -ne 0 ]
-    then
-        return 1
-    fi
+import argparse
+import pydoc
+import subprocess
 
-    usersFile="$top/.meta/users"
-    if [ ! -f "$usersFile" ]
-    then
-        return 1
-    fi
+import sr.tools.inventory as srinv
+from sr.tools.inventory import normalise_partcode
+from sr.tools.inventory import oldinv
 
-    echo $top
-    return 0
-}
+parser = argparse.ArgumentParser(
+    description="Show the metadata of a given part, and its git history.")
+parser.add_argument('partcode', type=str, help="The part code to look up.")
+args = parser.parse_args()
 
-top=$(getTopLeve)
-if [ $? -ne 0 ]
-then
-    echo "This command must be run in the inventory git repository."
-    exit 4
-fi
+top = oldinv.gettoplevel()
+if top is None:
+    print("Error: Must be run from within the inventory.", file=sys.stderr)
+    exit(1)
+inv = srinv.Inventory(top)
 
-fname=`sr inv-findpart $1`
+partcode = normalise_partcode(args.partcode)
+part = inv.root.parts[partcode]
 
-if [ $? -ne 0 ]
-then
-    exit 2
-fi
+pager_text = "Full path: " + part.path
+with open(part.info_path, 'r') as info_file:
+    pager_text += info_file.read() + '\n'
 
-git_log_colour()
-{
-    ui=$(git config --get color.ui)
-    if [ -n "$ui"  -a  "$ui" != "false"  ]
-    then
-        echo "--color"
-    else
-        diff=$(git config --get color.diff)
-        if [ -n "$diff" -a "$diff" != "false" ]
-        then
-            echo "--color"
-        fi
-    fi
-}
+pager_text += "Log\n===\n"
+pager_text += subprocess.check_output(['git', '--no-pager', 'log', '--color',
+                                      '--follow', '-C', '-M', part.path],
+                                      universal_newlines=True)
 
-details()
-{
-    echo "Full name: $fname"
-    if [ -d "$fname" ]    # assemblies are directories
-    then
-        cat "$fname"/info
-    else
-        cat "$fname"
-    fi
-    colour=$(git_log_colour)
-    git --no-pager log $colour --follow -C -M  "$fname"
-}
-
-details | less -R -F -X
+pydoc.pager(pager_text)

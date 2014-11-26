@@ -8,9 +8,9 @@ import os
 import sys
 
 try:
-    import cPickle
+    import cPickle as pickle
 except ImportError:
-    import pickle as cPickle
+    import pickle
 
 import yaml
 
@@ -69,12 +69,12 @@ def cached_yaml_load(path):
         if os.path.getmtime(p) >= os.path.getmtime(path):
             "Check that it's newer"
             with open(p, 'rb') as file:
-                return cPickle.load(file)
+                return pickle.load(file)
 
     y = yaml.load(codecs.open(path, "r", encoding="utf-8"),
                   Loader=YAML_Loader)
     with open(p, 'wb') as file:
-        cPickle.dump(y, file)
+        pickle.dump(y, file)
     return y
 
 

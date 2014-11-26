@@ -297,8 +297,8 @@ def _children(inv_node):
 
 @Function.register('siblings')
 def _siblings(inv_node):
-    return filter(lambda x: x is not inv_node,
-                  inv_node.parent.children.values())
+    return [x for x in inv_node.parent.children.values() \
+              if x is not inv_node]
 
 
 @Function.register('descendants')

@@ -15,6 +15,10 @@ except ImportError:
 from sr.tools.environment import get_config_filename
 
 
+if sys.version_info < (3,):
+    input = raw_input
+
+
 class Config(dict):
 
     """Configuration reader for the SR tools"""

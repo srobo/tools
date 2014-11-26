@@ -38,7 +38,7 @@ _TRI_STATE_KEY_NAMES = ("development", "v-sense-move-1213",
                         "cased", "umbilical", "climit_disabled",
                         "dremel-mod", "tvs-mod-698",
                         "battery-aa-mod-1270")
-TRI_STATE_KEYS = map(Literal, _TRI_STATE_KEY_NAMES)
+TRI_STATE_KEYS = [Literal(x) for x in _TRI_STATE_KEY_NAMES]
 
 ASSET_CODE = Regex(r"(sr)?[a-zA-Z0-9]+")
 ASSET_SERIAL = Regex(r"[a-zA-Z0-9\.\*\-\?\[\]]+")

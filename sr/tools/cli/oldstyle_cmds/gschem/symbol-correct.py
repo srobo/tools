@@ -1,6 +1,6 @@
 from __future__ import print_function
 
-import commands
+import subprocess
 import sys
 
 
@@ -89,7 +89,8 @@ def write_file(outputfile):
 def gsymcheck(filename):
     command = "/home/andy/geda/geda-gaf/gsymcheck/src/gsymcheck -vv " \
               + filename
-    gsymoutput = commands.getoutput(command).splitlines()
+    output = subprocess.check_output(command, universal_newlines=True)
+    gsymoutput = output.splitlines()
     gsymoutput.pop(0)  # first line of output is always blank
     return gsymoutput
     # print error and warning messages associated with a symbol file

@@ -141,8 +141,8 @@ class Item(distpart.DistItem):
             p = cells[1].text
 
             # Sometimes Farnell do something stupid with unicode
-            p = p.replace(u"\ufffd", "")
-            p = p.replace(u"£", "")
+            p = p.replace("\ufffd", "")
+            p = p.replace("£", "")
 
             p = D(p.strip())
 

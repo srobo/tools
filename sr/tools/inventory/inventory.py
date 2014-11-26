@@ -89,7 +89,8 @@ class Item(object):
         self.code = m.group(2)
 
         # Load data from yaml file
-        self.info = cached_yaml_load(path)
+        self.info_path = path
+        self.info = cached_yaml_load(self.info_path)
 
         # Verify that assetcode matches filename
         if self.info["assetcode"] != self.code:
@@ -187,7 +188,8 @@ class ItemGroup(ItemTree):
         self.code = m.group(2)
 
         # Load info from 'info' file
-        self.info = cached_yaml_load(os.path.join(path, "info"))
+        self.info_path = os.path.join(path, "info")
+        self.info = cached_yaml_load(self.info_path)
 
         if self.info["assetcode"] != self.code:
             print("Code in group directory name does not match info file:",

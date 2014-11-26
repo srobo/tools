@@ -7,7 +7,7 @@ from sr.tools import __path__
 
 def get_commands_directory():
     """Return the directory at which commands will be found."""
-    return os.path.join(__path__[0], "cli", "oldstyle_cmds")
+    return os.path.join(__path__[0], "cli", "cmds")
 
 
 def find_commands(filter_private=False, commands_dir=None):

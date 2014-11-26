@@ -15,7 +15,6 @@ def main():
     parser = argparse.ArgumentParser(description='Student Robotics tools')
     parser.add_argument('--version', '-v', help='Show version of the tools.',
                         action='store_true')
-    parser.set_defaults(func=lambda x: parser.print_help())
 
     subparsers = parser.add_subparsers()
     cmds.add_subparsers(subparsers)
@@ -28,4 +27,7 @@ def main():
     if args.version:
         print_version()
     else:
-        args.func(args)
+        if 'func' in args:
+            args.func(args)
+        else:
+            parser.print_help()

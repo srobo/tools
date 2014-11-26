@@ -2,7 +2,11 @@ from __future__ import print_function
 
 import re
 
-import pygit2
+try:
+    import pygit2
+    PYGIT2_AVAILABLE = True
+except ImportError:
+    PYGIT2_AVAILABLE = False
 
 
 def check_my_git(args):
@@ -24,8 +28,9 @@ def check_my_git(args):
 
 
 def add_subparsers(subparsers):
-    parser_check_my_git = subparsers.add_parser('check-my-git',
-                                                help='Checks whether you '
-                                                     'have git configured '
-                                                     'sanely.')
-    parser_check_my_git.set_defaults(func=check_my_git)
+    if PYGIT2_AVAILABLE:
+        parser_check_my_git = subparsers.add_parser('check-my-git',
+                                                    help='Checks whether you '
+                                                         'have git configured '
+                                                         'sanely.')
+        parser_check_my_git.set_defaults(func=check_my_git)

@@ -2,17 +2,18 @@
 from __future__ import print_function
 
 import argparse
-import os, sys, subprocess
+import os
+import sys
+import subprocess
+
 from sr.tools import Config
 
-parser = argparse.ArgumentParser( description = "Clone an SR git repository" )
-parser.add_argument( "repo",
-                     help = "Repository path -- e.g. tools.git" )
-parser.add_argument( "dir", nargs="?",
-                     help = "Directory to clone to (optional)" )
-parser.add_argument( "-a", "--anonymous",
-                     action = "store_true", default = False,
-                     help = "Clone anonymously over git://" )
+
+parser = argparse.ArgumentParser(description="Clone an SR git repository")
+parser.add_argument("repo", help="Repository path -- e.g. tools.git")
+parser.add_argument("dir", nargs="?", help="Directory to clone to (optional)")
+parser.add_argument("-a", "--anonymous", action="store_true", default=False,
+                    help="Clone anonymously over git://")
 args = parser.parse_args()
 
 config = Config()
@@ -30,19 +31,18 @@ cmd = ["git", "clone", "--recursive", repo]
 if args.dir != None:
     cmd += [args.dir]
 
-subprocess.check_call( cmd )
+subprocess.check_call(cmd)
 
 clonedir = args.dir
 if clonedir is None:
-    clonedir = os.path.basename( args.repo )
+    clonedir = os.path.basename(args.repo)
 
     if clonedir[-4:] == ".git":
         clonedir = clonedir[:-4]
 
 if not args.anonymous:
     # Set up the gerrit Change-Id commit hook
-
-    subprocess.check_call(
-        [ "scp",
-          "{0}:hooks/commit-msg".format( config["gerrit_ssh"] ),
-          os.path.join( clonedir, ".git", "hooks" ) ] )
+    cmd = ["scp",
+           "{}:hooks/commit-msg".format(config["gerrit_ssh"]),
+           os.path.join(clonedir, ".git", "hooks")]
+    subprocess.check_call(cmd)

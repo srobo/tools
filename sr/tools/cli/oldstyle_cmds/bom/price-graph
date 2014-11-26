@@ -12,7 +12,7 @@ if len(sys.argv) < 2:
     Where N and M are multipliers for the number of boards.""")
    sys.exit(1)
 
-db = parts_db.Db( bom.PARTS_DB )
+db = parts_db.get_db()
 m = bom.MultiBoardBom(db)
 m.load_boards_args( sys.argv[1:] )
 m.prime_cache()

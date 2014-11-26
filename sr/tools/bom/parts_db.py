@@ -1,19 +1,15 @@
 """Student Robotics parts database access library"""
 import csv
+import pkg_resources
 import os
 import sys
 
 from sr.tools.bom import farnell, rs, digikey, mouser
 
 
-PARTS_DB = os.path.expanduser("~/.sr/tools/bom/sr_component_lib")
-if not os.path.exists(PARTS_DB):
-    print("Parts DB not found at \"%s\"" % PARTS_DB)
-    sys.exit(1)
-
-
 def get_db():
-    return Db(PARTS_DB)
+    path = pkg_resources.resource_filename('sr.tools.bom', 'component_lib.csv')
+    return Db(path)
 
 
 class Part(dict):

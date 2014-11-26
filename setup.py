@@ -21,7 +21,8 @@ setup(
         'beautifulsoup4',
         'numpy',
         'pyudev',
-        'pygit2'
+        'pygit2',
+        'matplotlib'
     ],
     include_package_data=True,
     zip_safe=False,

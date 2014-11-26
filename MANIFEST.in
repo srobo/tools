@@ -1,1 +1,2 @@
 recursive-include sr/tools/cli/oldstyle_cmds *
+include sr/tools/bom/component_lib.csv

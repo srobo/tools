@@ -19,7 +19,8 @@ setup(
         'sympy',
         'pyparsing',
         'beautifulsoup4',
-        'numpy'
+        'numpy',
+        'six'
     ],
     extras_require={
         'inv-history': ['pygit2'],

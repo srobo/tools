@@ -11,7 +11,8 @@ def walk_history(tree, repo):
 
         o = repo[entry.oid]
         if isinstance(o, pygit2.Tree):
-            yield from walk_history(o, repo)
+            #yield from walk_history(o, repo)
+            pass
 
 
 def history(args):

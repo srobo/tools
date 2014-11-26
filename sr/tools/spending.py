@@ -5,6 +5,7 @@ import datetime
 from decimal import Decimal as D
 import errno
 import os
+import six
 from subprocess import check_output, check_call, CalledProcessError
 import sys
 
@@ -116,6 +117,9 @@ def load_budget_spends(root):
                "--format", "%A,%(display_total)\n",
                "^Expenses:"]
         balances = check_output(cmd, universal_newlines=True).strip()
+
+        if six.PY2:
+            balances = balances.decode('UTF-8')
     except OSError as oe:
         if oe.errno == errno.ENOENT:
             "A nicer error for the most likely case"

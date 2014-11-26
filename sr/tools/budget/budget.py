@@ -7,6 +7,7 @@ import collections
 from decimal import Decimal as D, ROUND_CEILING, ROUND_FLOOR, ROUND_UP
 import runpy
 import tempfile
+import six
 import shutil
 from subprocess import check_call, check_output, CalledProcessError
 from tempfile import NamedTemporaryFile
@@ -55,7 +56,7 @@ def dec_floor(d):
 
 
 def py_translate_to_decimals(s):
-    "Translate any literal floats in the given source into decimals"
+    """Translate any literal floats in the given source into decimals."""
 
     # Parse numbers in the string as Decimals
     # based on example from http://docs.python.org/2.7/library/tokenize.html
@@ -240,7 +241,12 @@ class BudgetConfig(object):
         with open(fname, "r") as in_file:
             in_src = in_file.read()
 
-        with NamedTemporaryFile('w', encoding='utf-8') as f:
+        if six.PY3:
+            tempfile = NamedTemporaryFile('w', encoding='utf-8')
+        else:
+            tempfile = NamedTemporaryFile('w')
+
+        with tempfile as f:
             trans_src = py_translate_to_decimals(in_src)
             f.write(trans_src)
             f.flush()
@@ -271,7 +277,12 @@ class BudgetConfig(object):
         # Use the python loader to make ordered dicts work
         y = yaml.load(open(fname, "r"), Loader=YAML_Loader)
 
-        with NamedTemporaryFile('w', encoding='utf-8') as f:
+        if six.PY3:
+            tempfile = NamedTemporaryFile('w', encoding='utf-8')
+        else:
+            tempfile = NamedTemporaryFile('w')
+
+        with tempfile as f:
             for vname, val in y["vars"].items():
                 print("{0} = {1}".format(vname, val), file=f)
 

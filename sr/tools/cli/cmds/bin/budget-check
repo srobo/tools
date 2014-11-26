@@ -3,15 +3,19 @@
 from __future__ import print_function
 
 from argparse import ArgumentParser
-import os
-from sr.tools import budget, spending, Config
-from subprocess import check_output
-import sys, yaml
 from decimal import Decimal as D, ROUND_UP
+import os
+import sys
+from subprocess import check_output
 
-parser = ArgumentParser( description = "Check the budget is valid" )
-parser.add_argument( "-s", "--spending",
-                     help = "The location of spending.git to check against" )
+import yaml
+
+from sr.tools import budget, spending, Config
+
+
+parser = ArgumentParser(description="Check the budget is valid")
+parser.add_argument("-s", "--spending",
+                    help="The location of spending.git to check against.")
 args = parser.parse_args()
 
 config = Config()
@@ -22,22 +26,22 @@ except budget.NotBudgetRepo:
     print("Error: Please run in budget.git", file=sys.stderr)
     exit(1)
 
-os.chdir( root )
+os.chdir(root)
 b = budget.load_budget("./")
 
 try:
-    f = open( "funds-in.yaml", "r" )
+    f = open("funds-in.yaml", "r")
 except IOError:
-    if os.path.exists( "check" ):
-        os.execv( "./check", ["./check"] + sys.argv[1:] )
+    if os.path.exists("check"):
+        os.execv("./check", ["./check"] + sys.argv[1:])
     exit(1)
 
-funds_in = yaml.load( f )
+funds_in = yaml.load(f)
 total_in = D(0)
 
 for i in funds_in["incoming"]:
     # Convert to str to avoid some rounding issues!
-    total_in += D( str(i["amount"]) )
+    total_in += D(str(i["amount"]))
 
 # All the lines in funds-in.yaml are divided by 1.1 at the moment
 MAX = total_in * budget.FUDGE_FACTOR
@@ -51,14 +55,14 @@ if budgeted > MAX:
     print("Fail: Budget is £%s too high" % (budgeted - MAX), file=sys.stderr)
     exit (1)
 
-print("OK:", end='')
+print("OK: ", end='')
 if budgeted == MAX:
     print("Budget is at maximum.")
 else:
     print("Budget is £%s below maximum." % (MAX-budgeted))
 
 def list_referenced_lines(root):
-    "Return a list of budget lines referenced in spending.git"
+    """Return a list of budget lines referenced in ``spending.git``."""
 
     cmd = ["ledger",
            "--file", os.path.join(root, "spending.dat"),
@@ -122,7 +126,7 @@ if spending_root is not None:
             print(" - {0}: £{1} spent, £{2} allocated".format(
                 line.name,
                 spent,
-                line.cost ))
+                line.cost))
     else:
         print("OK: All closed lines have the correct value.")
 

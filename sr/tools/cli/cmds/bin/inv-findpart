@@ -8,6 +8,7 @@ import sys
 import sr.tools.inventory as srinv
 import sr.tools.inventory.assetcode as assetcode
 import sr.tools.inventory.oldinv as oldinv
+from sr.tools.inventory import normalise_partcode
 
 
 ASSET_CODE = 0
@@ -26,7 +27,8 @@ aparser.add_argument("-s", "--stat", action="store_true", default=False, dest="a
 aparser.add_argument("-r", "--relpath", action="store_true", default=False, dest="relpath",
                      help="Print relative, rather than absolute, paths.")
 aparser.add_argument("itemspecs", metavar="ITEM_SPEC", nargs="+",
-                     help="Either an SR asset code or part type. The nature of the specifier is auto-detected and asset codes/part types can be mixed.")
+                     help="Either an SR asset code or part type. " +
+                          "The nature of the specifier is auto-detected and asset codes/part types can be mixed.")
 
 args = aparser.parse_args()
 
@@ -39,9 +41,7 @@ inv = srinv.Inventory(top)
 parts = []
 spec_type = ASSET_CODE
 for c in args.itemspecs:
-    code = c.upper().strip()
-    if code[0:2] == "SR":
-        code = code[2:]
+    code = normalise_partcode(c)
 
     try:
         assetcode.code_to_num(code)

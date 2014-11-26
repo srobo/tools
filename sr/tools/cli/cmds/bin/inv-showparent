@@ -6,6 +6,7 @@ import sys
 import sr.tools.inventory as srinv
 import sr.tools.inventory.assetcode as assetcode
 import sr.tools.inventory.oldinv as oldinv
+from sr.tools.inventory import normalise_partcode
 import os
 
 
@@ -21,9 +22,7 @@ inv = srinv.Inventory(top)
 
 parts = []
 for c in sys.argv[1:]:
-    code = c.upper().strip()
-    if code[0:2] == "SR":
-        code = code[2:]
+    code = normalise_partcode(c)
 
     try:
         assetcode.code_to_num(code)

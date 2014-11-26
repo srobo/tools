@@ -40,9 +40,8 @@ def should_ignore(path):
 
 def normalise_partcode(partcode):
     """
-    Take a part code from user input and normalise it to one that is compatible
-    with the inventory. Generally this just involves removing the 'sr' from
-    the front.
+    Normalise the given partcode to one that is compatible with the inventory.
+    Generally this just involves removing the 'sr' from the front.
     """
     partcode = partcode.strip()
     if partcode.lower().startswith('sr'):

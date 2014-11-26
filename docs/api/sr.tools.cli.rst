@@ -4,6 +4,14 @@ sr.tools.cli package
 Submodules
 ----------
 
+sr.tools.cli.cmds module
+------------------------
+
+.. automodule:: sr.tools.cli.cmds
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 sr.tools.cli.git module
 -----------------------
 
@@ -24,14 +32,6 @@ sr.tools.cli.misc module
 ------------------------
 
 .. automodule:: sr.tools.cli.misc
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-sr.tools.cli.oldstyle module
-----------------------------
-
-.. automodule:: sr.tools.cli.oldstyle
     :members:
     :undoc-members:
     :show-inheritance:

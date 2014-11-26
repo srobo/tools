@@ -1,0 +1,7 @@
+Commands
+========
+
+.. toctree::
+   :glob:
+
+   *

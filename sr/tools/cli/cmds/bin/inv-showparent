@@ -11,7 +11,7 @@ import os
 
 
 if len(sys.argv) < 2:
-    print("Usage: inv-edit PART_CODES", file=sys.stderr)
+    print("Usage: inv-showparent PART_CODES", file=sys.stderr)
     exit(1)
 
 top = oldinv.gettoplevel()

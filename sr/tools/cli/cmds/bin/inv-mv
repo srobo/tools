@@ -8,7 +8,7 @@ import sys
 import sr.tools.inventory as srinv
 from sr.tools.inventory import assetcode
 from sr.tools.inventory import oldinv
-from sr.tools.inventory import normalise_partcode
+from sr.tools.inventory import normalise_partcode, get_inventory
 
 
 desc = "Move inventory items into the CWD."
@@ -20,11 +20,7 @@ aparser.add_argument("assetcodes", metavar="ASSET_CODE", nargs="+", help="The as
 
 args = aparser.parse_args()
 
-top = oldinv.gettoplevel()
-if top is None:
-    print("Error: Must be run from within the inventory.", file=sys.stderr)
-    exit(1)
-inv = srinv.Inventory(top)
+inv = get_inventory()
 
 parts = []
 for c in args.assetcodes:

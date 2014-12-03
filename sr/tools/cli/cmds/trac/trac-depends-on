@@ -5,9 +5,9 @@ Show the items which have the given ticket as an immediate dependency.
 from __future__ import print_function
 
 import argparse
+import sys
 
-from sr.tools.trac import TracProxy, WrongServer
-from sr.tools.trac.deptree import Ticket
+from sr.tools.trac import Ticket, TracProxy, WrongServer
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("ticket", type=int, help="Ticket number")
@@ -17,8 +17,9 @@ args = parser.parse_args()
 try:
     server = TracProxy()
 except WrongServer:
-    print("Error: The specified server is not a Trac instance", file=sys.stderr)
-    exit(1)
+    print("Error: The specified server is not a Trac instance",
+          file=sys.stderr)
+    sys.exit(1)
 
 search_ticket = args.ticket
 

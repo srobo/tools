@@ -2,38 +2,41 @@
 from __future__ import print_function
 
 import argparse
-from sr.tools.trac import TracProxy, WrongServer
-from sr.tools.trac.deptree import Ticket
+import sys
 
-parser = argparse.ArgumentParser( description = "Produce a graph of a ticket's dependencies" )
-parser.add_argument( "ticket", type = int,
-                     help = "Ticket number to attach" )
+from sr.tools.trac import Ticket, TracProxy, WrongServer
+
+
+parser = argparse.ArgumentParser(description="Produce a graph of a ticket's dependencies")
+parser.add_argument("ticket", type=int, help="Ticket number to attach")
 args = parser.parse_args()
+
 
 try:
     server = TracProxy()
 except WrongServer:
-    print("Error: The specified server is not a Trac instance", file=sys.stderr)
-    exit(1)
+    print("Error: The specified server is not a Trac instance",
+          file=sys.stderr)
+    sys.exit(1)
 
 tickets = {}
 
 done = set()
 todo = set([args.ticket])
 
-"digraph G {"
-"rankdir=LR;"
+print("digraph G {")
+print("rankdir=LR;")
 
 while len(todo):
     for num in list(todo):
-        t = Ticket( num, server )
+        t = Ticket(num, server)
         tickets[num] = t
 
         for dep in t.deps:
             if dep not in done:
                 todo.add(dep)
 
-            "{0} -> {1};".format( dep, num )
+            print("{0} -> {1};".format(dep, num))
 
         done.add(num)
         todo.remove(num)
@@ -47,8 +50,8 @@ for num, ticket in tickets.items():
 
     propstr = ""
     for name, val in props.items():
-        propstr += """{0}="{1}" """.format( name, val )
+        propstr += """{0}="{1}" """.format(name, val)
 
-    """{0} [{1}]""".format( num, propstr )
+    print("{0} [{1}]".format(num, propstr))
 
-"}"
+print("}")

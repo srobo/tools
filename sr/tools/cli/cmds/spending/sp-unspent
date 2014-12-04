@@ -2,12 +2,15 @@
 # coding=utf8
 from __future__ import print_function
 
-from subprocess import check_output
-
+import argparse
 from decimal import Decimal as D
-import sys, os, argparse
+from subprocess import check_output
+import os
+import sys
+
 from sr.tools import spending
 from sr.tools.budget import BudgetTree, FUDGE_FACTOR
+
 
 p = argparse.ArgumentParser(description="Unspent things")
 p.add_argument("path", help="The budget tree to inspect")
@@ -17,7 +20,7 @@ try:
     root = spending.find_root()
 except spending.NotSpendingRepo:
     print("Please run in spending.git", file=sys.stderr)
-    exit(1)
+    sys.exit(1)
 
 bud = spending.load_budget_with_spending(root)
 
@@ -44,10 +47,10 @@ if isinstance(budline, BudgetTree):
             line.name, unspent
         total_unspent += unspent
 
-    "-" * 10
+    print("-" * 10)
 
 else:
     total_unspent = budline.cost - budline.spent
 
-"Total budget:\t", total
-"Total unspent:\t", total_unspent
+print("Total budget:\t", total)
+print("Total unspent:\t", total_unspent)

@@ -1,18 +1,21 @@
 #!/usr/bin/env python
 from __future__ import print_function
 
+import os
+import sys
+
 from sr.tools import spending
 from sr.tools.trac import TracProxy
-import sys, os
+
 
 transactions = spending.load_transactions( "./" )
-p = TracProxy( anon = True )
-tickets = p.ticket.query( "component=purchasing&max=0&resolution=fixed&status=closed" )
+p = TracProxy(anon=True)
+tickets = p.ticket.query("component=purchasing&max=0&resolution=fixed&status=closed")
 
 counts = {}
 for t in tickets:
     if t < 821 and t not in []:
-        "Tickets before #839 except for those listed above weren't budgeted"
+        print("Tickets before #839 except for those listed above weren't budgeted")
         continue
 
     counts[t] = 0
@@ -35,16 +38,15 @@ for tnum, count in counts.items():
 missing.sort()
 
 if len(missing):
-    "{0} trac tickets with no spending.git entry:".format( len(missing) )
+    print("{0} trac tickets with no spending.git entry:".format(len(missing)))
     for t in missing:
-        "{0:10} -- http://srobo.org/trac/ticket/{0}".format(t)
+        print("{0:10} -- http://srobo.org/trac/ticket/{0}".format(t))
 else:
-    "All resolved purchasing tickets exist in spending.git :-)"
+    print("All resolved purchasing tickets exist in spending.git :-)")
 
 if len(premature):
-    "-" * 40
-
-    "Grabbing ticket information...",
+    print("-" * 40)
+    print("Grabbing ticket information...", end='')
     sys.stdout.flush()
 
     states = {}
@@ -57,33 +59,32 @@ if len(premature):
 
         states[s].append( t )
 
-    "done"
+    print("done")
 
-    "{0} purchasing tickets have been added to spending.git before being closed.".format( len(premature) )
-    print
-    "This is non-fatal, and generally means that there is more treasurer-related"
-    "action to be taken on them (maybe the treasurer is waiting for some"
-    "information)."
-    print
+    print("{0} purchasing tickets have been added to spending.git before being closed.".format( len(premature) ))
+    print()
+    print("This is non-fatal, and generally means that there is more treasurer-related")
+    print("action to be taken on them (maybe the treasurer is waiting for some information).")
+    print()
 
     for state, tickets in states.items():
         tickets.sort()
 
-        "{0} tickets in state {1}:{2}:".format( len(tickets),
-                                                      state[0],
-                                                      state[1] )
+        print("{0} tickets in state {1}:{2}:".format(len(tickets),
+                                                     state[0],
+                                                     state[1]))
         for t in tickets:
-            "{0:10} -- http://srobo.org/trac/ticket/{0}".format(t)
-        print
+            print("{0:10} -- http://srobo.org/trac/ticket/{0}".format(t))
+        print()
 
 open_tickets = set(p.ticket.query( "component=purchasing&max=0&status=new" ))
 
-"There are {0} unresolved purchasing tickets in trac right now.".format(len(open_tickets))
-"Here are the ones that don't exist in spending.git"
-"(note that they don't need to yet)"
+print("There are {0} unresolved purchasing tickets in trac right now.".format(len(open_tickets)))
+print("Here are the ones that don't exist in spending.git")
+print("(note that they don't need to yet)")
 
 n = list(open_tickets.difference( premature ))
 n.sort()
 
 for t in n:
-    "{0:10} -- http://srobo.org/trac/ticket/{0}".format(t)
+    print("{0:10} -- http://srobo.org/trac/ticket/{0}".format(t))

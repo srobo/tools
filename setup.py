@@ -24,7 +24,7 @@ setup(
     ],
     extras_require={
         'inv-history': ['pygit2'],
-        'linux': ['pyudev'],
+        'cam-serial, usb-key-serial': ['pyudev'],
         'price-graph': ['matplotlib']
     },
     include_package_data=True,

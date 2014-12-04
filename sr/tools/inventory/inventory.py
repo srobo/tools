@@ -7,10 +7,7 @@ import re
 import os
 import sys
 
-try:
-    import cPickle as pickle
-except ImportError:
-    import pickle
+import six.moves.cPickle as pickle
 
 import yaml
 

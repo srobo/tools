@@ -14,10 +14,8 @@ from tempfile import NamedTemporaryFile
 import tokenize
 import yaml
 
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
+from six.moves.cStringIO import StringIO
+
 
 # Spending against a budget line is allowed to go over its value by
 # this factor

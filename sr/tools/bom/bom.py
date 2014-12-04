@@ -1,4 +1,6 @@
 # Routines for extracting BOMs from schematics
+from __future__ import print_function
+
 from decimal import Decimal
 import os
 

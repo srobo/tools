@@ -4,12 +4,9 @@
 # {{{ http://code.activestate.com/recipes/577187/ (r9)
 from __future__ import print_function
 
-try:
-    from Queue import Queue
-except ImportError:
-    from queue import Queue
-
 from threading import Thread
+
+from six.moves.queue import Queue
 
 
 class Worker(Thread):

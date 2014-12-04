@@ -1,5 +1,7 @@
 """Routines for extracting information from EAGLE schematics
 You probably always want to import schem instead of this."""
+from __future__ import print_function
+
 import hashlib
 import os
 import subprocess

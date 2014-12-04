@@ -14,7 +14,7 @@ from tempfile import NamedTemporaryFile
 import tokenize
 import yaml
 
-from six.moves.cStringIO import StringIO
+from six.moves import cStringIO as StringIO
 
 try:
     from yaml import CLoader as YAML_Loader

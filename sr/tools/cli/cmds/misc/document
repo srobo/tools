@@ -32,7 +32,7 @@ parser = argparse.ArgumentParser(description = "Generate formatted documents.")
 parser.add_argument("source", metavar = "FILE", type=argparse.FileType('r'),
                     help = "Source markdown file")
 parser.add_argument("-o","--output", dest = "output",
-                    metavar = "FILE", type=argparse.FileType('w'),
+                    metavar = "FILE", type=argparse.FileType('wb'),
                     help = "Output file", required = True)
 parser.add_argument("-l", action = "store_true", dest = "latex",
                     help = "Emit LaTeX source rather than PDF")
@@ -49,7 +49,8 @@ ensure_callable('pandoc', 'pdflatex')
 
 pandoc_process = subprocess.Popen(['pandoc', '-f', 'html' if args.html else 'markdown', '-t', 'latex', '-'],
                                   stdin = subprocess.PIPE,
-                                  stdout = subprocess.PIPE)
+                                  stdout = subprocess.PIPE,
+                                  universal_newlines=True)
 pandoc_process.stdin.write(source)
 pandoc_process.stdin.close()
 generated = pandoc_process.stdout.read()
@@ -141,7 +142,8 @@ with zipfile.ZipFile(zip_path, 'r') as zf:
 pdflatex_proc = subprocess.Popen(['pdflatex', '-interaction=nonstopmode', 'main.tex'],
                                  cwd = temp_dir,
                                  stderr = subprocess.PIPE,
-                                 stdout = subprocess.PIPE)
+                                 stdout = subprocess.PIPE,
+                                 universal_newlines=True)
 
 while pdflatex_proc.returncode is None:
     (out, err) = pdflatex_proc.communicate()
@@ -152,7 +154,7 @@ while pdflatex_proc.returncode is None:
 output_file = os.path.join(temp_dir, 'main.pdf')
 success = pdflatex_proc.returncode == 0 and os.path.exists(output_file)
 if success:
-    with open(output_file, 'r') as f:
+    with open(output_file, 'rb') as f:
         args.output.write(f.read())
 
 shutil.rmtree(temp_dir)

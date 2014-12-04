@@ -1,0 +1,40 @@
+# Please complete all of the fields below
+# This is a YAML file.
+
+# The username of the payee
+username:
+
+# A one-line summary of this purchase
+# (Keep it short -- this is used in the trac ticket title etc.)
+summary:
+
+# Name of the supplier
+supplier:
+# URL of the supplier (if appropriate)
+supplier-url:
+
+# The purchase(s) that you are requesting
+purchases: ##############################
+
+  # The budget line
+  - budget-line:
+    # Summary for this budget line
+    summary:
+    # The item(s) you want to buy from the supplier against this budget line
+    items:
+      - desc:
+        cost: 0.00
+
+      # Items with a null description will be ignored
+      - desc: null
+        cost: 0.00
+
+  # Add more entries like this as necessary
+  # (entries with null budget-lines will be ignored)
+  - budget-line: null
+    summary:
+    items:
+      - desc:
+        cost: 0.00
+      - desc:
+        cost: 0.00

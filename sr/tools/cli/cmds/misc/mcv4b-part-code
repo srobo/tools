@@ -2,17 +2,16 @@
 from __future__ import print_function
 
 import argparse
-
-import pyudev
 import re
 import os
-from sr.tools.inventory import query
+
+import pyudev
+
+from sr.tools.inventory import assetcode, query
 
 
 
 # Motorobards have FTDI ICs on them
-from sr.tools.inventory import assetcode
-
 FTDI_ID_VENDOR  = '0403'  # Future Technology Devices International, Ltd
 FTDI_ID_PRODUCT = '6001'  # FT232 USB-Serial (UART) IC
 
@@ -64,7 +63,6 @@ def is_motorboard(device):
     for matcher in (id_vendor_match, id_product_match,
                     product_match, manufacturer_match,
                     partcode_match):
-
         if not matcher(device):
             return False
 
@@ -121,11 +119,10 @@ for device in devices:
     serial = device.attributes['serial']
 
     if args.output == "code":
-        serial
-
+        print(serial)
     else:
         os.chdir(args.inv_dir)
         res = query.query("code:{0}".format(serial))[0]
 
         if args.output == "path":
-            res.path
+            print(res.path)

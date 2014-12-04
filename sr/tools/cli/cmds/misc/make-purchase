@@ -7,13 +7,19 @@ import datetime
 from decimal import Decimal as D
 from subprocess import check_call, check_output, CalledProcessError
 import os
+import six
 import sys
 import tempfile
 import yaml
 
+import sr.tools.environment
 import sr.tools.spending as srspending
 import sr.tools.budget as srbudget
 from sr.tools.trac import TracProxy, WrongServer
+
+
+if six.PY2:
+    input = raw_input
 
 
 parser = argparse.ArgumentParser( description = "Make an SR purchase request" )
@@ -65,6 +71,7 @@ class Purchase(object):
 
 class SpendRequest(object):
     "Query the user for purchase information"
+
     def __init__(self, fname, delete_file = False):
         self.fname = fname
         self.delete_file = delete_file
@@ -79,15 +86,15 @@ class SpendRequest(object):
         os.close(fd)
 
         # Fill in the temporary file from the template
-        template_path = os.path.join( os.path.dirname( __file__ ), "../var", "spend-template.yaml" )
+        template_path = os.path.join(os.path.dirname( __file__ ), "spend-template.yaml")
         with open( template_path, "r" ) as f:
             template = f.read()
 
         with open( fname, "w" ) as f:
-            f.write( template )
+            f.write(template)
 
         while True:
-            check_call( [ os.getenv( "EDITOR", "vi" ), fname ] )
+            sr.tools.environment.open_editor(fname)
 
             try:
                 spendreq = cls( fname,
@@ -181,7 +188,7 @@ for purchase in spend_request.purchases:
         print("\tBudget line's value: £{0}".format( budget_line.cost ))
         print("\tRequested Expenditure: £{0} ({1}%)".format( req_total,
                                                              100 * (req_total)/budget_line.cost ))
-        if not raw_input("Continue anyway? [y/N] ").lower() == 'y':
+        if not input("Continue anyway? [y/N] ").lower() == 'y':
             sys.exit()
 
     if purchase.budget_line not in budget_line_totals:

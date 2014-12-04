@@ -1,25 +1,26 @@
 #!/usr/bin/env python
 from __future__ import print_function
 
-import sys, os
+import os
+import sys
+
 import sr.tools.bom.bom as bom
 import sr.tools.bom.parts_db as parts_db
 
 if len(sys.argv) < 2:
-   print("Usage: %s DIR -N SCHEMATIC1 -M SCHEMATIC2 ..." % os.path.basename( sys.argv[0] ))
-   print("""
+    print("Usage: %s DIR -N SCHEMATIC1 -M SCHEMATIC2 ..." % os.path.basename(sys.argv[0]))
+    print("""
     Where N and M are multipliers for the number of boards
 
     create-order generates the data to stick into a supplier's
     website, or send to a supplier (if they don't support such
     things), for an order made up of the given numbers of
     schematics.""")
-   sys.exit(1)
+    sys.exit(1)
 
-db = parts_db.Db( bom.PARTS_DB )
+db = parts_db.get_db()
 m = bom.MultiBoardBom(db)
-m.load_boards_args( sys.argv[1:] )
-
+m.load_boards_args(sys.argv[1:])
 
 m.prime_cache()
 
@@ -28,27 +29,22 @@ m.prime_cache()
 dist = {}
 
 for srcode, pg in m.items():
-   if srcode == "sr-nothing":
-      continue
+    if srcode == "sr-nothing":
+        continue
 
-   supplier = pg.part["supplier"]
-
-   if not dist.has_key(supplier):
-      dist[supplier] = []
-
-   dist[supplier].append( pg )
+    supplier = pg.part["supplier"]
+    dist.setdefault(supplier, []).append(pg)
 
 for d, partgroups in dist.items():
-   print("Distributor: %s" % d)
-   for pg in partgroups:
-      n = pg.order_num()
-      if n == None:
-         print("FAIL :-(")
-      else:
-
-         if d == "farnell":
-            print("%s, %i" % ( pg.part["order-number"], pg.order_num() ))
-         else:
-            print(" - %i * %s" % ( pg.order_num(), pg.part["order-number"] ))
+    print("Distributor: %s" % d)
+    for pg in partgroups:
+        n = pg.order_num()
+        if n == None:
+            print("FAIL :-(")
+        else:
+            if d == "farnell":
+                print("%s, %i" % (pg.part["order-number"], pg.order_num()))
+            else:
+                print(" - %i * %s" % (pg.order_num(), pg.part["order-number"]))
 
 print("Total Price:", m.get_price())

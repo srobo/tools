@@ -2,13 +2,12 @@
 # Export gerber from a board
 from __future__ import print_function
 
-import sr.tools.bom.geda as geda
-import sys, os, shutil, subprocess
+import os
+import shutil
+import subprocess
+import sys
 
-try:
-    import ConfigParser
-except ImportError:
-    import configparser as ConfigParser
+import sr.tools.bom.geda as geda
 
 
 OUTPUT_DIR = "./gerbers"
@@ -23,17 +22,16 @@ if len(sys.argv) != 2:
 
 BOARD = sys.argv[1]
 
-if os.path.exists( OUTPUT_DIR ) and not os.path.isdir( OUTPUT_DIR ):
+if os.path.exists(OUTPUT_DIR) and not os.path.isdir(OUTPUT_DIR):
     print("%s exists and is not a directory" % OUTPUT_DIR)
     print("Cowardly refusing to remove it!")
     sys.exit(1)
 
-if not os.path.exists( OUTPUT_DIR ):
-    os.mkdir( OUTPUT_DIR )
+if not os.path.exists(OUTPUT_DIR):
+    os.mkdir(OUTPUT_DIR)
 
-f = open(BOARD, "r")
-assert geda.file_is_geda_pcb(f)
-f.close()
+with open(BOARD) as file:
+    assert geda.file_is_geda_pcb(file)
 
 print("Generating gerbers from %s" % BOARD)
 # You can't specify the output dir and of the files created some
@@ -43,9 +41,7 @@ shutil.copy(BOARD, OUTPUT_DIR)
 os.chdir(OUTPUT_DIR)
 
 cmd = "pcb -x gerber %s" % BOARD
-p = subprocess.Popen( cmd,
-                      shell = True,
-                      stdout = open("/dev/null", "w") )
+p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
 p.communicate()
 p.wait()
 

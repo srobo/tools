@@ -1,0 +1,64 @@
+#!/bin/bash
+# This script gets EAGLE to export a parts list
+# This process is complicated because EAGLE has a bug that causes
+# it to continuously execute the script telling it to export the list.
+# Also, if Xvfb is available, this script will run eagle in that so it
+# doesn't offend the user.
+
+EAGLE_JOB="%1"
+XVFB=0
+
+if ( which Xvfb > /dev/null 2>&1 )
+    then
+    AUTH=`mktemp`
+    echo localhost > $AUTH
+    Xvfb -auth $AUTH :1 > /dev/null 2>&1 &
+    export DISPLAY=:1
+    EAGLE_JOB="%2"
+    XVFB=1
+fi
+
+if [ -f $2 ]
+then
+    rm -f $2
+fi
+
+scr=`mktemp`
+tmpf=`mktemp`
+# Eagle refuses to write over an existing file
+rm $tmpf
+
+# Get eagle to output partslist into two files
+# We kill eagle after the second file has been created
+# This avoids the race condition in which we kill eagle when it's halfway through 
+# filling the BOM file.
+echo "export partlist $2;" > $scr
+echo "export partlist $tmpf;" >> $scr
+
+EAGLE=eagle
+if [[ `sr eagle_ver $1 | cut -d . -f 1` == "5" ]]
+    then
+    EAGLE=eagle5
+fi
+
+echo -n "Generating bom (`basename $1`)..."
+$EAGLE $1 -S $scr &
+eagle_pid=$!
+
+while [ ! -f $tmpf ]
+do
+    sleep 0.1
+done
+
+disown $EAGLE_JOB
+kill -9 $eagle_pid
+echo " done."
+
+rm -f $tmpf
+rm $scr
+
+# Kill the X server
+if [[ "$XVFB" == "1" ]]
+    then
+    kill -9 %1
+fi

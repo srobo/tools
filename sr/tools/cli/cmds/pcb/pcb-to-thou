@@ -1,8 +1,11 @@
 #!/bin/env python
 from __future__ import print_function
 
-import re, sys, os
 from decimal import Decimal
+import re
+import os
+import sys
+
 
 if len(sys.argv) < 2:
     print("Usage: %s PCB_FILE" % os.path.basename( sys.argv[0] ))
@@ -10,17 +13,18 @@ if len(sys.argv) < 2:
     sys.exit(1)
 
 PCB_FILE = sys.argv[1]
-f = open( PCB_FILE, "r" )
+f = open(PCB_FILE)
 
 def conv_ht(match):
     if match.groups()[0][0] == '"':
         return match.groups()[0]
 
-    mm = Decimal( match.groups()[1] )
-    return str( int( mm / Decimal( "0.000254" ) ) )
+    mm = Decimal(match.groups()[1])
+    return str(int(mm / Decimal("0.000254")))
 
 fcontent = f.read()
 
 f.close()
-f = open( PCB_FILE, "w" )
-f.write( re.sub( """(([0-9.]+)(mm)|".*?")""", conv_ht, fcontent ) )
+
+with open(PCB_FILE, "w") as file:
+    file.write(re.sub(r'(([0-9.]+)(mm)|".*?")', conv_ht, fcontent))

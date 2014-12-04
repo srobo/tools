@@ -1,30 +1,29 @@
 "Library for accessing the budget files"
 from __future__ import print_function
 
-import os
-import sys
 import collections
 from decimal import Decimal as D, ROUND_CEILING, ROUND_FLOOR, ROUND_UP
 import runpy
-import tempfile
+import os
 import six
 import shutil
 from subprocess import check_call, check_output, CalledProcessError
+import sys
+import tempfile
 from tempfile import NamedTemporaryFile
 import tokenize
 import yaml
 
 from six.moves.cStringIO import StringIO
 
-
-# Spending against a budget line is allowed to go over its value by
-# this factor
-FUDGE_FACTOR = D("1.1")
-
 try:
     from yaml import CLoader as YAML_Loader
 except ImportError:
     from yaml import Loader as YAML_Loader
+
+
+# Spending against a budget line is allowed to go over its value by this factor
+FUDGE_FACTOR = D("1.1")
 
 
 def dict_constructor(loader, node):
@@ -36,13 +35,13 @@ def num_constructor(loader, node):
     "Constructor for libyaml to translate numeric literals to Decimals"
     return D(node.value)
 
+
 # Give me ordered dictionaries back
 YAML_Loader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
                             dict_constructor)
 
 # Parse floats as decimals
-YAML_Loader.add_constructor("tag:yaml.org,2002:float",
-                            num_constructor)
+YAML_Loader.add_constructor("tag:yaml.org,2002:float", num_constructor)
 
 
 def dec_ceil(d):
@@ -76,7 +75,6 @@ def py_translate_to_decimals(s):
 
 
 class BudgetItem(object):
-
     def __init__(self, name, fname, conf):
         self.fname = fname
         self.conf = conf
@@ -84,7 +82,7 @@ class BudgetItem(object):
 
         if False in [x in y for x in ["cost", "summary", "description"]]:
             print("Error: %s does not match schema." % fname, file=sys.stderr)
-            exit(1)
+            sys.exit(1)
 
         self.name = name
         self.summary = y["summary"]
@@ -135,7 +133,6 @@ class InvalidPath(Exception):
 
 
 class BudgetTree(object):
-
     """Container for the BudgetItems and BudgetTrees below a certain point"""
 
     def __init__(self, name):
@@ -215,13 +212,11 @@ class BudgetTree(object):
 
 
 class NoBudgetConfig(Exception):
-
     def __init__(self):
         super(NoBudgetConfig, self).__init__("No config file found")
 
 
 class BudgetConfig(object):
-
     def __init__(self, root):
         pypath = os.path.join(root, "config.py")
         yamlpath = os.path.join(root, "config.yaml")
@@ -367,7 +362,7 @@ def find_root(path=os.getcwd()):
                        stdout=n,
                        stderr=n)
     except CalledProcessError:
-        "It's not the spending repository"
+        # It's not the spending repository
         raise NotBudgetRepo
 
     root = check_output(["git", "rev-parse", "--show-toplevel"],

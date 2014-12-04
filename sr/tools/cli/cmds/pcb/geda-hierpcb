@@ -27,8 +27,7 @@ try:
             clean_line = line.strip('\n')
             schematic_filenames = clean_line.split(' ')[1:]
     project_file.close()
-
-except:
+except IOError:
     print("File not found: %s" % project_filename)
     sys.exit(1)
 
@@ -48,7 +47,7 @@ try:
             value = value.strip('"')
             search_path.append(value)
     gafrc.close()
-except:
+except IOError:
     print("Unable to open gafrc, will only look in the current directory for schematics.")
 
 

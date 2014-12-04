@@ -26,11 +26,8 @@ class GSchem(dict):
         self.__load_bom()
 
     def __export_bom(self, ofname):
-        p = subprocess.Popen('gnetlist -g partslist1 -o %s %s' % (ofname,
-                                                                  self.fname),
-                             shell=True)
-        p.communicate()
-        p.wait()
+        command = 'gnetlist -g partslist1 -o %s %s' % (ofname, self.fname)
+        subprocess.check_call(command, shell=True)
 
     def __load_bom(self):
         cache_dir = get_cache_dir('bom', 'geda', 'bom')
@@ -39,7 +36,7 @@ class GSchem(dict):
 
         # Generate cache filename
         h = hashlib.sha1()
-        h.update(ab)
+        h.update(ab.encode('UTF-8'))
         cfname = os.path.join(cache_dir, h.hexdigest())
 
         cache_good = False
@@ -49,7 +46,7 @@ class GSchem(dict):
             cache_t = os.path.getmtime(cfname)
 
             if cache_t > schem_t:
-                "Cache is good"
+                # Cache is good
                 cache_good = True
 
         if not cache_good:

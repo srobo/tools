@@ -91,7 +91,7 @@ class EagleSchem(dict):
         f.close()
 
     def __export_bom(self, out_fname):
-        p = subprocess.Popen('sr export_eagle_bom "%s" "%s" ' %
+        p = subprocess.Popen('sr export-eagle-bom "%s" "%s" ' %
                              (self.fname, out_fname), shell=True)
         p.communicate()
         p.wait()

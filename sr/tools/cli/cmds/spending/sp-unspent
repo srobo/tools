@@ -44,7 +44,7 @@ if isinstance(budline, BudgetTree):
         unspent = line.cost - line.spent
 
         if unspent != D(0):
-            line.name, unspent
+            print(line.name, unspent)
         total_unspent += unspent
 
     print("-" * 10)

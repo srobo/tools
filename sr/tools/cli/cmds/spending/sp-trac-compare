@@ -15,7 +15,7 @@ tickets = p.ticket.query("component=purchasing&max=0&resolution=fixed&status=clo
 counts = {}
 for t in tickets:
     if t < 821 and t not in []:
-        print("Tickets before #839 except for those listed above weren't budgeted")
+        # Tickets before #839 except for those listed above weren't budgeted
         continue
 
     counts[t] = 0

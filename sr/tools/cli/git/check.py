@@ -1,15 +1,11 @@
 from __future__ import print_function
 
-import re
+def command(args):
+    import re
 
-try:
     import pygit2
-    PYGIT2_AVAILABLE = True
-except ImportError:
-    PYGIT2_AVAILABLE = False
 
 
-def check_my_git(args):
     config = pygit2.Config.get_global_config()
 
     if not config['user.name'].strip():
@@ -27,12 +23,22 @@ def check_my_git(args):
     print("Your git is correctly configured. :)")
 
 
-def add_subparsers(subparsers):
-    if not PYGIT2_AVAILABLE:
-        return
+def command_no_pygit2(args):
+    import sys
 
-    parser_check_my_git = subparsers.add_parser('check-my-git',
-                                                help='Checks whether you '
-                                                     'have git configured '
-                                                     'sanely.')
-    parser_check_my_git.set_defaults(func=check_my_git)
+
+    print('Please install pygit2 to use this tool.', file=sys.stderr)
+    sys.exit(1)
+
+
+def add_subparser(subparsers):
+    parser = subparsers.add_parser('check-my-git',
+                                   help='Checks whether you have git '
+                                        'configured sanely.')
+
+    try:
+        import pygit2
+    except ImportError:
+        parser.set_defaults(func=command_no_pygit2)
+    else:
+        parser.set_defaults(func=command)

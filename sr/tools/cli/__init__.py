@@ -3,7 +3,7 @@ from __future__ import print_function
 import argparse
 import pkg_resources
 
-from sr.tools.cli import cmds, git, misc
+from sr.tools.cli import budget, cmds, git, misc
 
 
 def print_version():
@@ -17,6 +17,7 @@ def main():
                         action='store_true')
 
     subparsers = parser.add_subparsers()
+    budget.add_subparsers(subparsers)
     cmds.add_subparsers(subparsers)
     git.add_subparsers(subparsers)
     misc.add_subparsers(subparsers)

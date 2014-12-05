@@ -13,6 +13,7 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+import glob
 import sys
 import os
 
@@ -230,10 +231,12 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    ('index', 'sr.tools', 'Student Robotics Tools Documentation',
-     ['Student Robotics'], 1)
-]
+man_pages = []
+for f in glob.glob('commands/*.rst'):
+    if f == 'commands/index.rst':
+        continue  # we don't want this in the man pages
+    name = 'sr-{}'.format(f[9:-4])
+    man_pages.append((f[:-4], name, name, ['Student Robotics'], 1))
 
 # If true, show URL addresses after external links.
 #man_show_urls = False

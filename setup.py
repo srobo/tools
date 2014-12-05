@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 setup(
     name='sr.tools',
     version='1.0.0-dev',
-    keywords='sr student robotics',
+    keywords='sr student robotics tools utilities utils',
     namespace_packages=['sr'],
     packages=find_packages(),
     entry_points={

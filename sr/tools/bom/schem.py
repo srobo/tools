@@ -1,35 +1,25 @@
 """Routines for extracting information from schematics"""
 import re
 
-from sr.tools.bom import eagle, geda, parts_db
+from sr.tools.bom import geda, parts_db
 
-EAGLE = 0
 GSCHEM = 1
 UNKNOWN = 2
 
 
 def schem_type(fname):
     """Returns the type of file.
-    At the moment it'll return EAGLE or UNKNOWN."""
-    f = open(fname, "r")
-
-    if eagle.file_is_eagle(f):
-        return EAGLE
-    else:
-        return GSCHEM
-
-    return UNKNOWN
+    At the moment it'll return GSCHEM."""
+    return GSCHEM
 
 
 def open_schem(fname):
     s = schem_type(fname)
-    if s == EAGLE:
-        schem = eagle.EagleSchem(fname)
-    elif s == GSCHEM:
+    if s == GSCHEM:
         schem = geda.GSchem(fname)
     else:
         raise Exception("We don't yet support exporting BOMs from "
-                        "non-EAGLE or gschem things.")
+                        "gschem things.")
 
     # New items to add to the schematic
     new_items = {}

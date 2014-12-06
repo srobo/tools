@@ -3,7 +3,8 @@ from __future__ import print_function
 import argparse
 import pkg_resources
 
-from sr.tools.cli import budget, cmds, git, ide, inventory, misc, spending, trac
+from sr.tools.cli import budget, cmds, git, gschem, ide, inventory, misc, \
+                         spending, trac
 
 
 def print_version():
@@ -20,6 +21,7 @@ def main():
     budget.add_subparsers(subparsers)
     cmds.add_subparsers(subparsers)
     git.add_subparsers(subparsers)
+    gschem.add_subparsers(subparsers)
     ide.add_subparsers(subparsers)
     inventory.add_subparsers(subparsers)
     misc.add_subparsers(subparsers)

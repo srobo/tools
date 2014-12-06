@@ -1,0 +1,54 @@
+from __future__ import print_function
+
+
+def command(args):
+    import os
+    import sys
+
+    import sr.tools.inventory as srinv
+    from sr.tools.inventory import assetcode
+    from sr.tools.inventory import normalise_partcode, get_inventory
+
+
+    inv = get_inventory()
+
+    parts = []
+    for c in args.assetcodes:
+        code = normalise_partcode(c)
+
+        try:
+            assetcode.code_to_num(code)
+        except:
+            print("Error: {} is an invalid asset code.".format(c), file=sys.stderr)
+            sys.exit(1)
+
+        try:
+            part = inv.root.parts[code]
+        except:
+            print("Error: There is no part with code {}.".format(code),
+                  file=sys.stderr)
+            sys.exit(1)
+
+        if hasattr(part.parent, "code"):
+            if args.assy:
+                parts.append(part.parent)
+            else:
+                print("Warning: Part {} is in an assembly.".format(code),
+                      "To move the assembly, use the -a switch.", file=sys.stderr)
+                parts.append(part)
+
+        else:
+            parts.append(part)
+
+    paths = map(lambda x: x.path, parts)
+
+    os.system("git mv " + " ".join(paths) + " ./")
+
+
+def add_subparser(subparsers):
+    parser = subparsers.add_parser('inv-mv',
+                                   help="Move inventory items into the CWD.")
+    parser.add_argument("-a", "--assy", action="store_true", default=False,
+                         dest="assy", help="If the asset codes are part of an assembly then move the whole assembly.")
+    parser.add_argument("assetcodes", metavar="ASSET_CODE", nargs="+", help="The asset code of the item to move.")
+    parser.set_defaults(func=command)

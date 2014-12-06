@@ -3,7 +3,7 @@ from __future__ import print_function
 import argparse
 import pkg_resources
 
-from sr.tools.cli import budget, cmds, git, ide, misc
+from sr.tools.cli import budget, cmds, git, ide, misc, trac
 
 
 def print_version():
@@ -22,6 +22,7 @@ def main():
     git.add_subparsers(subparsers)
     ide.add_subparsers(subparsers)
     misc.add_subparsers(subparsers)
+    trac.add_subparsers(subparsers)
 
     args = parser.parse_args()
 

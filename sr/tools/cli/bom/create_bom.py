@@ -1,17 +1,6 @@
-#!/usr/bin/env python
 from __future__ import print_function
 
-import base64
-import json
 import os
-import sys
-import time
-
-from six.moves import reduce
-
-import sr.tools.bom.parts_db as parts_db
-import sr.tools.bom.bom as bom
-import sr.tools.bom.geda as geda
 
 
 header_file = os.path.dirname(__file__) + "/bom_header.inc"
@@ -19,6 +8,12 @@ res = 150  # Image resolution in DPI
 
 
 def html_header(f, names=None, image=None, xy=None):
+    import base64
+    import json
+
+    from six.moves import reduce
+
+
     with open(header_file) as file:
         header = file.read()
 
@@ -48,10 +43,13 @@ AAAASUVORK5CYII=" />"""
     f.write(header % {'title': title, 'img_tag': img_tag, 'xy': xy_array, 'cross_hair': cross_hair})
 
 def html_footer(f):
+    import time
+
+
     f.write("""
 <p>Generated on %s with %s.</p>
 </body>
-</html>""" % (time.asctime(), os.path.basename(sys.argv[0])) )
+</html>""" % (time.asctime(), os.path.basename('create-bom')) )
 
 def pcode_extract_str(pcode):
     for c in range(0, len(pcode)):
@@ -113,6 +111,9 @@ def wrap_order_number(onum):
         return onum
 
 def convert_xy_to_json(xy):
+    import json
+
+
     parts = {}
     for line in xy.split("\n"):
         if len(line) == 0 or line[0] == "#":
@@ -141,15 +142,15 @@ def prep_parts(lines):
         out_lines.append(line)
     return out_lines
 
-def writeHTML(lines, out_fn):
+def writeHTML(lines, out_fn, args, pcb=None):
     outf = open( out_fn, "w" )
     pcb_image = None
     pcb_xy = None
-    if has_layout:
+    if pcb is not None:
         pcb_image = pcb.get_image(res)
         pcb_xy = pcb.get_xy()
 
-    html_header(outf, map(lambda n: os.path.basename(n), sys.argv[1:-1]), image=pcb_image, xy=pcb_xy)
+    html_header(outf, map(lambda n: os.path.basename(n), args.schematic), image=pcb_image, xy=pcb_xy)
 
     line_num = 1
     total_parts = 0
@@ -190,7 +191,7 @@ def writeHTML(lines, out_fn):
         total_parts += quantity
 
         pcodes = get_sorted_pcodes(line)
-        if has_layout:
+        if pcb is not None:
             pcodes = ["""<a onmouseover="highlight('%(x)s');return false" href="#">%(x)s</a>""" %
                   {'x': x} for x in pcodes]
         outf.write( "<td>%s</td>" % "|".join(pcodes) )
@@ -246,37 +247,42 @@ def writeXLS(lines, out_fn):
 
     book.save(out_fn)
 
-if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage: %s [--layout=LAYOUT] SCHEMATIC(S) OUTFILE" % (os.path.basename(sys.argv[0])))
-        print("Where:")
-        print("    - LAYOUT is the PCB layout for a single design")
-        print("    - SCHEMATIC is the schematic to read from (can be more than one)")
-        print("    - OUTFILE is the output HTML/XLS file")
-        sys.exit(1)
+
+def command(args):
+    import sys
+
+    import sr.tools.bom.parts_db as parts_db
+    import sr.tools.bom.bom as bom
+    import sr.tools.bom.geda as geda
 
     lib = parts_db.get_db()
-    if sys.argv[-1].split('.')[-1] == "sch":
+    if os.path.splitext(args.outfile)[1] == '.sch':
         print("Output file has extension 'sch', aborting as this is almost certainly a mistake")
         sys.exit(1)
 
-    has_layout = False
-    if sys.argv[1][0:9] == "--layout=":
-        pcb = geda.PCB(sys.argv[1][9:])
-        has_layout = True
+    pcb = None
+    if args.layout:
+        pcb = geda.PCB(args.layout)
 
-    out_fn = sys.argv[-1]
+    out_fn = args.outfile
 
     multibom = bom.MultiBoardBom(lib)
-    multibom.load_boards_args( sys.argv[2 if has_layout else 1:-1],
-                               allow_multipliers = False )
+    multibom.load_boards_args(args.schematic, allow_multipliers=False)
 
     sorted_lines = sorted(multibom.values(), key=lambda x: x.part['sr-code'])
     lines = prep_parts(sorted_lines)
 
-    if out_fn[-3:] == "xls":
+    if os.path.splitext(out_fn)[1] == ".xls":
         print("Writing XLS BOM")
         writeXLS(lines, out_fn)
     else:
         print("Writing HTML BOM")
-        writeHTML(lines, out_fn)
+        writeHTML(lines, out_fn, args, pcb)
+
+
+def add_subparser(subparsers):
+    parser = subparsers.add_parser('create_bom', help='Create a BOM.')
+    parser.add_argument('schematic', nargs='+', help='The schematic to read from.')
+    parser.add_argument('outfile', help='The output HTML/XLS file.')
+    parser.add_argument('--layout', '-l', help='The PCB layout for a single design.')
+    parser.set_defaults(func=command)

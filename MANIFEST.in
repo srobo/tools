@@ -1,2 +1,3 @@
 recursive-include sr/tools/cli/cmds *
+include sr/tools/cli/bom/bom_header.inc
 include sr/tools/bom/component_lib.csv

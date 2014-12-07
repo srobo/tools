@@ -95,7 +95,7 @@ class PartGroup(list):
                   (self.part["sr-code"], self.part["supplier"]))
             return Decimal(0)
 
-        return p * n
+        return p * Decimal(n)
 
 
 class Bom(dict):

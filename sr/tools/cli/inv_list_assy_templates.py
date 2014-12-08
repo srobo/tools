@@ -7,7 +7,6 @@ def command(args):
 
     from sr.tools.cli import inv_list_templates
 
-
     print("'inv-list-assy-templates' is deprecated. Please use "
           "'inv-list-templates --assemblies' instead.", file=sys.stderr)
 

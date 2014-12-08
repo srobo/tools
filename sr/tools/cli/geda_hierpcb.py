@@ -120,8 +120,8 @@ def command(args):
             # Did not find pre-existing PCB layout
             continue
 
-        dst_filename = os.path.join('.', block_filename + '_' + \
-                                         refdes + ".pcb")
+        dst_filename = os.path.join('.', block_filename + '_' +
+                                    refdes + ".pcb")
         try:
             # Open the original PCB layout
             src_pcb = open(pcb_filename, 'r')

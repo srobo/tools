@@ -45,7 +45,6 @@ def command(args):
 
     import sr.tools.budget as budget
 
-
     cmd = args.command
     subtree_path = args.subtree_path
 

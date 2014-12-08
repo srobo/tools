@@ -8,7 +8,6 @@ def command(args):
     from sr.tools.inventory.inventory import assetcode, normalise_partcode, \
         get_inventory
 
-
     inv = get_inventory()
 
     parts = []

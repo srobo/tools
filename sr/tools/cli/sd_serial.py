@@ -10,7 +10,6 @@ def command(args):
         print("Please install 'pyudev' to use this tool.", file=sys.stderr)
         sys.exit(1)
 
-
     con = pyudev.Context()
 
     for dev in con.list_devices(subsystem="mmc"):

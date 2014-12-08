@@ -59,7 +59,6 @@ class TracProxy(ServerProxy):
 
 class Ticket(object):
     """A ticket that may have dependencies."""
-
     def __init__(self, num, proxy):
         self.proxy = proxy
         self.num = num

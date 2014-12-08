@@ -8,7 +8,6 @@ def command(args):
     from sr.tools.environment import open_editor
     from sr.tools.inventory.oldinv import gettoplevel
 
-
     # Check we're being run in the inventory repo
     gitdir = gettoplevel()
     if not gitdir:

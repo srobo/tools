@@ -46,7 +46,6 @@ def html_footer(f):
     import os
     import time
 
-
     f.write("""
 <p>Generated on %s with %s.</p>
 </body>
@@ -151,7 +150,6 @@ def prep_parts(lines):
 
 def writeHTML(lines, out_fn, args, pcb=None):
     import os
-
 
     outf = open(out_fn, "w")
     pcb_image = None
@@ -298,7 +296,6 @@ def command(args):
 def command_deprecated(args):
     import sys
 
-
     print("This is deprecated, please use 'create-bom' instead.",
           file=sys.stderr)
     command(args)
@@ -312,7 +309,6 @@ def add_subparser(subparsers):
     parser.add_argument(
         '--layout', '-l', help='The PCB layout for a single design.')
     parser.set_defaults(func=command_deprecated)
-
 
     parser = subparsers.add_parser('create-bom', help='Create a BOM.')
     parser.add_argument(

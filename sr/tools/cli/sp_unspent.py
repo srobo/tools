@@ -8,7 +8,6 @@ def command(args):
     from sr.tools import spending
     from sr.tools.budget import BudgetTree
 
-
     try:
         root = spending.find_root()
     except spending.NotSpendingRepo:

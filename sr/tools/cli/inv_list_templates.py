@@ -6,7 +6,6 @@ def command(args):
 
     from sr.tools.inventory.inventory import get_inventory
 
-
     inventory = get_inventory()
     templatedir = os.path.join(inventory.rootpath, ".meta",
                                'assemblies' if args.assemblies else 'parts')

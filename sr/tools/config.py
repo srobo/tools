@@ -21,7 +21,6 @@ if six.PY2:
 
 class Config(dict):
     """Configuration reader for the SR tools"""
-
     def __init__(self):
         # default settings
         self['user'] = None

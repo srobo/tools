@@ -1,10 +1,5 @@
 from __future__ import print_function
 
-import re
-import sys
-
-from sr.tools.inventory import assetcode, query
-
 
 # Motorobards have FTDI ICs on them
 FTDI_ID_VENDOR = '0403'  # Future Technology Devices International, Ltd
@@ -14,10 +9,6 @@ FTDI_ID_PRODUCT = '6001'  # FT232 USB-Serial (UART) IC
 MCV4B_MANUFACTURER = 'Student Robotics'
 MCV4B_PRODUCT = 'MCV4B'
 
-# construct a reasonably accurate part code regular expression
-_ALPHA = "".join(assetcode.alphabet_lut)
-PARTCODE_RE = re.compile("sr([{0}]+)$".format(_ALPHA), re.IGNORECASE)
-
 
 def _has_attr(device, key, value):
     """
@@ -25,6 +16,7 @@ def _has_attr(device, key, value):
     """
     attrs = device.attributes
     return key in attrs.keys() and attrs[key] == value
+
 
 id_vendor_match = lambda d: _has_attr(d, 'idVendor',     FTDI_ID_VENDOR)
 id_product_match = lambda d: _has_attr(d, 'idProduct',    FTDI_ID_PRODUCT)
@@ -37,8 +29,16 @@ def partcode_match(device):
     Returns True if the udev Device has a valid SR partcode in its 'serial'
     attribute.
     """
+    import re
+
+    from sr.tools.inventory import assetcode
+
     if 'serial' not in device.attributes:
         return False
+
+    ALPHA = "".join(assetcode.alphabet_lut)
+    PARTCODE_RE = re.compile("sr([{0}]+)$".format(ALPHA), re.IGNORECASE)
+
     # does it look like a partcode?
     match = PARTCODE_RE.match(device.attributes['serial'])
     if not match:
@@ -90,6 +90,7 @@ def wait_for_first_insertion(context):
 
 def command(args):
     import os
+    import sys
 
     try:
         import pyudev
@@ -97,6 +98,7 @@ def command(args):
         print("Please install 'pyudev' to use this tool.", file=sys.stderr)
         sys.exit(1)
 
+    from sr.tools.inventory import query
 
     context = pyudev.Context()
 

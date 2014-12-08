@@ -74,7 +74,6 @@ def py_translate_to_decimals(s):
 
 
 class BudgetItem(object):
-
     def __init__(self, name, fname, conf):
         self.fname = fname
         self.conf = conf
@@ -133,9 +132,7 @@ class InvalidPath(Exception):
 
 
 class BudgetTree(object):
-
     """Container for the BudgetItems and BudgetTrees below a certain point"""
-
     def __init__(self, name):
         self.children = {}
         self.name = name
@@ -213,13 +210,11 @@ class BudgetTree(object):
 
 
 class NoBudgetConfig(Exception):
-
     def __init__(self):
         super(NoBudgetConfig, self).__init__("No config file found")
 
 
 class BudgetConfig(object):
-
     def __init__(self, root):
         pypath = os.path.join(root, "config.py")
         yamlpath = os.path.join(root, "config.yaml")
@@ -323,7 +318,6 @@ def load_budget(root):
 
 
 class TmpBudgetExport(object):
-
     def __init__(self, root, rev):
         self.rev = rev
         self.tmpdir = tempfile.mkdtemp()

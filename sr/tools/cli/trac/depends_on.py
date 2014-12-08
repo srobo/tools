@@ -18,7 +18,6 @@ def command(args):
     query = "description=~{}".format(search_ticket)
     matches = server.ticket.query(query)
 
-    none = True
     deps = []
     refs = []
     for num in matches:

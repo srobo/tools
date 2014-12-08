@@ -20,8 +20,6 @@ def command(args):
     # Round the number of teams up to a power of two
     rounded_teams = int(2 ** math.ceil(math.log(args.n_teams, 2)))
 
-    n_bits = int(math.ceil(math.log(rounded_teams, 2)))
-
     n_per_match = 4
     n_matches = int(math.ceil(float(rounded_teams) / n_per_match))
     matches_bits = int(math.ceil(math.log(n_matches, 2)))

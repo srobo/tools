@@ -2,10 +2,6 @@ from __future__ import print_function
 
 
 def command(args):
-    import argparse
-    import os
-    import sys
-
     import sr.tools.teamgit as teamgit
 
     from datetime import datetime

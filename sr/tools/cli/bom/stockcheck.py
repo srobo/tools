@@ -2,17 +2,11 @@ from __future__ import print_function
 
 
 def command(args):
-    import os
     import sys
-    import threading
 
     import sr.tools.bom.bom as bom
     import sr.tools.bom.parts_db as parts_db
-    import sr.tools.bom.schem as schem
 
-    import six.moves.queue as Queue
-
-    NUM_THREADS = 3
 
     db = parts_db.get_db()
     boards = bom.MultiBoardBom(db)

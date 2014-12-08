@@ -1,9 +1,7 @@
 """Student Robotics parts database access library"""
 import csv
 import pkg_resources
-import os
 import six
-import sys
 
 from sr.tools.bom import farnell, rs, digikey, mouser
 

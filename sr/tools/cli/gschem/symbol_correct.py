@@ -3,7 +3,7 @@ from __future__ import print_function
 
 def command(args):
     import subprocess
-    import sys
+
 
     gsymoutput = []
     symbolfile = []

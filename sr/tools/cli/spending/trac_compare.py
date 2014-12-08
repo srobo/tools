@@ -2,7 +2,6 @@ from __future__ import print_function
 
 
 def command(args):
-    import os
     import sys
 
     from sr.tools import spending

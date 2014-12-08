@@ -2,12 +2,8 @@ from __future__ import print_function
 
 
 def command(args):
-    import argparse
     import re
-    import os
     import sys
-
-    import yaml
 
     import sr.tools.spending as srspending
     import sr.tools.budget as srbudget

@@ -5,9 +5,9 @@ from __future__ import print_function
 def command(args):
     import json
     import re
-    import sys
 
     from six.moves.urllib.request import urlopen
+
 
     matcher = None
     if args.regex:

@@ -2,13 +2,10 @@ from __future__ import print_function
 
 
 def command(args):
-    import argparse
     import pydoc
     import subprocess
 
-    import sr.tools.inventory as srinv
-    from sr.tools.inventory import get_inventory
-    from sr.tools.inventory import normalise_partcode
+    from sr.tools.inventory import get_inventory, normalise_partcode
 
     inv = get_inventory()
 

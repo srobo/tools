@@ -4,7 +4,6 @@ from __future__ import print_function
 def command(args):
     from decimal import Decimal
     import re
-    import os
 
     with open(args.pcb_file) as file:
         fcontent = file.read()

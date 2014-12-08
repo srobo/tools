@@ -4,19 +4,16 @@ from __future__ import print_function
 
 
 class Cmd(object):
-
     def __init__(self, tree):
         pass
 
 
 class TotalCmd(object):
-
     def __init__(self, tree):
         print("Total: £%s" % tree.total())
 
 
 class HistCmd(object):
-
     def __init__(self, tree):
         import pylab
         import numpy as np
@@ -38,7 +35,6 @@ commands = {"total": TotalCmd, "hist": HistCmd}
 
 
 def command(args):
-    import numpy as np
     import sys
 
     import sr.tools.budget as budget

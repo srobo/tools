@@ -4,10 +4,10 @@ from __future__ import print_function
 def command(args):
     import os
     from subprocess import check_call
-    import sys
 
     import sr.tools.spending as spending
     from sr.tools.budget import BudgetTree
+
 
     root = spending.find_root()
     budget = spending.load_budget_with_spending(root)
@@ -32,7 +32,8 @@ def command(args):
 
     line = args.budgetline.replace("/", ":")
     if line[0] == ":":
-        line = account[1:]
+        line = account[1:] # 'account' doesn't exist, this doesn't appear to
+                           # have been a problem though
 
     check_call(["ledger",
                 "--file", os.path.join(root, "spending.dat"),

@@ -3,12 +3,12 @@ from __future__ import print_function
 
 def command(args):
     import os
-    from subprocess import check_call
     import sys
 
     from sr.tools import spending, Config
     from sr.tools.environment import get_config_filename
     from sr.tools.spending import NotSpendingRepo
+
 
     # Invoke ledger on the SR spending repo
     # Check that we are indeed invoking it on spending.git

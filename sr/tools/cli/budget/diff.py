@@ -2,7 +2,6 @@ from __future__ import print_function
 
 
 def command(args):
-    from argparse import ArgumentParser
     from decimal import Decimal as D
     import sys
 

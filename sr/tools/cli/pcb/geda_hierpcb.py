@@ -54,7 +54,6 @@ def command(args):
     for schematic_filename in schematic_filenames:
         try:
             schematic = open(schematic_filename, 'r')
-            current_refdes = ''
             for line in schematic:
                 if state == ParseState.STARTCOMP:
                     if line[0] == '{':
@@ -121,9 +120,9 @@ def command(args):
             # Did not find pre-existing PCB layout
             continue
 
+        dst_filename = os.path.join('.', block_filename + '_' + \
+                                         refdes + ".pcb")
         try:
-            dst_filename = os.path.join(
-                '.', block_filename + '_' + refdes + ".pcb")
             # Open the original PCB layout
             src_pcb = open(pcb_filename, 'r')
             # Open the new PCB layout
@@ -141,9 +140,8 @@ def command(args):
             src_pcb.close()
 
             print("Created %s for %s" % (dst_filename, refdes))
-
         except:
-            print("Failed to copy %s to %s" % (pcb_filename, dest))
+            print("Failed to copy %s to %s" % (pcb_filename, dst_filename))
             continue
 
 

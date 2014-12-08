@@ -2,10 +2,8 @@ from __future__ import print_function
 
 
 def command(args):
-    import os
     import sys
 
-    import sr.tools.bom.bom as bom
     import sr.tools.bom.schem as schem
     import sr.tools.bom.parts_db as parts_db
 
@@ -13,8 +11,6 @@ def command(args):
 
     lib = parts_db.get_db()
     parts = schem.open_schem(SCHEMATIC)
-
-    bom = {}
 
     error = 0
     found = 0

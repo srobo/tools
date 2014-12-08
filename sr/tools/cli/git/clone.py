@@ -2,12 +2,11 @@ from __future__ import print_function
 
 
 def command(args):
-    import argparse
     import os
-    import sys
     import subprocess
 
     from sr.tools import Config
+
 
     config = Config()
 

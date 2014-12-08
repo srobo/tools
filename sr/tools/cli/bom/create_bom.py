@@ -8,7 +8,6 @@ res = 150  # Image resolution in DPI
 
 def html_header(f, names=None, image=None, xy=None):
     import base64
-    import json
     import pkg_resources
 
     from six.moves import reduce

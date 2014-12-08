@@ -2,7 +2,6 @@ from __future__ import print_function
 
 
 def command(args):
-    import argparse
     import os
     import subprocess
     import sys

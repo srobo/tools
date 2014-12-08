@@ -5,7 +5,6 @@ GIT_URL = 'https://www.studentrobotics.org/robogit/{team}/{project}.git'
 
 
 def command(args):
-    import os
     import subprocess
     import sys
 

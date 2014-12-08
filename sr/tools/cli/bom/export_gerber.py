@@ -12,8 +12,6 @@ def command(args):
 
     import sr.tools.bom.geda as geda
 
-    FORMAT_RS274X = 1
-    FORMAT_EXCELLON = 2
 
     BOARD = args.board
 

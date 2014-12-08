@@ -3,12 +3,11 @@ from __future__ import print_function
 
 def command(args):
     from decimal import Decimal as D
-    from subprocess import check_output
-    import os
     import sys
 
     from sr.tools import spending
-    from sr.tools.budget import BudgetTree, FUDGE_FACTOR
+    from sr.tools.budget import BudgetTree
+
 
     try:
         root = spending.find_root()

@@ -3,9 +3,11 @@ from __future__ import print_function
 
 def command(args):
     import os
+    import sys
 
     from sr.tools.environment import open_editor
     from sr.tools.inventory.oldinv import gettoplevel
+
 
     # Check we're being run in the inventory repo
     gitdir = gettoplevel()

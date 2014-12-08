@@ -2,13 +2,12 @@ from __future__ import print_function
 
 
 def command(args):
-    import os
-    import sys
-
     from pylab import bar, yticks, subplots_adjust, show
+    from numpy import arange
 
     import sr.tools.bom.bom as bom
     import sr.tools.bom.parts_db as parts_db
+
 
     db = parts_db.get_db()
     m = bom.MultiBoardBom(db)

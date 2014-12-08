@@ -5,9 +5,7 @@ def command(args):
     import os
     import sys
 
-    import sr.tools.inventory as srinv
-    from sr.tools.inventory import assetcode
-    from sr.tools.inventory import normalise_partcode, get_inventory
+    from sr.tools.inventory import assetcode, normalise_partcode, get_inventory
 
     inv = get_inventory()
 

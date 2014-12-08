@@ -6,7 +6,6 @@ from decimal import Decimal as D, ROUND_CEILING, ROUND_FLOOR, ROUND_UP
 import runpy
 import os
 import six
-import shutil
 from subprocess import check_call, check_output, CalledProcessError
 import sys
 import tempfile

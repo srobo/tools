@@ -2,7 +2,7 @@ from __future__ import print_function
 
 
 def command(args):
-    from decimal import Decimal as D, ROUND_UP
+    from decimal import Decimal as D
     import os
     from subprocess import check_output
     import sys

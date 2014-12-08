@@ -2,9 +2,7 @@ from __future__ import print_function
 
 
 def command(args):
-    import getpass
     import re
-    import os
     import sys
     import six.moves.xmlrpc_client as xmlrpclib
 
@@ -18,7 +16,7 @@ def command(args):
             "Please run in spending.git top level directory", file=sys.stderr)
         exit(1)
 
-    spends = spending.load_transactions('.')
+    spends = spending.load_transactions(root)
 
     spendsumgrp = {}
     for s in spends:

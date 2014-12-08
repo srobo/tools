@@ -3,9 +3,6 @@ from __future__ import print_function
 
 
 def command(args):
-    import os
-    import sys
-
     from sr.tools import teamgit
 
     teams = teamgit.list_teams(server=args.server)

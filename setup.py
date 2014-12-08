@@ -20,7 +20,8 @@ setup(
         'pyparsing',
         'beautifulsoup4',
         'numpy',
-        'six'
+        'six',
+        'xlwt-future'
     ],
     extras_require={
         'cam-serial, usb-key-serial, sd-serial, mcv4b-part-code': ['pyudev'],

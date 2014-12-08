@@ -9,6 +9,7 @@ def command(args):
 
     import yaml
 
+    from sr.tools.environment import open_editor
     from sr.tools.inventory.oldinv import gettoplevel, getusername, getusernumber, getpartnumber
     import sr.tools.inventory.assetcode as assetcode
 
@@ -53,7 +54,7 @@ def command(args):
     assetfile.close()
 
     if args.start_editor:
-        subprocess.call([os.environ["EDITOR"] or "vi", os.path.join(groupname, "info")])
+        open_editor(os.path.join(groupname, "info"))
 
     if args.create_all:
         assy_data = yaml.load(open(templatefn))

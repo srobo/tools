@@ -35,8 +35,6 @@ def command(args):
 
         parts.append(part)
 
-    editor = os.getenv("EDITOR", "vi")
-
     for part in parts:
         print("# item -> parent")
 

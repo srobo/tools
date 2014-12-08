@@ -4,6 +4,7 @@ from __future__ import print_function
 def command(args):
     import os
 
+    from sr.tools.environment import open_editor
     from sr.tools.inventory.oldinv import gettoplevel
 
 
@@ -32,7 +33,7 @@ def command(args):
         assetfile.close()
 
         if args.start_editor:
-            subprocess.call([os.environ["EDITOR"] or "vi", assetfn])
+            open_editor(assetfn)
 
 
 def add_subparser(subparsers):

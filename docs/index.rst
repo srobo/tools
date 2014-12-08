@@ -18,7 +18,7 @@ API Reference
 .. toctree::
    :maxdepth: 2
 
-   api/sr.tools
+   api
 
 
 Indices and tables

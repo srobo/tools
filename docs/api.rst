@@ -77,16 +77,6 @@ Budget
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: sr.tools.budget.budget
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-.. automodule:: sr.tools.budget.diff
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 Configuration
 -------------
 

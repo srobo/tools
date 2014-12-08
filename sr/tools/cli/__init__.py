@@ -1,10 +1,17 @@
 from __future__ import print_function
 
 import argparse
+import importlib
 import pkg_resources
 
 from sr.tools.cli import bom, budget, git, gschem, ide, inventory, pcb, misc, \
                          spending, trac
+
+
+def add_subcommands(module, subparsers):
+    for command in module.__all__:
+        name = '{}.{}'.format(module.__name__, command)
+        importlib.import_module(name).add_subparser(subparsers)
 
 
 def print_version():
@@ -18,16 +25,16 @@ def main():
                         action='store_true')
 
     subparsers = parser.add_subparsers()
-    bom.add_subparsers(subparsers)
-    budget.add_subparsers(subparsers)
-    git.add_subparsers(subparsers)
-    gschem.add_subparsers(subparsers)
-    ide.add_subparsers(subparsers)
-    inventory.add_subparsers(subparsers)
-    pcb.add_subparsers(subparsers)
-    misc.add_subparsers(subparsers)
-    spending.add_subparsers(subparsers)
-    trac.add_subparsers(subparsers)
+    add_subcommands(bom, subparsers)
+    add_subcommands(budget, subparsers)
+    add_subcommands(git, subparsers)
+    add_subcommands(gschem, subparsers)
+    add_subcommands(ide, subparsers)
+    add_subcommands(inventory, subparsers)
+    add_subcommands(pcb, subparsers)
+    add_subcommands(misc, subparsers)
+    add_subcommands(spending, subparsers)
+    add_subcommands(trac, subparsers)
 
     args = parser.parse_args()
 

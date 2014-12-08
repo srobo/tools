@@ -1,4 +1,3 @@
-recursive-include sr/tools/cli/cmds *
 include sr/tools/bom/component_lib.csv
 include sr/tools/cli/bom/bom_header.inc
 include sr/tools/cli/misc/latex-assets.zip

@@ -16,7 +16,7 @@ def add_subcommands(module, subparsers):
 
 def print_version():
     version = pkg_resources.get_distribution('sr.tools').version
-    print("SR Tools {version}".format(version=version))
+    print("Student Robotics Tools {version}".format(version=version))
 
 
 def main():

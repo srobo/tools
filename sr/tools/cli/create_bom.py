@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import os
+import sys
 
 
 res = 150  # Image resolution in DPI
@@ -291,8 +292,23 @@ def command(args):
         writeHTML(lines, out_fn, args, pcb)
 
 
+def command_deprecated(args):
+    print("This is deprecated, please use 'create-bom' instead.",
+          file=sys.stderr)
+    command(args)
+
+
 def add_subparser(subparsers):
     parser = subparsers.add_parser('create_bom', help='Create a BOM.')
+    parser.add_argument(
+        'schematic', nargs='+', help='The schematic to read from.')
+    parser.add_argument('outfile', help='The output HTML/XLS file.')
+    parser.add_argument(
+        '--layout', '-l', help='The PCB layout for a single design.')
+    parser.set_defaults(func=command_deprecated)
+
+
+    parser = subparsers.add_parser('create-bom', help='Create a BOM.')
     parser.add_argument(
         'schematic', nargs='+', help='The schematic to read from.')
     parser.add_argument('outfile', help='The output HTML/XLS file.')

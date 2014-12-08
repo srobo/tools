@@ -1,9 +1,9 @@
 from __future__ import print_function
 
+import sys
+
 
 def command(args):
-    import sys
-
     import sr.tools.bom.schem as schem
     import sr.tools.bom.parts_db as parts_db
 
@@ -37,8 +37,20 @@ def command(args):
         sys.exit(2)
 
 
+def command_deprecated(args):
+    print("This is deprecated, please use 'pcb-lint' instead.",
+          file=sys.stderr)
+    command(args)
+
+
 def add_subparser(subparsers):
     parser = subparsers.add_parser('pcb_lint',
+                                   help="Checks that all the parts in a PCB's "
+                                        'schematic are in the SR database')
+    parser.add_argument('schematic', help='The schematic to check.')
+    parser.set_defaults(func=command_deprecated)
+
+    parser = subparsers.add_parser('pcb-lint',
                                    help="Checks that all the parts in a PCB's "
                                         'schematic are in the SR database')
     parser.add_argument('schematic', help='The schematic to check.')

@@ -245,9 +245,28 @@ def command(args):
                        trac=ticketNum))
 
 
+def command_deprecated(args):
+    print("This is deprecated, please use 'make-purchase' instead.",
+          file=sys.stderr)
+    command(args)
+
+
 def add_subparser(subparsers):
-    parser = subparsers.add_parser(
-        'make_purchase', help="Make an SR purchase request")
+    parser = subparsers.add_parser('make_purchase',
+                                   help="Make an SR purchase request")
+    parser.add_argument("-s", "--server", help="Hostname of server to talk to")
+    parser.add_argument("-p", "--port", help="Server port number to talk to",
+                        type=int)
+    parser.add_argument("-f", "--spend-file",
+                        help="Take spending info from this YAML file rather "
+                             "than running an editor")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Process and check everything, but don't "
+                             "actually create purchasing ticket")
+    parser.set_defaults(func=command_deprecated)
+
+    parser = subparsers.add_parser('make-purchase',
+                                   help="Make an SR purchase request")
     parser.add_argument("-s", "--server", help="Hostname of server to talk to")
     parser.add_argument("-p", "--port", help="Server port number to talk to",
                         type=int)

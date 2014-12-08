@@ -8,19 +8,19 @@ import pkg_resources
 # make sure to update this with new tools if they are created
 __all__ = ['budget_check', 'budget_close', 'budget_diff', 'budget_eval',
            'budget_query', 'budget_tree', 'cam_serial', 'check_my_git',
-           'cog', 'cog_team', 'create_bom', 'create_order', 'digikey',
+           'clone_team', 'clone', 'create_bom', 'create_order', 'digikey',
            'document', 'export_gerber', 'farnell', 'geda_hierpcb',
            'ide_list_repos', 'ide_list_teams', 'ide_version', 'inv_edit',
            'inv_findpart', 'inv_list_assy_templates', 'inv_list_templates',
            'inv_mv', 'inv_new_asset', 'inv_new_group', 'inv_query',
            'inv_set_attr', 'inv_show_parent', 'inv_show', 'inv_sync_asset',
-           'inv_touch', 'list_commands', 'make_purchase', 'mcv4b_part_code',
-           'mouser', 'pcb_lint', 'pcb_to_thou', 'price_graph', 'repolist',
-           'rs', 'schedule_knockout', 'sd_serial', 'sp_ledger', 'sp_line',
-           'sp_trac_compare', 'sp_trac', 'sp_unspent', 'srweb_version',
-           'stockcheck', 'symbol_correct', 'trac_attach', 'trac_depends_on',
-           'trac_depgraph', 'trac_deps_add', 'trac_deps_rm', 'update',
-           'usb_key_serial']
+           'inv_touch', 'ledger', 'list_commands', 'make_purchase',
+           'mcv4b_part_code', 'mouser', 'pcb_lint', 'pcb_to_thou',
+           'price_graph', 'repolist', 'rs', 'schedule_knockout', 'sd_serial',
+           'sp_line', 'sp_trac_compare', 'sp_trac', 'sp_unspent',
+           'srweb_version', 'stockcheck', 'symbol_correct', 'trac_attach',
+           'trac_depends_on', 'trac_depgraph', 'trac_deps_add', 'trac_deps_rm',
+           'update', 'usb_key_serial']
 
 
 def print_version():

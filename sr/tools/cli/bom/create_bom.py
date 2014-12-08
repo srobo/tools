@@ -3,19 +3,20 @@ from __future__ import print_function
 import os
 
 
-header_file = os.path.dirname(__file__) + "/bom_header.inc"
 res = 150  # Image resolution in DPI
 
 
 def html_header(f, names=None, image=None, xy=None):
     import base64
     import json
+    import pkg_resources
 
     from six.moves import reduce
 
 
-    with open(header_file) as file:
-        header = file.read()
+    header_file = pkg_resources.resource_stream('sr.tools.cli.bom',
+                                                'bom_header.html')
+    header = header_file.read().decode('UTF-8')
 
     title = ""
     if names != None:

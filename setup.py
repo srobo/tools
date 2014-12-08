@@ -28,7 +28,7 @@ setup(
         'price-graph': ['matplotlib']
     },
     include_package_data=True,
-    zip_safe=False,
+    zip_safe=True,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Topic :: Utilities'

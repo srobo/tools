@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 from decimal import Decimal as D
+import pkg_resources
 import os
 import six
 import sys
@@ -51,32 +52,28 @@ class SpendRequest(object):
         os.close(fd)
 
         # Fill in the temporary file from the template
-        template_path = os.path.join(os.path.dirname( __file__ ), "spend-template.yaml")
-        with open( template_path, "r" ) as f:
-            template = f.read()
+        template = pkg_resources.resource_stream('sr.tools.cli.misc',
+                                                 'spend-template.yaml')
 
-        with open( fname, "w" ) as f:
-            f.write(template)
+        with open(fname, 'wb') as file:
+            file.write(template.read())
 
         while True:
             sr.tools.environment.open_editor(fname)
 
             try:
-                spendreq = cls( fname,
-                                delete_file = True )
-
+                spendreq = cls(fname, delete_file=True)
             except KeyError as e:
                 print("Missing field:", e, file=sys.stderr)
-                input( "Press return to try again" )
+                input("Press return to try again")
                 continue
-
             except yaml.parser.ParserError as e:
                 print("Error parsing your YAML", file=sys.stderr)
                 print(e, file=sys.stderr)
-                input( "Press return to try again" )
+                input("Press return to try again")
                 continue
-
-            break
+            else:
+                break
 
         return spendreq
 

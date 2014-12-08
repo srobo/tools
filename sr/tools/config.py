@@ -39,17 +39,6 @@ class Config(dict):
         except IOError:
             pass
 
-    @staticmethod
-    def get_tools_root():
-        """Return the root directory of tools.git"""
-        # Discover our directory
-        mydir = os.path.dirname(__file__)
-
-        # Find the root of this git repo
-        root = check_output(["git", "rev-parse", "--show-toplevel"], cwd=mydir)
-
-        return root.decode("utf-8").strip()
-
     def update_from_file(self, fname):
         """Update the config from the given YAML file"""
         with open(fname) as file:

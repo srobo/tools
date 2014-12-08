@@ -24,6 +24,7 @@ def ensure_callable(*names):
 
 
 def command(args):
+    import pkg_resources
     import shutil
     import subprocess
     import tempfile
@@ -121,8 +122,8 @@ def command(args):
     with open(main_file, 'w') as f:
         f.write(total)
 
-    zip_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'latex-assets.zip')
-    with zipfile.ZipFile(zip_path, 'r') as zf:
+    file = pkg_resources.resource_stream('sr.tools.cli.misc', 'latex-assets.zip')
+    with zipfile.ZipFile(file) as zf:
         for name in ('ecs.png', 'moto.png', 'bitbox.png', 'sr-logo.pdf'):
             zf.extract(name, temp_dir)
 

@@ -2,14 +2,15 @@
 import csv
 import pkg_resources
 import os
+import six
 import sys
 
 from sr.tools.bom import farnell, rs, digikey, mouser
 
 
 def get_db():
-    path = pkg_resources.resource_filename('sr.tools.bom', 'component_lib.csv')
-    return Db(path)
+    file = pkg_resources.resource_stream('sr.tools.bom', 'component_lib.csv')
+    return Db(six.StringIO(file.read().decode('UTF-8')))
 
 
 class Part(dict):
@@ -106,12 +107,8 @@ class Part(dict):
 
 
 class Db(dict):
-
-    def __init__(self, fname):
-        f = open(fname, "r")
-        r = csv.DictReader(f)
-
-        for line in r:
+    def __init__(self, file):
+        for line in csv.DictReader(file):
             # Discard commented out lines
             if line["sr-code"].strip()[0] == "#":
                 continue

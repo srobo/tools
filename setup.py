@@ -25,7 +25,8 @@ setup(
     ],
     extras_require={
         'cam-serial, usb-key-serial, sd-serial, mcv4b-part-code': ['pyudev'],
-        'price-graph': ['matplotlib']
+        'price-graph': ['matplotlib'],
+        'save passwords': ['keyring']
     },
     include_package_data=True,
     zip_safe=True,

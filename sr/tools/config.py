@@ -2,7 +2,9 @@
 from __future__ import print_function
 
 import getpass
+import six
 import sys
+
 import yaml
 
 try:
@@ -13,12 +15,11 @@ except ImportError:
 from sr.tools.environment import get_config_filename
 
 
-if sys.version_info < (3,):
+if six.PY2:
     input = raw_input
 
 
 class Config(dict):
-
     """Configuration reader for the SR tools"""
 
     def __init__(self):

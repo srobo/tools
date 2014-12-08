@@ -13,9 +13,7 @@ import sr.tools.budget as budget
 
 
 class Transaction(object):
-
     def __init__(self, name, date, fname):
-
         self.name = "TODO"
         self.date = None        # TODO
         self.summary = "TODO"
@@ -101,7 +99,6 @@ def account_to_budget_line(account):
 
 
 class LedgerNotFound(Exception):
-
     def __init__(self):
         super(LedgerNotFound, self).__init__("Unable to find 'ledger' which "
                                              "is required to operate the "
@@ -174,7 +171,7 @@ def find_root(path=None):
         path = os.getcwd()
 
     try:
-        "Check that we're in spending.git"
+        # Check that we're in spending.git
 
         with open("/dev/null", "w") as n:
             check_call(["git", "rev-list",
@@ -185,8 +182,8 @@ def find_root(path=None):
                        stdout=n,
                        stderr=n)
     except CalledProcessError:
-        "It's not the spending repository"
-        raise NotSpendingRepo
+        # It's not the spending repository
+        raise NotSpendingRepo()
 
     root = check_output(["git", "rev-parse", "--show-toplevel"],
                         cwd=path)

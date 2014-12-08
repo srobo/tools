@@ -9,6 +9,7 @@ User Guide
 
    installation
    usage
+   development
 
 API Reference
 -------------

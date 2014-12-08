@@ -13,8 +13,9 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys
+import glob
 import os
+import sys
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -226,10 +227,14 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    ('index', 'studentroboticstools', 'Student Robotics Tools Documentation',
-     ['Student Robotics'], 1)
-]
+man_pages = []
+for f in glob.glob('commands/*.rst'):
+    if 'index.rst' in f:
+        continue  # we don't want this in the man pages
+    command_name = f[9:-4]
+    name = 'sr-{}'.format(command_name)
+    description = 'Help for "{}" tool.'.format(command_name)
+    man_pages.append((f[:-4], name, description, ['Student Robotics'], 1))
 
 # If true, show URL addresses after external links.
 #man_show_urls = False

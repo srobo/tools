@@ -9,6 +9,7 @@ User Guide
 
    installation
    usage
+   commands/index
    development
 
 API Reference

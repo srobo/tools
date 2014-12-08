@@ -8,7 +8,6 @@ def command(args):
 
     from sr.tools import teamgit
 
-
     teams = teamgit.list_teams(server=args.server)
     for team in sorted(teams):
         print(team)
@@ -17,10 +16,9 @@ def command(args):
 def add_subparser(subparsers):
     import sr.tools.teamgit as teamgit
 
-
     parser = subparsers.add_parser('ide-list-teams',
                                    help='List teams in the IDE.')
     parser.add_argument('--server', '-s', default=teamgit.DEFAULT_SERVER,
-                        help='The server running the IDE. Defaults to the ' \
+                        help='The server running the IDE. Defaults to the '
                              'official Student Robotics server.')
     parser.set_defaults(func=command)

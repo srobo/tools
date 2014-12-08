@@ -10,7 +10,6 @@ def command(args):
     from sr.tools.environment import get_config_filename
     from sr.tools.spending import NotSpendingRepo
 
-
     # Invoke ledger on the SR spending repo
     # Check that we are indeed invoking it on spending.git
     config = Config()
@@ -30,14 +29,15 @@ def command(args):
         print("This isn't SR spending.git", file=sys.stderr)
         print("Solve this by either:", file=sys.stderr)
         print(" - Changing working directory to spending.git", file=sys.stderr)
-        print(" - Set the 'spending' config option in {}".format(get_config_filename()), file=sys.stderr)
+        print(" - Set the 'spending' config option in {}"
+              .format(get_config_filename()), file=sys.stderr)
         sys.exit(1)
 
     ledger_args = ['ledger'] + args.command
     if "--file" not in args:
         # Tell ledger where to look
         ledger_args = ['ledger', "--file", os.path.join(root, "spending.dat")] \
-                      + args.command
+            + args.command
 
     os.execvp("ledger", ledger_args)
 

@@ -6,7 +6,6 @@ def command(args):
 
     from sr.tools.trac import Ticket, TracProxy, WrongServer
 
-
     try:
         server = TracProxy()
     except WrongServer:
@@ -37,7 +36,8 @@ def command(args):
         print("Nothing depends on {}".format(search_ticket))
 
     if len(refs):
-        print("The following tickets appear to reference {}:".format(search_ticket))
+        print("The following tickets appear to reference {}:"
+              .format(search_ticket))
         for t in refs:
             print("\t{}".format(t))
 

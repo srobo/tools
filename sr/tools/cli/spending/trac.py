@@ -11,11 +11,11 @@ def command(args):
     from sr.tools import spending
     from sr.tools.trac import TracProxy
 
-
     try:
         root = spending.find_root()
     except spending.NotSpendingRepo:
-        print("Please run in spending.git top level directory", file=sys.stderr)
+        print(
+            "Please run in spending.git top level directory", file=sys.stderr)
         exit(1)
 
     spends = spending.load_transactions('.')
@@ -27,7 +27,7 @@ def command(args):
         else:
             spendsumgrp[s.trac] = float(s.cost)
 
-    server = TracProxy(anon = True)
+    server = TracProxy(anon=True)
     mserver = xmlrpclib.MultiCall(server)
 
     tickets = server.ticket.query("status!=closed&component=Purchasing")
@@ -36,9 +36,11 @@ def command(args):
 
     costsumgrp = {}
     for ticket in mserver():
-        match = re.search('Total cost: \xa3([0-9.]+)',ticket[3]['description'])
+        match = re.search(
+            'Total cost: \xa3([0-9.]+)', ticket[3]['description'])
         if match is None:
-            print("Unable to determine cost for ticket " + str(ticket[0]) + ". Invalid formatting")
+            print("Unable to determine cost for ticket " +
+                  str(ticket[0]) + ". Invalid formatting")
             continue
 
         if ticket[0] in costsumgrp:

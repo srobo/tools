@@ -1,10 +1,10 @@
 from __future__ import print_function
 
+
 def command(args):
     import re
 
     import pygit2
-
 
     config = pygit2.Config.get_global_config()
 
@@ -25,7 +25,6 @@ def command(args):
 
 def command_no_pygit2(args):
     import sys
-
 
     print('Please install pygit2 to use this tool.', file=sys.stderr)
     sys.exit(1)

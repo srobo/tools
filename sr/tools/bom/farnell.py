@@ -8,6 +8,7 @@ import re
 
 
 class Item(distpart.DistItem):
+
     def __init__(self, part_number):
         distpart.DistItem.__init__(self, part_number)
 

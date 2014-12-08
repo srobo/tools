@@ -10,7 +10,6 @@ def command(args):
     import sr.tools.inventory.oldinv as oldinv
     from sr.tools.inventory import normalise_partcode
 
-
     top = oldinv.gettoplevel()
     if top is None:
         print("Error: Must be run from within the inventory.", file=sys.stderr)
@@ -30,7 +29,8 @@ def command(args):
         try:
             part = inv.root.parts[code]
         except KeyError:
-            print("Error: There is no part with code %s." % code, file=sys.stderr)
+            print("Error: There is no part with code %s." %
+                  code, file=sys.stderr)
             sys.exit(1)
 
         parts.append(part)
@@ -46,6 +46,7 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('inv-showparent', help='Show parent of items.')
+    parser = subparsers.add_parser(
+        'inv-showparent', help='Show parent of items.')
     parser.add_argument('part_code', nargs='+', help='Part codes to show.')
     parser.set_defaults(func=command)

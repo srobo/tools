@@ -9,20 +9,19 @@ def command(args):
 
     from sr.tools import Config
 
-
     config = Config()
 
     if args.anonymous:
-        prefix = "git://{0}/".format( config["server"] )
+        prefix = "git://{0}/".format(config["server"])
     else:
-        prefix = "{0}:".format( config["gerrit_ssh"] )
+        prefix = "{0}:".format(config["gerrit_ssh"])
 
     repo = args.repo
     if repo[:len(prefix)] != prefix:
-        repo = "{0}{1}".format( prefix, repo )
+        repo = "{0}{1}".format(prefix, repo)
 
     cmd = ["git", "clone", "--recursive", repo]
-    if args.dir != None:
+    if args.dir is not None:
         cmd += [args.dir]
 
     subprocess.check_call(cmd)
@@ -45,7 +44,8 @@ def command(args):
 def add_subparser(subparsers):
     parser = subparsers.add_parser('cog', help="Clone an SR git repository")
     parser.add_argument("repo", help="Repository path -- e.g. tools.git")
-    parser.add_argument("dir", nargs="?", help="Directory to clone to (optional)")
-    parser.add_argument("-a", "--anonymous", action="store_true", default=False,
-                        help="Clone anonymously over git://")
+    parser.add_argument("dir", nargs="?",
+                        help="Directory to clone to (optional)")
+    parser.add_argument("-a", "--anonymous", action="store_true",
+                        default=False, help="Clone anonymously over git://")
     parser.set_defaults(func=command)

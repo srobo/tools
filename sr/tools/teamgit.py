@@ -43,6 +43,7 @@ def list_teams(reporoot=DEFAULT_REPOROOT, server=DEFAULT_SERVER):
 
 
 class Repo(object):
+
     def __init__(self, path, server=DEFAULT_SERVER):
         self.path = path
         self.server = server
@@ -61,6 +62,7 @@ class Repo(object):
 
 
 class Team(object):
+
     def __init__(self, identifier, server=DEFAULT_SERVER,
                  reporoot=DEFAULT_REPOROOT):
         self.identifier = identifier

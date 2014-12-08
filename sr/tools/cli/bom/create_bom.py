@@ -13,57 +13,61 @@ def html_header(f, names=None, image=None, xy=None):
 
     from six.moves import reduce
 
-
     header_file = pkg_resources.resource_stream('sr.tools.cli.bom',
                                                 'bom_header.html')
     header = header_file.read().decode('UTF-8')
 
     title = ""
-    if names != None:
+    if names is not None:
         title = " - "
         title = title + reduce(lambda t, n: t + ', ' + n, names)
 
     img_tag = ""
     cross_hair = ""
-    if image != None:
+    if image is not None:
         img_tag = """<img id="top" src="data:image/png;base64,%s" />""" \
                   % base64.b64encode(image)
-        cross_hair = """<img id="crosshair" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
-AAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADeSURB
-VFiF7ZW9DYMwEEafE6oUEUUmoWK0jJApKDINVXagT5WCiuhLYQchCrBNkBXJJ50E6Ljvyb4fI4lo
-M+YGgHSNTXGIV/+NZYAMkAGSAxQb/2/TARhzAp7js9RH5ZEU5lAKGsEgkPPBfStD88WIdxPhuXeh
-EKEAzYL415uQnMZ7G9o7fwHHlcg3cPatiWJcqcvWYgtuTRwXU2HMBajXgpPPgeRX4H8CNuHdI/Ie
-NBP+qw13GET+NTA3WxOVe3sEHfvE4neB1LtWI1YctrdhjUev7wmw2TJABsgAyQE+dlzYaD6jZ48A
-AAAASUVORK5CYII=" />"""
+        cross_hair = """<img id="crosshair" src="data:image/png;base64,iVBOR
+w0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOx
+AAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADeSURBVFiF7
+ZW9DYMwEEafE6oUEUUmoWK0jJApKDINVXagT5WCiuhLYQchCrBNkBXJJ50E6Ljvyb4fI4loM+YGg
+HSNTXGIV/+NZYAMkAGSAxQb/2/TARhzAp7js9RH5ZEU5lAKGsEgkPPBfStD88WIdxPhuXehEKEAz
+YL415uQnMZ7G9o7fwHHlcg3cPatiWJcqcvWYgtuTRwXU2HMBajXgpPPgeRX4H8CNuHdI/IeNBP+q
+w13GET+NTA3WxOVe3sEHfvE4neB1LtWI1YctrdhjUev7wmw2TJABsgAyQE+dlzYaD6jZ48AAAAAS
+UVORK5CYII=" />"""
 
     xy_array = ""
-    if xy != None:
+    if xy is not None:
         jsondata = convert_xy_to_json(xy)
         xy_array = """var xy = %s;""" % jsondata
 
-    f.write(header % {'title': title, 'img_tag': img_tag, 'xy': xy_array, 'cross_hair': cross_hair})
+    f.write(header % {'title': title, 'img_tag': img_tag,
+                      'xy': xy_array, 'cross_hair': cross_hair})
+
 
 def html_footer(f):
     import time
 
-
     f.write("""
 <p>Generated on %s with %s.</p>
 </body>
-</html>""" % (time.asctime(), os.path.basename('create-bom')) )
+</html>""" % (time.asctime(), os.path.basename('create-bom')))
+
 
 def pcode_extract_str(pcode):
     for c in range(0, len(pcode)):
         if pcode[c].isdigit():
             return pcode[:c]
 
+
 def pcode_extract_num(pcode):
     for c in range(0, len(pcode)):
         if pcode[c].isdigit():
             if "." in pcode[c:]:
-                return float( pcode[c:] )
+                return float(pcode[c:])
             else:
-                return int( pcode[c:] )
+                return int(pcode[c:])
+
 
 def pcode_find_ranges(pcodes):
     grouped = []
@@ -73,7 +77,7 @@ def pcode_find_ranges(pcodes):
         n = pcode_extract_num(pc)
         cs = pcode_extract_str(pc)
 
-        if not pr.has_key(cs):
+        if cs not in pr:
             pr[cs] = []
 
         if not isinstance(n, int):
@@ -91,17 +95,18 @@ def pcode_find_ranges(pcodes):
             end -= 1
 
             if end - start < 2:
-                for n in range(start, end+1):
-                    grouped.append( "%s%i" % (prefix, n) )
+                for n in range(start, end + 1):
+                    grouped.append("%s%i" % (prefix, n))
             else:
-                grouped.append( "%s%i-%i" % (prefix, start, end) )
+                grouped.append("%s%i-%i" % (prefix, start, end))
 
     return grouped
+
 
 def get_sorted_pcodes(line):
     pcodes = [x[1] for x in line]
     pcodes.sort(key=lambda x: pcode_extract_num(x))
-    #pcodes = pcode_find_ranges(pcodes)
+    # pcodes = pcode_find_ranges(pcodes)
     return pcodes
 
 
@@ -111,9 +116,9 @@ def wrap_order_number(onum):
     else:
         return onum
 
+
 def convert_xy_to_json(xy):
     import json
-
 
     parts = {}
     for line in xy.split("\n"):
@@ -123,11 +128,12 @@ def convert_xy_to_json(xy):
         s = line.split(",")
         if len(s) != 7:
             continue
-        x = int(float(s[3])/1000 * res)
-        y = int(float(s[4])/1000 * res)
+        x = int(float(s[3]) / 1000 * res)
+        y = int(float(s[4]) / 1000 * res)
         parts[s[0]] = {'value': s[2][1:-1], 'x': x, 'y': y, 'side': s[6][0]}
 
     return json.dumps(parts)
+
 
 def prep_parts(lines):
     out_lines = []
@@ -143,15 +149,17 @@ def prep_parts(lines):
         out_lines.append(line)
     return out_lines
 
+
 def writeHTML(lines, out_fn, args, pcb=None):
-    outf = open( out_fn, "w" )
+    outf = open(out_fn, "w")
     pcb_image = None
     pcb_xy = None
     if pcb is not None:
         pcb_image = pcb.get_image(res)
         pcb_xy = pcb.get_xy()
 
-    html_header(outf, map(lambda n: os.path.basename(n), args.schematic), image=pcb_image, xy=pcb_xy)
+    html_header(outf, map(lambda n: os.path.basename(n), args.schematic),
+                image=pcb_image, xy=pcb_xy)
 
     line_num = 1
     total_parts = 0
@@ -162,10 +170,10 @@ def writeHTML(lines, out_fn, args, pcb=None):
 
         url = p.get_url()
         order_num = wrap_order_number(p["order-number"])
-        if url == None:
+        if url is None:
             order_num_html = order_num
         else:
-            order_num_html = """<a href="%s">%s</a>""" % ( url, order_num )
+            order_num_html = """<a href="%s">%s</a>""" % (url, order_num)
 
         quantity = len(line)
 
@@ -176,7 +184,7 @@ def writeHTML(lines, out_fn, args, pcb=None):
         if p["part-number"] == "":
             p["part-number"] = "&nbsp;"
 
-        outf.write( """
+        outf.write("""
             <td>%(line-no)i</td>
             <td>%(sr-code)s</td>
             <td>%(qty)i</td>
@@ -186,23 +194,24 @@ def writeHTML(lines, out_fn, args, pcb=None):
             <td>%(order-no)s</td>
             <td>%(manufacturer)s</td>
             <td>%(part-number)s</td>
-        """ % p )
+        """ % p)
         line_num += 1
 
         total_parts += quantity
 
         pcodes = get_sorted_pcodes(line)
         if pcb is not None:
-            pcodes = ["""<a onmouseover="highlight('%(x)s');return false" href="#">%(x)s</a>""" %
-                  {'x': x} for x in pcodes]
-        outf.write( "<td>%s</td>" % "|".join(pcodes) )
+            pcodes = ["""<a onmouseover="highlight('%(x)s');return false" """
+                      """href="#">%(x)s</a>""" % {'x': x} for x in pcodes]
+        outf.write("<td>%s</td>" % "|".join(pcodes))
 
         outf.write("</tr>")
 
-    outf.write( "</tbody></table>" )
-    outf.write( "<p>%i parts in total.</p>" % total_parts )
+    outf.write("</tbody></table>")
+    outf.write("<p>%i parts in total.</p>" % total_parts)
 
     html_footer(outf)
+
 
 def writeXLS(lines, out_fn):
     import xlwt
@@ -223,7 +232,7 @@ def writeXLS(lines, out_fn):
 
     # Keep try of the longest line in a column so that we can set the column
     # width
-    col_char_count = [0]*len(headings)
+    col_char_count = [0] * len(headings)
 
     bold_style = xlwt.easyxf("font: bold on;")
     for colx, (heading, field) in enumerate(headings):
@@ -238,13 +247,14 @@ def writeXLS(lines, out_fn):
                   "pcodes": ", ".join(get_sorted_pcodes(line))})
         for colx, (heading, field) in enumerate(headings):
             sheet.write(rowx, colx, p[field])
-            col_char_count[colx] = max(col_char_count[colx], len(str(p[field])))
+            col_char_count[colx] = max(
+                col_char_count[colx], len(str(p[field])))
         rowx += 1
 
     for colx, c in enumerate(col_char_count):
-        # See http://stackoverflow.com/q/3154270 for an explanation of the magic
-        # numbers
-        sheet.col(colx).width = int((1+c)*256)
+        # See http://stackoverflow.com/q/3154270 for an explanation of the
+        # magic numbers
+        sheet.col(colx).width = int((1 + c) * 256)
 
     book.save(out_fn)
 
@@ -258,7 +268,8 @@ def command(args):
 
     lib = parts_db.get_db()
     if os.path.splitext(args.outfile)[1] == '.sch':
-        print("Output file has extension 'sch', aborting as this is almost certainly a mistake")
+        print("Output file has extension 'sch', "
+              "aborting as this is almost certainly a mistake")
         sys.exit(1)
 
     pcb = None
@@ -283,7 +294,9 @@ def command(args):
 
 def add_subparser(subparsers):
     parser = subparsers.add_parser('create_bom', help='Create a BOM.')
-    parser.add_argument('schematic', nargs='+', help='The schematic to read from.')
+    parser.add_argument(
+        'schematic', nargs='+', help='The schematic to read from.')
     parser.add_argument('outfile', help='The output HTML/XLS file.')
-    parser.add_argument('--layout', '-l', help='The PCB layout for a single design.')
+    parser.add_argument(
+        '--layout', '-l', help='The PCB layout for a single design.')
     parser.set_defaults(func=command)

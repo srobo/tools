@@ -5,7 +5,7 @@ import importlib
 import pkg_resources
 
 from sr.tools.cli import bom, budget, git, gschem, ide, inventory, pcb, misc, \
-                         spending, trac
+    spending, trac
 
 
 def add_subcommands(module, subparsers):

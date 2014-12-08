@@ -6,7 +6,6 @@ def command(args):
     import re
     import os
 
-
     with open(args.pcb_file) as file:
         fcontent = file.read()
 
@@ -22,6 +21,8 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('pcb-to-thou', help='Converts all units suffixed with mm to hundreths of thou')
+    parser = subparsers.add_parser('pcb-to-thou',
+                                   help='Converts all units suffixed with mm '
+                                        'to hundreths of thou')
     parser.add_argument('pcb_file', help='PCB file to convert.')
     parser.set_defaults(func=command)

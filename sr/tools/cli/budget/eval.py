@@ -10,7 +10,6 @@ def command(args):
 
     import sr.tools.budget as budget
 
-
     try:
         root = budget.find_root()
     except budget.NotBudgetRepo:
@@ -27,7 +26,7 @@ def command(args):
             config = i.conf
             break
 
-    assert config != None
+    assert config is not None
 
     r = sympy.S(args.expression)
     r = D("%.2f" % r.evalf(subs=config.vars))
@@ -37,6 +36,7 @@ def command(args):
 
 def add_subparser(subparsers):
     parser = subparsers.add_parser('budget-eval',
-                                   help='Evaluate an expression on the budget.')
+                                   help='Evaluate an expression on the '
+                                        'budget.')
     parser.add_argument('expression', help='Expression to evaluate.')
     parser.set_defaults(func=command)

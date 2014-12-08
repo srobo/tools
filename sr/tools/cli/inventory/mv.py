@@ -9,7 +9,6 @@ def command(args):
     from sr.tools.inventory import assetcode
     from sr.tools.inventory import normalise_partcode, get_inventory
 
-
     inv = get_inventory()
 
     parts = []
@@ -19,7 +18,8 @@ def command(args):
         try:
             assetcode.code_to_num(code)
         except:
-            print("Error: {} is an invalid asset code.".format(c), file=sys.stderr)
+            print("Error: {} is an invalid asset code.".format(c),
+                  file=sys.stderr)
             sys.exit(1)
 
         try:
@@ -34,7 +34,8 @@ def command(args):
                 parts.append(part.parent)
             else:
                 print("Warning: Part {} is in an assembly.".format(code),
-                      "To move the assembly, use the -a switch.", file=sys.stderr)
+                      "To move the assembly, use the -a switch.",
+                      file=sys.stderr)
                 parts.append(part)
 
         else:
@@ -49,6 +50,9 @@ def add_subparser(subparsers):
     parser = subparsers.add_parser('inv-mv',
                                    help="Move inventory items into the CWD.")
     parser.add_argument("-a", "--assy", action="store_true", default=False,
-                         dest="assy", help="If the asset codes are part of an assembly then move the whole assembly.")
-    parser.add_argument("assetcodes", metavar="ASSET_CODE", nargs="+", help="The asset code of the item to move.")
+                        dest="assy",
+                        help="If the asset codes are part of an assembly then "
+                             "move the whole assembly.")
+    parser.add_argument("assetcodes", metavar="ASSET_CODE",
+                        nargs="+", help="The asset code of the item to move.")
     parser.set_defaults(func=command)

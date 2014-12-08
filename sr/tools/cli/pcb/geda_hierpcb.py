@@ -13,7 +13,6 @@ def command(args):
     import os
     import sys
 
-
     # Read a list of the schematics to process from the gEDA project file
     project_filename = args.project
     schematic_filenames = None
@@ -33,7 +32,6 @@ def command(args):
         print("Did not find any schematics in project file.")
         sys.exit(1)
 
-
     # Get path to sub-schematics from gafrc file
     search_path = ['.']
     try:
@@ -46,11 +44,12 @@ def command(args):
                 search_path.append(value)
         gafrc.close()
     except IOError:
-        print("Unable to open gafrc, will only look in the current directory for schematics.")
-
+        print('Unable to open gafrc, will only look in the current '
+              'directory for schematics.')
 
     sub_schematic_components = []
-    # Iterate over each schematic looking for components with 'source' attribute
+    # Iterate over each schematic looking for components with 'source'
+    # attribute
     state = ParseState.IDLE
     for schematic_filename in schematic_filenames:
         try:
@@ -64,7 +63,8 @@ def command(args):
                     else:
                         state = ParseState.IDLE
 
-                # Drop through to here straight after detecting a component with no extra info
+                # Drop through to here straight after detecting a component
+                # with no extra info
                 if state == ParseState.IDLE:
                     if line[0] == 'C':
                         refdes = None
@@ -77,8 +77,9 @@ def command(args):
                         state = ParseState.STARTTEXT
                         continue
                     elif line[0] == '}':
-                        # At the end of a component, see if we have found one with a source attrib
-                        if source != None:
+                        # At the end of a component, see if we have found one
+                        # with a source attrib
+                        if source is not None:
                             sub_schematic_components.append((refdes, source))
                         state = ParseState.IDLE
                         continue
@@ -101,7 +102,8 @@ def command(args):
         print("Did not find any sub-schematic components.")
         sys.exit(0)
     else:
-        print("Found %s sub-schematic components." % len(sub_schematic_components))
+        print("Found %s sub-schematic components." %
+              len(sub_schematic_components))
 
     for sub_sche in sub_schematic_components:
         # Find out if a PCB layout already exists for the sub-schematic
@@ -112,14 +114,16 @@ def command(args):
         for path in search_path:
             if os.path.exists(os.path.join(path, block_filename + ".pcb")):
                 pcb_filename = os.path.join(path, block_filename + ".pcb")
-                print("Found pre-existing PCB layout for %s in %s" % (refdes, pcb_filename))
+                print("Found pre-existing PCB layout for %s in %s" %
+                      (refdes, pcb_filename))
 
         if pcb_filename is None:
             # Did not find pre-existing PCB layout
             continue
 
         try:
-            dst_filename = os.path.join('.', block_filename + '_' + refdes + ".pcb")
+            dst_filename = os.path.join(
+                '.', block_filename + '_' + refdes + ".pcb")
             # Open the original PCB layout
             src_pcb = open(pcb_filename, 'r')
             # Open the new PCB layout
@@ -127,7 +131,9 @@ def command(args):
 
             for line in src_pcb:
                 if "Element[" in line:
-                    dst_pcb.write(re.sub(r"(Element\[\".*?\" \".*?\" \")(.*)", r"\1" + refdes + r"/\2", line))
+                    regex = r"(Element\[\".*?\" \".*?\" \")(.*)", r"\1" + \
+                            refdes + r"/\2"
+                    dst_pcb.write(re.sub(regex, line))
                 else:
                     dst_pcb.write(line)
 

@@ -107,6 +107,7 @@ class Part(dict):
 
 
 class Db(dict):
+
     def __init__(self, file):
         for line in csv.DictReader(file):
             # Discard commented out lines

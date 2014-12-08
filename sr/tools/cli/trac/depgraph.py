@@ -6,7 +6,6 @@ def command(args):
 
     from sr.tools.trac import Ticket, TracProxy, WrongServer
 
-
     try:
         server = TracProxy()
     except WrongServer:
@@ -54,6 +53,7 @@ def command(args):
 
 def add_subparser(subparsers):
     parser = subparsers.add_parser('trac-depgraph',
-                                   help="Produce a graph of a ticket's dependencies")
+                                   help="Produce a graph of a ticket's "
+                                        "dependencies.")
     parser.add_argument("ticket", type=int, help="Ticket number to attach")
     parser.set_defaults(func=command)

@@ -8,7 +8,6 @@ def command(args):
 
     from sr.tools.trac import TracProxy, WrongServer
 
-
     try:
         server = TracProxy(server=args.server, port=args.port)
     except WrongServer:
@@ -34,5 +33,5 @@ def add_subparser(subparsers):
                         help="File description")
     parser.add_argument("ticket", type=int,
                         help="Ticket number to attach to")
-    parser.add_argument("filename", help = "File to attach")
+    parser.add_argument("filename", help="File to attach")
     parser.set_defaults(func=command)

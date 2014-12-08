@@ -8,7 +8,6 @@ def command(args):
     from sr.tools.inventory import assetcode, normalise_partcode, get_inventory
     from sr.tools.environment import open_editor
 
-
     inv = get_inventory()
 
     parts = []
@@ -24,11 +23,11 @@ def command(args):
         try:
             part = inv.root.parts[code]
         except KeyError:
-            print("Error: There is no part with code %s." % code, file=sys.stderr)
+            print("Error: There is no part with code %s." %
+                  code, file=sys.stderr)
             sys.exit(1)
 
         parts.append(part)
-
 
     for part in parts:
         open_editor(part.path)

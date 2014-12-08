@@ -9,6 +9,7 @@ from sr.tools.bom.cachedfetch import grab_url_cached
 
 
 class Item(distpart.DistItem):
+
     """Represents a Digikey item"""
 
     def __init__(self, partNumber):

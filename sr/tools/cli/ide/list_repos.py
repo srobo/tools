@@ -10,7 +10,6 @@ def command(args):
 
     from datetime import datetime
 
-
     team = teamgit.Team(args.team, server=args.server)
 
     if not args.timesort:
@@ -28,13 +27,12 @@ def command(args):
 def add_subparser(subparsers):
     import sr.tools.teamgit as teamgit
 
-
     parser = subparsers.add_parser('team-list-repos',
                                    help='List team repositories.')
     parser.add_argument('team', help='The identifier of the team.')
     parser.add_argument('-t', "--timesort", action="store_true", default=False,
                         help="Sort by the time of the latest commit.")
     parser.add_argument('--server', '-s', default=teamgit.DEFAULT_SERVER,
-                        help='The server running the IDE. Defaults to the ' \
+                        help='The server running the IDE. Defaults to the '
                              'official Student Robotics server.')
     parser.set_defaults(func=command)

@@ -10,7 +10,6 @@ def command(args):
     import sr.tools.bom.bom as bom
     import sr.tools.bom.parts_db as parts_db
 
-
     db = parts_db.get_db()
     m = bom.MultiBoardBom(db)
     m.load_boards_args(args.arg)

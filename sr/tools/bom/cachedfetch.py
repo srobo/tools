@@ -28,7 +28,8 @@ def grab_url_cached(url):
     else:
         # Try the remote supplier page cache
         try:
-            cached_url = "https://www.studentrobotics.org/~rspanton/supcache/%s" % h.hexdigest()
+            base_url = "https://www.studentrobotics.org/~rspanton/supcache/{}"
+            cached_url = base_url.format(h.hexdigest())
             sc = urlopen(cached_url)
             page = sc.read()
         except HTTPError:

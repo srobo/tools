@@ -8,7 +8,6 @@ def command(args):
     import sr.tools.bom.bom as bom
     import sr.tools.bom.parts_db as parts_db
 
-
     db = parts_db.get_db()
     m = bom.MultiBoardBom(db)
     m.load_boards_args(args.arg)
@@ -30,20 +29,22 @@ def command(args):
         print("Distributor: %s" % d)
         for pg in partgroups:
             n = pg.order_num()
-            if n == None:
+            if n is None:
                 print("FAIL :-(")
             else:
                 if d == "farnell":
                     print("%s, %i" % (pg.part["order-number"], pg.order_num()))
                 else:
-                    print(" - %i * %s" % (pg.order_num(), pg.part["order-number"]))
+                    print(" - %i * %s" %
+                          (pg.order_num(), pg.part["order-number"]))
 
     print("Total Price:", m.get_price())
 
 
 def add_subparser(subparsers):
     parser = subparsers.add_parser('create-order',
-                                   help="Generate the data to stick into a supplier's website")
+                                   help="Generate the data to stick into a "
+                                        "supplier's website")
     parser.add_argument('arg', nargs='+', help="""DIR -N SCHEMATIC1 -M SCHEMATIC2 ...
 Where N and M are multipliers for the number of boards
 

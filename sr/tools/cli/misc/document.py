@@ -6,13 +6,15 @@ import sys
 
 
 def which(name):
-    # Adapted from answer to http://stackoverflow.com/questions/775351/os-path-exists-for-files-in-your-path
+    # Adapted from answer to
+    # http://stackoverflow.com/questions/775351/os-path-exists-for-files-in-your-path
     for p in os.environ["PATH"].split(os.pathsep):
         possible_path = os.path.join(p, name)
         if os.path.exists(possible_path):
             return possible_path
 
     return None
+
 
 def ensure_callable(*names):
     missing = [name for name in names if which(name) is None]
@@ -30,72 +32,32 @@ def command(args):
     import tempfile
     import zipfile
 
-
     source = args.source.read()
 
     ensure_callable('pandoc', 'pdflatex')
 
-    pandoc_process = subprocess.Popen(['pandoc', '-f', 'html' if args.html else 'markdown', '-t', 'latex', '-'],
-                                      stdin = subprocess.PIPE,
-                                      stdout = subprocess.PIPE,
+    cmdline = ['pandoc',
+               '-f', 'html' if args.html else 'markdown',
+               '-t', 'latex',
+               '-']
+    pandoc_process = subprocess.Popen(cmdline,
+                                      stdin=subprocess.PIPE,
+                                      stdout=subprocess.PIPE,
                                       universal_newlines=True)
     pandoc_process.stdin.write(source)
     pandoc_process.stdin.close()
     generated = pandoc_process.stdout.read()
     pandoc_process.wait()
 
-    generated = generated.replace('\section', '\section*').replace('\subsection', '\subsection*')
+    generated = generated.replace(
+        '\section', '\section*').replace('\subsection', '\subsection*')
 
-    prefix = r"""
-    \documentclass[a4paper]{article}
-    \usepackage[dvinames]{xcolor}
-    \usepackage[top=2in,left=1.5in,bottom=2.8in,right=1.25in]{geometry}
-    \usepackage{graphicx}
-    \usepackage{ctable}
-    \usepackage[colorlinks=false,
-                pdfborder={0 0 0},]{hyperref}
-    \usepackage[absolute]{textpos}
-    \usepackage[oldstylenums]{kpfonts}
-    \usepackage[T1]{fontenc}
-    \usepackage{fancyhdr}
-    \pagestyle{fancy}
-    \parindent0pt
-    \setlength{\parskip}{0.8\baselineskip}
-    \definecolor{SRblue}{RGB}{13,31,97}
-    \definecolor{SRgrey}{RGB}{223,219,215}
-    \urlstyle{sf}
-    \fancyhead{}
-    \fancyfoot{}
-    \setlength{\footskip}{3em}
-    \renewcommand{\headrulewidth}{0pt}
-    \renewcommand{\footrulewidth}{1pt}
-    \fancyfoot[C]{\footnotesize\color{SRblue}\sffamily
-    Student Robotics, School of Electronics and Computer Science, University of Southampton, SO17 1BJ\\[-0.1\baselineskip]
-    \url{info@studentrobotics.org} \textbullet\ \url{http://studentrobotics.org/}\\ \medskip \Huge
-    \includegraphics[height=1em]{moto.png}\hfill{}\includegraphics[height=1em]{ecs.png}\hfill{}\includegraphics[height=1em]{bitbox.png} \\ \hfill
-    }
-    \begin{document}
-    \begin{textblock*}{2in}[0.3066,0.39](1.5in,1.33in)
-        \includegraphics[width=1.7in]{sr-logo.pdf}
-    \end{textblock*}
-    \begin{textblock*}{6.375in}(0.65in,1.0in)
-        \sffamily
-        \begin{flushright}
-        \sffamily \Huge \color{SRblue}
-        Student Robotics\\ \large
-        \smallskip
-        School of Electronics and Computer Science\\
-        University of Southampton\\
-        SO17 1BJ
-        \end{flushright}
-    \end{textblock*}
-    \color{black}
-    \vspace*{0.4in}
-    """
-
-    suffix = r"""
-    \end{document}
-    """
+    prefix_file = pkg_resources.resource_stream('sr.tools.cli.misc',
+                                                'document_prefix.tex')
+    suffix_file = pkg_resources.resource_stream('sr.tools.cli.misc',
+                                                'document_suffix.tex')
+    prefix = prefix_file.read().decode('UTF-8')
+    suffix = suffix_file.read().decode('UTF-8')
 
     signature_block = ''
     if args.signature:
@@ -122,20 +84,23 @@ def command(args):
     with open(main_file, 'w') as f:
         f.write(total)
 
-    file = pkg_resources.resource_stream('sr.tools.cli.misc', 'latex-assets.zip')
+    file = pkg_resources.resource_stream('sr.tools.cli.misc',
+                                         'latex-assets.zip')
     with zipfile.ZipFile(file) as zf:
         for name in ('ecs.png', 'moto.png', 'bitbox.png', 'sr-logo.pdf'):
             zf.extract(name, temp_dir)
 
-    pdflatex_proc = subprocess.Popen(['pdflatex', '-interaction=nonstopmode', 'main.tex'],
-                                     cwd = temp_dir,
-                                     stderr = subprocess.PIPE,
-                                     stdout = subprocess.PIPE,
+    cmdline = ['pdflatex', '-interaction=nonstopmode', 'main.tex']
+    pdflatex_proc = subprocess.Popen(cmdline,
+                                     cwd=temp_dir,
+                                     stderr=subprocess.PIPE,
+                                     stdout=subprocess.PIPE,
                                      universal_newlines=True)
 
     while pdflatex_proc.returncode is None:
         (out, err) = pdflatex_proc.communicate()
-        errors = [line for line in out.split(os.linesep) if len(line) > 0 and line[0] == '!']
+        errors = [line for line in out.split(
+            os.linesep) if len(line) > 0 and line[0] == '!']
         if len(errors) > 0:
             print(os.linesep.join(errors))
 
@@ -155,11 +120,11 @@ def command(args):
 def add_subparser(subparser):
     import argparse
 
-
-    parser = subparser.add_parser('document', description="Generate formatted documents.")
+    parser = subparser.add_parser(
+        'document', description="Generate formatted documents.")
     parser.add_argument("source", metavar="FILE", type=argparse.FileType('r'),
                         help="Source markdown file")
-    parser.add_argument("-o","--output", dest="output",
+    parser.add_argument("-o", "--output", dest="output",
                         metavar="FILE", type=argparse.FileType('wb'),
                         help="Output file", required=True)
     parser.add_argument("-l", action="store_true", dest="latex",

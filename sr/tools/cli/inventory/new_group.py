@@ -10,9 +10,9 @@ def command(args):
     import yaml
 
     from sr.tools.environment import open_editor
-    from sr.tools.inventory.oldinv import gettoplevel, getusername, getusernumber, getpartnumber
+    from sr.tools.inventory.oldinv import gettoplevel, getusername, \
+        getusernumber, getpartnumber
     import sr.tools.inventory.assetcode as assetcode
-
 
     dirname = args.dirname
 
@@ -68,11 +68,20 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('inv-new-group', help="Promote a directory to a tracked assembly.")
-    parser.add_argument("-a", "--all", action="store_true", default=False, dest="create_all",
-                        help="Create all of the elements of the assembly too. This should only be used when initially adding a whole assembly to the inventory")
-    parser.add_argument("-e", "--editor", action="store_true", default=False, dest="start_editor",
-                        help="Open up the newly created assembly 'info' file in $EDITOR. If the --all option is used then also open the editor for each asset created.")
+    parser = subparsers.add_parser('inv-new-group',
+                                   help="Promote a directory to a tracked "
+                                        "assembly.")
+    parser.add_argument("-a", "--all", action="store_true", default=False,
+                        dest="create_all",
+                        help="Create all of the elements of the assembly too. "
+                             "This should only be used when initially adding "
+                             "a whole assembly to the inventory")
+    parser.add_argument("-e", "--editor", action="store_true", default=False,
+                        dest="start_editor",
+                        help="Open up the newly created assembly 'info' file "
+                             "in $EDITOR. If the --all option is used then "
+                             "also open the editor for each asset created.")
     parser.add_argument("dirname", metavar="DIR",
-                        help="The directory to promote to a tracked assembly. If it does not exist it will be created.")
+                        help="The directory to promote to a tracked assembly. "
+                             "If it does not exist it will be created.")
     parser.set_defaults(func=command)

@@ -9,7 +9,6 @@ def command(args):
     import subprocess
     import sys
 
-
     cmdline = ["git", "clone", GIT_URL.format(team=args.team.upper(),
                                               project=args.project)]
     if args.dir is not None:

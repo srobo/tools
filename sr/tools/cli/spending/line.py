@@ -9,7 +9,6 @@ def command(args):
     import sr.tools.spending as spending
     from sr.tools.budget import BudgetTree
 
-
     root = spending.find_root()
     budget = spending.load_budget_with_spending(root)
     line = budget.path(args.budgetline)

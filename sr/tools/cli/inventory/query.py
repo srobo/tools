@@ -7,7 +7,6 @@ def command(args):
     import sr.tools.inventory.query as query
     from pyparsing import ParseException
 
-
     query_str = args.query
     style = 'codes' if args.codes else 'paths'
     verbose = args.v

@@ -1,4 +1,6 @@
 include sr/tools/bom/component_lib.csv
 include sr/tools/cli/bom/bom_header.html
 include sr/tools/cli/misc/latex-assets.zip
+include sr/tools/cli/misc/document_prefix.tex
+include sr/tools/cli/misc/document_suffix.tex
 include sr/tools/cli/misc/spend-template.yaml

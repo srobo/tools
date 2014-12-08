@@ -8,8 +8,7 @@ def command(args):
 
     import sr.tools.budget as budget
     from sr.tools.budget.diff import diff_trees, AddedItem, RemovedItem, \
-                                     ChangedItem, changes_to_tree
-
+        ChangedItem, changes_to_tree
 
     try:
         root = budget.find_root()
@@ -47,10 +46,10 @@ def command(args):
     changes = []
     for change in diff_trees(a, b):
         if args.zero_hide \
-           and (isinstance(change, AddedItem) \
-                 or isinstance(change, RemovedItem)) \
+           and (isinstance(change, AddedItem)
+                or isinstance(change, RemovedItem)) \
            and change.a.cost == 0:
-                continue
+            continue
         changes.append(change)
 
     if args.tree:
@@ -60,6 +59,7 @@ def command(args):
         exit(0)
 
     class Summary:
+
         def __init__(self):
             self.added = D(0)
             self.removed = D(0)
@@ -86,7 +86,7 @@ def command(args):
             else:
                 summary.removed += -d
 
-            print("M", x.a.name, "({0}{1})".format( s,d ))
+            print("M", x.a.name, "({0}{1})".format(s, d))
 
     print("---")
     print(" Summary")
@@ -100,11 +100,12 @@ def add_subparser(subparsers):
                                    help='Diff two versions of the budget.')
     parser.add_argument("old", help="Old git commit to compare against.")
     parser.add_argument("new", nargs="?", default=None,
-                        help="New git commit to act as reference (default HEAD).")
+                        help="New git commit to act as reference (default "
+                             "HEAD).")
     parser.add_argument("--tree", "-t", action="store_true",
-                        help = "Display the diff as a tree")
+                        help="Display the diff as a tree")
     parser.add_argument("--limit", "-l", type=str,
-                        help = "Limit to the given subtree")
+                        help="Limit to the given subtree")
     parser.add_argument("--zero-hide", "-z", action="store_true",
-                        help = "Hide lines added or removed with 0 value")
+                        help="Hide lines added or removed with 0 value")
     parser.set_defaults(func=command)

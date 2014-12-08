@@ -3,7 +3,7 @@ from __future__ import print_function
 
 def bit_mask(n):
     """Return an n-bit mask of 1's."""
-    return 2 ** n -1
+    return 2 ** n - 1
 
 
 def reverse_bits(n, width):
@@ -18,13 +18,13 @@ def command(args):
     import yaml
 
     # Round the number of teams up to a power of two
-    rounded_teams = int( 2 ** math.ceil( math.log( args.n_teams, 2 ) ) )
+    rounded_teams = int(2 ** math.ceil(math.log(args.n_teams, 2)))
 
-    n_bits = int( math.ceil( math.log( rounded_teams, 2 ) ) )
+    n_bits = int(math.ceil(math.log(rounded_teams, 2)))
 
     n_per_match = 4
     n_matches = int(math.ceil(float(rounded_teams) / n_per_match))
-    matches_bits = int( math.ceil( math.log( n_matches, 2 ) ) )
+    matches_bits = int(math.ceil(math.log(n_matches, 2)))
 
     # Find the order in which we repeatedly insert teams into the
     # match list.
@@ -59,7 +59,9 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('schedule-knockout', help="Create the schedule for the first round of a knock-out")
+    parser = subparsers.add_parser('schedule-knockout',
+                                   help="Create the schedule for the first "
+                                        "round of a knock-out")
     parser.add_argument("n_teams", type=int, help="The number of teams")
     parser.add_argument("--yaml", action="store_true", help="Output YAML")
     parser.set_defaults(func=command)

@@ -45,8 +45,10 @@ def command(args):
 
 def add_subparser(subparsers):
     parser = subparsers.add_parser('inv-set-attr',
-                                   help="Sets an attribute on one or more items or assemblies.")
-    parser.add_argument('attrname',  type=str, help="The name of the attribute.")
+                                   help="Sets an attribute on one or more "
+                                        "items or assemblies.")
+    parser.add_argument('attrname', type=str,
+                        help="The name of the attribute.")
     parser.add_argument('attrvalue', type=str, help="The value to set.")
     parser.add_argument('partcodes', type=str, nargs='+',
                         help="The codes of the parts to modify.")

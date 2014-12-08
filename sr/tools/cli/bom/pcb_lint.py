@@ -9,7 +9,6 @@ def command(args):
     import sr.tools.bom.schem as schem
     import sr.tools.bom.parts_db as parts_db
 
-
     SCHEMATIC = args.schematic
 
     lib = parts_db.get_db()
@@ -33,7 +32,8 @@ def command(args):
     print("%i correct parts found." % found)
 
     if len(err_parts) > 0:
-        print("The following %i parts are not in the SR parts database:" % error)
+        print("The following %i parts are not in the SR parts database:" %
+              error)
 
         for name, components in err_parts.items():
             print("\t'%s': %s" % (name, " ".join(components)))
@@ -42,6 +42,8 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('pcb_lint', help="Checks that all the parts in a PCB's schematic are in the SR database")
+    parser = subparsers.add_parser('pcb_lint',
+                                   help="Checks that all the parts in a PCB's "
+                                        'schematic are in the SR database')
     parser.add_argument('schematic', help='The schematic to check.')
     parser.set_defaults(func=command)

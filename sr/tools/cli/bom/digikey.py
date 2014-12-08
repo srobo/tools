@@ -7,7 +7,6 @@ def command(args):
 
     import sr.tools.bom.digikey as digikey
 
-
     if args.id:
         ids_stream = io.StringIO('\n'.join(args.id))
     else:
@@ -22,6 +21,7 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('digikey', help='Get information about a part from DigiKey.')
+    parser = subparsers.add_parser(
+        'digikey', help='Get information about a part from DigiKey.')
     parser.add_argument('id', nargs='*', help='IDs to get information about.')
     parser.set_defaults(func=command)

@@ -8,15 +8,16 @@ def command(args):
     from sr.tools import spending
     from sr.tools.trac import TracProxy
 
-
-    transactions = spending.load_transactions( "./" )
+    transactions = spending.load_transactions("./")
     p = TracProxy(anon=True)
-    tickets = p.ticket.query("component=purchasing&max=0&resolution=fixed&status=closed")
+    tickets = p.ticket.query(
+        "component=purchasing&max=0&resolution=fixed&status=closed")
 
     counts = {}
     for t in tickets:
         if t < 821 and t not in []:
-            # Tickets before #839 except for those listed above weren't budgeted
+            # Tickets before #839 except for those listed above weren't
+            # budgeted
             continue
 
         counts[t] = 0
@@ -34,12 +35,13 @@ def command(args):
     missing = []
     for tnum, count in counts.items():
         if count == 0:
-            missing.append( tnum )
+            missing.append(tnum)
 
     missing.sort()
 
     if len(missing):
-        print("{0} trac tickets with no spending.git entry:".format(len(missing)))
+        print("{0} trac tickets with no spending.git "
+              "entry:".format(len(missing)))
         for t in missing:
             print("{0:10} -- http://srobo.org/trac/ticket/{0}".format(t))
     else:
@@ -58,14 +60,17 @@ def command(args):
             if s not in states:
                 states[s] = []
 
-            states[s].append( t )
+            states[s].append(t)
 
         print("done")
 
-        print("{0} purchasing tickets have been added to spending.git before being closed.".format( len(premature) ))
+        print("{0} purchasing tickets have been added to spending.git "
+              "before being closed.".format(len(premature)))
         print()
-        print("This is non-fatal, and generally means that there is more treasurer-related")
-        print("action to be taken on them (maybe the treasurer is waiting for some information).")
+        print("This is non-fatal, "
+              "and generally means that there is more treasurer-related")
+        print("action to be taken on them "
+              "(maybe the treasurer is waiting for some information).")
         print()
 
         for state, tickets in states.items():
@@ -78,13 +83,14 @@ def command(args):
                 print("{0:10} -- http://srobo.org/trac/ticket/{0}".format(t))
             print()
 
-    open_tickets = set(p.ticket.query( "component=purchasing&max=0&status=new" ))
+    open_tickets = set(p.ticket.query("component=purchasing&max=0&status=new"))
 
-    print("There are {0} unresolved purchasing tickets in trac right now.".format(len(open_tickets)))
+    print("There are {0} unresolved purchasing tickets in trac right now."
+          .format(len(open_tickets)))
     print("Here are the ones that don't exist in spending.git")
     print("(note that they don't need to yet)")
 
-    n = list(open_tickets.difference( premature ))
+    n = list(open_tickets.difference(premature))
     n.sort()
 
     for t in n:
@@ -92,5 +98,6 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('sp-trac-compare', help='Compare spending with trac.')
+    parser = subparsers.add_parser(
+        'sp-trac-compare', help='Compare spending with trac.')
     parser.set_defaults(func=command)

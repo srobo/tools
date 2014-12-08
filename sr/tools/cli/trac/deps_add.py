@@ -7,14 +7,12 @@ def command(args):
 
     from sr.tools.trac import Ticket, TracProxy, WrongServer
 
-
     try:
         server = TracProxy()
     except WrongServer:
         print("Error: The specified server is not a Trac instance",
               file=sys.stderr)
         sys.exit(1)
-
 
     t = Ticket(args.ticket, server)
 
@@ -42,7 +40,7 @@ def command(args):
 
     msg += "Adding dependencies:"
     for n in to_add:
-        msg += "\n * #{0}".format( n )
+        msg += "\n * #{0}".format(n)
 
     updated = t.cleanup(dry_run=args.dry_run, msg=msg)
 
@@ -60,5 +58,6 @@ def add_subparser(subparsers):
     parser.add_argument("deps", type=int, nargs="+", help="Tickets to add")
     parser.add_argument("-m", type=str, help="Message to append")
     parser.add_argument("--dry-run", action="store_true",
-                         help="Go through the motions, but don't commit the change")
+                        help="Go through the motions, but don't commit the "
+                             "change.")
     parser.set_defaults(func=command)

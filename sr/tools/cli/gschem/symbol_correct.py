@@ -5,21 +5,18 @@ def command(args):
     import subprocess
     import sys
 
-
     gsymoutput = []
     symbolfile = []
     inputfile = args.inputfile
     outputfile = args.outputfile
-
 
     def readfile(filename):
         with open(filename, 'r') as f:
             symbolfile = [line.strip() for line in f]
         return symbolfile
 
-    # If the output line from gsymcheck gives the coordinates of the error, then
-    # use this function to fix the line in symbolfile
-
+    # If the output line from gsymcheck gives the coordinates of the error,
+    # then use this function to fix the line in symbolfile
 
     def fix_object_with_coords(line, firstchars, colour, elementno):
         x1 = ''
@@ -35,7 +32,6 @@ def command(args):
         search = firstchars + x1 + " " + y1
         return fix_line_colour(search, colour, elementno)
 
-
     def fix_line_colour(searchstring, colour, elementno, offset=0):
         for entryno in range(0, len(symbolfile)):
             if searchstring in symbolfile[entryno]:
@@ -45,7 +41,6 @@ def command(args):
                 s = ' '.join(array)
                 print(s)
                 symbolfile[entryno + offset] = s
-
 
     def fix_colours():
         for i in range(0, len(gsymoutput)):
@@ -80,13 +75,11 @@ def command(args):
 
     # Write modified symbol file to a new file.
 
-
     def write_file(outputfile):
         output = open(outputfile, 'w')
         for item in symbolfile:
             output.write("%s\n" % item)
         output.close()
-
 
     def gsymcheck(filename):
         command = ["gsymcheck", "-vv", filename]
@@ -99,7 +92,6 @@ def command(args):
         gsymoutput.pop(0)  # first line of output is always blank
         return gsymoutput
         # print error and warning messages associated with a symbol file
-
 
     gsymoutput = gsymcheck(inputfile)
     symbolfile = readfile(inputfile)

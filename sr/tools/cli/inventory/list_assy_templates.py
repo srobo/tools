@@ -7,7 +7,6 @@ def command(args):
 
     from sr.tools.inventory.oldinv import gettoplevel
 
-
     gitdir = gettoplevel()
     if not gitdir:
         # Not in the inventory, give up

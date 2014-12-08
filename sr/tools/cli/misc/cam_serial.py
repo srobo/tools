@@ -13,7 +13,6 @@ SR_CAMERA_IDS = [
 def command(args):
     import pyudev
 
-
     con = pyudev.Context()
 
     for dev in con.list_devices(subsystem="video4linux"):
@@ -31,5 +30,7 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('cam-serial', help='Displays the serial number of connected SR cameras')
+    parser = subparsers.add_parser('cam-serial',
+                                   help='Displays the serial number of '
+                                        'connected SR cameras')
     parser.set_defaults(func=command)

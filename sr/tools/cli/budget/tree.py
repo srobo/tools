@@ -6,7 +6,6 @@ def command(args):
 
     from sr.tools import budget
 
-
     try:
         root = budget.find_root()
     except budget.NotBudgetRepo:
@@ -23,6 +22,7 @@ def command(args):
 
 def add_subparser(subparsers):
     parser = subparsers.add_parser('budget-tree',
-                                   help='Draw (part of) the budget as an ascii tree.')
+                                   help='Draw (part of) the budget as an '
+                                        'ascii tree.')
     parser.add_argument('path', nargs='?', help='The subtree to draw')
     parser.set_defaults(func=command)

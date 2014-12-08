@@ -101,6 +101,7 @@ def account_to_budget_line(account):
 
 
 class LedgerNotFound(Exception):
+
     def __init__(self):
         super(LedgerNotFound, self).__init__("Unable to find 'ledger' which "
                                              "is required to operate the "

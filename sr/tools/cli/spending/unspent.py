@@ -10,7 +10,6 @@ def command(args):
     from sr.tools import spending
     from sr.tools.budget import BudgetTree, FUDGE_FACTOR
 
-
     try:
         root = spending.find_root()
     except spending.NotSpendingRepo:
@@ -52,6 +51,7 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('sp-unspent', help='Display unspent budget.')
+    parser = subparsers.add_parser(
+        'sp-unspent', help='Display unspent budget.')
     parser.add_argument("path", help="The budget tree to inspect")
     parser.set_defaults(func=command)

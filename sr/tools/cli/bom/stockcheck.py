@@ -10,9 +10,7 @@ def command(args):
     import sr.tools.bom.parts_db as parts_db
     import sr.tools.bom.schem as schem
 
-
     import six.moves.queue as Queue
-
 
     NUM_THREADS = 3
 
@@ -24,10 +22,7 @@ def command(args):
     n = 0
 
     for x in boards.stockcheck():
-        if not stock.has_key(x[0]):
-            stock[x[0]] = []
-
-        stock[x[0]].append(x[1])
+        stock.setdefault(x[0], []).append(x[1])
 
         # Show stock checking progress:
         n = n + 1
@@ -35,15 +30,17 @@ def command(args):
         sys.stdout.flush()
     print
 
-    if stock.has_key(bom.STOCK_UNKNOWN):
+    if bom.STOCK_UNKNOWN in stock:
         print("Warning: Cannot check suppliers for these parts:")
         for part in stock[bom.STOCK_UNKNOWN]:
-            print("\t- %s %s(%s)" % (part["sr-code"], part["supplier"], part["order-number"]))
+            print("\t- %s %s(%s)" %
+                  (part["sr-code"], part["supplier"], part["order-number"]))
 
-    if stock.has_key(bom.STOCK_OUT):
+    if bom.STOCK_OUT in stock:
         print("Out of stock:")
         for part in stock[bom.STOCK_OUT]:
-            print("\t- %s %s(%s)" % (part["sr-code"], part["supplier"], part["order-number"]))
+            print("\t- %s %s(%s)" %
+                  (part["sr-code"], part["supplier"], part["order-number"]))
         sys.exit(1)
 
     print("All checkable parts are sufficiently in stock.")

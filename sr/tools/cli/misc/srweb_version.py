@@ -9,7 +9,6 @@ def fetch(url):
 
     from six.moves.urllib.request import urlopen
 
-
     page = urlopen(url)
     data = page.read()
 
@@ -44,7 +43,8 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('srweb-version', help='Display the srweb version.')
+    parser = subparsers.add_parser(
+        'srweb-version', help='Display the srweb version.')
     parser.add_argument('--quiet', '-q', action='store_true', dest='quiet',
                         help='Enable quiet mode.')
     parser.set_defaults(func=command)

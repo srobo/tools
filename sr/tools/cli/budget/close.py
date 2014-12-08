@@ -34,20 +34,24 @@ def command(args):
 
         if item.spent > (item.cost * srbudget.FUDGE_FACTOR):
             # More has been spent than the budget line's value
-            print("Cannot close {0}: More has been spent than budgeted.".format(item.name), file=sys.stderr)
-            print("\tSpent: £{0}\n\tBudgeted: £{1}".format(item.spent, item.cost * srbudget.FUDGE_FACTOR ), file=sys.stderr)
+            print("Cannot close {0}: More has been spent than budgeted."
+                  .format(item.name), file=sys.stderr)
+            print("\tSpent: £{0}\n\tBudgeted: £{1}"
+                  .format(item.spent, item.cost * srbudget.FUDGE_FACTOR),
+                  file=sys.stderr)
             # Skip this item
             continue
 
-        orig_contents = open(item.fname,'r').read()
-        contents = re.sub( r'^(\s*cost\s*:\s*).+$',
-                           r'\g<1>{0}'.format(item.spent),
-                           orig_contents, 0, re.MULTILINE )
+        orig_contents = open(item.fname, 'r').read()
+        contents = re.sub(r'^(\s*cost\s*:\s*).+$',
+                          r'\g<1>{0}'.format(item.spent),
+                          orig_contents, 0, re.MULTILINE)
 
         # Check that the cost has actually been changed
         # within the string if it actually needed to be
         if item.spent != item.cost and contents == orig_contents:
-            print("Warning: Failed to set the cost of {0} -- skipping it.".format( item.name ), file=sys.stderr)
+            print("Warning: Failed to set the cost of {0} -- skipping it."
+                  .format(item.name), file=sys.stderr)
             continue
 
         # Mark as closed

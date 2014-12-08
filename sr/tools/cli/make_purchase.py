@@ -55,7 +55,7 @@ class SpendRequest(object):
         os.close(fd)
 
         # Fill in the temporary file from the template
-        template = pkg_resources.resource_stream('sr.tools.cli.misc',
+        template = pkg_resources.resource_stream('sr.tools.cli',
                                                  'spend-template.yaml')
 
         with open(fname, 'wb') as file:

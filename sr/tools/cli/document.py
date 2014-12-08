@@ -52,9 +52,9 @@ def command(args):
     generated = generated.replace(
         '\section', '\section*').replace('\subsection', '\subsection*')
 
-    prefix_file = pkg_resources.resource_stream('sr.tools.cli.misc',
+    prefix_file = pkg_resources.resource_stream('sr.tools.cli',
                                                 'document_prefix.tex')
-    suffix_file = pkg_resources.resource_stream('sr.tools.cli.misc',
+    suffix_file = pkg_resources.resource_stream('sr.tools.cli',
                                                 'document_suffix.tex')
     prefix = prefix_file.read().decode('UTF-8')
     suffix = suffix_file.read().decode('UTF-8')
@@ -84,7 +84,7 @@ def command(args):
     with open(main_file, 'w') as f:
         f.write(total)
 
-    file = pkg_resources.resource_stream('sr.tools.cli.misc',
+    file = pkg_resources.resource_stream('sr.tools.cli',
                                          'latex-assets.zip')
     with zipfile.ZipFile(file) as zf:
         for name in ('ecs.png', 'moto.png', 'bitbox.png', 'sr-logo.pdf'):

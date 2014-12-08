@@ -13,7 +13,7 @@ def html_header(f, names=None, image=None, xy=None):
 
     from six.moves import reduce
 
-    header_file = pkg_resources.resource_stream('sr.tools.cli.bom',
+    header_file = pkg_resources.resource_stream('sr.tools.cli',
                                                 'bom_header.html')
     header = header_file.read().decode('UTF-8')
 

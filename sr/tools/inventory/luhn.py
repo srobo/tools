@@ -17,7 +17,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301 USA
 
-"""Module for calculation and verifying the checksum of a number
+"""
+Module for calculation and verifying the checksum of a number
 using the Luhn algorithm.
 
 Validation can be done with is_valid() which validates that the
@@ -40,13 +41,14 @@ The default alphabet is '0123456789'.
 False
 >>> checksum('1234', alphabet='0123456789abcdef')
 14
-
 """
 
 
 def checksum(number, alphabet='0123456789'):
-    """Calculate the Luhn checksum over the provided number. The checksum
-    is returned as an int. Valid numbers should have a checksum of 0."""
+    """
+    Calculate the Luhn checksum over the provided number. The checksum is
+    returned as an int. Valid numbers should have a checksum of 0.
+    """
     n = len(alphabet)
     number = tuple(alphabet.index(i) for i in reversed(str(number)))
     return (sum(number[::2]) +
@@ -62,7 +64,9 @@ def is_valid(number, alphabet='0123456789'):
 
 
 def calc_check_digit(number, alphabet='0123456789'):
-    """With the provided number, calculate the extra digit that should be
-    appended to make it pass the Luhn checksum."""
+    """
+    With the provided number, calculate the extra digit that should be appended
+    to make it pass the Luhn checksum.
+    """
     ck = checksum(str(number) + alphabet[0], alphabet)
     return alphabet[-ck]

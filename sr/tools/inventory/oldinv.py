@@ -1,3 +1,5 @@
+"""Old API calls for the inventory."""
+
 import os
 import subprocess
 import sys
@@ -8,7 +10,7 @@ from sr.tools.inventory import assetcode
 
 
 def gettoplevel():
-    """Find the top level of the inventory repo"""
+    """Find the top level of the inventory repo."""
     tmp = subprocess.Popen(("git", "rev-parse", "--show-toplevel"),
                            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
@@ -26,6 +28,10 @@ def gettoplevel():
 
 
 def getusername():
+    """
+    Get the inventory username based on the users configured Git name and email
+    address.
+    """
     gitname = subprocess.check_output(("git", "config", "user.name")).strip()
     gitemail = subprocess.check_output(("git", "config", "user.email")).strip()
 
@@ -33,7 +39,7 @@ def getusername():
 
 
 def getusernumber(gitdir, user):
-    """Get the ID number of user"""
+    """Get the ID number of user."""
     usersfn = os.path.join(gitdir, ".meta", "users")
     f = open(usersfn)
     users = yaml.load(f)
@@ -49,7 +55,7 @@ def getusernumber(gitdir, user):
 
 
 def getpartnumbers(topd):
-    """Recursively get a list of all part numbers"""
+    """Recursively get a list of all part numbers."""
     parts = []
 
     for d in os.listdir(topd):
@@ -66,9 +72,8 @@ def getpartnumbers(topd):
                 continue
             parts.append(assetcode.code_to_num(acode))
         elif os.path.isfile(path):
-
             if path[-1] == "~":
-                "Ignore temporary files from editors"
+                # ignore temporary files from editors
                 continue
 
             fname = os.path.basename(path)
@@ -82,7 +87,7 @@ def getpartnumbers(topd):
 
 
 def getpartnumber(gitdir, userno):
-    """Get the next available part number"""
+    """Get the next available part number."""
     maxno = -1
     # Gather all part numbers from the inventory
     partnos = getpartnumbers(gitdir)

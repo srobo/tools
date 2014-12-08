@@ -1,4 +1,4 @@
-"API for the SR inventory"
+"""API for the SR inventory."""
 from __future__ import print_function
 
 import codecs
@@ -20,6 +20,7 @@ try:
 except ImportError:
     from yaml import Loader as YAML_Loader
 
+
 CACHE_DIR = get_cache_dir('inventory')
 
 RE_PART = re.compile("^(.+)-sr([%s]+)$" % "".join(assetcode.alphabet_lut))
@@ -30,13 +31,16 @@ def get_inventory():
     top = oldinv.gettoplevel()
     if top is None:
         print("Error: Must be run from within the inventory.", file=sys.stderr)
-        exit(1)
+        sys.exit(1)
 
     return Inventory(top)
 
 
 def should_ignore(path):
-    "Return True if the path should be ignored"
+    """
+    Check if the path should be ignored. A path that is deamed ignore-worthy
+    starts with '.' or ends with '~'.
+    """
     if path[0] == ".":
         return True
 
@@ -48,8 +52,9 @@ def should_ignore(path):
 
 def normalise_partcode(partcode):
     """
-    Normalise the given partcode to one that is compatible with the inventory.
-    Generally this just involves removing the 'sr' from the front.
+    Normalise the given part code to one that is compatible with the inventory
+    API. Generally this just involves removing the 'sr' from the front and
+    making the result all in uppercase.
     """
     partcode = partcode.strip()
     if partcode.lower().startswith('sr'):
@@ -59,7 +64,7 @@ def normalise_partcode(partcode):
 
 
 def cached_yaml_load(path):
-    "Load the pickled YAML file from cache"
+    """Load the pickled YAML file from cache."""
     path = os.path.abspath(path)
 
     ho = hashlib.sha256()
@@ -72,9 +77,9 @@ def cached_yaml_load(path):
     p = os.path.join(CACHE_DIR, h)
 
     if os.path.exists(p):
-        "Cache has file"
+        # cache has file
         if os.path.getmtime(p) >= os.path.getmtime(path):
-            "Check that it's newer"
+            # check that it's newer
             with open(p, 'rb') as file:
                 return pickle.load(file)
 
@@ -86,9 +91,7 @@ def cached_yaml_load(path):
 
 
 class Item(object):
-
-    "An item in the inventory"
-
+    """An item in the inventory."""
     def __init__(self, path, parent=None):
         self.path = path
         self.parent = parent
@@ -122,7 +125,7 @@ class Item(object):
 
 
 class ItemTree(object):
-
+    """A tree of items in the inventory."""
     def __init__(self, path, parent=None):
         self.name = os.path.basename(path)
         self.path = path
@@ -142,19 +145,18 @@ class ItemTree(object):
     def _find_children(self):
         for fname in os.listdir(self.path):
             if should_ignore(fname) or fname == "info":
-                "Ignore dotfiles and group description files"
+                # ignore dotfiles and group description files
                 continue
 
             p = os.path.join(self.path, fname)
 
             if os.path.isfile(p):
-                "It's got to be an item"
+                # it's got to be an item
                 i = Item(p, parent=self)
                 self.children[i.code] = i
 
             elif os.path.isdir(p):
-                "Could either be a group or a collection"
-
+                # could either be a group or a collection
                 if RE_PART.match(p) is not None:
                     a = ItemGroup(p, parent=self)
                     self.children[a.code] = a
@@ -163,6 +165,7 @@ class ItemTree(object):
                     self.children[t.name] = t
 
     def walk(self):
+        """Walk through the item tree."""
         for child in self.children.values():
             if hasattr(child, "walk"):
                 for c in child.walk():
@@ -173,7 +176,6 @@ class ItemTree(object):
 
     def resolve(self, path):
         "Resolve the given path into an object"
-
         if path[0] == "/":
             path = path[1:]
 
@@ -185,9 +187,7 @@ class ItemTree(object):
 
 
 class ItemGroup(ItemTree):
-
-    "A group of items"
-
+    "A group of items."
     def __init__(self, path, parent=None):
         ItemTree.__init__(self, path, parent=parent)
 
@@ -207,7 +207,7 @@ class ItemGroup(ItemTree):
             print("\t           code in info: '%s'" % self.info["assetcode"],
                   file=sys.stderr)
             print("\n\tOffending group:", self.path, file=sys.stderr)
-            exit(1)
+            sys.exit(1)
 
         self.description = self.info["description"]
 
@@ -218,7 +218,7 @@ class ItemGroup(ItemTree):
 
 
 class Inventory(object):
-
+    """An inventory."""
     def __init__(self, rootpath):
         self.rootpath = rootpath
         self.root = ItemTree(rootpath)

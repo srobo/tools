@@ -1,22 +1,24 @@
 import fnmatch
 
-from sr.tools.inventory import inventory
 from functools import reduce
+
+from sr.tools.inventory import inventory
 
 
 class ASTNode(object):
+    """An abstract syntax tree node."""
     pass
 
 
 class NonTerminal(ASTNode):
-
+    """A non-terminal AST node."""
     def match(self, inv_nodes):
         raise NotImplementedError("match(...) not implemented"
                                   " for {}".format(self.__class__))
 
 
 class Terminal(ASTNode):
-
+    """A terminal AST node."""
     def match_single(self, inv_node):
         raise NotImplementedError("match_single(...) not implemented"
                                   " for {}".format(self.__class__))
@@ -26,7 +28,7 @@ class Terminal(ASTNode):
 
 
 class Not(NonTerminal):
-
+    """An AST node representing a not."""
     def __init__(self, node):
         super(Not, self).__init__()
         self.node = node
@@ -40,7 +42,7 @@ class Not(NonTerminal):
 
 
 class And(NonTerminal):
-
+    """An AST node representing a and."""
     def __init__(self, left, right):
         super(And, self).__init__()
         self.left = left
@@ -57,7 +59,7 @@ class And(NonTerminal):
 
 
 class Or(NonTerminal):
-
+    """An AST node representing an or."""
     def __init__(self, left, right):
         super(Or, self).__init__()
         self.left = left
@@ -74,7 +76,7 @@ class Or(NonTerminal):
 
 
 class Condition(Terminal):
-
+    """An AST node representing a condition."""
     def __init__(self, *conditions):
         super(Condition, self).__init__()
         self.conditions = set(conditions)
@@ -132,7 +134,7 @@ class Condition(Terminal):
 
 
 class Type(Terminal):
-
+    """An AST node representing a type key."""
     def __init__(self, *types):
         super(Type, self).__init__()
         self.types = types
@@ -149,7 +151,7 @@ class Type(Terminal):
 
 
 class Labelled(Terminal):
-
+    """An AST node representing a labelled key."""
     def __init__(self, labelled):
         super(Labelled, self).__init__()
         self.labelled = labelled.lower() in ('true', '1')
@@ -164,7 +166,7 @@ class Labelled(Terminal):
 
 
 class Assy(Terminal):
-
+    """An AST node representing a assy key."""
     def __init__(self, assy):
         super(Assy, self).__init__()
         self.assy = assy.lower() in ('true', '1')
@@ -178,7 +180,7 @@ class Assy(Terminal):
 
 
 class TriState(Terminal):
-
+    """An AST node representing a tri key."""
     def __init__(self, key, desired_val):
         super(TriState, self).__init__()
         self.key = key
@@ -199,7 +201,7 @@ class TriState(Terminal):
 
 
 class Path(Terminal):
-
+    """An AST node representing a path key."""
     def __init__(self, *paths):
         super(Path, self).__init__()
         paths = [path[1:] if path[0] == '/' else path for path in paths]
@@ -225,7 +227,7 @@ class Path(Terminal):
 
 
 class Code(Terminal):
-
+    """An AST node representing a code key."""
     def __init__(self, *codes):
         self.codes = set(map(self._tidy, codes))
 
@@ -243,7 +245,7 @@ class Code(Terminal):
 
 
 class Serial(Terminal):
-
+    """An AST node representing a serial key."""
     def __init__(self, *serials):
         self.serials = set(serials)
 
@@ -256,6 +258,7 @@ class Serial(Terminal):
 
 
 class Function(NonTerminal):
+    """An AST node representing a function."""
     _functions = {}
 
     @classmethod
@@ -284,11 +287,13 @@ class Function(NonTerminal):
 
 @Function.register('parent')
 def _parent(inv_node):
+    """A function which returns the parent of a node."""
     return [inv_node.parent]
 
 
 @Function.register('children')
 def _children(inv_node):
+    """A function which returns the children of a node."""
     if not hasattr(inv_node, 'children'):
         return []
     return inv_node.children.values()
@@ -296,11 +301,13 @@ def _children(inv_node):
 
 @Function.register('siblings')
 def _siblings(inv_node):
+    """A function which returns the siblings of a node."""
     return [x for x in inv_node.parent.children.values() if x is not inv_node]
 
 
 @Function.register('descendants')
 def _descendants(inv_node):
+    """A function which returns the descendants of a node."""
     def rec(node):
         children = getattr(node, 'children', {})
         return sum(map(rec, children.values()), [node])

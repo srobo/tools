@@ -16,14 +16,12 @@ if six.PY2:
 
 
 class PurchaseItem(object):
-
     def __init__(self, info):
         self.desc = info["desc"]
         self.cost = D("%.2f" % info["cost"])
 
 
 class Purchase(object):
-
     def __init__(self, pinfo):
         self.budget_line = pinfo["budget-line"]
         self.summary = pinfo["summary"]
@@ -38,9 +36,7 @@ class Purchase(object):
 
 
 class SpendRequest(object):
-
     "Query the user for purchase information"
-
     def __init__(self, fname, delete_file=False):
         self.fname = fname
         self.delete_file = delete_file
@@ -55,7 +51,7 @@ class SpendRequest(object):
         os.close(fd)
 
         # Fill in the temporary file from the template
-        template = pkg_resources.resource_stream('sr.tools.cli.misc',
+        template = pkg_resources.resource_stream('sr.tools.cli',
                                                  'spend-template.yaml')
 
         with open(fname, 'wb') as file:
@@ -87,7 +83,6 @@ class SpendRequest(object):
 
     def _parse(self):
         "Parse our YAML file"
-
         with open(self.fname, "r") as f:
             data = yaml.load(f)
 

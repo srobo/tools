@@ -3,7 +3,7 @@ import re
 
 from six.moves.xmlrpc_client import ServerProxy
 
-from sr.tools import Config
+from sr.tools.config import Config
 
 
 class WrongServer(Exception):
@@ -13,7 +13,6 @@ class WrongServer(Exception):
 
 class TracProxy(ServerProxy):
     """An XML-RPC proxy for SR Trac"""
-
     def __init__(self, user=None, password=None, server=None, port=None,
                  anon=False):
         """

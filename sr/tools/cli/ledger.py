@@ -5,9 +5,9 @@ def command(args):
     import os
     import sys
 
-    from sr.tools import spending, Config
+    from sr.tools import spending
+    from sr.tools.config import Config
     from sr.tools.environment import get_config_filename
-    from sr.tools.spending import NotSpendingRepo
 
 
     # Invoke ledger on the SR spending repo
@@ -25,7 +25,7 @@ def command(args):
     try:
         # Check that it's actually spending.git
         root = spending.find_root(path=root)
-    except NotSpendingRepo:
+    except spending.NotSpendingRepo:
         print("This isn't SR spending.git", file=sys.stderr)
         print("Solve this by either:", file=sys.stderr)
         print(" - Changing working directory to spending.git", file=sys.stderr)

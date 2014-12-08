@@ -6,7 +6,7 @@ def command(args):
     import sys
 
     import sr.tools.inventory.assetcode as assetcode
-    from sr.tools.inventory import normalise_partcode, get_inventory
+    from sr.tools.inventory.inventory import normalise_partcode, get_inventory
 
     ASSET_CODE = 0
     PART_TYPE = 1

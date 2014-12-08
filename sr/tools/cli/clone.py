@@ -1,13 +1,12 @@
 from __future__ import print_function
 
-import sys
-
 
 def command(args):
     import os
     import subprocess
+    import sys
 
-    from sr.tools import Config
+    from sr.tools.config import Config
 
 
     config = Config()
@@ -43,6 +42,9 @@ def command(args):
 
 
 def command_deprecated(args):
+    import sys
+
+
     print("This is deprecated, please use 'clone' instead.", file=sys.stderr)
     command(args)
 

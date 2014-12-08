@@ -2,24 +2,18 @@ from __future__ import print_function
 
 
 def command(args):
-    import os
+    import argparse
     import sys
 
-    from sr.tools.inventory.oldinv import gettoplevel
+    from sr.tools.cli import inv_list_templates
 
-    gitdir = gettoplevel()
-    if not gitdir:
-        # Not in the inventory, give up
-        sys.exit(1)
 
-    templatedir = os.path.join(gitdir, ".meta", "assemblies")
-    templates = os.listdir(templatedir)
+    print("'inv-list-assy-templates' is deprecated. Please use "
+          "'inv-list-templates --assemblies' instead.", file=sys.stderr)
 
-    for template in templates:
-        if template in ["default"]:
-            continue
-
-        print(template)
+    args = argparse.Namespace()
+    args.assemblies = True
+    inv_list_templates.command(args)
 
 
 def add_subparser(subparsers):

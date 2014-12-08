@@ -4,7 +4,8 @@ from __future__ import print_function
 def command(args):
     import sys
 
-    from sr.tools.inventory import assetcode, normalise_partcode, get_inventory
+    from sr.tools.inventory.inventory import assetcode, normalise_partcode, \
+        get_inventory
     from sr.tools.environment import open_editor
 
     inv = get_inventory()

@@ -2,6 +2,7 @@ from __future__ import print_function
 
 
 def command(args):
+    import argparse
     import os
     import subprocess
     import sys
@@ -12,6 +13,7 @@ def command(args):
     from sr.tools.inventory.oldinv import gettoplevel, getusername, \
         getusernumber, getpartnumber
     import sr.tools.inventory.assetcode as assetcode
+    from sr.tools.cli import inv_new_asset
 
     dirname = args.dirname
 
@@ -60,10 +62,10 @@ def command(args):
         if "elements" in assy_data:
             os.chdir(groupname)
             for element in assy_data["elements"]:
-                if args.start_editor:
-                    subprocess.call(["sr", "inv-new-asset", "-e", element])
-                else:
-                    subprocess.call(["sr", "inv-new-asset", element])
+                other_args = argparse.Namespace()
+                other_args.assetname = element
+                other_args.start_editor = args.start_editor
+                inv_new_asset.command(other_args)
 
 
 def add_subparser(subparsers):

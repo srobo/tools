@@ -6,7 +6,7 @@ def command(args):
     import sys
 
     import sr.tools.budget as budget
-    from sr.tools.budget.diff import diff_trees, AddedItem, RemovedItem, \
+    from sr.tools.budget import diff_trees, AddedItem, RemovedItem, \
         ChangedItem, changes_to_tree
 
     try:

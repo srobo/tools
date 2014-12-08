@@ -1,12 +1,11 @@
 import json
 import subprocess
 
-from sr.tools import Config
+from sr.tools.config import Config
 
 
 def cmd(args):
     """Run the given gerrit command and return the response"""
-
     conf = Config()
     c = ["ssh", conf["gerrit_ssh"], "gerrit"] + args
     return subprocess.check_output(c)

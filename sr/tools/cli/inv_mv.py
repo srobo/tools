@@ -5,7 +5,8 @@ def command(args):
     import subprocess
     import sys
 
-    from sr.tools.inventory import assetcode, normalise_partcode, get_inventory
+    from sr.tools.inventory.inventory import assetcode, normalise_partcode, \
+        get_inventory
 
 
     inv = get_inventory()
@@ -41,7 +42,7 @@ def command(args):
             parts.append(part)
 
     paths = [x.path for x in parts]
-    subprocess.check_call(['git', 'mv', paths, '.'])
+    subprocess.check_call(['git', 'mv'] + paths + ['.'])
 
 
 def add_subparser(subparsers):

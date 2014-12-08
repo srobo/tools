@@ -4,10 +4,10 @@ from __future__ import print_function
 def command(args):
     import sys
 
-    import sr.tools.inventory as srinv
+    import sr.tools.inventory.inventory as srinv
     import sr.tools.inventory.assetcode as assetcode
     import sr.tools.inventory.oldinv as oldinv
-    from sr.tools.inventory import normalise_partcode
+    from sr.tools.inventory.inventory import normalise_partcode
 
     top = oldinv.gettoplevel()
     if top is None:

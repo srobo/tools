@@ -1,11 +1,10 @@
-#!/usr/bin/env python
 from __future__ import print_function
-
-import os
-import sys
 
 
 def which(name):
+    import os
+
+
     # Adapted from answer to
     # http://stackoverflow.com/questions/775351/os-path-exists-for-files-in-your-path
     for p in os.environ["PATH"].split(os.pathsep):
@@ -17,6 +16,9 @@ def which(name):
 
 
 def ensure_callable(*names):
+    import sys
+
+
     missing = [name for name in names if which(name) is None]
     if len(missing) == 0:
         return
@@ -26,9 +28,11 @@ def ensure_callable(*names):
 
 
 def command(args):
+    import os
     import pkg_resources
     import shutil
     import subprocess
+    import sys
     import tempfile
     import zipfile
 
@@ -52,9 +56,9 @@ def command(args):
     generated = generated.replace(
         '\section', '\section*').replace('\subsection', '\subsection*')
 
-    prefix_file = pkg_resources.resource_stream('sr.tools.cli.misc',
+    prefix_file = pkg_resources.resource_stream('sr.tools.cli',
                                                 'document_prefix.tex')
-    suffix_file = pkg_resources.resource_stream('sr.tools.cli.misc',
+    suffix_file = pkg_resources.resource_stream('sr.tools.cli',
                                                 'document_suffix.tex')
     prefix = prefix_file.read().decode('UTF-8')
     suffix = suffix_file.read().decode('UTF-8')
@@ -84,7 +88,7 @@ def command(args):
     with open(main_file, 'w') as f:
         f.write(total)
 
-    file = pkg_resources.resource_stream('sr.tools.cli.misc',
+    file = pkg_resources.resource_stream('sr.tools.cli',
                                          'latex-assets.zip')
     with zipfile.ZipFile(file) as zf:
         for name in ('ecs.png', 'moto.png', 'bitbox.png', 'sr-logo.pdf'):

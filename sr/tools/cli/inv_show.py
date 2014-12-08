@@ -5,7 +5,7 @@ def command(args):
     import pydoc
     import subprocess
 
-    from sr.tools.inventory import get_inventory, normalise_partcode
+    from sr.tools.inventory.inventory import get_inventory, normalise_partcode
 
     inv = get_inventory()
 

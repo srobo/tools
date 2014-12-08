@@ -1,11 +1,12 @@
 from __future__ import print_function
 
-import sys
-
 
 def command(args):
+    import sys
+
     import sr.tools.bom.schem as schem
     import sr.tools.bom.parts_db as parts_db
+
 
     SCHEMATIC = args.schematic
 
@@ -38,6 +39,9 @@ def command(args):
 
 
 def command_deprecated(args):
+    import sys
+
+
     print("This is deprecated, please use 'pcb-lint' instead.",
           file=sys.stderr)
     command(args)

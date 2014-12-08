@@ -1,9 +1,10 @@
 from __future__ import print_function
 
-import re
-
 
 def replace_line(path, key, value):
+    import re
+
+
     print("Replacing:", key, "->", value, "in", path)
     pattern = r"{key}( *):( *)(?:[^#\s]*)(.*)".format(key=key)
 
@@ -27,7 +28,7 @@ def replace_line(path, key, value):
 def command(args):
     import sys
 
-    from sr.tools.inventory import get_inventory, normalise_partcode
+    from sr.tools.inventory.inventory import get_inventory, normalise_partcode
 
     inv = get_inventory()
 

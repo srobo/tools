@@ -27,7 +27,7 @@ def replace_line(path, key, value):
 def command(args):
     import sys
 
-    from sr.tools.inventory import get_inventory, normalise_partcode
+    from sr.tools.inventory.inventory import get_inventory, normalise_partcode
 
     inv = get_inventory()
 

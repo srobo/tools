@@ -5,7 +5,8 @@ def command(args):
     import subprocess
     import sys
 
-    from sr.tools.inventory import assetcode, normalise_partcode, get_inventory
+    from sr.tools.inventory.inventory import assetcode, normalise_partcode, \
+        get_inventory
 
 
     inv = get_inventory()

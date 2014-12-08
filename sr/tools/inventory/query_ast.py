@@ -9,14 +9,12 @@ class ASTNode(object):
 
 
 class NonTerminal(ASTNode):
-
     def match(self, inv_nodes):
         raise NotImplementedError("match(...) not implemented"
                                   " for {}".format(self.__class__))
 
 
 class Terminal(ASTNode):
-
     def match_single(self, inv_node):
         raise NotImplementedError("match_single(...) not implemented"
                                   " for {}".format(self.__class__))
@@ -26,7 +24,6 @@ class Terminal(ASTNode):
 
 
 class Not(NonTerminal):
-
     def __init__(self, node):
         super(Not, self).__init__()
         self.node = node
@@ -40,7 +37,6 @@ class Not(NonTerminal):
 
 
 class And(NonTerminal):
-
     def __init__(self, left, right):
         super(And, self).__init__()
         self.left = left
@@ -57,7 +53,6 @@ class And(NonTerminal):
 
 
 class Or(NonTerminal):
-
     def __init__(self, left, right):
         super(Or, self).__init__()
         self.left = left
@@ -74,7 +69,6 @@ class Or(NonTerminal):
 
 
 class Condition(Terminal):
-
     def __init__(self, *conditions):
         super(Condition, self).__init__()
         self.conditions = set(conditions)
@@ -132,7 +126,6 @@ class Condition(Terminal):
 
 
 class Type(Terminal):
-
     def __init__(self, *types):
         super(Type, self).__init__()
         self.types = types
@@ -149,7 +142,6 @@ class Type(Terminal):
 
 
 class Labelled(Terminal):
-
     def __init__(self, labelled):
         super(Labelled, self).__init__()
         self.labelled = labelled.lower() in ('true', '1')
@@ -164,7 +156,6 @@ class Labelled(Terminal):
 
 
 class Assy(Terminal):
-
     def __init__(self, assy):
         super(Assy, self).__init__()
         self.assy = assy.lower() in ('true', '1')
@@ -178,7 +169,6 @@ class Assy(Terminal):
 
 
 class TriState(Terminal):
-
     def __init__(self, key, desired_val):
         super(TriState, self).__init__()
         self.key = key
@@ -199,7 +189,6 @@ class TriState(Terminal):
 
 
 class Path(Terminal):
-
     def __init__(self, *paths):
         super(Path, self).__init__()
         paths = [path[1:] if path[0] == '/' else path for path in paths]
@@ -225,7 +214,6 @@ class Path(Terminal):
 
 
 class Code(Terminal):
-
     def __init__(self, *codes):
         self.codes = set(map(self._tidy, codes))
 
@@ -243,7 +231,6 @@ class Code(Terminal):
 
 
 class Serial(Terminal):
-
     def __init__(self, *serials):
         self.serials = set(serials)
 
@@ -256,7 +243,6 @@ class Serial(Terminal):
 
 
 class Function(NonTerminal):
-
     _functions = {}
 
     @classmethod

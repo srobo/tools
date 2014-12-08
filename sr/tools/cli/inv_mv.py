@@ -41,7 +41,7 @@ def command(args):
             parts.append(part)
 
     paths = [x.path for x in parts]
-    subprocess.check_call(['git', 'mv', paths, '.'])
+    subprocess.check_call(['git', 'mv'] + paths + ['.'])
 
 
 def add_subparser(subparsers):

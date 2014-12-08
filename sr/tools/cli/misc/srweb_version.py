@@ -1,35 +1,30 @@
-#!/usr/bin/env python
 from __future__ import print_function
 
-import json
-try:
-    from urllib2 import urlopen
-except ImportError:
-    from urllib.request import urlopen
-import sys
 
-
-base_url = 'https://www.studentrobotics.org/.git/'
+BASE_URL = 'https://www.studentrobotics.org/.git/'
 
 
 def fetch(url):
+    import sys
+
+    from six.moves.urllib.request import urlopen
+
+
     page = urlopen(url)
     data = page.read()
 
     if data is None:
         print('Failed to download from: {url}.'.format(url=url),
               file=sys.stderr)
-        exit(1)
+        sys.exit(1)
 
     return data.strip().decode('utf-8')
 
 
-def main():
-    quiet = False
-    if any(True for arg in sys.argv if arg in ['-q', '--quiet']):
-        quiet = True
+def command(args):
+    quiet = args.quiet
 
-    url = base_url + "HEAD"
+    url = BASE_URL + "HEAD"
     data = fetch(url)
 
     ref_base = 'ref: '
@@ -43,10 +38,13 @@ def main():
     if not quiet:
         print('On:', ref)
 
-    url = base_url + ref
+    url = BASE_URL + ref
     data = fetch(url)
     print(data)
 
 
-if __name__ == '__main__':
-    main()
+def add_subparser(subparsers):
+    parser = subparsers.add_parser('srweb-version', help='Display the srweb version.')
+    parser.add_argument('--quiet', '-q', action='store_true', dest='quiet',
+                        help='Enable quiet mode.')
+    parser.set_defaults(func=command)

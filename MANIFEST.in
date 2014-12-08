@@ -1,3 +1,5 @@
 recursive-include sr/tools/cli/cmds *
-include sr/tools/cli/bom/bom_header.inc
 include sr/tools/bom/component_lib.csv
+include sr/tools/cli/bom/bom_header.inc
+include sr/tools/cli/misc/latex-assets.zip
+include sr/tools/cli/misc/spending-template.yaml

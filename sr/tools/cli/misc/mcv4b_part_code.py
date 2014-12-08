@@ -1,14 +1,9 @@
-#!/usr/bin/env python
 from __future__ import print_function
 
-import argparse
 import re
 import os
 
-import pyudev
-
 from sr.tools.inventory import assetcode, query
-
 
 
 # Motorobards have FTDI ICs on them
@@ -84,6 +79,9 @@ def wait_for_first_insertion(context):
     This function monitors udev additions (i.e. insertions), checking each as
     they happen.  The first device that looks like a motorboard is returned.
     """
+    import pyudev
+
+
     monitor = pyudev.Monitor.from_netlink(context)
     for action, device in monitor:
         if action == 'add':
@@ -91,8 +89,32 @@ def wait_for_first_insertion(context):
                 return device
 
 
-def get_args():
-    parser = argparse.ArgumentParser(
+def command(args):
+    import pyudev
+
+
+    context = pyudev.Context()
+
+    if args.wait:
+        devices = [wait_for_first_insertion(context)]
+    else:
+        devices = find_motorboards(context)
+
+    for device in devices:
+        serial = device.attributes['serial']
+
+        if args.output == "code":
+            print(serial)
+        else:
+            os.chdir(args.inv_dir)
+            res = query.query("code:{0}".format(serial))[0]
+
+            if args.output == "path":
+                print(res.path)
+
+
+def add_subparser(subparsers):
+    parser = subparsers.add_parser('mcv4b-part-code',
         description=("Finds connected MCv4b motorboards by searching or waiting for insertion.  "
                      "Two output formats are provided: "
                      "'code' - just the SR part code; "
@@ -104,25 +126,4 @@ def get_args():
                         help="Selects an output style (Default: code)")
     parser.add_argument("--inv-dir", type=str, default=".",
                         help="The root of the local inventory checkout, if not pwd")
-    return parser.parse_args()
-
-
-context = pyudev.Context()
-args = get_args()
-
-if args.wait:
-    devices = [wait_for_first_insertion(context)]
-else:
-    devices = find_motorboards(context)
-
-for device in devices:
-    serial = device.attributes['serial']
-
-    if args.output == "code":
-        print(serial)
-    else:
-        os.chdir(args.inv_dir)
-        res = query.query("code:{0}".format(serial))[0]
-
-        if args.output == "path":
-            print(res.path)
+    parser.set_defaults(func=command)

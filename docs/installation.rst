@@ -7,5 +7,5 @@ Installation
     $ ./setup.py install --user
     $ sr --help
 
-Make sure you have ``~/.local/bin`` in your ``$PAtH``, the location where local
+Make sure you have ``~/.local/bin`` in your ``$PATH``, the location where local
 binaries are stored.

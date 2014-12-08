@@ -1,7 +1,8 @@
 from __future__ import print_function
 
-import re
 import os
+import re
+import sys
 
 from sr.tools.inventory import assetcode, query
 
@@ -89,7 +90,12 @@ def wait_for_first_insertion(context):
 
 
 def command(args):
-    import pyudev
+    try:
+        import pyudev
+    except ImportError:
+        print("Please install 'pyudev' to use this tool.", file=sys.stderr)
+        sys.exit(1)
+
 
     context = pyudev.Context()
 

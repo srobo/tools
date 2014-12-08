@@ -1,6 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from __future__ import print_function
+
+import sys
 
 
 class Cmd(object):
@@ -15,7 +15,13 @@ class TotalCmd(object):
 
 class HistCmd(object):
     def __init__(self, tree):
-        import pylab
+        try:
+            import pylab
+        except ImportError:
+            print("Please install 'matplotlib' to use this tool.",
+                  file=sys.stderr)
+            sys.exit(1)
+
         import numpy as np
 
         costs = []
@@ -35,9 +41,8 @@ commands = {"total": TotalCmd, "hist": HistCmd}
 
 
 def command(args):
-    import sys
-
     import sr.tools.budget as budget
+
 
     cmd = args.command
     subtree_path = args.subtree_path
@@ -69,6 +74,6 @@ def add_subparser(subparsers):
                                    help='Run a query on the budget.')
     parser.add_argument('command', choices=commands.keys(),
                         help='Command to run.')
-    parser.add_argument(
-        'subtree_path', help='The subtree path in the budget to run.')
+    parser.add_argument('subtree_path',
+                        help='The subtree path in the budget to run.')
     parser.set_defaults(func=command)

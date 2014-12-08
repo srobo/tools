@@ -1,10 +1,17 @@
 from __future__ import print_function
 
+import sys
+
 
 def command(args):
     import re
 
-    import pygit2
+    try:
+        import pygit2
+    except ImportError:
+        print("Please install 'pygit2' to use this tool.", file=sys.stderr)
+        sys.exit(1)
+
 
     config = pygit2.Config.get_global_config()
 
@@ -23,21 +30,8 @@ def command(args):
     print("Your git is correctly configured. :)")
 
 
-def command_no_pygit2(args):
-    import sys
-
-    print('Please install pygit2 to use this tool.', file=sys.stderr)
-    sys.exit(1)
-
-
 def add_subparser(subparsers):
     parser = subparsers.add_parser('check-my-git',
                                    help='Checks whether you have git '
                                         'configured sanely.')
-
-    try:
-        import pygit2
-    except ImportError:
-        parser.set_defaults(func=command_no_pygit2)
-    else:
-        parser.set_defaults(func=command)
+    parser.set_defaults(func=command)

@@ -7,7 +7,7 @@ def command(args):
     import os
     import subprocess
 
-    from sr.tools import Config
+    from sr.tools.config import Config
 
 
     config = Config()

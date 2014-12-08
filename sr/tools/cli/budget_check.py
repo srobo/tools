@@ -9,7 +9,8 @@ def command(args):
 
     import yaml
 
-    from sr.tools import budget, spending, Config
+    from sr.tools import budget, spending
+    from sr.tools.config import Config
 
     config = Config()
 

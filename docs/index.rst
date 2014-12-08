@@ -1,6 +1,14 @@
 Student Robotics Tools
 ======================
 
+User Guide
+----------
+
+.. toctree::
+   :maxdepth: 2
+
+   installation
+
 API Reference
 -------------
 
@@ -16,4 +24,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

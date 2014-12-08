@@ -1,5 +1,7 @@
 from __future__ import print_function
 
+import sys
+
 
 def command(args):
     import sr.tools.teamgit as teamgit
@@ -20,10 +22,27 @@ def command(args):
             print(datetime.fromtimestamp(modtime), repo)
 
 
+def command_deprecated(args):
+    print("This is deprecated, please use 'ide-list-repos' instead.",
+          file=sys.stderr)
+    command(args)
+
+
 def add_subparser(subparsers):
     import sr.tools.teamgit as teamgit
 
     parser = subparsers.add_parser('team-list-repos',
+                                   help='List team repositories.')
+    parser.add_argument('team', help='The identifier of the team.')
+    parser.add_argument('-t', "--timesort", action="store_true", default=False,
+                        help="Sort by the time of the latest commit.")
+    parser.add_argument('--server', '-s', default=teamgit.DEFAULT_SERVER,
+                        help='The server running the IDE. Defaults to the '
+                             'official Student Robotics server.')
+    parser.set_defaults(func=command_deprecated)
+
+
+    parser = subparsers.add_parser('ide-list-repos',
                                    help='List team repositories.')
     parser.add_argument('team', help='The identifier of the team.')
     parser.add_argument('-t', "--timesort", action="store_true", default=False,

@@ -30,8 +30,8 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser(
-        'repolist', help="Display a list of SR repos")
-    parser.add_argument(
-        "regex", nargs='?', help="Optionally filter the repository.")
+    parser = subparsers.add_parser('repolist',
+                                   help="Display a list of SR repos")
+    parser.add_argument("regex", nargs='?',
+                        help="Optionally filter the repository.")
     parser.set_defaults(func=command)

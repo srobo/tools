@@ -97,6 +97,6 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser(
-        'sp-trac-compare', help='Compare spending with trac.')
+    parser = subparsers.add_parser('sp-trac-compare',
+                                   help='Compare spending with trac.')
     parser.set_defaults(func=command)

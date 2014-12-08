@@ -2,10 +2,11 @@ from __future__ import print_function
 
 
 def command(args):
-    import os
+    import subprocess
     import sys
 
     from sr.tools.inventory import assetcode, normalise_partcode, get_inventory
+
 
     inv = get_inventory()
 
@@ -39,9 +40,8 @@ def command(args):
         else:
             parts.append(part)
 
-    paths = map(lambda x: x.path, parts)
-
-    os.system("git mv " + " ".join(paths) + " ./")
+    paths = [x.path for x in parts]
+    subprocess.check_call(['git', 'mv', paths, '.'])
 
 
 def add_subparser(subparsers):

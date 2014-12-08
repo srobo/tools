@@ -37,7 +37,7 @@ _sr()
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
-    opts=`sr list-cmds`
+    opts=`sr list-commands`
 
     get_first_arg
 

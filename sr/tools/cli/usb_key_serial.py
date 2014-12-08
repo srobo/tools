@@ -1,9 +1,10 @@
 from __future__ import print_function
 
-import sys
-
 
 def command(args):
+    import sys
+
+
     try:
         import pyudev
     except ImportError:

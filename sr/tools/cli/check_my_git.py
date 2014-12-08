@@ -1,10 +1,9 @@
 from __future__ import print_function
 
-import sys
-
 
 def command(args):
     import re
+    import sys
 
     try:
         import pygit2

@@ -1,8 +1,5 @@
 from __future__ import print_function
 
-import os
-import sys
-
 
 res = 150  # Image resolution in DPI
 
@@ -46,7 +43,9 @@ UVORK5CYII=" />"""
 
 
 def html_footer(f):
+    import os
     import time
+
 
     f.write("""
 <p>Generated on %s with %s.</p>
@@ -151,6 +150,9 @@ def prep_parts(lines):
 
 
 def writeHTML(lines, out_fn, args, pcb=None):
+    import os
+
+
     outf = open(out_fn, "w")
     pcb_image = None
     pcb_xy = None
@@ -260,6 +262,7 @@ def writeXLS(lines, out_fn):
 
 
 def command(args):
+    import os
     import sys
 
     import sr.tools.bom.parts_db as parts_db
@@ -293,6 +296,9 @@ def command(args):
 
 
 def command_deprecated(args):
+    import sys
+
+
     print("This is deprecated, please use 'create-bom' instead.",
           file=sys.stderr)
     command(args)

@@ -1,6 +1,5 @@
 from __future__ import print_function
 
-import os
 import re
 import sys
 
@@ -90,6 +89,8 @@ def wait_for_first_insertion(context):
 
 
 def command(args):
+    import os
+
     try:
         import pyudev
     except ImportError:

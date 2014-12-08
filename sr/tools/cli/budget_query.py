@@ -1,7 +1,5 @@
 from __future__ import print_function
 
-import sys
-
 
 class Cmd(object):
     def __init__(self, tree):
@@ -15,6 +13,8 @@ class TotalCmd(object):
 
 class HistCmd(object):
     def __init__(self, tree):
+        import sys
+
         try:
             import pylab
         except ImportError:
@@ -41,6 +41,8 @@ commands = {"total": TotalCmd, "hist": HistCmd}
 
 
 def command(args):
+    import sys
+
     import sr.tools.budget as budget
 
 

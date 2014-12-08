@@ -1,7 +1,5 @@
 from __future__ import print_function
 
-import sys
-
 
 def command(args):
     import sr.tools.teamgit as teamgit
@@ -23,6 +21,9 @@ def command(args):
 
 
 def command_deprecated(args):
+    import sys
+
+
     print("This is deprecated, please use 'ide-list-repos' instead.",
           file=sys.stderr)
     command(args)

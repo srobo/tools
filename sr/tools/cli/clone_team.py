@@ -1,13 +1,13 @@
 from __future__ import print_function
 
-import sys
-
 
 GIT_URL = 'https://www.studentrobotics.org/robogit/{team}/{project}.git'
 
 
 def command(args):
+    import sys
     import subprocess
+
 
     cmdline = ["git", "clone", GIT_URL.format(team=args.team.upper(),
                                               project=args.project)]
@@ -18,6 +18,9 @@ def command(args):
 
 
 def command_deprecated(args):
+    import sys
+
+
     print("This is deprecated, please use 'clone-team' instead.",
           file=sys.stderr)
     command(args)

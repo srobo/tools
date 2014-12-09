@@ -9,24 +9,6 @@ import yaml
 from sr.tools.inventory import assetcode
 
 
-def gettoplevel():
-    """Find the top level of the inventory repo."""
-    tmp = subprocess.Popen(("git", "rev-parse", "--show-toplevel"),
-                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-
-    gitdir = tmp.communicate()[0].strip().decode("utf-8")
-
-    if tmp.returncode != 0:
-        return None
-
-    usersfn = os.path.join(gitdir, ".meta", "users")
-
-    if not os.path.isfile(usersfn):
-        return None
-
-    return gitdir
-
-
 def getusername():
     """
     Get the inventory username based on the users configured Git name and email

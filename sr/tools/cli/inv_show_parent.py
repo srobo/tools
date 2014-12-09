@@ -6,14 +6,9 @@ def command(args):
 
     import sr.tools.inventory.inventory as srinv
     import sr.tools.inventory.assetcode as assetcode
-    import sr.tools.inventory.oldinv as oldinv
-    from sr.tools.inventory.inventory import normalise_partcode
+    from sr.tools.inventory.inventory import get_inventory, normalise_partcode
 
-    top = oldinv.gettoplevel()
-    if top is None:
-        print("Error: Must be run from within the inventory.", file=sys.stderr)
-        exit(1)
-    inv = srinv.Inventory(top)
+    inv = get_inventory()
 
     parts = []
     for c in args.part_code:
@@ -23,7 +18,7 @@ def command(args):
             assetcode.code_to_num(code)
         except:
             print("Error: %s is an invalid code." % code, file=sys.stderr)
-            exit(1)
+            sys.exit(1)
 
         try:
             part = inv.root.parts[code]
@@ -45,7 +40,7 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser(
-        'inv-showparent', help='Show parent of items.')
+    parser = subparsers.add_parser('inv-showparent',
+                                   help='Show parent of items.')
     parser.add_argument('part_code', nargs='+', help='Part codes to show.')
     parser.set_defaults(func=command)

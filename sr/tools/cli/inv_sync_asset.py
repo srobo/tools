@@ -6,10 +6,10 @@ def command(args):
     import sys
 
     from sr.tools.environment import open_editor
-    from sr.tools.inventory.oldinv import gettoplevel
+    from sr.tools.inventory.inventory import find_top_level_dir
 
     # Check we're being run in the inventory repo
-    gitdir = gettoplevel()
+    gitdir = find_top_level_dir()
     if not gitdir:
         print("This command must be run in the inventory git repository.")
         sys.exit(2)

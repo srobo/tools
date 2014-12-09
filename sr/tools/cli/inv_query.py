@@ -4,17 +4,18 @@ from __future__ import print_function
 def command(args):
     import sys
 
-    import sr.tools.inventory.query as query
+    from sr.tools.inventory.inventory import get_inventory
     from pyparsing import ParseException
+
+    inventory = get_inventory()
 
     query_str = args.query
     style = 'codes' if args.codes else 'paths'
     verbose = args.v
 
     try:
-
         count = 0
-        for asset in query.query(query_str):
+        for asset in inventory.query(query_str):
             count += 1
             print(asset.code if style == 'codes' else asset.path)
         if verbose:

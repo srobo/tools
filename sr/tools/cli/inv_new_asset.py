@@ -3,20 +3,15 @@ from __future__ import print_function
 
 def command(args):
     import os
-    import sys
 
     from sr.tools.environment import open_editor
-    from sr.tools.inventory.oldinv import gettoplevel, getusername, \
-        getusernumber, getpartnumber
+    from sr.tools.inventory.inventory import get_inventory
     import sr.tools.inventory.assetcode as assetcode
 
     assetname = args.assetname
 
-    # Check we're being run in the inventory repo
-    gitdir = gettoplevel()
-    if not gitdir:
-        print("This command must be run in the inventory git repository.")
-        sys.exit(2)
+    inventory = get_inventory()
+    gitdir = inventory.root_path
 
     # Check that a template for the new asset exists
     templatefn = os.path.join(gitdir, ".meta", "parts", assetname)
@@ -26,12 +21,9 @@ def command(args):
         templatefn = os.path.join(gitdir, ".meta", "parts", "default")
 
     # Get the git name/email of the user
-    username = getusername()
+    userno = inventory.current_user_id
+    assetcd = inventory.get_next_part_code(userno)
 
-    userno = getusernumber(gitdir, username)
-    partno = getpartnumber(gitdir, userno)
-
-    assetcd = assetcode.num_to_code(userno, partno)
     assetfn = "%s-sr%s" % (assetname, assetcd)
 
     print('Created new asset with name "{0}-\033[1msr{1}\033[0m"'

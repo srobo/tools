@@ -1,10 +1,15 @@
-"""API for the SR inventory."""
+"""
+A set of classes and functions for working with
+:doc:`The Inventory </inventory>`.
+"""
 from __future__ import print_function
 
 import codecs
+import email.utils
 import hashlib
 import re
 import os
+import subprocess
 import sys
 
 import six.moves.cPickle as pickle
@@ -12,26 +17,50 @@ import six.moves.cPickle as pickle
 import yaml
 
 from sr.tools.inventory import assetcode
-from sr.tools.inventory import oldinv
 from sr.tools.environment import get_cache_dir
-
-try:
-    from yaml import CLoader as YAML_Loader
-except ImportError:
-    from yaml import Loader as YAML_Loader
 
 
 CACHE_DIR = get_cache_dir('inventory')
-
 RE_PART = re.compile("^(.+)-sr([%s]+)$" % "".join(assetcode.alphabet_lut))
 
 
-def get_inventory():
-    """Return an Inventory object if in an inventory directory; else exit."""
-    top = oldinv.gettoplevel()
+def find_top_level_dir(start_dir=None):
+    """
+    Find the top level of the inventory repo.
+
+    :param str start_dir: The working to start the search from. If this is
+                          None, the current working directory is used.
+    :returns: The top level directory or None.
+    :rtype: str or None
+    """
+    try:
+        cmd = ['git', 'rev-parse', '--show-toplevel']
+        gitdir = subprocess.check_output(cmd, universal_newlines=True,
+                                         cwd=start_dir).strip()
+    except subprocess.CalledProcessError:
+        return None
+
+    usersfn = os.path.join(gitdir, ".meta", "users")
+    if not os.path.isfile(usersfn):
+        return None
+
+    return gitdir
+
+
+def get_inventory(directory=None):
+    """
+    Get an :class:`Inventory` object for a directory.
+
+    :param str directory: The directory to find the inventory from. If this is
+                          left as None, the current working directory is used.
+    :returns: An instance of an :class:`Inventory` object pointing to the
+              inventory in the directory specified.
+    :rtype: :class:`Inventory`
+    :raises OSError: If the directory is not an inventory.
+    """
+    top = find_top_level_dir(directory)
     if top is None:
-        print("Error: Must be run from within the inventory.", file=sys.stderr)
-        sys.exit(1)
+        raise OSError("Not an inventory.")
 
     return Inventory(top)
 
@@ -40,6 +69,10 @@ def should_ignore(path):
     """
     Check if the path should be ignored. A path that is deamed ignore-worthy
     starts with '.' or ends with '~'.
+
+    :param str path: The path to check.
+    :returns: ``True`` if the path should be ignored, else ``False``.
+    :rtype: bool
     """
     if path[0] == ".":
         return True
@@ -50,21 +83,31 @@ def should_ignore(path):
     return False
 
 
-def normalise_partcode(partcode):
+def normalise_partcode(part_code):
     """
     Normalise the given part code to one that is compatible with the inventory
     API. Generally this just involves removing the 'sr' from the front and
     making the result all in uppercase.
+
+    :param str part_code: The part code to normalise.
+    :returns: A normalised part code.
+    :rtype: str
     """
-    partcode = partcode.strip()
-    if partcode.lower().startswith('sr'):
-        return partcode[2:].upper()
+    part_code = part_code.strip()
+    if part_code.lower().startswith('sr'):
+        return part_code[2:].upper()
     else:
-        return partcode.upper()
+        return part_code.upper()
 
 
 def cached_yaml_load(path):
-    """Load the pickled YAML file from cache."""
+    """
+    Load a pickled YAML file from cache.
+
+    :param str path: The path to load.
+    :returns: The loaded YAML file, possibly from cache.
+    :rtype: dict
+    """
     path = os.path.abspath(path)
 
     ho = hashlib.sha256()
@@ -75,7 +118,6 @@ def cached_yaml_load(path):
         os.makedirs(CACHE_DIR)
 
     p = os.path.join(CACHE_DIR, h)
-
     if os.path.exists(p):
         # cache has file
         if os.path.getmtime(p) >= os.path.getmtime(path):
@@ -83,8 +125,7 @@ def cached_yaml_load(path):
             with open(p, 'rb') as file:
                 return pickle.load(file)
 
-    y = yaml.load(codecs.open(path, "r", encoding="utf-8"),
-                  Loader=YAML_Loader)
+    y = yaml.load(codecs.open(path, "r", encoding="utf-8"))
     with open(p, 'wb') as file:
         pickle.dump(y, file)
     return y
@@ -219,6 +260,72 @@ class ItemGroup(ItemTree):
 
 class Inventory(object):
     """An inventory."""
-    def __init__(self, rootpath):
-        self.rootpath = rootpath
-        self.root = ItemTree(rootpath)
+    def __init__(self, root_path):
+        self.root_path = root_path
+        self.root = ItemTree(root_path)
+
+        self._load_users()
+
+    def _load_users(self):
+        self.users = {}
+
+        with open(os.path.join(self.root_path, '.meta', 'users')) as file:
+            users = yaml.safe_load(file)
+
+        for details, user_id in users.items():
+            self.users[email.utils.parseaddr(details)] = user_id
+
+    @property
+    def current_user_id(self):
+        """
+        Get the user ID of the currently configure Git user.
+        """
+        user = self.get_current_user()
+        return self.users[user]
+
+    @staticmethod
+    def get_current_user():
+        """
+        Get the currently configured Git user.
+
+        :returns: A tuple containing the name and email address.
+        :rtype: tuple
+        """
+        gitname = subprocess.check_output(("git", "config", "user.name")).strip()
+        gitemail = subprocess.check_output(("git", "config", "user.email")).strip()
+        return (gitname.decode('UTF-8'), gitemail.decode('UTF-8'))
+
+    @property
+    def part_codes(self):
+        """Get a list of all part numbers."""
+        for dirpath, dirnames, filenames in os.walk(self.root_path):
+            if '.git' in dirpath or '.meta' in dirpath:
+                continue
+
+            for filename in dirnames + filenames:
+                if '-sr' in filename:
+                    code = filename[filename.rindex('-sr') + 3:]
+                    yield code
+
+    def get_next_part_code(self, user_id):
+        """Get the next available part code."""
+        # Gather all part numbers from the inventory
+        maxno = -1
+        for p in map(assetcode.code_to_num, self.part_codes):
+            if p[0] == user_id:
+                maxno = max(maxno, p[1])
+        return assetcode.num_to_code(user_id, maxno + 1)
+
+    def query(self, query_str):
+        """
+        Run a query on the inventory.
+
+        :param str query_str: The query to run on the inventory.
+        :returns: Any items found from the query.
+        :rtype: list of :class:`Item`s
+        :raises pyparsing.ParseError: If the query could not be parsed.
+        """
+        from sr.tools.inventory import query_parser  # circular dependency
+
+        tree = query_parser.search_tree(query_str)
+        return tree.match(self.root.parts.values())

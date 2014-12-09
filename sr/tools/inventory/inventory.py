@@ -295,6 +295,27 @@ class Inventory(object):
         gitemail = subprocess.check_output(("git", "config", "user.email")).strip()
         return (gitname.decode('UTF-8'), gitemail.decode('UTF-8'))
 
+    @property
+    def part_codes(self):
+        """Get a list of all part numbers."""
+        for dirpath, dirnames, filenames in os.walk(self.root_path):
+            if '.git' in dirpath or '.meta' in dirpath:
+                continue
+
+            for filename in dirnames + filenames:
+                if '-sr' in filename:
+                    code = filename[filename.rindex('-sr') + 3:]
+                    yield code
+
+    def get_next_part_code(self, user_id):
+        """Get the next available part code."""
+        # Gather all part numbers from the inventory
+        maxno = -1
+        for p in map(assetcode.code_to_num, self.part_codes):
+            if p[0] == user_id:
+                maxno = max(maxno, p[1])
+        return assetcode.num_to_code(user_id, maxno + 1)
+
     def query(self, query_str):
         """
         Run a query on the inventory.

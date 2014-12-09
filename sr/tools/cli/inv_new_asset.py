@@ -6,7 +6,6 @@ def command(args):
 
     from sr.tools.environment import open_editor
     from sr.tools.inventory.inventory import get_inventory
-    from sr.tools.inventory.oldinv import getpartnumber
     import sr.tools.inventory.assetcode as assetcode
 
     assetname = args.assetname
@@ -23,9 +22,8 @@ def command(args):
 
     # Get the git name/email of the user
     userno = inventory.current_user_id
-    partno = getpartnumber(gitdir, userno)
+    assetcd = inventory.get_next_part_code(userno)
 
-    assetcd = assetcode.num_to_code(userno, partno)
     assetfn = "%s-sr%s" % (assetname, assetcd)
 
     print('Created new asset with name "{0}-\033[1msr{1}\033[0m"'

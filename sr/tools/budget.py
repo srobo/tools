@@ -1,4 +1,4 @@
-"Library for accessing the budget files"
+"""Library for accessing the budget files."""
 from __future__ import print_function
 
 import collections
@@ -26,12 +26,12 @@ FUDGE_FACTOR = D("1.1")
 
 
 def dict_constructor(loader, node):
-    "Constructor for libyaml to use ordered dicts instead of dicts"
+    """Constructor for libyaml to use ordered dicts instead of dicts."""
     return collections.OrderedDict(loader.construct_pairs(node))
 
 
 def num_constructor(loader, node):
-    "Constructor for libyaml to translate numeric literals to Decimals"
+    """Constructor for libyaml to translate numeric literals to Decimals."""
     return D(node.value)
 
 
@@ -44,10 +44,12 @@ YAML_Loader.add_constructor("tag:yaml.org,2002:float", num_constructor)
 
 
 def dec_ceil(d):
+    """Get the ceiling of a decimal."""
     return d.to_integral_exact(ROUND_CEILING)
 
 
 def dec_floor(d):
+    """Get the floor of a decimal."""
     return d.to_integral_exact(ROUND_FLOOR)
 
 
@@ -74,6 +76,7 @@ def py_translate_to_decimals(s):
 
 
 class BudgetItem(object):
+    """A budget item."""
     def __init__(self, name, fname, conf):
         self.fname = fname
         self.conf = conf
@@ -108,7 +111,7 @@ class BudgetItem(object):
         self.cost = self._parse_cost(y["cost"], conf)
 
     def _parse_cost(self, s, conf):
-        "Parse the cost string"
+        """Parse the cost string."""
 
         s = py_translate_to_decimals(s)
         cost = eval(s,
@@ -128,16 +131,18 @@ class BudgetItem(object):
 
 
 class InvalidPath(Exception):
+    """An exception representing an invalid budget path."""
     pass
 
 
 class BudgetTree(object):
-    """Container for the BudgetItems and BudgetTrees below a certain point"""
+    """Container for the BudgetItems and BudgetTrees below a certain point."""
     def __init__(self, name):
         self.children = {}
         self.name = name
 
     def add_child(self, child):
+        """Add a child to the tree."""
         if isinstance(child, BudgetTree):
             self.children[child.name] = child
         elif isinstance(child, BudgetItem):
@@ -147,7 +152,7 @@ class BudgetTree(object):
                              "BudgetTree")
 
     def total(self):
-        """Sum all children"""
+        """Sum all children."""
         t = D(0)
         for ent in self.children.values():
             if isinstance(ent, BudgetTree):
@@ -157,7 +162,7 @@ class BudgetTree(object):
         return t
 
     def walk(self):
-        "Walk through all the BudgetItems of the this tree"
+        """Walk through all the BudgetItems of the this tree."""
         for c in self.children.values():
             if isinstance(c, BudgetItem):
                 yield c
@@ -166,7 +171,7 @@ class BudgetTree(object):
                     yield e
 
     def path(self, path):
-        """Return the object at the given path relative to this one"""
+        """Return the object at the given path relative to this one."""
         pos = self
         for s in path.split("/"):
             try:
@@ -177,10 +182,8 @@ class BudgetTree(object):
         return pos
 
     def draw(self, fd=sys.stdout, space="  ", prefix=""):
-        """Draw a text-representation of the tree"""
-
+        """Draw a text-representation of the tree."""
         format_string = '{prefix}--{name} ({cost})'
-
         print(format_string.format(prefix=prefix,
                                    name=os.path.basename(self.name),
                                    cost=self.total()), file=fd)
@@ -210,11 +213,16 @@ class BudgetTree(object):
 
 
 class NoBudgetConfig(Exception):
+    """
+    An exception representing that no config file for the budget has been
+    found.
+    """
     def __init__(self):
         super(NoBudgetConfig, self).__init__("No config file found")
 
 
 class BudgetConfig(object):
+    """A class representing a budget config."""
     def __init__(self, root):
         pypath = os.path.join(root, "config.py")
         yamlpath = os.path.join(root, "config.yaml")
@@ -226,7 +234,7 @@ class BudgetConfig(object):
             self._load_from_yaml(yamlpath)
             self.path = yamlpath
         else:
-            raise NoBudgetConfig
+            raise NoBudgetConfig()
 
     def _load_from_py(self, fname):
         with open(fname, "r") as in_file:
@@ -264,7 +272,7 @@ class BudgetConfig(object):
                 self.vars.pop(vname)
 
     def _load_from_yaml(self, fname):
-        "Munge the old yaml file into a python file"
+        """Munge the old yaml file into a python file."""
         # Use the python loader to make ordered dicts work
         y = yaml.load(open(fname, "r"), Loader=YAML_Loader)
 
@@ -282,6 +290,7 @@ class BudgetConfig(object):
 
 
 def load_budget(root):
+    """Load the budget from a budger root."""
     root = os.path.abspath(root)
     funds_in_path = os.path.join(root, "funds-in.yaml")
     conf = BudgetConfig(root)
@@ -292,13 +301,13 @@ def load_budget(root):
             try:
                 dirnames.remove(d)
             except ValueError:
-                "Those directories will not always be there"
+                # those directories will not always be there
                 pass
 
         for fname in filenames:
             fullp = os.path.abspath(os.path.join(dirpath, fname))
             if fullp in [conf.path, funds_in_path]:
-                "These files are yaml files, but not budget items"
+                # these files are yaml files, but not budget items
                 continue
 
             if fname[-5:] != ".yaml":
@@ -318,6 +327,7 @@ def load_budget(root):
 
 
 class TmpBudgetExport(object):
+    """A class for temporarily exporting a budget."""
     def __init__(self, root, rev):
         self.rev = rev
         self.tmpdir = tempfile.mkdtemp()
@@ -331,16 +341,17 @@ class TmpBudgetExport(object):
 
 
 def load_budget_rev(root, rev):
-    # Load a named revision of the budget
+    """Load a specific revision of the budget."""
     t = TmpBudgetExport(root, rev)
     return t.btree
 
 
 class NotBudgetRepo(Exception):
+    """An exception raised if the repo is not a budget."""
     pass
 
 
-def find_root(path=os.getcwd()):
+def find_root(path=None):
     """
     Find the root directory of the budget repository.
 
@@ -349,8 +360,11 @@ def find_root(path=os.getcwd()):
     :param path: if provided is a path within the budget.git repository
                  (defaults to working directory)
     """
+    if path is None:
+        path = os.getcwd()
+
     try:
-        "Check that we're in budget.git"
+        # check that we're in budget.git
 
         with open("/dev/null", "w") as n:
             check_call(["git", "rev-list",
@@ -360,8 +374,8 @@ def find_root(path=os.getcwd()):
                        stdout=n,
                        stderr=n)
     except CalledProcessError:
-        # It's not the spending repository
-        raise NotBudgetRepo
+        # it's not the spending repository
+        raise NotBudgetRepo()
 
     root = check_output(["git", "rev-parse", "--show-toplevel"],
                         cwd=path)
@@ -370,16 +384,19 @@ def find_root(path=os.getcwd()):
 
 
 class AddedItem(object):
+    """An item that has been added to the budget."""
     def __init__(self, a):
         self.a = a
 
 
 class RemovedItem(object):
+    """An item that has been removed from the budget."""
     def __init__(self, a):
         self.a = a
 
 
 class ChangedItem(object):
+    """An item in the budget that has been changed."""
     def __init__(self, a, b):
         self.a = a
         self.b = b
@@ -394,6 +411,7 @@ def _item_dict(tree):
 
 
 def diff_trees(a, b):
+    """Get the difference betwen two budget trees."""
     a_items = _item_dict(a)
     b_items = _item_dict(b)
 
@@ -410,11 +428,10 @@ def diff_trees(a, b):
             added.remove(bi)
 
             if bi.cost != ai.cost:
-                "Changed value"
+                # changed value
                 changes.append(ChangedItem(ai, bi))
-
         else:
-            "It's been removed"
+            # it's been removed
             changes.append(RemovedItem(ai))
 
     for i in added:
@@ -424,8 +441,7 @@ def diff_trees(a, b):
 
 
 def changes_to_tree(changes):
-    "Convert a list of changes into a tree"
-
+    """Convert a list of changes into a tree."""
     tree = BudgetTree("sr")
 
     for c in changes:
@@ -445,7 +461,7 @@ def changes_to_tree(changes):
             raise Exception("Unsupported object type in change list")
 
         def fudge_parent(parents, name):
-            "Fudge a directory name in because there were two..."
+            """Fudge a directory name in because there were two..."""
             name = "{0}.d".format(name)
             if name in parents[-1].children:
                 res = parents[-1].children[name]
@@ -472,7 +488,7 @@ def changes_to_tree(changes):
             r = r.children[d]
 
         if not isinstance(r, BudgetTree):
-            "Need to fudge a directory in"
+            # need to fudge a directory in
             r = fudge_parent(parents, os.path.basename(r.name))
 
         if os.path.basename(item.name) in r.children:

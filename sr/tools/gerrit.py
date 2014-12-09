@@ -5,14 +5,14 @@ from sr.tools.config import Config
 
 
 def cmd(args):
-    """Run the given gerrit command and return the response"""
+    """Run the given gerrit command and return the response."""
     conf = Config()
     c = ["ssh", conf["gerrit_ssh"], "gerrit"] + args
     return subprocess.check_output(c)
 
 
 def query(**conditions):
-    """Perform a gerrit query"""
+    """Perform a gerrit query."""
     args = ["query", "--format", "json"]
     for vname, val in conditions.items():
         args.append("{0}:{1}".format(vname, val))

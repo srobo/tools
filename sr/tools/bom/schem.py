@@ -1,19 +1,23 @@
-"""Routines for extracting information from schematics"""
+"""Routines for extracting information from schematics."""
 import re
 
 from sr.tools.bom import geda, parts_db
+
 
 GSCHEM = 1
 UNKNOWN = 2
 
 
 def schem_type(fname):
-    """Returns the type of file.
-    At the moment it'll return GSCHEM."""
+    """
+    Returns the type of file.
+    At the moment it'll return GSCHEM.
+    """
     return GSCHEM
 
 
 def open_schem(fname):
+    """Open a schematics file."""
     s = schem_type(fname)
     if s == GSCHEM:
         schem = geda.GSchem(fname)

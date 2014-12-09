@@ -124,16 +124,6 @@ Inventory
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: sr.tools.inventory.oldinv
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-.. automodule:: sr.tools.inventory.query
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 .. automodule:: sr.tools.inventory.query_ast
     :members:
     :undoc-members:

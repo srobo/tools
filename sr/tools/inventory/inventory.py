@@ -259,6 +259,20 @@ class ItemGroup(ItemTree):
 
 class Inventory(object):
     """An inventory."""
-    def __init__(self, rootpath):
-        self.rootpath = rootpath
-        self.root = ItemTree(rootpath)
+    def __init__(self, root_path):
+        self.root_path = root_path
+        self.root = ItemTree(root_path)
+
+    def query(self, query_str):
+        """
+        Run a query on the inventory.
+
+        :param str query_str: The query to run on the inventory.
+        :returns: Any items found from the query.
+        :rtype: list of :class:`Item`s
+        :raises pyparsing.ParseError: If the query could not be parsed.
+        """
+        from sr.tools.inventory import query_parser  # circular dependency
+
+        tree = query_parser.search_tree(query_str)
+        return tree.match(self.root.parts.values())

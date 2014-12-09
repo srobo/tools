@@ -33,5 +33,6 @@ setup(
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Topic :: Utilities'
-    ]
+    ],
+    test_suite='tests'
 )

@@ -7,7 +7,6 @@ def command(args):
     import sr.tools.bom.schem as schem
     import sr.tools.bom.parts_db as parts_db
 
-
     SCHEMATIC = args.schematic
 
     lib = parts_db.get_db()
@@ -40,7 +39,6 @@ def command(args):
 
 def command_deprecated(args):
     import sys
-
 
     print("This is deprecated, please use 'pcb-lint' instead.",
           file=sys.stderr)

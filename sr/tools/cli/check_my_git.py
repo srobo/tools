@@ -11,7 +11,6 @@ def command(args):
         print("Please install 'pygit2' to use this tool.", file=sys.stderr)
         sys.exit(1)
 
-
     config = pygit2.Config.get_global_config()
 
     if not config['user.name'].strip():

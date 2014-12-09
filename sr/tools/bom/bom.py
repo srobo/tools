@@ -1,4 +1,4 @@
-# Routines for extracting BOMs from schematics
+"""Routines for extracting BOMs from schematics."""
 from __future__ import print_function
 
 from decimal import Decimal
@@ -16,12 +16,7 @@ NUM_THREADS = 4
 
 
 class PartGroup(list):
-
-    """
-    A set of parts
-    One might call this a "BOM line"
-    """
-
+    """A set of parts. One might call this a "BOM line"."""
     def __init__(self, part, name="", designators=[]):
         list.__init__(self)
 
@@ -53,19 +48,19 @@ class PartGroup(list):
         """
 
         if self.part.stockcheck() is None:
-            "Unable to discover details from distributor..."
-            # Assume one part per distributor unit
+            # unable to discover details from distributor...
+            # assume one part per distributor unit
             return len(self)
 
         if self.part.get_dist_units() is None:
-            "Same as above"
+            # Same as above
             return len(self)
 
         n = len(self)
         if n == 0:
             return 0
 
-        # Change n to be in distributor units, rather than component units
+        # change n to be in distributor units, rather than component units
         # (e.g. number of reels rather than number of components)
         d = n / self.part.get_dist_units()
         if n % self.part.get_dist_units() > 0:
@@ -73,7 +68,7 @@ class PartGroup(list):
         n = d
 
         if n < self.part.get_min_order():
-            "Round up to minimum order"
+            # round up to minimum order
             n = self.part.get_min_order()
         elif (n % self.part.get_increments()) != 0:
             n = n + (self.part.get_increments() -
@@ -99,11 +94,12 @@ class PartGroup(list):
 
 
 class Bom(dict):
-
+    """A bill of materials."""
     def stockcheck(self):
-        """Check that all items in the schematic are in stock.
-        Returns list of things that aren't in stock."""
-
+        """
+        Check that all items in the schematic are in stock.
+        Returns list of things that aren't in stock.
+        """
         for pg in self.values():
             a = pg.stockcheck()
 
@@ -115,6 +111,7 @@ class Bom(dict):
                 yield (STOCK_OK, pg.part)
 
     def get_price(self):
+        """Get total price of all the items."""
         tot = Decimal(0)
         for pg in self.values():
             tot = tot + pg.get_price()
@@ -122,15 +119,17 @@ class Bom(dict):
 
 
 class BoardBom(Bom):
-
-    """BOM object.
+    """
+    BOM object.
     Groups parts with the same srcode into PartGroups.
-    Dictionary keys are sr codes."""
-
+    Dictionary keys are sr codes.
+    """
     def __init__(self, db, fname, name):
-        """fname is the schematic to load from.
+        """
+        ``fname`` is the schematic to load from.
         db is the parts database object.
-        name is the name to give the schematic."""
+        name is the name to give the schematic.
+        """
         Bom.__init__(self)
         self.db = db
         self.name = name
@@ -147,7 +146,7 @@ class BoardBom(Bom):
 
 
 class MultiBoardBom(Bom):
-
+    """A bill of materials with multiple boards."""
     def __init__(self, db):
         Bom.__init__(self)
 
@@ -169,10 +168,11 @@ class MultiBoardBom(Bom):
                 self.add_boards(board, mul)
 
     def add_boards(self, board, num):
-        """Add num boards to the collection.
-        board must be a BoardBom instance."""
-
-        # Already part of this collection?
+        """
+        Add num boards to the collection. ```board`` must be a BoardBom
+        instance.
+        """
+        # already part of this collection?
         found = False
         for n in range(len(self.boards)):
             t = self.boards[n]
@@ -203,7 +203,6 @@ class MultiBoardBom(Bom):
         Ensures that the webpage cache is filled in the quickest time possible
         by making many requests in parallel.
         """
-
         print("Getting data for parts from suppliers' websites")
         pool = ThreadPool(NUM_THREADS)
 

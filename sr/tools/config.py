@@ -1,4 +1,4 @@
-"Config for the SR tools"
+"""Config for the SR tools."""
 from __future__ import print_function
 
 import getpass
@@ -20,8 +20,7 @@ if six.PY2:
 
 
 class Config(dict):
-    """Configuration reader for the SR tools"""
-
+    """Configuration reader for the SR tools."""
     def __init__(self):
         # default settings
         self['user'] = None

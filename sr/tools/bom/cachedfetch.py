@@ -1,12 +1,10 @@
-# -*- coding: utf-8 -*-
 """Routines for grabbing a page, with caching"""
-
-from six.moves.urllib.error import HTTPError
-from six.moves.urllib.request import urlopen
-
 import hashlib
 import os
 import time
+
+from six.moves.urllib.error import HTTPError
+from six.moves.urllib.request import urlopen
 
 from sr.tools.environment import get_cache_dir
 
@@ -15,6 +13,7 @@ CACHE_LIFE = 36000
 
 
 def grab_url_cached(url):
+    """Download a possibly cached URL."""
     cache_dir = get_cache_dir('urls')
 
     h = hashlib.sha1()
@@ -26,7 +25,7 @@ def grab_url_cached(url):
         with open(F) as file:
             page = file.read()
     else:
-        # Try the remote supplier page cache
+        # try the remote supplier page cache
         try:
             base_url = "https://www.studentrobotics.org/~rspanton/supcache/{}"
             cached_url = base_url.format(h.hexdigest())

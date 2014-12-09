@@ -4,10 +4,8 @@ from __future__ import print_function
 def command(args):
     import os
     import subprocess
-    import sys
 
     from sr.tools.config import Config
-
 
     config = Config()
 
@@ -44,7 +42,6 @@ def command(args):
 def command_deprecated(args):
     import sys
 
-
     print("This is deprecated, please use 'clone' instead.", file=sys.stderr)
     command(args)
 
@@ -57,7 +54,6 @@ def add_subparser(subparsers):
     parser.add_argument("-a", "--anonymous", action="store_true",
                         default=False, help="Clone anonymously over git://")
     parser.set_defaults(func=command_deprecated)
-
 
     parser = subparsers.add_parser('clone', help="Clone an SR git repository")
     parser.add_argument("repo", help="Repository path -- e.g. tools.git")

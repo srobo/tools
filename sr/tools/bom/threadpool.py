@@ -10,7 +10,6 @@ from six.moves.queue import Queue
 
 
 class Worker(Thread):
-
     """Thread executing tasks from a given tasks queue."""
 
     def __init__(self, tasks):
@@ -30,9 +29,7 @@ class Worker(Thread):
 
 
 class ThreadPool:
-
     """Pool of threads consuming tasks from a queue."""
-
     def __init__(self, num_threads):
         self.tasks = Queue(num_threads)
         for _ in range(num_threads):

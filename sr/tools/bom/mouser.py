@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""Routines for scraping data about parts from Mouser"""
+"""Routines for scraping data about parts from Mouser."""
 from bs4 import BeautifulSoup
 from sr.tools.bom.cachedfetch import grab_url_cached
 from decimal import Decimal as D
@@ -8,9 +7,7 @@ import re
 
 
 class Item(distpart.DistItem):
-
-    "An item sold by Mouser"
-
+    """An item sold by Mouser."""
     def __init__(self, part_number):
         distpart.DistItem.__init__(self, part_number)
 
@@ -41,23 +38,19 @@ class Item(distpart.DistItem):
             self._get_constraints(soup)
 
     def _check_exists(self, soup):
-        "Work out whether the part exists based on the soup"
-
+        """Work out whether the part exists based on the soup."""
         # Simple test: is this div present?
         if soup.find(attrs={"id": "product-details"}) is None:
             return False
         return True
 
     def _soup_check_part(self, soup):
-        "Work out whether the info we've retrieved is for the right part"
-
+        """Work out whether the info we've retrieved is for the right part."""
         sn = soup.find(attrs={"id": "divMouserPartNum"}).text.strip()
-
         return self.part_number == sn
 
     def _get_availability(self, soup):
-        "Extract the part availability from the soup"
-
+        """Extract the part availability from the soup."""
         av = soup.find(attrs={"id": "ctl00_ContentMain_availability_tbl1"})
         av = av.find_all("td")[0]
         av = av.text.strip().replace(",", "")
@@ -65,8 +58,7 @@ class Item(distpart.DistItem):
         self.avail = int(av)
 
     def _get_pricing(self, soup):
-        "Extract pricing information from the soup"
-
+        """Extract pricing information from the soup."""
         pt = soup.find(attrs={"id": "ctl00_ContentMain_divPricing"})
 
         prices = []
@@ -97,13 +89,13 @@ class Item(distpart.DistItem):
                     pass
 
         if len(prices):
-            "The minimum order is the smallest quantity from this table"
+            # the minimum order is the smallest quantity from this table
             self.min_order = prices[0][0]
 
         self.prices = prices
 
     def _get_constraints(self, soup):
-        "Extract the purchasing constraints from the soup"
+        """Extract the purchasing constraints from the soup."""
 
         av = soup.find("table", attrs={"id": "ctl00_ContentMain_tbl2"})
 

@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""Routines for scraping data about parts from digikey"""
+"""Routines for scraping data about parts from digikey."""
 from bs4 import BeautifulSoup
 from decimal import Decimal
 import re
@@ -9,9 +8,7 @@ from sr.tools.bom.cachedfetch import grab_url_cached
 
 
 class Item(distpart.DistItem):
-
-    """Represents a Digikey item"""
-
+    """Represents a Digikey item."""
     def __init__(self, partNumber):
         distpart.DistItem.__init__(self, partNumber)
 

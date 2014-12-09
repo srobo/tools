@@ -4,7 +4,6 @@ from __future__ import print_function
 def command(args):
     import subprocess
 
-
     gsymoutput = []
     symbolfile = []
     inputfile = args.inputfile

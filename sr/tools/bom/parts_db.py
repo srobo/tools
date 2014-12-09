@@ -1,4 +1,4 @@
-"""Student Robotics parts database access library"""
+"""Student Robotics parts database access library."""
 import csv
 import pkg_resources
 import six
@@ -7,16 +7,15 @@ from sr.tools.bom import farnell, rs, digikey, mouser
 
 
 def get_db():
+    """Get the parts DB that is embedded with this library."""
     file = pkg_resources.resource_stream('sr.tools.bom', 'component_lib.csv')
     return Db(six.StringIO(file.read().decode('UTF-8')))
 
 
 class Part(dict):
-
-    """Represents a part"""
-
+    """Represents a part."""
     def __init__(self, d):
-        """Initialise with a dict from the DB"""
+        """Initialise with a dict from the DB."""
         for k in d.keys():
             if isinstance(d[k], str):
                 d[k] = d[k].strip()
@@ -34,7 +33,7 @@ class Part(dict):
         return self.stock
 
     def get_price(self, num):
-        "Get the unit price when buying num distributor units"
+        """Get the unit price when buying num distributor units."""
         if not self.loaded:
             self.__load_data()
 
@@ -50,25 +49,28 @@ class Part(dict):
         return price
 
     def get_dist_units(self):
-        """Number of components per distributor unit"""
+        """Number of components per distributor unit."""
         if not self.loaded:
             self.__load_data()
 
         return self.dist_unit
 
     def get_min_order(self):
+        """Get the minimum order."""
         if not self.loaded:
             self.__load_data()
 
         return self.min_order
 
     def get_increments(self):
+        """Get the increments."""
         if not self.loaded:
             self.__load_data()
 
         return self.increments
 
     def get_url(self):
+        """Get the URL."""
         if self["supplier"] == "farnell":
             return "https://xgoat.com/p/farnell/%s" % self["order-number"]
         if self["supplier"] == "rs":
@@ -105,10 +107,10 @@ class Part(dict):
 
 
 class Db(dict):
-
+    """A parts database."""
     def __init__(self, file):
         for line in csv.DictReader(file):
-            # Discard commented out lines
+            # discard commented out lines
             if line["sr-code"].strip()[0] == "#":
                 continue
 

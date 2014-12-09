@@ -12,7 +12,6 @@ def command(args):
 
     import sr.tools.bom.geda as geda
 
-
     BOARD = args.board
 
     if os.path.exists(OUTPUT_DIR) and not os.path.isdir(OUTPUT_DIR):

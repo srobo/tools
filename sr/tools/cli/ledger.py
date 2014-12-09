@@ -9,7 +9,6 @@ def command(args):
     from sr.tools.config import Config
     from sr.tools.environment import get_config_filename
 
-
     # Invoke ledger on the SR spending repo
     # Check that we are indeed invoking it on spending.git
     config = Config()

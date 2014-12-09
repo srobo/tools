@@ -1,14 +1,9 @@
 from __future__ import print_function
 
 from decimal import Decimal as D
-import pkg_resources
 import os
 import six
 import sys
-import tempfile
-import yaml
-
-import sr.tools.environment
 
 
 if six.PY2:
@@ -45,6 +40,12 @@ class SpendRequest(object):
     @classmethod
     def from_editor(cls):
         "Present the user with a template in an editor"
+        import pkg_resources
+        import tempfile
+
+        import yaml
+
+        import sr.tools.environment
 
         # Temporary file for user to fill in
         fd, fname = tempfile.mkstemp(suffix=".yaml")
@@ -83,6 +84,8 @@ class SpendRequest(object):
 
     def _parse(self):
         "Parse our YAML file"
+        import yaml
+
         with open(self.fname, "r") as f:
             data = yaml.load(f)
 

@@ -7,12 +7,12 @@ from sr.tools.config import Config
 
 
 class WrongServer(Exception):
-    """The RPC server specified isn't a trac instance"""
+    """The RPC server specified isn't a trac instance."""
     pass
 
 
 class TracProxy(ServerProxy):
-    """An XML-RPC proxy for SR Trac"""
+    """An XML-RPC proxy for SR Trac."""
     def __init__(self, user=None, password=None, server=None, port=None,
                  anon=False):
         """
@@ -59,7 +59,6 @@ class TracProxy(ServerProxy):
 
 class Ticket(object):
     """A ticket that may have dependencies."""
-
     def __init__(self, num, proxy):
         self.proxy = proxy
         self.num = num
@@ -90,7 +89,7 @@ class Ticket(object):
 
         r = reg.match(desc)
         if r is None:
-            "Ticket has no dependencies"
+            # ticket has no dependencies
             self.prelude = desc
             self.deptitle = ""
             self.depspace = ""

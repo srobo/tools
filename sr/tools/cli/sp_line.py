@@ -8,7 +8,6 @@ def command(args):
     import sr.tools.spending as spending
     from sr.tools.budget import BudgetTree
 
-
     root = spending.find_root()
     budget = spending.load_budget_with_spending(root)
     line = budget.path(args.budgetline)
@@ -32,8 +31,8 @@ def command(args):
 
     line = args.budgetline.replace("/", ":")
     if line[0] == ":":
-        line = account[1:] # 'account' doesn't exist, this doesn't appear to
-                           # have been a problem though
+        line = account[1:]  # 'account' doesn't exist, this doesn't appear to
+        # have been a problem though
 
     check_call(["ledger",
                 "--file", os.path.join(root, "spending.dat"),

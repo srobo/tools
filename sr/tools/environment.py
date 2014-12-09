@@ -23,8 +23,8 @@ def get_cache_dir(*components):
     """
     Return the cache directory for a particular component of the tools.
 
-    If the environment variable 'SR_CACHE_DIR' is set, that takes precedence as
-    the root of the cache directory.
+    If the environment variable ``SR_CACHE_DIR`` is set, that takes precedence
+    as the root of the cache directory.
     """
     default_path = os.path.expanduser('~/.sr/cache')
     if sys.platform == 'win32':

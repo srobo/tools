@@ -4,7 +4,6 @@ from __future__ import print_function
 def replace_line(path, key, value):
     import re
 
-
     print("Replacing:", key, "->", value, "in", path)
     pattern = r"{key}( *):( *)(?:[^#\s]*)(.*)".format(key=key)
 

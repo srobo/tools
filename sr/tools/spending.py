@@ -1,4 +1,4 @@
-"Library for accessing the spending files"
+"""Library for accessing the spending files."""
 from __future__ import print_function
 
 import datetime
@@ -13,6 +13,7 @@ import sr.tools.budget as budget
 
 
 class Transaction(object):
+    """A spending transaction."""
     def __init__(self, name, date, fname):
         self.name = "TODO"
         self.date = None        # TODO
@@ -34,6 +35,7 @@ class Transaction(object):
 
 
 def load_transactions(root):
+    """Load transactions from a directory."""
     root = os.path.abspath(root)
     transactions = []
 
@@ -42,7 +44,7 @@ def load_transactions(root):
             dirnames.remove(".git")
             dirnames.remove("budget")
         except ValueError:
-            "Those directories will not always be there"
+            # those directories will not always be there
             pass
 
         for fname in filenames:
@@ -68,7 +70,7 @@ def load_transactions(root):
                 except:
                     print("Unable to determine the date of the transaction "
                           "%s." % fullp, file=sys.stderr)
-                    exit(1)
+                    sys.exit(1)
 
             transactions.append(Transaction(name, date, fullp))
     return transactions
@@ -85,7 +87,7 @@ def group_trans_by_budget_line(trans):
 
 
 def budget_line_to_account(line):
-    "Convert a budget line to an account name"
+    """Convert a budget line to an account name."""
     if line[0] == "/":
         line = line[1:]
     line = line.replace("/", ":")
@@ -93,12 +95,13 @@ def budget_line_to_account(line):
 
 
 def account_to_budget_line(account):
-    """Convert an account name to a budget line name"""
+    """Convert an account name to a budget line name."""
     line = account.replace(":", "/")
     return line[len("Expenses/"):]
 
 
 class LedgerNotFound(Exception):
+    """An exception that occurs if 'ledger' cannot be found."""
     def __init__(self):
         super(LedgerNotFound, self).__init__("Unable to find 'ledger' which "
                                              "is required to operate the "
@@ -106,6 +109,7 @@ class LedgerNotFound(Exception):
 
 
 def load_budget_spends(root):
+    """Load budget spending data."""
     p = os.path.join(root, "spending.dat")
 
     try:
@@ -120,10 +124,10 @@ def load_budget_spends(root):
             balances = balances.decode('UTF-8')
     except OSError as oe:
         if oe.errno == errno.ENOENT:
-            "A nicer error for the most likely case"
-            raise LedgerNotFound
+            # a nicer error for the most likely case
+            raise LedgerNotFound()
         else:
-            "Re-raise the underlying exception"
+            # re-raise the underlying exception
             raise
 
     lines = {}
@@ -142,6 +146,7 @@ def load_budget_spends(root):
 
 
 def load_budget_with_spending(root):
+    """Load the budget with spending data."""
     bud = budget.load_budget(os.path.join(root, "budget/"))
     lines = load_budget_spends(root)
 
@@ -155,6 +160,7 @@ def load_budget_with_spending(root):
 
 
 class NotSpendingRepo(Exception):
+    """An exception that occurs if the repo is not a spending clone."""
     pass
 
 
@@ -171,8 +177,7 @@ def find_root(path=None):
         path = os.getcwd()
 
     try:
-        # Check that we're in spending.git
-
+        # check that we're in spending.git
         with open("/dev/null", "w") as n:
             check_call(["git", "rev-list",
                         # This is the commit that transitioned spending.git
@@ -182,10 +187,10 @@ def find_root(path=None):
                        stdout=n,
                        stderr=n)
     except CalledProcessError:
-        # It's not the spending repository
+        # it's not the spending repository
         raise NotSpendingRepo()
 
     root = check_output(["git", "rev-parse", "--show-toplevel"],
                         cwd=path)
 
-    return root.strip().decode('utf-8')
+    return root.strip().decode('UTF-8')

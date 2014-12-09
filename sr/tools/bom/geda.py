@@ -20,7 +20,6 @@ def file_is_geda_pcb(f):
 
 
 class GSchem(dict):
-
     """Reads in gEDA file."""
 
     def __init__(self, fname):
@@ -81,9 +80,7 @@ class GSchem(dict):
 
 
 class PCB:
-
-    """Read in a gEDA PCB file"""
-
+    """Read in a gEDA PCB file."""
     def __init__(self, fname):
         self.fname = fname
 

@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""Routines for scraping data about parts from Farnell"""
+"""Routines for scraping data about parts from Farnell."""
 from bs4 import BeautifulSoup
 from sr.tools.bom import distpart
 from sr.tools.bom.cachedfetch import grab_url_cached
@@ -8,7 +7,7 @@ import re
 
 
 class Item(distpart.DistItem):
-
+    """A Farnell item."""
     def __init__(self, part_number):
         distpart.DistItem.__init__(self, part_number)
 
@@ -35,7 +34,7 @@ class Item(distpart.DistItem):
             self._get_constraints(soup)
 
     def _check_exists(self, soup):
-        "Determine if the part exists from the soup"
+        """Determine if the part exists from the soup."""
 
         # This div seems to exist on part pages, but not others
         if soup.find(attrs={"class": "order-details"}) is None:
@@ -43,7 +42,7 @@ class Item(distpart.DistItem):
         return True
 
     def _soup_get_pddict(self, soup):
-        "Return a dict of the part details table information"
+        """Return a dict of the part details table information."""
 
         pd = soup.find("dl", attrs={"class": "pd_details"})
 
@@ -60,13 +59,12 @@ class Item(distpart.DistItem):
         return details
 
     def _soup_check_part(self, soup):
-        "Check the part in the soup is the one we wanted"
+        """Check the part in the soup is the one we wanted."""
         details = self._soup_get_pddict(soup)
         return details["Order Code:"] == self.part_number
 
     def _get_availability(self, soup):
-        "Extract the part availability from the soup"
-
+        """Extract the part availability from the soup."""
         av = soup.find("div", attrs={"class": "availability"})
         sd = av.find(attrs={"class": "stockDetail"})
 
@@ -74,14 +72,14 @@ class Item(distpart.DistItem):
             # Farnell now report their stock in the UK/EU separately
             stock = [s.text for s in sd.find_all("b")]
         else:
-            "Some parts have a different format"
+            # some parts have a different format
 
             sd = av.find(attrs={"class": "prodDetailAvailability"})
 
             stock = sd.find(attrs={"class": "stockDetails"})
 
             if stock is None:
-                # The stockDetails tag disappears in this situation
+                # the stockDetails tag disappears in this situation
 
                 awaiting_delivery = re.compile(".*Awaiting Delivery.*")
                 out_of_stock = re.compile(".*Out of Stock.*")
@@ -95,7 +93,7 @@ class Item(distpart.DistItem):
                     # False means discontinued
                     self.avail = False
                     stock = 0
-                    # There's nothing else to do in this case
+                    # there's nothing else to do in this case
                     return
                 else:
                     raise distpart.UnsupportedFormat(self.part_number)
@@ -112,7 +110,7 @@ class Item(distpart.DistItem):
         self.avail = sum(stock)
 
     def _parse_quantity(self, q):
-        "Parse a quantity string, return the lower boundary"
+        """Parse a quantity string, return the lower boundary."""
         if "-" in q:
             return int(q.split("-")[0].strip())
         elif "+" in q:
@@ -129,7 +127,6 @@ class Item(distpart.DistItem):
         prices = []
 
         for row in pd.find_all("tr")[1:]:
-
             cells = row.find_all("td")
 
             quant_str = cells[0].text.strip()
@@ -151,7 +148,7 @@ class Item(distpart.DistItem):
         self.prices = prices
 
     def _get_constraints(self, soup):
-        "Extract the purchasing constraints from the soup"
+        """Extract the purchasing constraints from the soup."""
 
         av = soup.find("div", attrs={"class": "availability"})
 

@@ -23,7 +23,6 @@ def command(args):
 def command_deprecated(args):
     import sys
 
-
     print("This is deprecated, please use 'ide-list-repos' instead.",
           file=sys.stderr)
     command(args)
@@ -41,7 +40,6 @@ def add_subparser(subparsers):
                         help='The server running the IDE. Defaults to the '
                              'official Student Robotics server.')
     parser.set_defaults(func=command_deprecated)
-
 
     parser = subparsers.add_parser('ide-list-repos',
                                    help='List team repositories.')

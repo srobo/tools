@@ -8,7 +8,6 @@ def command(args):
 
     from six.moves.urllib.request import urlopen
 
-
     matcher = None
     if args.regex:
         matcher = re.compile(args.regex)

@@ -1,20 +1,19 @@
-# -*- coding: utf-8 -*-
-# Superclass for distributor items
+"""Superclass for distributor items."""
 from __future__ import print_function
 
 
 class NonExistentPart(Exception):
+    """The part does not exist."""
     pass
 
 
 class UnsupportedFormat(Exception):
-
     "The page returned by the distributor was of an unsupported format"
     pass
 
 
 class DistItem(object):
-
+    """A distributor item."""
     def __init__(self, part_number):
         self.part_number = part_number
 
@@ -44,6 +43,7 @@ class DistItem(object):
         self.prices = None
 
     def print_info(self):
+        """Print all information about the part."""
         print("Part", self.part_number)
 
         print("\tStock:", end="")
@@ -74,7 +74,6 @@ class DistItem(object):
             print("\t\tUnknown")
         else:
             for i in range(0, len(self.prices)):
-
                 quantity, price = self.prices[i]
 
                 if i + 1 < len(self.prices):

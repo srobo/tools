@@ -8,7 +8,7 @@ DEFAULT_SERVER = 'studentrobotics.org'
 DEFAULT_REPOROOT = '/var/www/html/ide/repos'
 
 
-def decode_if_not_none(x):
+def _decode_if_not_none(x):
     if x is None:
         return None
     else:
@@ -16,6 +16,7 @@ def decode_if_not_none(x):
 
 
 def remote_cmd(cmd, server=DEFAULT_SERVER):
+    """Run a remote SSH command on a server."""
     if ':' in server:
         parts = server.split(':')
         hostname = parts[0]
@@ -30,11 +31,11 @@ def remote_cmd(cmd, server=DEFAULT_SERVER):
     p = subprocess.Popen(cmdline, stdout=subprocess.PIPE, shell=True)
     so, se = p.communicate()
     assert p.wait() == 0
-    return (decode_if_not_none(x) for x in (so, se))
+    return (_decode_if_not_none(x) for x in (so, se))
 
 
 def list_teams(reporoot=DEFAULT_REPOROOT, server=DEFAULT_SERVER):
-    "Return a list of team numbers"
+    """Return a list of teams."""
     so, se = remote_cmd("ls {0}".format(reporoot), server)
 
     r = re.compile("^[A-Z0-9]+$")
@@ -43,6 +44,7 @@ def list_teams(reporoot=DEFAULT_REPOROOT, server=DEFAULT_SERVER):
 
 
 class Repo(object):
+    """Representing a repository on the IDE."""
     def __init__(self, path, server=DEFAULT_SERVER):
         self.path = path
         self.server = server
@@ -61,6 +63,7 @@ class Repo(object):
 
 
 class Team(object):
+    """Representing a team in the IDE."""
     def __init__(self, identifier, server=DEFAULT_SERVER,
                  reporoot=DEFAULT_REPOROOT):
         self.identifier = identifier

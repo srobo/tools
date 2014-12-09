@@ -5,6 +5,7 @@ A set of classes and functions for working with
 from __future__ import print_function
 
 import codecs
+import email.utils
 import hashlib
 import re
 import os
@@ -262,6 +263,37 @@ class Inventory(object):
     def __init__(self, root_path):
         self.root_path = root_path
         self.root = ItemTree(root_path)
+
+        self._load_users()
+
+    def _load_users(self):
+        self.users = {}
+
+        with open(os.path.join(self.root_path, '.meta', 'users')) as file:
+            users = yaml.safe_load(file)
+
+        for details, user_id in users.items():
+            self.users[email.utils.parseaddr(details)] = user_id
+
+    @property
+    def current_user_id(self):
+        """
+        Get the user ID of the currently configure Git user.
+        """
+        user = self.get_current_user()
+        return self.users[user]
+
+    @staticmethod
+    def get_current_user():
+        """
+        Get the currently configured Git user.
+
+        :returns: A tuple containing the name and email address.
+        :rtype: tuple
+        """
+        gitname = subprocess.check_output(("git", "config", "user.name")).strip()
+        gitemail = subprocess.check_output(("git", "config", "user.email")).strip()
+        return (gitname.decode('UTF-8'), gitemail.decode('UTF-8'))
 
     def query(self, query_str):
         """

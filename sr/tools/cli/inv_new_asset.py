@@ -3,21 +3,16 @@ from __future__ import print_function
 
 def command(args):
     import os
-    import sys
 
     from sr.tools.environment import open_editor
-    from sr.tools.inventory.inventory import find_top_level_dir
-    from sr.tools.inventory.oldinv import getusername, getusernumber, \
-        getpartnumber
+    from sr.tools.inventory.inventory import get_inventory
+    from sr.tools.inventory.oldinv import getpartnumber
     import sr.tools.inventory.assetcode as assetcode
 
     assetname = args.assetname
 
-    # Check we're being run in the inventory repo
-    gitdir = find_top_level_dir()
-    if not gitdir:
-        print("This command must be run in the inventory git repository.")
-        sys.exit(2)
+    inventory = get_inventory()
+    gitdir = inventory.root_path
 
     # Check that a template for the new asset exists
     templatefn = os.path.join(gitdir, ".meta", "parts", assetname)
@@ -27,9 +22,7 @@ def command(args):
         templatefn = os.path.join(gitdir, ".meta", "parts", "default")
 
     # Get the git name/email of the user
-    username = getusername()
-
-    userno = getusernumber(gitdir, username)
+    userno = inventory.current_user_id
     partno = getpartnumber(gitdir, userno)
 
     assetcd = assetcode.num_to_code(userno, partno)

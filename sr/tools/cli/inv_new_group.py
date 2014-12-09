@@ -4,32 +4,26 @@ from __future__ import print_function
 def command(args):
     import argparse
     import os
-    import sys
 
     import yaml
 
     from sr.tools.environment import open_editor
-    from sr.tools.inventory.inventory import find_top_level_dir
-    from sr.tools.inventory.oldinv import getusername, getusernumber, \
-        getpartnumber
+    from sr.tools.inventory.inventory import get_inventory
+    from sr.tools.inventory.oldinv import getpartnumber
     import sr.tools.inventory.assetcode as assetcode
     from sr.tools.cli import inv_new_asset
 
     dirname = args.dirname
 
-    # Check we're being run in the inventory repo
-    gitdir = find_top_level_dir()
-    if not gitdir:
-        print("This command must be run in the inventory git repository.")
-        sys.exit(2)
+    inventory = get_inventory()
+    gitdir = inventory.root_path
 
     # Find out if there's a template for the 'info' file
     templatefn = os.path.join(gitdir, ".meta", "assemblies", dirname)
     if not os.path.isfile(templatefn):
         templatefn = os.path.join(gitdir, ".meta", "assemblies", "default")
 
-    username = getusername()
-    userno = getusernumber(gitdir, username)
+    userno = inventory.current_user_id
     partno = getpartnumber(gitdir, userno)
 
     assetcd = assetcode.num_to_code(userno, partno)

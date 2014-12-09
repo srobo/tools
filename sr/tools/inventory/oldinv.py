@@ -1,39 +1,8 @@
 """Old API calls for the inventory."""
 
 import os
-import subprocess
-import sys
-
-import yaml
 
 from sr.tools.inventory import assetcode
-
-
-def getusername():
-    """
-    Get the inventory username based on the users configured Git name and email
-    address.
-    """
-    gitname = subprocess.check_output(("git", "config", "user.name")).strip()
-    gitemail = subprocess.check_output(("git", "config", "user.email")).strip()
-
-    return "%s <%s>" % (gitname.decode('UTF-8'), gitemail.decode('UTF-8'))
-
-
-def getusernumber(gitdir, user):
-    """Get the ID number of user."""
-    usersfn = os.path.join(gitdir, ".meta", "users")
-    f = open(usersfn)
-    users = yaml.load(f)
-    f.close()
-
-    if users is None or user not in users:
-        print('Inventory user "{}" not found.\n'
-              'Please see http://srobo.org/trac/wiki/Inventory for more '
-              'information.'.format(user))
-        sys.exit(3)
-
-    return users[user]
 
 
 def getpartnumbers(topd):

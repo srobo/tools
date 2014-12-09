@@ -6,7 +6,6 @@ def command(args):
 
     import sr.tools.inventory.inventory as srinv
     import sr.tools.inventory.assetcode as assetcode
-    import sr.tools.inventory.oldinv as oldinv
     from sr.tools.inventory.inventory import get_inventory, normalise_partcode
 
     inv = get_inventory()

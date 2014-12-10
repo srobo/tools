@@ -473,7 +473,7 @@ def diff_trees(a, b):
 
     :returns: A sorted list of changes containing either ``AddedItem``,
               ``RemovedItem`` or ``ChangedItem`` objects.
-    :rtype: list of ``AddedItem``s, ``RemovedItem``s and ``ChangedItem``s
+    :rtype: list of ``AddedItem``, ``RemovedItem`` and ``ChangedItem``
     """
     a_items = _item_dict(a)
     b_items = _item_dict(b)

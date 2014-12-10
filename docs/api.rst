@@ -1,5 +1,5 @@
-API
-===
+Tools
+=====
 
 .. automodule:: sr.tools
     :members:

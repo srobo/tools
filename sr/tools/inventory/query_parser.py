@@ -52,6 +52,7 @@ FUNCTIONS = oneOf(' '.join(query_ast.Function.registered_names()))
 
 
 def generate_in_expr(prop, val_type):
+    """Generate an 'in' expression."""
     return (prop + IN + L_C_BRKT +
             val_type + ZeroOrMore(COMMA + val_type) +
             R_C_BRKT)

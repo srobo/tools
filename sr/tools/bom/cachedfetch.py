@@ -1,4 +1,4 @@
-"""Routines for grabbing a page, with caching"""
+"""Routines for grabbing a page, with caching."""
 import hashlib
 import os
 import time
@@ -13,7 +13,11 @@ CACHE_LIFE = 36000
 
 
 def grab_url_cached(url):
-    """Download a possibly cached URL."""
+    """
+    Download a possibly cached URL.
+
+    :returns: The contents of the page.
+    """
     cache_dir = get_cache_dir('urls')
 
     h = hashlib.sha1()

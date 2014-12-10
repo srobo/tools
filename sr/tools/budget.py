@@ -78,6 +78,13 @@ def py_translate_to_decimals(s):
 class BudgetItem(object):
     """A budget item."""
     def __init__(self, name, fname, conf):
+        """
+        Create a new budget item.
+
+        :param str name: The name of the item.
+        :param str fname: The filename of the item.
+        :param conf: The configuration.
+        """
         self.fname = fname
         self.conf = conf
         y = yaml.load(open(fname, "r"), Loader=YAML_Loader)
@@ -112,7 +119,6 @@ class BudgetItem(object):
 
     def _parse_cost(self, s, conf):
         """Parse the cost string."""
-
         s = py_translate_to_decimals(s)
         cost = eval(s,
                     {"Decimal": D,
@@ -138,11 +144,22 @@ class InvalidPath(Exception):
 class BudgetTree(object):
     """Container for the BudgetItems and BudgetTrees below a certain point."""
     def __init__(self, name):
+        """
+        Create the budget tree.
+
+        :param str name: The name of the tree.
+        """
         self.children = {}
         self.name = name
 
     def add_child(self, child):
-        """Add a child to the tree."""
+        """
+        Add a child to the tree.
+
+        :param child: The child to add.
+        :type child: ``BudgetTree`` or ``BudgetItem``.
+        :raises ValueError: If the child is not a valid type.
+        """
         if isinstance(child, BudgetTree):
             self.children[child.name] = child
         elif isinstance(child, BudgetItem):
@@ -152,7 +169,12 @@ class BudgetTree(object):
                              "BudgetTree")
 
     def total(self):
-        """Sum all children."""
+        """
+        Sum all children.
+
+        :returns: The total cost of all the children.
+        :rtype: decimal.Decimal
+        """
         t = D(0)
         for ent in self.children.values():
             if isinstance(ent, BudgetTree):
@@ -162,7 +184,11 @@ class BudgetTree(object):
         return t
 
     def walk(self):
-        """Walk through all the BudgetItems of the this tree."""
+        """
+        Walk through all the BudgetItems of the this tree.
+
+        :returns: An iterator over the items in the tree.
+        """
         for c in self.children.values():
             if isinstance(c, BudgetItem):
                 yield c
@@ -171,18 +197,29 @@ class BudgetTree(object):
                     yield e
 
     def path(self, path):
-        """Return the object at the given path relative to this one."""
+        """
+        Get the object at the given path relative to this one.
+
+        :returns: The object at the path.
+        :raises InvalidPath: If the path is invalid.
+        """
         pos = self
         for s in path.split("/"):
             try:
                 pos = pos.children[s]
             except KeyError:
-                raise InvalidPath("'{}' has no child "
-                                  "node '{}'".format(pos.name, s))
+                raise InvalidPath("'{}' has no child node '{}'"
+                                  .format(pos.name, s))
         return pos
 
     def draw(self, fd=sys.stdout, space="  ", prefix=""):
-        """Draw a text-representation of the tree."""
+        """
+        Draw a text-representation of the tree.
+
+        :param fd: Where to print the result.
+        :param space: The string representing a space.
+        :param prefix: The prefix for each line in the tree.
+        """
         format_string = '{prefix}--{name} ({cost})'
         print(format_string.format(prefix=prefix,
                                    name=os.path.basename(self.name),
@@ -224,6 +261,11 @@ class NoBudgetConfig(Exception):
 class BudgetConfig(object):
     """A class representing a budget config."""
     def __init__(self, root):
+        """
+        Create a new budget config.
+
+        :param str root: The root path to the budget.
+        """
         pypath = os.path.join(root, "config.py")
         yamlpath = os.path.join(root, "config.yaml")
 
@@ -290,7 +332,11 @@ class BudgetConfig(object):
 
 
 def load_budget(root):
-    """Load the budget from a budger root."""
+    """
+    Load the budget from a budget root.
+
+    :param root: The root path to the budget.
+    """
     root = os.path.abspath(root)
     funds_in_path = os.path.join(root, "funds-in.yaml")
     conf = BudgetConfig(root)
@@ -329,6 +375,12 @@ def load_budget(root):
 class TmpBudgetExport(object):
     """A class for temporarily exporting a budget."""
     def __init__(self, root, rev):
+        """
+        Create a new temporary budget export.
+
+        :param root: The root path to the budget.
+        :param rev: The revision to export.
+        """
         self.rev = rev
         self.tmpdir = tempfile.mkdtemp()
 
@@ -341,7 +393,12 @@ class TmpBudgetExport(object):
 
 
 def load_budget_rev(root, rev):
-    """Load a specific revision of the budget."""
+    """
+    Load a specific revision of the budget.
+
+    :param str root: The root of the budget.
+    :param str rev: The revision to get.
+    """
     t = TmpBudgetExport(root, rev)
     return t.btree
 
@@ -411,7 +468,13 @@ def _item_dict(tree):
 
 
 def diff_trees(a, b):
-    """Get the difference betwen two budget trees."""
+    """
+    Get the difference betwen two budget trees.
+
+    :returns: A sorted list of changes containing either ``AddedItem``,
+              ``RemovedItem`` or ``ChangedItem`` objects.
+    :rtype: list of ``AddedItem``s, ``RemovedItem``s and ``ChangedItem``s
+    """
     a_items = _item_dict(a)
     b_items = _item_dict(b)
 
@@ -441,7 +504,14 @@ def diff_trees(a, b):
 
 
 def changes_to_tree(changes):
-    """Convert a list of changes into a tree."""
+    """
+    Convert a list of changes into a tree.
+
+    :param changes: A list of changes in the budget.
+    :raises ValueError: If the list of changes contains non-change objects.
+    :returns: A new budget tree.
+    :rtype: BudgetTree
+    """
     tree = BudgetTree("sr")
 
     for c in changes:
@@ -458,7 +528,7 @@ def changes_to_tree(changes):
             item = BudgetItem(c.a.name, c.a.fname, c.a.conf)
             item.cost *= -1
         else:
-            raise Exception("Unsupported object type in change list")
+            raise ValueError("Unsupported object type in change list")
 
         def fudge_parent(parents, name):
             """Fudge a directory name in because there were two..."""
@@ -492,7 +562,7 @@ def changes_to_tree(changes):
             r = fudge_parent(parents, os.path.basename(r.name))
 
         if os.path.basename(item.name) in r.children:
-            raise Exception("Unsupported situation!")
+            raise ValueError("Unsupported situation!")
 
         r.add_child(item)
 

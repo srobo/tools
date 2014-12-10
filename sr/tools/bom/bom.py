@@ -18,6 +18,13 @@ NUM_THREADS = 4
 class PartGroup(list):
     """A set of parts. One might call this a "BOM line"."""
     def __init__(self, part, name="", designators=[]):
+        """
+        Create a new part group.
+
+        :param part: The part.
+        :param str name: The name of the group.
+        :param list designators: A list of designators
+        """
         list.__init__(self)
 
         for x in designators:
@@ -27,7 +34,13 @@ class PartGroup(list):
         self.name = name
 
     def stockcheck(self):
-        """Check the distributor has enough parts in stock."""
+        """
+        Check the distributor has enough parts in stock.
+
+        :returns: ``None`` if the result cannot be determined, ``True`` if the
+                  distributor has enough parts, otherwise ``False``.
+        :rtype: None or bool
+        """
         s = self.part.stockcheck()
         if s is None:
             return None
@@ -42,11 +55,14 @@ class PartGroup(list):
 
     def order_num(self):
         """
-        Returns the number of parts to order from the distributor.
-        e.g. if we need 5002 components from a 5000 component reel, this
-        will return 2.
-        """
+        Get the number of parts to order from a distributor.
 
+        For example, if we need 5002 components from a 5000 component reel,
+        this will return 2.
+
+        :returns: The number of parts to order.
+        :rtype: int
+        """
         if self.part.stockcheck() is None:
             # unable to discover details from distributor...
             # assume one part per distributor unit
@@ -81,7 +97,12 @@ class PartGroup(list):
         return n
 
     def get_price(self):
-        """Returns the price."""
+        """
+        Returns the price of the group.
+
+        :returns: The price.
+        :rtype: decimal.Decimal
+        """
         n = self.order_num()
 
         p = self.part.get_price(n)
@@ -99,6 +120,10 @@ class Bom(dict):
         """
         Check that all items in the schematic are in stock.
         Returns list of things that aren't in stock.
+
+        :returns: An iterator containing pairs of ``STOCK_UNKNOWN``,
+                  ``STOCK_OUT``, ``STOCK_OK`` and the part.
+        :rtype: iterator of tuples
         """
         for pg in self.values():
             a = pg.stockcheck()
@@ -111,7 +136,12 @@ class Bom(dict):
                 yield (STOCK_OK, pg.part)
 
     def get_price(self):
-        """Get total price of all the items."""
+        """
+        Get total price of all the items.
+
+        :returns: The total price.
+        :rtype: decimal.Decimal
+        """
         tot = Decimal(0)
         for pg in self.values():
             tot = tot + pg.get_price()
@@ -121,14 +151,16 @@ class Bom(dict):
 class BoardBom(Bom):
     """
     BOM object.
-    Groups parts with the same srcode into PartGroups.
-    Dictionary keys are sr codes.
+    Groups parts with the same asset code into PartGroups.
+    Dictionary keys are asset codes.
     """
     def __init__(self, db, fname, name):
         """
-        ``fname`` is the schematic to load from.
-        db is the parts database object.
-        name is the name to give the schematic.
+        Create a new ``BoardBom`` object.
+
+        :param db: A parts DB instance.
+        :param fname: The schematic to load from.
+        :param name: The name to give the schematic.
         """
         Bom.__init__(self)
         self.db = db
@@ -148,6 +180,11 @@ class BoardBom(Bom):
 class MultiBoardBom(Bom):
     """A bill of materials with multiple boards."""
     def __init__(self, db):
+        """
+        Create multiple board BOM.
+
+        :param db: A parts DB instance.
+        """
         Bom.__init__(self)
 
         self.db = db
@@ -158,6 +195,16 @@ class MultiBoardBom(Bom):
         self.boards = []
 
     def load_boards_args(self, args, allow_multipliers=True):
+        """
+        Load the BOM from board arguments, which is a list of arguments where
+        each item is a string either starting with a '-' and then a number,
+        meaning it is a multiplier, or just a string which contains the
+        schematic.
+
+        :param args: The board arguments.
+        :param bool allow_multipliers: Whether or not to allow multipliers in
+                                       the board arguments.
+        """
         mul = 1
 
         for arg in args:
@@ -169,8 +216,10 @@ class MultiBoardBom(Bom):
 
     def add_boards(self, board, num):
         """
-        Add num boards to the collection. ```board`` must be a BoardBom
-        instance.
+        Add boards to the collection.
+
+        :param BoardCom board: The board to add.
+        :param int num: The number of times to add it.
         """
         # already part of this collection?
         found = False
@@ -188,11 +237,9 @@ class MultiBoardBom(Bom):
         self.clear()
 
         for num, board in self.boards:
-
             # Mmmmm. Horrible.
             for i in range(num):
                 for srcode, bpg in board.items():
-
                     if srcode not in self:
                         self[srcode] = PartGroup(bpg.part)
 

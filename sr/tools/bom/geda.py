@@ -21,8 +21,12 @@ def file_is_geda_pcb(f):
 
 class GSchem(dict):
     """Reads in gEDA file."""
-
     def __init__(self, fname):
+        """
+        Create a new gEDA schematic object.
+
+        :param str fname: The filename of the schematic.
+        """
         self.fname = fname
         self.__load_bom()
 
@@ -82,6 +86,11 @@ class GSchem(dict):
 class PCB:
     """Read in a gEDA PCB file."""
     def __init__(self, fname):
+        """
+        Create a new PCB object.
+
+        :param str fname: The filename of the PCB file.
+        """
         self.fname = fname
 
     def __export_image(self, res, ofname):
@@ -99,6 +108,11 @@ class PCB:
         p.wait()
 
     def get_image(self, res):
+        """
+        Get an image of the PCB.
+
+        :returns: The contents of the image.
+        """
         cache_dir = get_cache_dir('bom', 'geda', 'pcbimg')
 
         ab = os.path.abspath(self.fname)
@@ -127,6 +141,11 @@ class PCB:
         return img
 
     def get_xy(self):
+        """
+        Get XY file for the PCB.
+
+        :returns: The XY file contents.
+        """
         cache_dir = get_cache_dir('bom', 'geda', 'pcbxy')
 
         ab = os.path.abspath(self.fname)

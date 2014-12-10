@@ -2,17 +2,25 @@ import fnmatch
 
 from functools import reduce
 
-from sr.tools.inventory import inventory
+from sr.tools.inventory import assetcode, inventory
 
 
 class ASTNode(object):
     """An abstract syntax tree node."""
-    pass
+    def sexpr(self):
+        """Get a string symbolic expression of the node."""
+        return ""
 
 
 class NonTerminal(ASTNode):
     """A non-terminal AST node."""
     def match(self, inv_nodes):
+        """
+        Check whether the inventory nodes match the operation defined in this
+        AST node.
+
+        :returns: A list of matching nodes.
+        """
         raise NotImplementedError("match(...) not implemented"
                                   " for {}".format(self.__class__))
 
@@ -20,16 +28,33 @@ class NonTerminal(ASTNode):
 class Terminal(ASTNode):
     """A terminal AST node."""
     def match_single(self, inv_node):
+        """
+        Check whether the inventory node matches the operation definied in this
+        AST node.
+
+        :returns: True or False depending on whether the node match.
+        """
         raise NotImplementedError("match_single(...) not implemented"
                                   " for {}".format(self.__class__))
 
     def match(self, inv_nodes):
-        return filter(self.match_single, inv_nodes)
+        """
+        Check whether the inventory nodes match the operation definied in this
+        AST node.
+
+        :returns: A list of matching nodes.
+        """
+        return list(filter(self.match_single, inv_nodes))
 
 
 class Not(NonTerminal):
-    """An AST node representing a not."""
+    """An AST node representing a 'not' operation."""
     def __init__(self, node):
+        """
+        Initialise a 'not' operation.
+
+        :param node: The node to be not-ed.
+        """
         super(Not, self).__init__()
         self.node = node
 
@@ -42,8 +67,14 @@ class Not(NonTerminal):
 
 
 class And(NonTerminal):
-    """An AST node representing a and."""
+    """An AST node representing an 'and'."""
     def __init__(self, left, right):
+        """
+        Initialise an 'and' operation.
+
+        :param left: The left side of the operation.
+        :param right: The right side of the operation.
+        """
         super(And, self).__init__()
         self.left = left
         self.right = right
@@ -59,8 +90,14 @@ class And(NonTerminal):
 
 
 class Or(NonTerminal):
-    """An AST node representing an or."""
+    """An AST node representing an 'or' operation."""
     def __init__(self, left, right):
+        """
+        Initialise an 'or' operation.
+
+        :param left: The left side of the operation.
+        :param right: The right side of the operation.
+        """
         super(Or, self).__init__()
         self.left = left
         self.right = right
@@ -76,8 +113,14 @@ class Or(NonTerminal):
 
 
 class Condition(Terminal):
-    """An AST node representing a condition."""
+    """An AST node representing a 'condition' check operation."""
     def __init__(self, *conditions):
+        """
+        Initialise the node with conditions.
+
+        :param conditions: A list of conditions that should be matched.
+        :type conditions: list of strs
+        """
         super(Condition, self).__init__()
         self.conditions = set(conditions)
 
@@ -134,8 +177,13 @@ class Condition(Terminal):
 
 
 class Type(Terminal):
-    """An AST node representing a type key."""
+    """An AST node representing a 'type' check."""
     def __init__(self, *types):
+        """
+        Initialise the node.
+
+        :param types: A list of types that should be checked.
+        """
         super(Type, self).__init__()
         self.types = types
 
@@ -151,10 +199,16 @@ class Type(Terminal):
 
 
 class Labelled(Terminal):
-    """An AST node representing a labelled key."""
+    """An AST node representing a 'labelled' check."""
     def __init__(self, labelled):
+        """
+        Initialise the 'labelled' check node.
+
+        :param labelled: Whether or not the asset is labelled.
+        :type labelled: A string representation of a bool ('true', '1', etc)
+        """
         super(Labelled, self).__init__()
-        self.labelled = labelled.lower() in ('true', '1')
+        self.labelled = labelled.lower() in ('true', '1', 'yes', 't')
 
     def match_single(self, inv_node):
         if hasattr(inv_node, 'labelled'):
@@ -166,10 +220,16 @@ class Labelled(Terminal):
 
 
 class Assy(Terminal):
-    """An AST node representing a assy key."""
+    """An AST node representing an 'assy' check."""
     def __init__(self, assy):
+        """
+        Initialise the 'assy' check node.
+
+        :param assy: Whether or not the asset has an assembly.
+        :type assy: A string representation of a bool ('true', '1', etc)
+        """
         super(Assy, self).__init__()
-        self.assy = assy.lower() in ('true', '1')
+        self.assy = assy.lower() in ('true', '1', 'yes', 't')
 
     def match_single(self, inv_node):
         return self.assy == (hasattr(inv_node, 'code')
@@ -180,8 +240,14 @@ class Assy(Terminal):
 
 
 class TriState(Terminal):
-    """An AST node representing a tri key."""
+    """An AST node representing a 'tri' check."""
     def __init__(self, key, desired_val):
+        """
+        Initialise a 'tri' check node.
+
+        :param str key: The key to check.
+        :param str desired_val: One of 'unset', 'true', 'false'.
+        """
         super(TriState, self).__init__()
         self.key = key
         self.desired_val = desired_val.lower()
@@ -201,8 +267,14 @@ class TriState(Terminal):
 
 
 class Path(Terminal):
-    """An AST node representing a path key."""
+    """An AST node representing a 'path' check."""
     def __init__(self, *paths):
+        """
+        Initialise the 'path' check node.
+
+        :param paths: A list of paths that are deamed valid.
+        :type paths: list of str
+        """
         super(Path, self).__init__()
         paths = [path[1:] if path[0] == '/' else path for path in paths]
         self.paths = [path + '*' for path in paths]
@@ -227,15 +299,15 @@ class Path(Terminal):
 
 
 class Code(Terminal):
-    """An AST node representing a code key."""
+    """An AST node representing a 'code' check."""
     def __init__(self, *codes):
-        self.codes = set(map(self._tidy, codes))
+        """
+        Initialise the 'code' check node.
 
-    def _tidy(self, code):
-        code = code.upper()
-        if code.startswith('SR'):
-            code = code[2:]
-        return code
+        :param codes: A list of valid codes.
+        :type codes: list of str
+        """
+        self.codes = set(map(assetcode.normalise, codes))
 
     def match_single(self, inv_node):
         return inv_node.code in self.codes
@@ -245,8 +317,13 @@ class Code(Terminal):
 
 
 class Serial(Terminal):
-    """An AST node representing a serial key."""
+    """An AST node representing a 'serial' check."""
     def __init__(self, *serials):
+        """
+        Initialise the 'serial' check node.
+
+        :param str serials: A list of valid serials.
+        """
         self.serials = set(serials)
 
     def match_single(self, inv_node):
@@ -273,6 +350,12 @@ class Function(NonTerminal):
         return cls._functions.keys()
 
     def __init__(self, func_name, node):
+        """
+        Initialise the function node.
+
+        :params str func_name: The name of the function.
+        :params node: The node to run the functions on.
+        """
         self.func_name = func_name
         self.node = node
 

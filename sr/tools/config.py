@@ -1,4 +1,4 @@
-"""Config for the SR tools."""
+"""Configuration for the tools."""
 from __future__ import print_function
 
 import getpass
@@ -20,8 +20,12 @@ if six.PY2:
 
 
 class Config(dict):
-    """Configuration reader for the SR tools."""
+    """Configuration reader for the tools."""
     def __init__(self):
+        """
+        Create a new configuration reader with the default configuration values
+        set.
+        """
         # default settings
         self['user'] = None
         self['use_keyring'] = False
@@ -31,16 +35,22 @@ class Config(dict):
         self['gerrit_ssh'] = "sr-gerrit"
         self['spending'] = None
 
-        # Override with the local config
+        # override with the local config
         try:
             self.update_from_file(get_config_filename())
         except IOError:
             pass
 
     def update_from_file(self, fname):
-        """Update the config from the given YAML file"""
+        """
+        Update the config from the given YAML file
+
+        :param str fname: The filename of the YAML file.
+        :raises IOError: If the YAML file cannot be read.
+        """
         with open(fname) as file:
             d = yaml.safe_load(file)
+
         if d is not None:
             self.update(d)
 

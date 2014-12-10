@@ -4,6 +4,7 @@ import argparse
 import importlib
 import pkg_resources
 import sys
+import traceback
 
 
 # make sure to update this with new tools if they are created
@@ -51,5 +52,9 @@ def main():
                 print("Please install the '{name}' module to use this tool."
                       .format(name=e.name), file=sys.stderr)
                 sys.exit(1)
+            except Exception as e:
+                traceback.print_exc()
+                print(e, file=sys.stderr)
+                sys.exit(2)
         else:
             parser.print_help()

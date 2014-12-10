@@ -5,8 +5,8 @@ def command(args):
     import os
     import sys
 
-    import sr.tools.inventory.assetcode as assetcode
-    from sr.tools.inventory.inventory import normalise_partcode, get_inventory
+    from sr.tools.inventory import assetcode
+    from sr.tools.inventory.inventory import get_inventory
 
     ASSET_CODE = 0
     PART_TYPE = 1
@@ -21,7 +21,7 @@ def command(args):
     parts = []
     spec_type = ASSET_CODE
     for c in args.itemspecs:
-        code = normalise_partcode(c)
+        code = assetcode.normalise(c)
 
         try:
             assetcode.code_to_num(code)

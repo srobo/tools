@@ -21,7 +21,7 @@ from sr.tools.environment import get_cache_dir
 
 
 CACHE_DIR = get_cache_dir('inventory')
-RE_PART = re.compile("^(.+)-sr([%s]+)$" % "".join(assetcode.alphabet_lut))
+RE_PART = re.compile("^(.+)-sr([%s]+)$" % "".join(assetcode.ALPHABET))
 
 
 def find_top_level_dir(start_dir=None):
@@ -83,23 +83,6 @@ def should_ignore(path):
     return False
 
 
-def normalise_partcode(part_code):
-    """
-    Normalise the given part code to one that is compatible with the inventory
-    API. Generally this just involves removing the 'sr' from the front and
-    making the result all in uppercase.
-
-    :param str part_code: The part code to normalise.
-    :returns: A normalised part code.
-    :rtype: str
-    """
-    part_code = part_code.strip()
-    if part_code.lower().startswith('sr'):
-        return part_code[2:].upper()
-    else:
-        return part_code.upper()
-
-
 def cached_yaml_load(path):
     """
     Load a pickled YAML file from cache.
@@ -134,6 +117,12 @@ def cached_yaml_load(path):
 class Item(object):
     """An item in the inventory."""
     def __init__(self, path, parent=None):
+        """
+        Create a new ``Item``.
+
+        :param str path: The path to the item.
+        :param parent: The item parent.
+        """
         self.path = path
         self.parent = parent
         m = RE_PART.match(os.path.basename(path))
@@ -152,22 +141,26 @@ class Item(object):
             print("\t code in contents: '%s'" % self.info["assetcode"],
                   file=sys.stderr)
             print("\n\tOffending file:", self.path, file=sys.stderr)
-            exit(1)
+            sys.exit(1)
 
         # The mandatory properties
-        mand = ["labelled", "description", "value", "condition"]
-
-        for pname in mand:
+        for pname in ["labelled", "description", "value", "condition"]:
             try:
                 setattr(self, pname, self.info[pname])
             except KeyError:
-                raise Exception("Part sr{} is missing '{}' "
-                                "property".format(self.code, pname))
+                raise ValueError("Part sr{} is missing '{}' property."
+                                 .format(self.code, pname))
 
 
 class ItemTree(object):
     """A tree of items in the inventory."""
     def __init__(self, path, parent=None):
+        """
+        Create a new item tree.
+
+        :param str path: The path to the tree.
+        :param parent: The parent item or tree.
+        """
         self.name = os.path.basename(path)
         self.path = path
         self.parent = parent
@@ -206,7 +199,11 @@ class ItemTree(object):
                     self.children[t.name] = t
 
     def walk(self):
-        """Walk through the item tree."""
+        """
+        Walk through the item tree, yielding the children.
+
+        :returns: An iteration of children.
+        """
         for child in self.children.values():
             if hasattr(child, "walk"):
                 for c in child.walk():
@@ -216,7 +213,12 @@ class ItemTree(object):
                 yield child
 
     def resolve(self, path):
-        "Resolve the given path into an object"
+        """
+        Resolve the given path into an object.
+
+        :param str path: The path to resolve.
+        :returns: The resolved items or ``self``.
+        """
         if path[0] == "/":
             path = path[1:]
 
@@ -228,8 +230,14 @@ class ItemTree(object):
 
 
 class ItemGroup(ItemTree):
-    "A group of items."
+    """A group of items in the inventory."""
     def __init__(self, path, parent=None):
+        """
+        Create a new item group.
+
+        :param str path: The path to the item group.
+        :param parent: The parent item or tree.
+        """
         ItemTree.__init__(self, path, parent=parent)
 
         m = RE_PART.match(os.path.basename(path))
@@ -261,6 +269,11 @@ class ItemGroup(ItemTree):
 class Inventory(object):
     """An inventory."""
     def __init__(self, root_path):
+        """
+        Create a new inventory.
+
+        :param str root_path: The root path to the inventory.
+        """
         self.root_path = root_path
         self.root = ItemTree(root_path)
 
@@ -276,28 +289,37 @@ class Inventory(object):
             self.users[email.utils.parseaddr(details)] = user_id
 
     @property
-    def current_user_id(self):
+    def current_user_number(self):
         """
         Get the user ID of the currently configure Git user.
+
+        :returns: The current user number.
+        :raises KeyError: If the user doesn't exist.
         """
-        user = self.get_current_user()
+        user = self.get_current_git_user()
         return self.users[user]
 
     @staticmethod
-    def get_current_user():
+    def get_current_git_user():
         """
         Get the currently configured Git user.
 
         :returns: A tuple containing the name and email address.
         :rtype: tuple
         """
-        gitname = subprocess.check_output(("git", "config", "user.name")).strip()
-        gitemail = subprocess.check_output(("git", "config", "user.email")).strip()
-        return (gitname.decode('UTF-8'), gitemail.decode('UTF-8'))
+        name = subprocess.check_output(["git", "config", "user.name"],
+                                       universal_newlines=True).strip()
+        email = subprocess.check_output(["git", "config", "user.email"],
+                                        universal_newlines=True).strip()
+        return (name, email)
 
     @property
-    def part_codes(self):
-        """Get a list of all part numbers."""
+    def asset_codes(self):
+        """
+        Get all the asset codes.
+
+        :returns: An iteration over the codes.
+        """
         for dirpath, dirnames, filenames in os.walk(self.root_path):
             if '.git' in dirpath or '.meta' in dirpath:
                 continue
@@ -307,14 +329,19 @@ class Inventory(object):
                     code = filename[filename.rindex('-sr') + 3:]
                     yield code
 
-    def get_next_part_code(self, user_id):
-        """Get the next available part code."""
-        # Gather all part numbers from the inventory
+    def get_next_asset_code(self, user_number):
+        """
+        Get the next available asset code.
+
+        :param int user_number: The user number for the asset code.
+        :returns: The new asset code.
+        """
         maxno = -1
-        for p in map(assetcode.code_to_num, self.part_codes):
-            if p[0] == user_id:
+        for p in map(assetcode.code_to_num, self.asset_codes):
+            if p[0] == user_number:
                 maxno = max(maxno, p[1])
-        return assetcode.num_to_code(user_id, maxno + 1)
+
+        return assetcode.num_to_code(user_number, maxno + 1)
 
     def query(self, query_str):
         """

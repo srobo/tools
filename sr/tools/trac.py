@@ -60,6 +60,12 @@ class TracProxy(ServerProxy):
 class Ticket(object):
     """A ticket that may have dependencies."""
     def __init__(self, num, proxy):
+        """
+        Create a new ticket object.
+
+        :param int num: The ticket number.
+        :param proxy: The XMLRPC proxy object.
+        """
         self.proxy = proxy
         self.num = num
         self.refresh()
@@ -120,7 +126,14 @@ class Ticket(object):
     def cleanup(self, dry_run=False,
                 msg="Synchronise dependency summaries with dependencies "
                     "(automated edit)"):
-        """Clean-up the ticket's description."""
+        """
+        Clean-up the ticket's description.
+
+        :param bool dry_run: Whether or not to actually commit the changes.
+        :param str msg: The message to be shown in Trac.
+        :returns: Whether or not a change has occurred.
+        :rtype: bool
+        """
 
         # Rebuild the deplist:
         if len(self.deps) != 0 and self.deptitle == "":

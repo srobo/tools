@@ -46,8 +46,13 @@ False
 
 def checksum(number, alphabet='0123456789'):
     """
-    Calculate the Luhn checksum over the provided number. The checksum is
-    returned as an int. Valid numbers should have a checksum of 0.
+    Calculate the Luhn checksum over the provided number. Valid numbers should
+    have a checksum of 0.
+
+    :param str number: The number to calculate the checksum of.
+    :param str alphabet: The alphabet of digits.
+    :returns: The checksum of the number.
+    :rtype: int
     """
     n = len(alphabet)
     number = tuple(alphabet.index(i) for i in reversed(str(number)))
@@ -56,17 +61,26 @@ def checksum(number, alphabet='0123456789'):
 
 
 def is_valid(number, alphabet='0123456789'):
-    """Checks to see if the number provided passes the Luhn checksum."""
-    try:
-        return bool(number) and checksum(number, alphabet) == 0
-    except:
-        return False
+    """
+    Checks to see if the number provided passes the Luhn checksum.
+
+    :param str number: The number to validate.
+    :param str alphabet: The alphabet of digits.
+    :returns: True if the number is valid.
+    :rtype: bool
+    """
+    return checksum(number, alphabet) == 0
 
 
 def calc_check_digit(number, alphabet='0123456789'):
     """
     With the provided number, calculate the extra digit that should be appended
     to make it pass the Luhn checksum.
+
+    :param str number: The number to calculate the check digit of.
+    :param str alphabet: The alphabet of digits.
+    :returns: The check digit of the number.
+    :rtype: int
     """
     ck = checksum(str(number) + alphabet[0], alphabet)
     return alphabet[-ck]

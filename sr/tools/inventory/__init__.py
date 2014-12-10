@@ -1,3 +1,1 @@
-"""
-Modules for working with the Student Robotics inventory system programatically.
-"""
+"""Modules for working with the Student Robotics inventory system."""

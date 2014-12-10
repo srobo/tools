@@ -5,7 +5,6 @@ import datetime
 from decimal import Decimal as D
 import errno
 import os
-import six
 from subprocess import check_output, check_call, CalledProcessError
 import sys
 
@@ -15,6 +14,13 @@ import sr.tools.budget as budget
 class Transaction(object):
     """A spending transaction."""
     def __init__(self, name, date, fname):
+        """
+        Create a new transaction.
+
+        :param str name: The name of the transaction.
+        :param date: The date of the transaction.
+        :param str fname: The filename of the transation.
+        """
         self.name = "TODO"
         self.date = None        # TODO
         self.summary = "TODO"
@@ -35,7 +41,11 @@ class Transaction(object):
 
 
 def load_transactions(root):
-    """Load transactions from a directory."""
+    """
+    Load transactions from a directory.
+
+    :param str root: The path to the root of the spending directory.
+    """
     root = os.path.abspath(root)
     transactions = []
 
@@ -77,17 +87,25 @@ def load_transactions(root):
 
 
 def group_trans_by_budget_line(trans):
+    """
+    Group transactions by the budget line.
+
+    :param trans: The transactions to group.
+    :returns: A dictionary mapping budget line to a list of transactions.
+    """
     transgrp = {}
     for t in trans:
-        if t.budget in transgrp:
-            transgrp[t.budget].append(t)
-        else:
-            transgrp[t.budget] = [t]
+        transgrp.setdefault(t.budget, []).append(t)
     return transgrp
 
 
 def budget_line_to_account(line):
-    """Convert a budget line to an account name."""
+    """
+    Convert a budget line to an account name.
+
+    :param str line: The line to convert.
+    :returns: The account.
+    """
     if line[0] == "/":
         line = line[1:]
     line = line.replace("/", ":")
@@ -95,7 +113,12 @@ def budget_line_to_account(line):
 
 
 def account_to_budget_line(account):
-    """Convert an account name to a budget line name."""
+    """
+    Convert an account name to a budget line name.
+
+    :param str account: The account to convert.
+    :returns: The budget line.
+    """
     line = account.replace(":", "/")
     return line[len("Expenses/"):]
 
@@ -109,7 +132,12 @@ class LedgerNotFound(Exception):
 
 
 def load_budget_spends(root):
-    """Load budget spending data."""
+    """
+    Load budget spending data.
+
+    :param str root: The root of the spending data.
+    :returns: A list of budget lines.
+    """
     p = os.path.join(root, "spending.dat")
 
     try:
@@ -119,9 +147,6 @@ def load_budget_spends(root):
                "--format", "%A,%(display_total)\n",
                "^Expenses:"]
         balances = check_output(cmd, universal_newlines=True).strip()
-
-        if six.PY2:
-            balances = balances.decode('UTF-8')
     except OSError as oe:
         if oe.errno == errno.ENOENT:
             # a nicer error for the most likely case
@@ -146,7 +171,13 @@ def load_budget_spends(root):
 
 
 def load_budget_with_spending(root):
-    """Load the budget with spending data."""
+    """
+    Load the budget with spending data.
+
+    :param str root: The root path of the spending data.
+    :returns: The budget with spending data.
+    :rtype: budget.Budget
+    """
     bud = budget.load_budget(os.path.join(root, "budget/"))
     lines = load_budget_spends(root)
 

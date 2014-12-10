@@ -16,7 +16,14 @@ def _decode_if_not_none(x):
 
 
 def remote_cmd(cmd, server=DEFAULT_SERVER):
-    """Run a remote SSH command on a server."""
+    """
+    Run a remote SSH command on a server.
+
+    :param str cmd: The command to run on the server.
+    :param str server: The server to run the command on.
+    :returns: The stdout and stderr responses, or None for each.
+    :rtype: (str or None, str or None)
+    """
     if ':' in server:
         parts = server.split(':')
         hostname = parts[0]
@@ -35,7 +42,14 @@ def remote_cmd(cmd, server=DEFAULT_SERVER):
 
 
 def list_teams(reporoot=DEFAULT_REPOROOT, server=DEFAULT_SERVER):
-    """Return a list of teams."""
+    """
+    Get a list of teams from the IDE.
+
+    :param str reporoot: The root directory for repositories.
+    :param str server: The server with the IDE.
+    :returns: A list of teams.
+    :rtype: list of str
+    """
     so, se = remote_cmd("ls {0}".format(reporoot), server)
 
     r = re.compile("^[A-Z0-9]+$")
@@ -46,11 +60,22 @@ def list_teams(reporoot=DEFAULT_REPOROOT, server=DEFAULT_SERVER):
 class Repo(object):
     """Representing a repository on the IDE."""
     def __init__(self, path, server=DEFAULT_SERVER):
+        """
+        Create a new repository object.
+
+        :param str path: The path to the repository.
+        :param str server: The server that the repository is on.
+        """
         self.path = path
         self.server = server
 
     def get_modtime(self):
-        """Get the time of the last commit."""
+        """
+        Get the time of the last commit.
+
+        :returns: The time as a single number.
+        :rtype: int
+        """
         cmd = 'cd {path}; git log -1 --format="format:%ct"'.format(
             path=pipes.quote(self.path)
         )
@@ -66,12 +91,20 @@ class Team(object):
     """Representing a team in the IDE."""
     def __init__(self, identifier, server=DEFAULT_SERVER,
                  reporoot=DEFAULT_REPOROOT):
+        """
+        Create a new team object.
+
+        :param str identifier: The identifier of the team.
+        :param str server: The server that the team resides in.
+        :param str reporoot: The root of the repositories on that server.
+        """
         self.identifier = identifier
         self.server = server
         self.reporoot = reporoot
-        self._pop_repos()
 
-    def _pop_repos(self):
+        self._load_repos()
+
+    def _load_repos(self):
         cmd = "ls {reporoot}/{team}/master/".format(reporoot=self.reporoot,
                                                     team=self.identifier)
         so, se = remote_cmd(cmd, self.server)

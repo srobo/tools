@@ -1,4 +1,5 @@
-from pyparsing import *
+from pyparsing import oneOf, CaselessKeyword, Forward, Literal, Optional, Or, \
+    Regex, ZeroOrMore
 
 from sr.tools.inventory import query_ast
 
@@ -51,6 +52,7 @@ FUNCTIONS = oneOf(' '.join(query_ast.Function.registered_names()))
 
 
 def generate_in_expr(prop, val_type):
+    """Generate an 'in' expression."""
     return (prop + IN + L_C_BRKT +
             val_type + ZeroOrMore(COMMA + val_type) +
             R_C_BRKT)
@@ -143,4 +145,10 @@ paren_expr.setParseAction(lambda x: x[1])
 
 
 def search_tree(query):
+    """
+    Create a search tree for a query string.
+
+    :param str query: The query string to generate the search tree for.
+    :returns: A new search tree.
+    """
     return root.parseString(query)[0]

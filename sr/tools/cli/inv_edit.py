@@ -4,15 +4,15 @@ from __future__ import print_function
 def command(args):
     import sys
 
-    from sr.tools.inventory.inventory import assetcode, normalise_partcode, \
-        get_inventory
+    from sr.tools.inventory import assetcode
+    from sr.tools.inventory.inventory import get_inventory
     from sr.tools.environment import open_editor
 
     inv = get_inventory()
 
     parts = []
     for c in args.part_code:
-        code = normalise_partcode(c)
+        code = assetcode.normalise(c)
 
         try:
             assetcode.code_to_num(code)

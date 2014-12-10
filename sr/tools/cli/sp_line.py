@@ -5,7 +5,7 @@ def command(args):
     import os
     from subprocess import check_call
 
-    import sr.tools.spending as spending
+    from sr.tools import spending
     from sr.tools.budget import BudgetTree
 
     root = spending.find_root()
@@ -29,14 +29,10 @@ def command(args):
 
     print("Transactions:")
 
-    line = args.budgetline.replace("/", ":")
-    if line[0] == ":":
-        line = account[1:]  # 'account' doesn't exist, this doesn't appear to
-        # have been a problem though
-
+    account = spending.budget_line_to_account(args.budgetline)
     check_call(["ledger",
                 "--file", os.path.join(root, "spending.dat"),
-                "reg", "Expenses:{0}".format(line)])
+                "reg", account])
 
 
 def add_subparser(subparsers):

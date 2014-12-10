@@ -10,20 +10,26 @@ UNKNOWN = 2
 
 def schem_type(fname):
     """
-    Returns the type of file.
-    At the moment it'll return GSCHEM.
+    Get the type of file.
+
+    :returns: ``GSCHEM`` or ``UNKNOWN``
     """
     return GSCHEM
 
 
 def open_schem(fname):
-    """Open a schematics file."""
+    """
+    Open a schematics file.
+
+    :returns: The parsed schematic as an object.
+    :raises ValueError: If the file is not a gschem file.
+    """
     s = schem_type(fname)
     if s == GSCHEM:
         schem = geda.GSchem(fname)
     else:
-        raise Exception("We don't yet support exporting BOMs from "
-                        "gschem things.")
+        raise ValueError("We don't yet support exporting BOMs from "
+                         "gschem things.")
 
     # New items to add to the schematic
     new_items = {}

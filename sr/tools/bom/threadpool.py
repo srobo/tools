@@ -11,7 +11,6 @@ from six.moves.queue import Queue
 
 class Worker(Thread):
     """Thread executing tasks from a given tasks queue."""
-
     def __init__(self, tasks):
         Thread.__init__(self)
         self.tasks = tasks
@@ -19,6 +18,7 @@ class Worker(Thread):
         self.start()
 
     def run(self):
+        """Run the worker thread."""
         while True:
             func, args, kargs = self.tasks.get()
             try:

@@ -3,6 +3,7 @@ from __future__ import print_function
 import argparse
 import importlib
 import pkg_resources
+import sys
 
 
 # make sure to update this with new tools if they are created
@@ -44,6 +45,11 @@ def main():
         print_version()
     else:
         if 'func' in args:
-            args.func(args)
+            try:
+                args.func(args)
+            except ImportError as e:
+                print("Please install the '{name}' module to use this tool."
+                      .format(name=e.name), file=sys.stderr)
+                sys.exit(1)
         else:
             parser.print_help()

@@ -3,7 +3,7 @@ Development
 
 Here are some instructions to aid development of the tools.
 
-Adding new tools
+Adding New Tools
 ----------------
 
 Adding a new tool is a fairly straightforward process.
@@ -39,7 +39,15 @@ you create first. An empty command file would look something like this:
 Finally, you should make sure to include the new file in the ``__all__`` list
 of the ``__init__.py`` file in ``sr/tools/cli``.
 
-Making a release
+Good Practices
+--------------
+
+Since individual commands are Python modules, it is a good idea to use deferred
+module loading as much as possible. This not only speeds up loading of the
+``sr`` command but also means all the commands won't break if a single one
+expects an obscure module.
+
+Making a Release
 ----------------
 
 The tools should generally follow `Semantic Versioning <http://semver.org/>`_.

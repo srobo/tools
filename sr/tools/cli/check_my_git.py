@@ -3,13 +3,8 @@ from __future__ import print_function
 
 def command(args):
     import re
-    import sys
 
-    try:
-        import pygit2
-    except ImportError:
-        print("Please install 'pygit2' to use this tool.", file=sys.stderr)
-        sys.exit(1)
+    import pygit2
 
     config = pygit2.Config.get_global_config()
 

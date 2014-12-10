@@ -13,15 +13,7 @@ class TotalCmd(object):
 
 class HistCmd(object):
     def __init__(self, tree):
-        import sys
-
-        try:
-            import pylab
-        except ImportError:
-            print("Please install 'matplotlib' to use this tool.",
-                  file=sys.stderr)
-            sys.exit(1)
-
+        import pylab
         import numpy as np
 
         costs = []

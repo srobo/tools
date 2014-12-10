@@ -2,13 +2,7 @@ from __future__ import print_function
 
 
 def command(args):
-    import sys
-
-    try:
-        import pyudev
-    except ImportError:
-        print("Please install 'pyudev' to use this tool.", file=sys.stderr)
-        sys.exit(1)
+    import pyudev
 
     con = pyudev.Context()
 

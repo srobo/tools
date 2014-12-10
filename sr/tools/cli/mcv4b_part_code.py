@@ -90,13 +90,8 @@ def wait_for_first_insertion(context):
 
 def command(args):
     import os
-    import sys
 
-    try:
-        import pyudev
-    except ImportError:
-        print("Please install 'pyudev' to use this tool.", file=sys.stderr)
-        sys.exit(1)
+    import pyudev
 
     from sr.tools.inventory import query
 

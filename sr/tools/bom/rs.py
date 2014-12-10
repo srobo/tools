@@ -7,8 +7,13 @@ from sr.tools.bom.cachedfetch import grab_url_cached
 
 
 class Item(distpart.DistItem):
-    "An item sold by RS."
+    """
+    An item sold by RS.
+
+    :param part_number: The number of the part.
+    """
     def __init__(self, part_number):
+        """Initialise an RS item."""
         distpart.DistItem.__init__(self, part_number)
 
         self._getinfo()

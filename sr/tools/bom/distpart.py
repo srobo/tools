@@ -13,13 +13,13 @@ class UnsupportedFormat(Exception):
 
 
 class DistItem(object):
-    """A distributor item."""
-    def __init__(self, part_number):
-        """
-        Create a new distributor item.
+    """
+    A distributor item.
 
-        :param part_number: The part number of the item.
-        """
+    :param part_number: The part number of the item.
+    """
+    def __init__(self, part_number):
+        """Create a new distributor item."""
         self.part_number = part_number
 
         # The number of items currently available

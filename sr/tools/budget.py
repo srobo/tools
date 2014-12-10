@@ -76,15 +76,14 @@ def py_translate_to_decimals(s):
 
 
 class BudgetItem(object):
-    """A budget item."""
-    def __init__(self, name, fname, conf):
-        """
-        Create a new budget item.
+    """
+    A budget item.
 
-        :param str name: The name of the item.
-        :param str fname: The filename of the item.
-        :param conf: The configuration.
-        """
+    :param str name: The name of the item.
+    :param str fname: The filename of the item.
+    :param conf: The configuration."""
+    def __init__(self, name, fname, conf):
+        """Create a new budget item."""
         self.fname = fname
         self.conf = conf
         y = yaml.load(open(fname, "r"), Loader=YAML_Loader)
@@ -142,13 +141,13 @@ class InvalidPath(Exception):
 
 
 class BudgetTree(object):
-    """Container for the BudgetItems and BudgetTrees below a certain point."""
-    def __init__(self, name):
-        """
-        Create the budget tree.
+    """
+    Container for the BudgetItems and BudgetTrees below a certain point.
 
-        :param str name: The name of the tree.
-        """
+    :param str name: The name of the tree.
+    """
+    def __init__(self, name):
+        """Create the budget tree."""
         self.children = {}
         self.name = name
 
@@ -259,13 +258,13 @@ class NoBudgetConfig(Exception):
 
 
 class BudgetConfig(object):
-    """A class representing a budget config."""
-    def __init__(self, root):
-        """
-        Create a new budget config.
+    """
+    A class representing a budget config.
 
-        :param str root: The root path to the budget.
-        """
+    :param str root: The root path to the budget.
+    """
+    def __init__(self, root):
+        """Create a new budget config."""
         pypath = os.path.join(root, "config.py")
         yamlpath = os.path.join(root, "config.yaml")
 
@@ -373,14 +372,14 @@ def load_budget(root):
 
 
 class TmpBudgetExport(object):
-    """A class for temporarily exporting a budget."""
-    def __init__(self, root, rev):
-        """
-        Create a new temporary budget export.
+    """
+    A class for temporarily exporting a budget.
 
-        :param root: The root path to the budget.
-        :param rev: The revision to export.
-        """
+    :param root: The root path to the budget.
+    :param rev: The revision to export.
+    """
+    def __init__(self, root, rev):
+        """Create a new temporary budget export."""
         self.rev = rev
         self.tmpdir = tempfile.mkdtemp()
 

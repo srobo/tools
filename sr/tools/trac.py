@@ -12,23 +12,23 @@ class WrongServer(Exception):
 
 
 class TracProxy(ServerProxy):
-    """An XML-RPC proxy for SR Trac."""
+    """
+    An XML-RPC proxy for SR Trac.
+
+    :param user: The username. By default this is looked up in the config
+                 or the user is prompted for it.
+    :param password: The password to use. If left as its default value of
+                     None, it may be looked up in the keyring, or the user
+                     may be prompted for it.
+    :param server: The server hostname. Defaults to that found in the
+                   config.
+    :param port: The HTTPS port of the server. Defaults to that found in
+                 the config.
+    :param anon: Whether to use trac anonymously.
+    """
     def __init__(self, user=None, password=None, server=None, port=None,
                  anon=False):
-        """
-        Initialise an SR trac object
-
-        :param user: The username. By default this is looked up in the config
-                     or the user is prompted for it.
-        :param password: The password to use. If left as its default value of
-                         None, it may be looked up in the keyring, or the user
-                         may be prompted for it.
-        :param server: The server hostname. Defaults to that found in the
-                       config.
-        :param port: The HTTPS port of the server. Defaults to that found in
-                     the config.
-        :param anon: Whether to use trac anonymously.
-        """
+        """Initialise an SR trac object."""
         config = Config()
 
         if server is None:
@@ -58,14 +58,14 @@ class TracProxy(ServerProxy):
 
 
 class Ticket(object):
-    """A ticket that may have dependencies."""
-    def __init__(self, num, proxy):
-        """
-        Create a new ticket object.
+    """
+    A ticket that may have dependencies.
 
-        :param int num: The ticket number.
-        :param proxy: The XMLRPC proxy object.
-        """
+    :param int num: The ticket number.
+    :param proxy: The XMLRPC proxy object.
+    """
+    def __init__(self, num, proxy):
+        """Create a new ticket object."""
         self.proxy = proxy
         self.num = num
         self.refresh()

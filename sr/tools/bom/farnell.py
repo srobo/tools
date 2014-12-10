@@ -7,8 +7,13 @@ import re
 
 
 class Item(distpart.DistItem):
-    """A Farnell item."""
+    """
+    A Farnell item.
+
+    :param part_number: The number of the part.
+    """
     def __init__(self, part_number):
+        """Initialise a Farnell item object."""
         distpart.DistItem.__init__(self, part_number)
 
         self._get_data()

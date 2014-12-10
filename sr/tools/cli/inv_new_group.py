@@ -9,7 +9,6 @@ def command(args):
 
     from sr.tools.environment import open_editor
     from sr.tools.inventory.inventory import get_inventory
-    import sr.tools.inventory.assetcode as assetcode
     from sr.tools.cli import inv_new_asset
 
     dirname = args.dirname
@@ -22,8 +21,8 @@ def command(args):
     if not os.path.isfile(templatefn):
         templatefn = os.path.join(gitdir, ".meta", "assemblies", "default")
 
-    userno = inventory.current_user_id
-    assetcd = inventory.get_next_part_code(userno)
+    userno = inventory.current_user_number
+    assetcd = inventory.get_next_asset_code(userno)
 
     groupname = "%s-sr%s" % (dirname, assetcd)
 

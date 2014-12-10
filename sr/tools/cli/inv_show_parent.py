@@ -4,15 +4,14 @@ from __future__ import print_function
 def command(args):
     import sys
 
-    import sr.tools.inventory.inventory as srinv
-    import sr.tools.inventory.assetcode as assetcode
-    from sr.tools.inventory.inventory import get_inventory, normalise_partcode
+    from sr.tools.inventory import assetcode
+    from sr.tools.inventory.inventory import get_inventory
 
     inv = get_inventory()
 
     parts = []
     for c in args.part_code:
-        code = normalise_partcode(c)
+        code = assetcode.normalise(c)
 
         try:
             assetcode.code_to_num(code)
@@ -39,8 +38,21 @@ def command(args):
             print("%s -> dir(%s)" % (part.code, part.parent.name))
 
 
+def command_deprecated(args):
+    import sys
+
+    print("This is deprecated, please use 'inv-show-parent' instead.",
+          file=sys.stderr)
+    command(args)
+
+
 def add_subparser(subparsers):
     parser = subparsers.add_parser('inv-showparent',
+                                   help='Show parent of items.')
+    parser.add_argument('part_code', nargs='+', help='Part codes to show.')
+    parser.set_defaults(func=command_deprecated)
+
+    parser = subparsers.add_parser('inv-show-parent',
                                    help='Show parent of items.')
     parser.add_argument('part_code', nargs='+', help='Part codes to show.')
     parser.set_defaults(func=command)

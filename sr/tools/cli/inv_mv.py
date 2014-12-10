@@ -5,14 +5,14 @@ def command(args):
     import subprocess
     import sys
 
-    from sr.tools.inventory.inventory import assetcode, normalise_partcode, \
-        get_inventory
+    from sr.tools.inventory import assetcode
+    from sr.tools.inventory.inventory import get_inventory
 
     inv = get_inventory()
 
     parts = []
     for c in args.assetcodes:
-        code = normalise_partcode(c)
+        code = assetcode.normalise(c)
 
         try:
             assetcode.code_to_num(code)

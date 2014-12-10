@@ -27,16 +27,17 @@ def replace_line(path, key, value):
 def command(args):
     import sys
 
-    from sr.tools.inventory.inventory import get_inventory, normalise_partcode
+    from sr.tools.inventory import assetcode
+    from sr.tools.inventory.inventory import get_inventory
 
     inv = get_inventory()
 
-    for partcode in args.partcodes:
-        part = inv.root.parts[normalise_partcode(partcode)]
+    for code in args.asset:
+        part = inv.root.parts[assetcode.normalise(code)]
         if part is not None:
             replace_line(part.path, args.attrname, args.attrvalue)
         else:
-            print("Could not find part", partcode, file=sys.stderr)
+            print("Could not find asset:", code, file=sys.stderr)
             sys.exit(1)
 
 
@@ -47,6 +48,6 @@ def add_subparser(subparsers):
     parser.add_argument('attrname', type=str,
                         help="The name of the attribute.")
     parser.add_argument('attrvalue', type=str, help="The value to set.")
-    parser.add_argument('partcodes', type=str, nargs='+',
-                        help="The codes of the parts to modify.")
+    parser.add_argument('asset', type=str, nargs='+',
+                        help="The codes of the assets to modify.")
     parser.set_defaults(func=command)

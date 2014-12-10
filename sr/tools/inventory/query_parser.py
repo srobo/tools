@@ -1,4 +1,5 @@
-from pyparsing import *
+from pyparsing import oneOf, CaselessKeyword, Forward, Literal, Optional, Or, \
+    Regex, ZeroOrMore
 
 from sr.tools.inventory import query_ast
 
@@ -143,4 +144,10 @@ paren_expr.setParseAction(lambda x: x[1])
 
 
 def search_tree(query):
+    """
+    Create a search tree for a query string.
+
+    :param str query: The query string to generate the search tree for.
+    :returns: A new search tree.
+    """
     return root.parseString(query)[0]

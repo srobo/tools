@@ -5,11 +5,12 @@ def command(args):
     import pydoc
     import subprocess
 
-    from sr.tools.inventory.inventory import get_inventory, normalise_partcode
+    from sr.tools.inventory import assetcode
+    from sr.tools.inventory.inventory import get_inventory
 
     inv = get_inventory()
 
-    partcode = normalise_partcode(args.partcode)
+    partcode = assetcode.normalise(args.partcode)
     part = inv.root.parts[partcode]
 
     pager_text = "Full path: " + part.path

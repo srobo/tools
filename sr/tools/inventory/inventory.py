@@ -118,7 +118,7 @@ class Item(object):
     """An item in the inventory."""
     def __init__(self, path, parent=None):
         """
-        Create a new ``Item``.
+        Create a new ``Item`` object.
 
         :param str path: The path to the item.
         :param parent: The item parent.

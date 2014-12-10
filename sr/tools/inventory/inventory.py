@@ -349,7 +349,7 @@ class Inventory(object):
 
         :param str query_str: The query to run on the inventory.
         :returns: Any items found from the query.
-        :rtype: list of :class:`Item`s
+        :rtype: list of :class:`Item`
         :raises pyparsing.ParseError: If the query could not be parsed.
         """
         from sr.tools.inventory import query_parser  # circular dependency

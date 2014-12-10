@@ -13,7 +13,11 @@ def get_db():
 
 
 class Part(dict):
-    """Represents a part."""
+    """
+    Represents a part.
+
+    :param dict d: A part dictionary from the database.
+    """
     def __init__(self, d):
         """Initialise with a dict from the DB."""
         for k in d.keys():
@@ -107,7 +111,12 @@ class Part(dict):
 
 
 class Db(dict):
-    """A parts database."""
+    """
+    A parts database.
+
+    :param file: A file-like object to read the parts DB from.
+    :type file: file-like
+    """
     def __init__(self, file):
         for line in csv.DictReader(file):
             # discard commented out lines

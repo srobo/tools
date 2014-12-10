@@ -115,14 +115,14 @@ def cached_yaml_load(path):
 
 
 class Item(object):
-    """An item in the inventory."""
-    def __init__(self, path, parent=None):
-        """
-        Create a new ``Item`` object.
+    """
+    An item in the inventory.
 
-        :param str path: The path to the item.
-        :param parent: The item parent.
-        """
+    :param str path: The path to the item.
+    :param parent: The item parent.
+    """
+    def __init__(self, path, parent=None):
+        """Create a new ``Item`` object."""
         self.path = path
         self.parent = parent
         m = RE_PART.match(os.path.basename(path))
@@ -153,14 +153,14 @@ class Item(object):
 
 
 class ItemTree(object):
-    """A tree of items in the inventory."""
-    def __init__(self, path, parent=None):
-        """
-        Create a new item tree.
+    """
+    A tree of items in the inventory.
 
-        :param str path: The path to the tree.
-        :param parent: The parent item or tree.
-        """
+    :param str path: The path to the tree.
+    :param parent: The parent item or tree.
+    """
+    def __init__(self, path, parent=None):
+        """Create a new item tree."""
         self.name = os.path.basename(path)
         self.path = path
         self.parent = parent
@@ -230,14 +230,14 @@ class ItemTree(object):
 
 
 class ItemGroup(ItemTree):
-    """A group of items in the inventory."""
-    def __init__(self, path, parent=None):
-        """
-        Create a new item group.
+    """
+    A group of items in the inventory.
 
-        :param str path: The path to the item group.
-        :param parent: The parent item or tree.
-        """
+    :param str path: The path to the item group.
+    :param parent: The parent item or tree.
+    """
+    def __init__(self, path, parent=None):
+        """Create a new item group."""
         ItemTree.__init__(self, path, parent=parent)
 
         m = RE_PART.match(os.path.basename(path))
@@ -267,13 +267,13 @@ class ItemGroup(ItemTree):
 
 
 class Inventory(object):
-    """An inventory."""
-    def __init__(self, root_path):
-        """
-        Create a new inventory.
+    """
+    An inventory.
 
-        :param str root_path: The root path to the inventory.
-        """
+    :param str root_path: The root path to the inventory.
+    """
+    def __init__(self, root_path):
+        """Create a new inventory."""
         self.root_path = root_path
         self.root = ItemTree(root_path)
 

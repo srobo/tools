@@ -58,14 +58,14 @@ def list_teams(reporoot=DEFAULT_REPOROOT, server=DEFAULT_SERVER):
 
 
 class Repo(object):
-    """Representing a repository on the IDE."""
-    def __init__(self, path, server=DEFAULT_SERVER):
-        """
-        Create a new repository object.
+    """
+    Representing a repository on the IDE.
 
-        :param str path: The path to the repository.
-        :param str server: The server that the repository is on.
-        """
+    :param str path: The path to the repository.
+    :param str server: The server that the repository is on.
+    """
+    def __init__(self, path, server=DEFAULT_SERVER):
+        """Create a new repository object."""
         self.path = path
         self.server = server
 
@@ -88,16 +88,16 @@ class Repo(object):
 
 
 class Team(object):
-    """Representing a team in the IDE."""
+    """
+    Representing a team in the IDE.
+
+    :param str identifier: The identifier of the team.
+    :param str server: The server that the team resides in.
+    :param str reporoot: The root of the repositories on that server.
+    """
     def __init__(self, identifier, server=DEFAULT_SERVER,
                  reporoot=DEFAULT_REPOROOT):
-        """
-        Create a new team object.
-
-        :param str identifier: The identifier of the team.
-        :param str server: The server that the team resides in.
-        :param str reporoot: The root of the repositories on that server.
-        """
+        """Create a new team object."""
         self.identifier = identifier
         self.server = server
         self.reporoot = reporoot

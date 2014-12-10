@@ -20,13 +20,13 @@ def file_is_geda_pcb(f):
 
 
 class GSchem(dict):
-    """Reads in gEDA file."""
-    def __init__(self, fname):
-        """
-        Create a new gEDA schematic object.
+    """
+    Reads in gEDA file.
 
-        :param str fname: The filename of the schematic.
-        """
+    :param str fname: The filename of the schematic.
+    """
+    def __init__(self, fname):
+        """Create a new gEDA schematic object."""
         self.fname = fname
         self.__load_bom()
 
@@ -84,13 +84,13 @@ class GSchem(dict):
 
 
 class PCB:
-    """Read in a gEDA PCB file."""
-    def __init__(self, fname):
-        """
-        Create a new PCB object.
+    """
+    Read in a gEDA PCB file.
 
-        :param str fname: The filename of the PCB file.
-        """
+    :param str fname: The filename of the PCB file.
+    """
+    def __init__(self, fname):
+        """Create a new PCB object."""
         self.fname = fname
 
     def __export_image(self, res, ofname):

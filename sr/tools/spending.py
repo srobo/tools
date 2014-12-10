@@ -12,15 +12,15 @@ import sr.tools.budget as budget
 
 
 class Transaction(object):
-    """A spending transaction."""
-    def __init__(self, name, date, fname):
-        """
-        Create a new transaction.
+    """
+    A spending transaction.
 
-        :param str name: The name of the transaction.
-        :param date: The date of the transaction.
-        :param str fname: The filename of the transation.
-        """
+    :param str name: The name of the transaction.
+    :param date: The date of the transaction.
+    :param str fname: The filename of the transation.
+    """
+    def __init__(self, name, date, fname):
+        """Create a new transaction."""
         self.name = "TODO"
         self.date = None        # TODO
         self.summary = "TODO"

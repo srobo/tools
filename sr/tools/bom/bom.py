@@ -16,15 +16,15 @@ NUM_THREADS = 4
 
 
 class PartGroup(list):
-    """A set of parts. One might call this a "BOM line"."""
-    def __init__(self, part, name="", designators=[]):
-        """
-        Create a new part group.
+    """
+    A set of parts. One might call this a "BOM line".
 
-        :param part: The part.
-        :param str name: The name of the group.
-        :param list designators: A list of designators
-        """
+    :param part: The part.
+    :param str name: The name of the group.
+    :param list designators: A list of designators
+    """
+    def __init__(self, part, name="", designators=[]):
+        """Create a new part group."""
         list.__init__(self)
 
         for x in designators:
@@ -153,15 +153,13 @@ class BoardBom(Bom):
     BOM object.
     Groups parts with the same asset code into PartGroups.
     Dictionary keys are asset codes.
+
+    :param db: A parts DB instance.
+    :param fname: The schematic to load from.
+    :param name: The name to give the schematic.
     """
     def __init__(self, db, fname, name):
-        """
-        Create a new ``BoardBom`` object.
-
-        :param db: A parts DB instance.
-        :param fname: The schematic to load from.
-        :param name: The name to give the schematic.
-        """
+        """Create a new ``BoardBom`` object."""
         Bom.__init__(self)
         self.db = db
         self.name = name
@@ -178,13 +176,12 @@ class BoardBom(Bom):
 
 
 class MultiBoardBom(Bom):
-    """A bill of materials with multiple boards."""
-    def __init__(self, db):
-        """
-        Create multiple board BOM.
+    """
+    A bill of materials with multiple boards.
 
-        :param db: A parts DB instance.
-        """
+    :param db: A parts DB instance."""
+    def __init__(self, db):
+        """Create multiple board BOM."""
         Bom.__init__(self)
 
         self.db = db

@@ -8,7 +8,11 @@ from sr.tools.bom.cachedfetch import grab_url_cached
 
 
 class Item(distpart.DistItem):
-    """Represents a Digikey item."""
+    """
+    Represents a Digikey item.
+
+    :param partNumber: The number of the part.
+    """
     def __init__(self, partNumber):
         distpart.DistItem.__init__(self, partNumber)
 

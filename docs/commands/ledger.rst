@@ -4,7 +4,7 @@ ledger
 Synopsis
 --------
 
-``sr inv-ledger [-h] [arg [arg ...]]``
+``sr ledger [-h] [arg [arg ...]]``
 
 Description
 -----------

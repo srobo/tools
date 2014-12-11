@@ -4,7 +4,7 @@ mouser
 Synopsis
 --------
 
-``sr farnell [-h] [<id> [<id> ...]]``
+``sr mouser [-h] [<id> [<id> ...]]``
 
 Description
 -----------

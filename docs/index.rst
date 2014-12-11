@@ -11,8 +11,16 @@ User Guide
    usage
    configuration
    inventory/index
-   commands/index
+   spending/index
    development
+
+Commands List
+-------------
+
+.. toctree::
+   :maxdepth: 2
+
+   commands/index
 
 API Reference
 -------------

@@ -1,5 +1,5 @@
 The Inventory
 =============
 
-.. include:: about.inc.rst
+.. include:: introduction.inc.rst
 .. include:: queries.inc.rst

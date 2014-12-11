@@ -1,5 +1,5 @@
-About
------
+Introduction
+------------
 
 In true Student Robotics fashion, the inventory is a Git repository containing
 YAML files tied together with Python scripts.

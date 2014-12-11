@@ -10,7 +10,7 @@ User Guide
    installation
    usage
    configuration
-   inventory
+   inventory/index
    commands/index
    development
 

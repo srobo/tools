@@ -1,6 +1,3 @@
-The Inventory
-=============
-
 Making Queries
 --------------
 

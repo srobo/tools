@@ -11,6 +11,8 @@ Description
 
 Run a query on the inventory.
 
+.. include:: ../inventory/queries.inc.rst
+
 Options
 -------
 

@@ -58,9 +58,12 @@ def get_inventory(directory=None):
     :rtype: :class:`Inventory`
     :raises OSError: If the directory is not an inventory.
     """
+    if directory is None:
+        directory = os.getcwd()
+
     top = find_top_level_dir(directory)
     if top is None:
-        raise OSError("Not an inventory.")
+        raise OSError("'{}' is not an inventory.".format(directory))
 
     return Inventory(top)
 

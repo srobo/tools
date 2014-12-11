@@ -1,10 +1,14 @@
 Installation
 ============
 
+Methods
+-------
+
 There are two tried and tested methods of installing the tools.
 
-With Pip
----------
+
+Pip
+~~~
 
 The recommended and 'official' way of installing the tools is to use Pip.
 
@@ -16,8 +20,8 @@ You may also choose to install the tools locally with the ``--user`` option.
 You should make sure that ``~/.local/bin`` is in your ``PATH`` variable if you
 choose to do that.
 
-With Setuptools
----------------
+Setuptools
+~~~~~~~~~~
 
 Using Setuptools to install the tools is more common if you are going to make
 changes to the tools.

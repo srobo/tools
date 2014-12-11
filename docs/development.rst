@@ -39,6 +39,11 @@ you create first. An empty command file would look something like this:
 Finally, you should make sure to include the new file in the ``__all__`` list
 of the ``__init__.py`` file in ``sr/tools/cli``.
 
+It would be a good idea when the tool is finished to write some documentation
+for it. You can achieve this by creating a new file in the ``docs/commands``
+directory and writing a reStructuredText file, following the template of the
+others. This will be automatically picked up and turned into a man page.
+
 Good Practices
 --------------
 

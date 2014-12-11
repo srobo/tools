@@ -101,6 +101,8 @@ Gerrit
     :undoc-members:
     :show-inheritance:
 
+.. _api.inventory:
+
 Inventory
 ---------
 

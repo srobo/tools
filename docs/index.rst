@@ -11,7 +11,7 @@ User Guide
    usage
    configuration
    inventory/index
-   spending/index
+   finance/index
    development
 
 Commands List

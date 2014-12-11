@@ -4,7 +4,7 @@ create-order
 Synopsis
 --------
 
-``sr create-order [-h] <dir> -<n> <schematic> -<m> <schematic> ...``
+``sr create-order [-h] [-<n>] <schematic> [[-<n>] <schematic> ...]``
 
 Description
 -----------

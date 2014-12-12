@@ -21,6 +21,7 @@ setup(
         'beautifulsoup4',
         'numpy',
         'six',
+        'tabulate',
         'xlwt-future'
     ],
     extras_require={

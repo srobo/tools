@@ -1,6 +1,6 @@
 """
 A set of classes and functions for working with
-:doc:`The Inventory </inventory>`.
+:doc:`The Inventory </inventory/index>`.
 """
 from __future__ import print_function
 

@@ -191,7 +191,7 @@ htmlhelp_basename = 'StudentRoboticsToolsdoc'
 latex_elements = {
     'papersize': 'a4paper',
     'pointsize': '11pt',
-    'preamble': '\setcounter{tocdepth}{2}'
+    'preamble': '\\setcounter{tocdepth}{2}'
 }
 
 # Grouping the document tree into LaTeX files. List of tuples

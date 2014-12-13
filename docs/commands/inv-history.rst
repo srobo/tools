@@ -1,10 +1,10 @@
-inv-findpart
-============
+inv-history
+===========
 
 Synopsis
 --------
 
-``sr inv-history [-h] <asset_code>``
+``sr inv-history [-h] [--output <output>] <asset_code>``
 
 Description
 -----------
@@ -16,6 +16,9 @@ Options
 
 --help, -h
     Display help and exit.
+
+--output <output>, -o <output>
+    Specify the output format. One of ``commits``, ``description``, ``full``.
 
 Examples
 --------

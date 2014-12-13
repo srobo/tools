@@ -97,12 +97,13 @@ summary
 
 cost
     The cost of the item, including delivery and VAT. Ideally you should find a
-    supplier that we can use, and use their normal price for the number we need
-    - don't expect that we'll be able to order the item on the special deal
+    supplier that we can use, and use their normal price for the number we
+    need—don't expect that we'll be able to order the item on the special deal
     you've found (but do mention that this is possible in the description).
 
 description
     Detailed description of:
+
     - The item, including a part code.
     - Why we need it.
     - How you reached the cost you've assigned. You should include links to the

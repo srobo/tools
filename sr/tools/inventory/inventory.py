@@ -24,6 +24,20 @@ CACHE_DIR = get_cache_dir('inventory')
 RE_PART = re.compile("^(.+)-sr([%s]+)$" % "".join(assetcode.ALPHABET))
 
 
+class NotAnInventoryError(OSError):
+    """
+    Raised when an inventory object is created for a directory that is not an
+    inventory.
+
+    :param directory: The directory that is not an inventory. Also accessible
+                      as the ``directory`` attribute of this class.
+    """
+    def __init__(self, directory):
+        msg = "'{directory}' is not an inventory.".format(directory=directory)
+        super(NotAnInventoryError, self).__init__(msg)
+        self.directory = directory
+
+
 def find_top_level_dir(start_dir=None):
     """
     Find the top level of the inventory repo.
@@ -63,7 +77,7 @@ def get_inventory(directory=None):
 
     top = find_top_level_dir(directory)
     if top is None:
-        raise OSError("'{}' is not an inventory.".format(directory))
+        raise NotAnInventoryError(directory)
 
     return Inventory(top)
 

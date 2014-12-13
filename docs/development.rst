@@ -44,6 +44,15 @@ for it. You can achieve this by creating a new file in the ``docs/commands``
 directory and writing a reStructuredText file, following the template of the
 others. This will be automatically picked up and turned into a man page.
 
+Exception Handling
+------------------
+
+The command runner will catch many common exceptions and display a nice error
+message to the user. The list of exceptions explicitly delt with is:
+
+- ``ImportError``
+- ``NotAnInventoryError``
+
 Good Practices
 --------------
 

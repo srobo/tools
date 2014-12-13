@@ -6,6 +6,8 @@ import pkg_resources
 import sys
 import traceback
 
+from sr.tools.inventory.inventory import NotAnInventoryError
+
 
 # make sure to update this with new tools if they are created
 __all__ = ['budget_check', 'budget_close', 'budget_diff', 'budget_eval',
@@ -57,9 +59,12 @@ def main():
                 print("Please install the '{name}' module to use this tool."
                       .format(name=name), file=sys.stderr)
                 sys.exit(1)
+            except NotAnInventoryError as e:
+                print(e, file=sys.stderr)
+                sys.exit(2)
             except Exception as e:
                 traceback.print_exc()
                 print(e, file=sys.stderr)
-                sys.exit(2)
+                sys.exit(3)
         else:
             parser.print_help()

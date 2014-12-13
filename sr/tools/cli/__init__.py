@@ -49,8 +49,13 @@ def main():
             try:
                 args.func(args)
             except ImportError as e:
+                try:
+                    name = e.name
+                except AttributeError:
+                    name = str(e)
+
                 print("Please install the '{name}' module to use this tool."
-                      .format(name=e.name), file=sys.stderr)
+                      .format(name=name), file=sys.stderr)
                 sys.exit(1)
             except Exception as e:
                 traceback.print_exc()

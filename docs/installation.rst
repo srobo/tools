@@ -35,6 +35,29 @@ changes to the tools.
 As with Pip, there is a ``--user`` flag available if you want to install the
 tools locally.
 
+Dependencies
+------------
+
+If you wish to install the dependencies yourself rather than relying on ``Pip``
+or ``Setuptools`` to do so for you, perhaps to use a system–wide package
+manager, you should install the following packages.
+
+- pyyaml
+- sympy
+- pyparsing
+- beautifulsoup4
+- numpy
+- six
+- tabulate
+- xlwt-future
+- pyudev
+- matplotlib
+- keyring
+
+.. note:: Some packages are optional and other tools will work without them
+          installed. If a specific tool requires a package to be available, a
+          friendly error messsage shall be displayed.
+
 Virtual Environments
 --------------------
 

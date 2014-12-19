@@ -26,7 +26,6 @@ setup(
         'xlwt-future'
     ],
     setup_requires=[
-        'nose >=1.0',
         'sphinx'
     ],
     extras_require={

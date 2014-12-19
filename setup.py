@@ -10,7 +10,7 @@ setup(
     version='1.0.0-dev',
     keywords='sr student robotics tools utilities utils',
     namespace_packages=['sr'],
-    packages=find_packages(),
+    packages=find_packages(exclude=['tests', 'tests.*']),
     entry_points={
         'console_scripts': ['sr = sr.tools.cli:main']
     },

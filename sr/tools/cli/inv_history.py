@@ -144,15 +144,15 @@ def command(args):
             print(commit.id)
         else:
             description = ''
-            if event[0] == 'A':
+            if status == 'A':
                 description = "'{}' created.".format(event[2])
-            elif event[0] == 'R':
+            elif status == 'R':
                 old_path = event[2][0]
                 new_path = event[2][1]
                 description = "Moved from '{}' into '{}'." \
                               .format(os.path.dirname(old_path),
                                       os.path.dirname(new_path))
-            elif event[0] == 'M':
+            elif status == 'M':
                 description = 'Contents modifed.'
             else:
                 description = 'Something happened.'

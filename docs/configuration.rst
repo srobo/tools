@@ -5,7 +5,7 @@ The tools are configurable using a YAML file found in ``~/.sr/config.yaml``.
 
 The configuration file looks something like this:
 
-.. code:: yaml
+.. code-block:: yaml
 
     # Student Robotics username
     user: null

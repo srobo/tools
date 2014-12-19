@@ -76,7 +76,7 @@ File Shape
 Each of these YAML files must be formed in the same manner, and must have
 certain elements. For instance, this is one revision of ``clothing.yaml``:
 
-.. code:: yaml
+.. code-block:: yaml
 
     summary: T-shirt and other forms of clothing we might buy
 

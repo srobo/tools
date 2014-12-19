@@ -24,7 +24,7 @@ for the command to run. It is important that somewhere in that function you set
 the default value in the argument parser of ``func`` to the command function
 you create first. An empty command file would look something like this:
 
-.. code::
+.. code-block:: python
 
     def command(args):
         if not args.quiet:

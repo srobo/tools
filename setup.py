@@ -26,7 +26,8 @@ setup(
         'xlwt-future'
     ],
     setup_requires=[
-        'nose >=1.0'
+        'nose >=1.0',
+        'sphinx'
     ],
     extras_require={
         'cam-serial, usb-key-serial, sd-serial, mcv4b-part-code': ['pyudev'],

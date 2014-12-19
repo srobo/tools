@@ -9,6 +9,7 @@ setup(
     name='sr.tools',
     version='1.0.0-dev',
     keywords='sr student robotics tools utilities utils',
+    url='https://www.studentrobotics.org/trac/wiki/DevScripts',
     namespace_packages=['sr'],
     packages=find_packages(exclude=['tests', 'tests.*']),
     entry_points={

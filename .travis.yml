@@ -6,6 +6,5 @@ python:
   - '3.3'
   - '3.4'
 install:
-  - pip install -e .  # don't know if this is actually necessary
   - ./setup.py install
 script: ./setup.py test

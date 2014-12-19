@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='sr.tools',
-    version='1.0.0-dev',
+    version='1.0.0',
     keywords='sr student robotics tools utilities utils',
     url='https://www.studentrobotics.org/trac/wiki/DevScripts',
     namespace_packages=['sr'],

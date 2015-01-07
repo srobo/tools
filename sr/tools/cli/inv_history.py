@@ -102,7 +102,9 @@ def get_history(repo, asset_code):
     sort_mode = pygit2.GIT_SORT_TOPOLOGICAL | pygit2.GIT_SORT_REVERSE
     all_commits = repo.walk(repo.head.target, sort_mode)
 
-    old_res, _ = added_res, added_commit = find_asset_by_code(asset_finder, asset_code, all_commits)
+    old_res, _ = added_res, added_commit = find_asset_by_code(asset_finder,
+                                                              asset_code,
+                                                              all_commits)
     asset_finder.search(id=added_res[1], path=added_res[2])
 
     yield ('A', added_commit, added_res[2])
@@ -110,7 +112,8 @@ def get_history(repo, asset_code):
     for commit in all_commits:
         res = asset_finder.test(commit.tree)
         if res is None:
-            res2, commit = find_asset_by_code(asset_finder, asset_code, all_commits)
+            res2, commit = find_asset_by_code(asset_finder, asset_code,
+                                              all_commits)
             asset_finder.search(id=res2[1], path=res2[2])
 
             if old_res[2] != res2[2]:
@@ -160,15 +163,18 @@ def command(args):
             terminal_width, terminal_height = get_terminal_size()
 
             if args.output == 'full':
-                print('Commit {} by {} on {}'
-                      .format(commit.id,
-                              commit.committer.name,
-                              datetime.datetime.fromtimestamp(commit.commit_time)))
+                print('Commit {} by {} on {}'.format(
+                    commit.id,
+                    commit.committer.name,
+                    datetime.datetime.fromtimestamp(commit.commit_time)
+                ))
+
                 for line in textwrap.wrap(description, width=terminal_width-2):
                     print(' ', line)
                 print()
             else:
                 print(description)
+
 
 def add_subparser(subparsers):
     parser = subparsers.add_parser('inv-history',

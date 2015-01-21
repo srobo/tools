@@ -19,7 +19,7 @@ setup(
         'pyyaml',
         'sympy',
         'pyparsing',
-        'beautifulsoup4',
+        'BeautifulSoup4',
         'numpy',
         'six',
         'tabulate',

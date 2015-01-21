@@ -122,8 +122,11 @@ def cached_yaml_load(path):
         # cache has file
         if os.path.getmtime(p) >= os.path.getmtime(path):
             # check that it's newer
-            with open(p, 'rb') as file:
-                return pickle.load(file)
+            try:
+                with open(p, 'rb') as file:
+                    return pickle.load(file)
+            except EOFError:
+                os.remove(p)  # cache file corrupted, recreate it
 
     y = yaml.load(codecs.open(path, "r", encoding="utf-8"))
     with open(p, 'wb') as file:

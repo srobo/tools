@@ -12,8 +12,9 @@ from sr.tools.inventory.inventory import NotAnInventoryError
 # make sure to update this with new tools if they are created
 __all__ = ['budget_check', 'budget_close', 'budget_diff', 'budget_eval',
            'budget_query', 'budget_tree', 'cam_serial', 'check_my_git',
-           'clone_team', 'clone', 'create_bom', 'create_order', 'digikey',
-           'document', 'export_gerber', 'farnell', 'geda_hierpcb',
+           'clone_team', 'clone', 'comp_calculate_league_matches',
+           'create_bom', 'create_order', 'digikey', 'document',
+           'export_gerber', 'farnell', 'geda_hierpcb',
            'ide_list_repos', 'ide_list_teams', 'ide_version', 'inv_edit',
            'inv_findpart', 'inv_history', 'inv_list_assy_templates',
            'inv_list_templates', 'inv_mv', 'inv_new_asset', 'inv_new_group',

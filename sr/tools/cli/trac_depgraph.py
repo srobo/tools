@@ -36,7 +36,12 @@ def command(args):
             todo.remove(num)
 
     for num, ticket in tickets.items():
-        props = {}
+        if args.summaries:
+            label = "#{}: {}".format(num, ticket.summary)
+        else:
+            label = "#{}".format(num)
+        props = {"label": label,
+                 "URL": "http://srobo.org/trac/ticket/{}".format(num)}
 
         if ticket.status == "closed":
             props["style"] = "filled"
@@ -56,4 +61,6 @@ def add_subparser(subparsers):
                                    help="Produce a graph of a ticket's "
                                         "dependencies.")
     parser.add_argument("ticket", type=int, help="Ticket number to attach")
+    parser.add_argument("-s", "--summaries", action='store_true',
+                        help='include ticket summaries in the graph')
     parser.set_defaults(func=command)

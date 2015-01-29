@@ -17,6 +17,9 @@ Options
 --help, -h
     Display help and exit.
 
+--summaries, -s
+    Show ticket summaries in the graph.
+
 Examples
 --------
 

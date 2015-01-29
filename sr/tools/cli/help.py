@@ -1,4 +1,3 @@
-from __future__ import print_function
 import webbrowser
 
 URL_PATTERN = 'http://srtools.readthedocs.org/en/latest/commands/{cmd}.html'

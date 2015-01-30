@@ -30,7 +30,7 @@ def command(args):
     if len(deps):
         print("The following tickets depend on {}:".format(search_ticket))
         for t in deps:
-            print("\t{}".format(t))
+            print("\t{} [{}]".format(t, t.url))
     else:
         print("Nothing depends on {}".format(search_ticket))
 
@@ -38,7 +38,7 @@ def command(args):
         print("The following tickets appear to reference {}:"
               .format(search_ticket))
         for t in refs:
-            print("\t{}".format(t))
+            print("\t{} [{}]".format(t, t.url))
 
 
 def add_subparser(subparsers):

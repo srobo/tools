@@ -41,7 +41,7 @@ def command(args):
         else:
             label = "#{}".format(num)
         props = {"label": label,
-                 "URL": "http://srobo.org/trac/ticket/{}".format(num)}
+                 "URL": ticket.url}
 
         if ticket.status == "closed":
             props["style"] = "filled"

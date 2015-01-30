@@ -37,6 +37,9 @@ class TracProxy(ServerProxy):
         if port is None:
             port = config["https_port"]
 
+        self.server = server
+        self.port = port
+
         rpc_settings = {"server": server, "port": port}
 
         if anon:
@@ -122,6 +125,17 @@ class Ticket(object):
 
         self.list_prefix = spacings.most_common(1)[0][0]
         self.deplist_ends_in_newline = (self.deplist[-1] == "\n")
+
+    @property
+    def url(self):
+        server, port = self.proxy.server, self.proxy.port
+        if port == 443:
+            base = 'https://{server}/trac/ticket/{num}'
+        else:
+            base = 'https://{server}:{port}/trac/ticket/{num}'
+        return base.format(server=server,
+                           port=port,
+                           num=self.num)
 
     def cleanup(self, dry_run=False,
                 msg="Synchronise dependency summaries with dependencies "

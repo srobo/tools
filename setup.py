@@ -13,18 +13,19 @@ setup(
         'console_scripts': ['sr = sr.tools.cli:main']
     },
     install_requires=[
-        'pyyaml',
-        'sympy',
-        'pyparsing',
-        'BeautifulSoup4',
-        'numpy',
-        'six',
-        'tabulate',
-        'xlwt-future'
+        'PyYAML >=3.11, <4',
+        'sympy >=0.7, <1',
+        'pyparsing >=2.0, <3',
+        'BeautifulSoup4 >=4.3, <5',
+        'numpy >=1.9, <2',
+        'six >=1.9, <2',
+        'tabulate >=0.7, <1',
+        'xlwt-future >=0.8, <1'
     ],
     setup_requires=[
-        'sphinx',
-        'pygments'
+        'Sphinx >=1.3b, <2',
+        'Pygments >=2.0, <3',
+        'nose >=1.3, <2'
     ],
     extras_require={
         'cam-serial, usb-key-serial, sd-serial, mcv4b-part-code': ['pyudev'],
@@ -37,5 +38,5 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'Topic :: Utilities'
     ],
-    test_suite='tests'
+    test_suite='nose.collector'
 )

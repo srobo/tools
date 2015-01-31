@@ -25,7 +25,8 @@ setup(
     setup_requires=[
         'Sphinx >=1.3b, <2',
         'Pygments >=2.0, <3',
-        'nose >=1.3, <2'
+        'nose >=1.3, <2',
+        'numpy >=1.9, <2'  # https://github.com/numpy/numpy/issues/2434#issuecomment-65252402
     ],
     extras_require={
         'cam-serial, usb-key-serial, sd-serial, mcv4b-part-code': ['pyudev'],

@@ -6,6 +6,8 @@ import sys
 sys.path.insert(0, os.path.abspath('..'))
 
 
+needs_sphinx = '1.3'  # for Napoleon
+
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',

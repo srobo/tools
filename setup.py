@@ -2,11 +2,16 @@
 from setuptools import setup, find_packages
 
 
+with open('README.rst') as readme:
+    long_description = readme.read()
+
 setup(
     name='sr.tools',
     version='1.0.0',
     keywords='sr student robotics tools utilities utils',
     url='https://www.studentrobotics.org/trac/wiki/DevScripts',
+    description='Student Robotics Tools',
+    long_description=long_description,
     namespace_packages=['sr'],
     packages=find_packages(exclude=['tests', 'tests.*']),
     entry_points={

@@ -15,9 +15,13 @@ def open_editor(filename, fallback_editor='vim'):
     Open the user-defined text editor on a particular file name and block until
     it exists.
 
-    :param str filename: The file to edit.
-    :param str fallback_editor: The editor binary to fallback on if a suitable
-                                one cannot be determined.
+    Parameters
+    ----------
+    filename : str
+        The file to edit.
+    fallback_editor : str
+        The editor binary to fallback on if a suitable one cannot be
+        determined.
     """
     editor = os.environ.get("EDITOR", fallback_editor)
     args = shlex.split(editor)
@@ -34,11 +38,16 @@ def get_cache_dir(*components):
 
     This function will endeavour to create the cache directory for you.
 
-    :param str components: Components used to separate out different parts of
-                           cache. Generally these are combined with the
-                           platform path separator path.
-    :returns: The path to the cache directory.
-    :rtype: str
+    Parameters
+    ----------
+    components : str
+        Used to separate out different parts of cache. Generally these are
+        combined with the platform path separator path.
+
+    Returns
+    -------
+    str
+        The path to the cache directory.
     """
     default_path = os.path.expanduser('~/.sr/cache')
     if sys.platform == 'win32':
@@ -56,8 +65,10 @@ def get_config_filename():
     """
     Get the filename for the configuration file.
 
-    :returns: The filename to the config.
-    :rtype: str
+    Returns
+    -------
+    str
+        The filename to the config.
     """
     default_path = os.path.expanduser('~/.sr/config.yaml')
     if sys.platform == 'win32':
@@ -66,9 +77,17 @@ def get_config_filename():
     return os.environ.get('SR_CONFIG', default_path)
 
 
-# https://gist.github.com/jtriley/1108174
-
 def get_terminal_size():
+    """
+    Get the size of the terminal window the user is working in.
+
+    The code for this is based on: https://gist.github.com/jtriley/1108174 .
+
+    Returns
+    -------
+    (width, height) tuple
+        A tuple containing the width and height as its elements respectively.
+    """
     current_os = platform.system()
     tuple_xy = None
     if current_os == 'Windows':

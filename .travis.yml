@@ -4,5 +4,5 @@ python:
   - '3.3'
   - '3.4'
 install:
-  - ./setup.py install
+  - pip install .
 script: ./setup.py test

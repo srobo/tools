@@ -34,8 +34,8 @@ The config file should be found in ``~/.ssh/config``. If it doesn't already exis
 
 It should contain this:
 
-.. code-block::
-        
+.. code:: 
+
         Host studentrobotics.org
 	        User username
 

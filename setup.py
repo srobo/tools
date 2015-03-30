@@ -28,7 +28,7 @@ setup(
         'xlwt-future >=0.8, <1'
     ],
     setup_requires=[
-        'Sphinx >=1.3b, <2',
+        'Sphinx >=1.3, <2',
         'Pygments >=2.0, <3',
         'nose >=1.3, <2',
         'numpy >=1.9, <2'  # https://github.com/numpy/numpy/issues/2434#issuecomment-65252402

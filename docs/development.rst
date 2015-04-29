@@ -48,10 +48,13 @@ Exception Handling
 ------------------
 
 The command runner will catch many common exceptions and display a nice error
-message to the user. The list of exceptions explicitly delt with is:
+message to the user. The list of exceptions explicitly dealt with is:
 
 - ``ImportError``
 - ``NotAnInventoryError``
+
+Any other exception is also handled, but printed to the console in the normal
+Python way.
 
 Good Practices
 --------------

@@ -56,7 +56,7 @@ manager, you should install the following packages.
 
 .. note:: Some packages are optional and other tools will work without them
           installed. If a specific tool requires a package to be available, a
-          friendly error messsage shall be displayed.
+          friendly error message shall be displayed.
 
 Virtual Environments
 --------------------
@@ -70,11 +70,11 @@ if you intend on making changes.
     $ cd tools
     $ pyvenv venv
     $ source venv/bin/activate
-    $ ./setup.py develop
+    $ pip install -e .
 
 If all went well, you will have an ``sr`` binary available for you in the
 ``venv`` directory. It should also be in your ``PATH`` environment variable.
 
-By using ``develop`` instead of ``install``, the package is symlinked into the
-Python ``site-packages`` directory meaning that any changes in the source are
-reflected immediately.
+.. note:: By using ``-e``, the package is symbolically linked into the Python
+          ``site-packages`` directory meaning that any changes in the source
+          are reflected immediately.

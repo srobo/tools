@@ -1,15 +1,19 @@
 #!/usr/bin/env python
-from distutils.command.build import build
+from distutils.command.install_data import install_data
 from glob import glob
+import os
 from setuptools import setup, find_packages
 
 from sr.tools import __version__, __description__
 
 
-class MyBuild(build):
+class install_data_with_sphinx(install_data):
     def run(self):
         self.run_command('build_sphinx')
-        build.run(self)
+        self.data_files.remove('docs')
+        sphinx = self.get_finalized_command('build_sphinx')
+        self.data_files += [('share/man/man1', glob(os.path.join(sphinx.build_dir, 'man', '*.1')))]
+        install_data.run(self)
 
 
 with open('README.rst') as file:
@@ -49,16 +53,16 @@ setup(
         'save passwords': ['keyring']
     },
     include_package_data=True,
-    zip_safe=True,
+    zip_safe=False,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Topic :: Utilities'
     ],
     test_suite='nose.collector',
     cmdclass={
-        'build': MyBuild
+        'install_data': install_data_with_sphinx
     },
     data_files=[
-        ('share/man/man1', glob('build/sphinx/man/*.1'))
+        'docs'  # there has to be an entry for 'install_data' to run
     ]
 )

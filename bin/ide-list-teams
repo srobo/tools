@@ -1,9 +1,0 @@
-#!/usr/bin/env python
-import os, sys
-import sr.teamgit as T
-
-teams = T.list_teams()
-teams.sort()
-
-for team in teams:
-    print team

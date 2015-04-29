@@ -1,0 +1,44 @@
+\documentclass[a4paper]{article}
+\usepackage[dvinames]{xcolor}
+\usepackage[top=2in,left=1.5in,bottom=2.8in,right=1.25in]{geometry}
+\usepackage{graphicx}
+\usepackage{ctable}
+\usepackage[colorlinks=false,
+            pdfborder={0 0 0},]{hyperref}
+\usepackage[absolute]{textpos}
+\usepackage[oldstylenums]{kpfonts}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\parindent0pt
+\setlength{\parskip}{0.8\baselineskip}
+\definecolor{SRblue}{RGB}{13,31,97}
+\definecolor{SRgrey}{RGB}{223,219,215}
+\urlstyle{sf}
+\fancyhead{}
+\fancyfoot{}
+\setlength{\footskip}{3em}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{1pt}
+\fancyfoot[C]{\footnotesize\color{SRblue}\sffamily
+Student Robotics, School of Electronics and Computer Science, University of Southampton, SO17 1BJ\\[-0.1\baselineskip]
+\url{info@studentrobotics.org} \textbullet\ \url{http://studentrobotics.org/}\\ \medskip \Huge
+\includegraphics[height=1em]{moto.png}\hfill{}\includegraphics[height=1em]{ecs.png}\hfill{}\includegraphics[height=1em]{bitbox.png} \\ \hfill
+}
+\begin{document}
+\begin{textblock*}{2in}[0.3066,0.39](1.5in,1.33in)
+    \includegraphics[width=1.7in]{sr-logo.pdf}
+\end{textblock*}
+\begin{textblock*}{6.375in}(0.65in,1.0in)
+    \sffamily
+    \begin{flushright}
+    \sffamily \Huge \color{SRblue}
+    Student Robotics\\ \large
+    \smallskip
+    School of Electronics and Computer Science\\
+    University of Southampton\\
+    SO17 1BJ
+    \end{flushright}
+\end{textblock*}
+\color{black}
+\vspace*{0.4in}

@@ -1,47 +1,14 @@
 #!/usr/bin/env python
-"""This is the Student Robotics development tool wrapper script.
-It provides an interface to a number of different CLI tools used by
-the SR project.
-
-The idea is that this script searches for executable files in the
-subdirectories of /tools/ and allows one to run them like so:
- sr SCRIPT
-
-Where SCRIPT is the name of an executable file with the path
-/tools/*/SCRIPT in tools.git.
-
-See http://trac.srobo.org/wiki/DevScripts for more details."""
+from __future__ import print_function
 
 import os
 import sys
 
-import sitepackage
-import sr_commands
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-sitepackage.check_installed()
+import sr.tools.cli
 
-TOOLS = os.path.join( sys.path[0], ".." )
 
-cmds = sr_commands.get_dict(TOOLS)
+print('Warning: You are running an old version of the tools.', file=sys.stderr)
 
-#if no argument was passed or the command passed doesn't exist
-if len(sys.argv) == 1 or (len(sys.argv) > 1 and sys.argv[1] not in cmds.keys()):
-    if len(sys.argv) > 1:
-        print("Invalid command '%s'" % sys.argv[1])
-    else:
-        print("sr: The Student Robotics devtool wrapper script")
-    print("Usage: sr COMMAND")
-    print("Available commands:")
-
-    k = cmds.keys()
-    k.sort()
-    for cmd in k:
-        if cmd[0] != "_" and cmd[-1] != "~":
-            print("\t%s" % cmd)
-    sys.exit(1)
-else:
-    cmd = sys.argv[1]
-
-args = [cmd]
-args += sys.argv[2:]
-os.execv( cmds[cmd], args )
+sr.tools.cli.main()

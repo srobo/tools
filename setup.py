@@ -1,0 +1,68 @@
+#!/usr/bin/env python
+from distutils.command.install_data import install_data
+from glob import glob
+import os
+from setuptools import setup, find_packages
+
+from sr.tools import __version__, __description__
+
+
+class install_data_with_sphinx(install_data):
+    def run(self):
+        self.run_command('build_sphinx')
+        self.data_files.remove('docs')
+        sphinx = self.get_finalized_command('build_sphinx')
+        self.data_files += [('share/man/man1', glob(os.path.join(sphinx.build_dir, 'man', '*.1')))]
+        install_data.run(self)
+
+
+with open('README.rst') as file:
+    long_description = file.read()
+
+setup(
+    name='sr.tools',
+    version=__version__,
+    keywords='sr student robotics tools utilities utils',
+    url='https://www.studentrobotics.org/trac/wiki/DevScripts',
+    description=__description__,
+    long_description=long_description,
+    namespace_packages=['sr'],
+    packages=find_packages(exclude=['tests', 'tests.*']),
+    entry_points={
+        'console_scripts': ['sr = sr.tools.cli:main']
+    },
+    install_requires=[
+        'PyYAML >=3.11, <4',
+        'sympy >=0.7, <1',
+        'pyparsing >=2.0, <3',
+        'BeautifulSoup4 >=4.3, <5',
+        'numpy >=1.9, <2',
+        'six >=1.9, <2',
+        'tabulate >=0.7, <1',
+        'xlwt-future >=0.8, <1'
+    ],
+    setup_requires=[
+        'Sphinx >=1.3, <2',
+        'Pygments >=2.0, <3',
+        'nose >=1.3, <2',
+        'numpy >=1.9, <2'  # https://github.com/numpy/numpy/issues/2434#issuecomment-65252402
+    ],
+    extras_require={
+        'cam-serial, usb-key-serial, sd-serial, mcv4b-part-code': ['pyudev'],
+        'price-graph': ['matplotlib'],
+        'save passwords': ['keyring']
+    },
+    include_package_data=True,
+    zip_safe=False,
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Topic :: Utilities'
+    ],
+    test_suite='nose.collector',
+    cmdclass={
+        'install_data': install_data_with_sphinx
+    },
+    data_files=[
+        'docs'  # there has to be an entry for 'install_data' to run
+    ]
+)

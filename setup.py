@@ -1,7 +1,14 @@
 #!/usr/bin/env python
+from distutils.command.build import build
 from setuptools import setup, find_packages
 
 from sr.tools import __version__, __description__
+
+
+class MyBuild(build):
+    def run(self):
+        self.run_command('build_sphinx')
+        build.run(self)
 
 
 with open('README.rst') as file:
@@ -46,5 +53,8 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'Topic :: Utilities'
     ],
-    test_suite='nose.collector'
+    test_suite='nose.collector',
+    cmdclass={
+        'build': MyBuild
+    }
 )

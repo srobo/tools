@@ -49,9 +49,10 @@ def get_cache_dir(*components):
     str
         The path to the cache directory.
     """
-    default_path = os.path.expanduser('~/.sr/cache')
     if sys.platform == 'win32':
         default_path = os.path.join(os.environ['APPDATA'], 'SR', 'cache')
+    else:
+        default_path = os.path.expanduser('~/.sr/cache')
 
     root_path = os.environ.get('SR_CACHE_DIR', default_path)
 

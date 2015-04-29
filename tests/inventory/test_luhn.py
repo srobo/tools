@@ -12,10 +12,12 @@ class TestValidity(unittest.TestCase):
         for code in ['78949']:
             self.assertTrue(luhn.is_valid(code))
 
+
 class TestChecksums(unittest.TestCase):
     def test_normal(self):
         for code, result in [('7894', 6)]:
             self.assertEqual(luhn.checksum(code), result)
+
 
 class TestCalculatingCheckDigit(unittest.TestCase):
     def test_normal(self):

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from distutils.command.build import build
+from glob import glob
 from setuptools import setup, find_packages
 
 from sr.tools import __version__, __description__
@@ -56,5 +57,8 @@ setup(
     test_suite='nose.collector',
     cmdclass={
         'build': MyBuild
-    }
+    },
+    data_files=[
+        ('share/man/man1', glob('build/sphinx/man/*.1'))
+    ]
 )

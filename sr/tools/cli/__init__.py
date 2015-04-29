@@ -6,6 +6,7 @@ import pkg_resources
 import sys
 import traceback
 
+from sr.tools import __description__
 from sr.tools.inventory.inventory import NotAnInventoryError
 
 
@@ -34,7 +35,7 @@ def print_version():
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Student Robotics tools')
+    parser = argparse.ArgumentParser(description=__description__)
     parser.add_argument('--version', '-v', help='Show version of the tools.',
                         action='store_true')
 

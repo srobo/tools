@@ -2,8 +2,9 @@ import glob
 import os
 import sys
 
-
 sys.path.insert(0, os.path.abspath('..'))
+
+from sr.tools import __version__
 
 
 needs_sphinx = '1.3'  # for Napoleon
@@ -25,8 +26,8 @@ master_doc = 'index'
 project = 'Student Robotics Tools'
 copyright = '2014, Student Robotics'
 
-version = '1.0.0'
-release = '1.0.0'
+version = __version__
+release = __version__
 
 exclude_patterns = ['_build']
 

@@ -30,7 +30,10 @@ class HistCmd(object):
         pylab.show()
 
 
-commands = {"total": TotalCmd, "hist": HistCmd}
+commands = {
+    "total": TotalCmd,
+    "hist": HistCmd,
+}
 
 
 def command(args):

@@ -96,7 +96,7 @@ _sr()
 		return 0;;
 
 	    *)
-		COMPREPLY=( $(compgen -f ${cur}) )
+		COMPREPLY=( $(compgen -f -- ${cur}) )
 		return 0;;
 	esac
     fi

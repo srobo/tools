@@ -8,11 +8,13 @@ class Cmd(object):
 
 
 class TotalCmd(object):
+    "Calculate the total cost of the items in the tree."
     def __init__(self, tree):
         print("Total: £%s" % tree.total())
 
 
 class HistCmd(object):
+    "Display a histogram of the items in the tree."
     def __init__(self, tree):
         import pylab
         import numpy as np

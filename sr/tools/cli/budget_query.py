@@ -7,6 +7,14 @@ class Cmd(object):
         pass
 
 
+class OpenLinesCmd(object):
+    "List all the open budget lines in the tree."
+    def __init__(self, tree):
+        for item in tree.walk():
+            if not item.closed:
+                print(item.name)
+
+
 class TotalCmd(object):
     "Calculate the total cost of the items in the tree."
     def __init__(self, tree):
@@ -34,6 +42,7 @@ class HistCmd(object):
 
 commands = {
     "total": TotalCmd,
+    "open-lines": OpenLinesCmd,
     "hist": HistCmd,
 }
 

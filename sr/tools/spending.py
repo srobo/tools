@@ -146,7 +146,7 @@ def load_budget_spends(root):
                "bal",
                "--format", "%A,%(display_total)\n",
                "^Expenses:"]
-        balances = check_output(cmd, universal_newlines=True).strip()
+        balances = check_output(cmd, universal_newlines=True).strip().decode('utf-8')
     except OSError as oe:
         if oe.errno == errno.ENOENT:
             # a nicer error for the most likely case

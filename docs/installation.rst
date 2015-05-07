@@ -14,7 +14,7 @@ The recommended and 'official' way of installing the tools is to use Pip.
 
 .. code::
 
-    $ pip install git+git://srobo.org/tools.git
+    $ pip install -U sr.tools
 
 You may also choose to install the tools locally with the ``--user`` option.
 You should make sure that ``~/.local/bin`` is in your ``PATH`` variable if you
@@ -30,7 +30,7 @@ changes to the tools.
 
     $ git clone git://srobo.org/tools.git
     $ cd tools
-    $ ./setup install
+    $ ./setup.py install
 
 As with Pip, there is a ``--user`` flag available if you want to install the
 tools locally.

@@ -29,15 +29,16 @@ __all__ = ['budget_check', 'budget_close', 'budget_diff', 'budget_eval',
            'trac_deps_add', 'trac_deps_rm', 'update', 'usb_key_serial']
 
 
-def print_version():
+def get_version():
     version = pkg_resources.get_distribution('sr.tools').version
-    print("Student Robotics Tools {version}".format(version=version))
+    return "Student Robotics Tools {} (Python {}.{}.{})" \
+        .format(version, *sys.version_info[0:3])
 
 
 def main():
     parser = argparse.ArgumentParser(description=__description__)
     parser.add_argument('--version', '-v', help='Show version of the tools.',
-                        action='store_true')
+                        action='version', version=get_version())
 
     subparsers = parser.add_subparsers()
     for command in __all__:

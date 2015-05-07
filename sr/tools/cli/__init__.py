@@ -47,27 +47,24 @@ def main():
 
     args = parser.parse_args()
 
-    if args.version:
-        print_version()
-    else:
-        if 'func' in args:
+    if 'func' in args:
+        try:
+            args.func(args)
+        except ImportError as e:
             try:
-                args.func(args)
-            except ImportError as e:
-                try:
-                    name = e.name
-                except AttributeError:
-                    name = str(e)
+                name = e.name
+            except AttributeError:
+                name = str(e)
 
-                print("Please install the '{name}' module to use this tool."
-                      .format(name=name), file=sys.stderr)
-                sys.exit(1)
-            except NotAnInventoryError as e:
-                print(e, file=sys.stderr)
-                sys.exit(2)
-            except Exception as e:
-                traceback.print_exc()
-                print(e, file=sys.stderr)
-                sys.exit(3)
-        else:
-            parser.print_help()
+            print("Please install the '{name}' module to use this tool."
+                  .format(name=name), file=sys.stderr)
+            sys.exit(1)
+        except NotAnInventoryError as e:
+            print(e, file=sys.stderr)
+            sys.exit(2)
+        except Exception as e:
+            traceback.print_exc()
+            print(e, file=sys.stderr)
+            sys.exit(3)
+    else:
+        parser.print_help()

@@ -31,6 +31,8 @@ setup(
     entry_points={
         'console_scripts': ['sr = sr.tools.cli:main']
     },
+    author='Student Robotics',
+    author_email='info@studentrobotics.org',
     install_requires=[
         'PyYAML >=3.11, <4',
         'sympy >=0.7, <1',

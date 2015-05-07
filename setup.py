@@ -54,10 +54,6 @@ setup(
     },
     include_package_data=True,
     zip_safe=False,
-    classifiers=[
-        'Development Status :: 5 - Production/Stable',
-        'Topic :: Utilities'
-    ],
     test_suite='nose.collector',
     cmdclass={
         'install_data': install_data_with_sphinx

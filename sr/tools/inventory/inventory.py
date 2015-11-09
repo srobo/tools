@@ -146,6 +146,8 @@ class Item(object):
         self.path = path
         self.parent = parent
         m = RE_PART.match(os.path.basename(path))
+        if m is None:
+            raise ValueError('Invalid asset: {}'.format(path))
         self.name = m.group(1)
         self.code = m.group(2)
 

@@ -13,7 +13,7 @@ def command(args):
     partcode = assetcode.normalise(args.partcode)
     part = inv.root.parts[partcode]
 
-    pager_text = "Full path: " + part.path
+    pager_text = "Full path: " + part.path + '\n'
     with open(part.info_path, 'r') as info_file:
         pager_text += info_file.read() + '\n'
 

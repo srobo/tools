@@ -1,15 +1,27 @@
 from __future__ import print_function
 
 
-GIT_URL = 'https://www.studentrobotics.org/robogit/{team}/{project}.git'
+GIT_URL = 'https://{username}:{password}@www.studentrobotics.org/robogit/{team}/{project}.git'
 
 
 def command(args):
     import sys
     import subprocess
 
-    cmdline = ["git", "clone", GIT_URL.format(team=args.team.upper(),
-                                              project=args.project)]
+    from sr.tools.config import Config
+
+    config = Config()
+
+    username = config.get_user()
+    password = config.get_password(user=username)
+
+    url = GIT_URL.format(username=username,
+                         password=password,
+                         team=args.team.upper(),
+                         project=args.project)
+
+    cmdline = ["git", "clone", url]
+
     if args.dir is not None:
         cmdline.append(args.dir)
 

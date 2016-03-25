@@ -39,6 +39,7 @@ setup(
         'pyparsing >=2.0, <3',
         'BeautifulSoup4 >=4.3, <5',
         'numpy >=1.9, <2',
+        'requests >=2.9, <3',
         'six >=1.9, <2',
         'tabulate >=0.7, <1',
         'xlwt-future >=0.8, <1'

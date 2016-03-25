@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 
-GIT_URL = 'https://{username}:{password}@www.studentrobotics.org/robogit/{team}/{project}.git'
+GIT_URL = 'https://{username}@www.studentrobotics.org/robogit/{team}/{project}.git'
 
 
 def command(args):
@@ -13,10 +13,8 @@ def command(args):
     config = Config()
 
     username = config.get_user()
-    password = config.get_password(user=username)
 
     url = GIT_URL.format(username=username,
-                         password=password,
                          team=args.team.upper(),
                          project=args.project)
 

@@ -313,7 +313,7 @@ class Inventory(object):
     @property
     def current_user_number(self):
         """
-        Get the user ID of the currently configure Git user.
+        Get the user ID of the currently configured Git user.
 
         :returns: The current user number.
         :raises KeyError: If the user doesn't exist.

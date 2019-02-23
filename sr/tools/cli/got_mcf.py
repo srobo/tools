@@ -3,14 +3,13 @@ from __future__ import print_function
 '''Record that we have received a Media Consent Form for a given user.'''
 
 USERMAN_URL = "https://{server}:{port}/userman/"
-USERMAN_URL = "http://localhost:5000/"
 
 class UsermanServer(object):
 
     @classmethod
     def from_config(cls, config):
-        username = 'blueshirt-mcf' # config.get_user()
-        password = 'blueshirt' # config.get_password(user=username)
+        username = config.get_user()
+        password = config.get_password(user=username)
 
         base_url = USERMAN_URL.format(server=config['server'],
                                       port=config['https_port'])

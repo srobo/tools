@@ -90,7 +90,7 @@ def code_to_num(asset_code):
     :rtype: pair of ints
     """
     asset_code = normalise(asset_code)
-    if not luhn.is_valid(asset_code, ALPHABET):
+    if not is_valid(asset_code):
         raise ValueError("Asset code '{}' is not valid".format(asset_code))
 
     # Remove checkdigit

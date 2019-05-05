@@ -11,13 +11,17 @@ class TestNormalise(unittest.TestCase):
 
 
 class TestValidity(unittest.TestCase):
+    longMessage = True
+
     def test_valid(self):
         for code in ['srp1u28']:
-            self.assertTrue(assetcode.is_valid(code))
+            msg = "{} should be valid".format(code)
+            self.assertTrue(assetcode.is_valid(code), msg)
 
     def test_invalid(self):
-        for code in ['abc']:
-            self.assertFalse(assetcode.is_valid(code))
+        for code in ['abc', 'sr2017', '2017', '2017-KICKSTART']:
+            msg = "{} should not be valid".format(code)
+            self.assertFalse(assetcode.is_valid(code), msg)
 
 
 class TestConversion(unittest.TestCase):

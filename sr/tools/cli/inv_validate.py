@@ -22,6 +22,19 @@ def check_no_duplicates(inventory):
         return "There are duplicate asset codes: " + codes_str
 
 
+@check
+def check_assets_are_valid(inventory):
+    from sr.tools.inventory.assetcode import is_valid
+
+    invalid_asset_codes = [
+        code for code in inventory.asset_codes if not is_valid(code)
+    ]
+
+    if invalid_asset_codes:
+        codes_str = ", ".join(invalid_asset_codes)
+        return "There are invalid asset codes: " + codes_str
+
+
 def command(args):
     from sr.tools.inventory.inventory import get_inventory
 

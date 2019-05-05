@@ -38,6 +38,19 @@ class NotAnInventoryError(OSError):
         self.directory = directory
 
 
+class InvalidFileError(ValueError):
+    """
+    Raised when an invalid file is found in the inventory.
+
+    :param path: The path to the file, relative to the inventory.
+                 Also accessible as the ``path`` attribute of this class.
+    """
+    def __init__(self, path, comment):
+        msg = "Invalid asset: '{}' {}.".format(path, comment)
+        super(InvalidFileError, self).__init__(msg)
+        self.path = path
+
+
 def find_top_level_dir(start_dir=None):
     """
     Find the top level of the inventory repo.
@@ -147,7 +160,8 @@ class Item(object):
         self.parent = parent
         m = RE_PART.match(os.path.basename(path))
         if m is None:
-            raise ValueError('Invalid asset: {}'.format(path))
+            raise InvalidFileError(path, "does not have a valid name (should be"
+                                   " in the form <name>-sr<part-code>)")
         self.name = m.group(1)
         self.code = m.group(2)
 

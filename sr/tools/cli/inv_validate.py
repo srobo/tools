@@ -1,10 +1,25 @@
 from __future__ import print_function
 
+CHECKS = []
+
+
+def check(fn):
+    CHECKS.append(fn)
+    return fn
+
 
 def get_duplicates(items):
     import collections
 
     return [x for x, y in collections.Counter(items).items() if y > 1]
+
+
+@check
+def check_no_duplicates(inventory):
+    duplicate_asset_codes = get_duplicates(inventory.asset_codes)
+    if duplicate_asset_codes:
+        codes_str = ", ".join(duplicate_asset_codes)
+        return "There are duplicate asset codes: " + codes_str
 
 
 def command(args):
@@ -13,13 +28,11 @@ def command(args):
     inventory = get_inventory()
 
     errors = 0
-
-    # check for duplicate asset codes
-    duplicate_asset_codes = get_duplicates(inventory.asset_codes)
-    if duplicate_asset_codes:
-        print('There are duplicate asset codes:',
-              ', '.join(duplicate_asset_codes))
-        errors += 1
+    for check_fn in CHECKS:
+        message = check_fn(inventory)
+        if message:
+            print(message)
+            errors += 1
 
     if errors == 0:
         print('No problems found. :)')

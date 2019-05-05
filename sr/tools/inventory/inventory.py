@@ -195,6 +195,12 @@ class ItemTree(object):
     :param str path: The path to the tree.
     :param parent: The parent item or tree.
     """
+
+    special_fnames = {
+        'info': "group 'info' files may only exist within directories "
+                "which are themselves assets",
+    }
+
     def __init__(self, path, parent=None):
         """Create a new item tree."""
         self.name = os.path.basename(path)
@@ -229,10 +235,8 @@ class ItemTree(object):
             p = os.path.join(self.path, fname)
 
             if os.path.isfile(p):
-                if fname == 'info':
-                    msg = "group 'info' files may only exist within directories" \
-                          " which are themselves assets"
-                    raise InvalidFileError(p, msg)
+                if fname in self.special_fnames:
+                    raise InvalidFileError(p, self.special_fnames[fname])
 
                 # it's got to be an item
                 i = Item(p, parent=self)

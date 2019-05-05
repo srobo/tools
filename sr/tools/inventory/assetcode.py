@@ -85,7 +85,7 @@ def code_to_num(asset_code):
     """
     Convert an alphanumeric asset code to a user/part number combo.
 
-    :param str asset_code: The asset code to convert.s
+    :param str asset_code: The asset code to convert.
     :returns: A tuple consisting of the user and part number.
     :rtype: pair of ints
     """

@@ -200,6 +200,7 @@ class ItemTree(object):
         'info': "group 'info' files may only exist within directories "
                 "which are themselves assets",
     }
+    ignore_fnames =  ()
 
     def __init__(self, path, parent=None):
         """Create a new item tree."""
@@ -223,6 +224,9 @@ class ItemTree(object):
         Ignore dotfiles etc.
         """
         if should_ignore(fname):
+            return True
+
+        if fname in self.ignore_fnames:
             return True
 
         return False
@@ -289,6 +293,9 @@ class ItemGroup(ItemTree):
     :param str path: The path to the item group.
     :param parent: The parent item or tree.
     """
+
+    ignore_fnames = ('info',)
+
     def __init__(self, path, parent=None):
         """Create a new item group."""
         ItemTree.__init__(self, path, parent=parent)
@@ -317,18 +324,6 @@ class ItemGroup(ItemTree):
             raise Exception("Group %s lacks an elements field" % self.code)
 
         self.elements = self.info["elements"]
-
-    def _should_ignore(self, fname):
-        """
-        Ignore dotfiles etc. and group description files
-        """
-        if super(ItemGroup, self)._should_ignore(fname):
-            return True
-
-        if fname == 'info' and isinstance(self, ItemGroup):
-            return True
-
-        return False
 
 
 class Inventory(object):

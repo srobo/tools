@@ -214,13 +214,18 @@ class ItemTree(object):
 
     def _find_children(self):
         for fname in os.listdir(self.path):
-            if should_ignore(fname) or fname == "info":
-                # ignore dotfiles and group description files
+            if should_ignore(fname) or (fname == 'info' and isinstance(self, ItemGroup)):
+                # ignore dotfiles and, if this is a group, group description files
                 continue
 
             p = os.path.join(self.path, fname)
 
             if os.path.isfile(p):
+                if fname == 'info':
+                    msg = "group 'info' files may only exist within directories" \
+                          " which are themselves assets"
+                    raise InvalidFileError(p, msg)
+
                 # it's got to be an item
                 i = Item(p, parent=self)
                 self.children[i.code] = i

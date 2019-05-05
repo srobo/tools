@@ -2,6 +2,8 @@ from __future__ import print_function
 
 
 def command(args):
+    import os
+    import os.path
     import subprocess
     import sys
 
@@ -9,6 +11,7 @@ def command(args):
     from sr.tools.inventory.inventory import get_inventory
 
     inv = get_inventory()
+    cwd = os.getcwd()
 
     parts = []
     for c in args.assetcodes:
@@ -28,6 +31,10 @@ def command(args):
                   file=sys.stderr)
             sys.exit(1)
 
+        if part.parent.path == cwd:
+            print("Warning: Part {} is already in {}.".format(code, cwd))
+            continue
+
         if hasattr(part.parent, "code"):
             if args.assy:
                 parts.append(part.parent)
@@ -40,9 +47,11 @@ def command(args):
         else:
             parts.append(part)
 
-    paths = [x.path for x in parts]
-    subprocess.check_call(['git', 'mv'] + paths + ['.'])
-
+    if parts:
+        paths = [x.path for x in parts]
+        subprocess.check_call(['git', 'mv'] + paths + ['.'])
+    else:
+        print("Warning: No parts to move", file=sys.stderr)
 
 def add_subparser(subparsers):
     parser = subparsers.add_parser('inv-mv',

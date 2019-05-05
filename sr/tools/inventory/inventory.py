@@ -212,10 +212,18 @@ class ItemTree(object):
                 self.types[i.name] = []
             self.types[i.name].append(i)
 
+    def _should_ignore(self, fname):
+        """
+        Ignore dotfiles etc.
+        """
+        if should_ignore(fname):
+            return True
+
+        return False
+
     def _find_children(self):
         for fname in os.listdir(self.path):
-            if should_ignore(fname) or (fname == 'info' and isinstance(self, ItemGroup)):
-                # ignore dotfiles and, if this is a group, group description files
+            if self._should_ignore(fname):
                 continue
 
             p = os.path.join(self.path, fname)
@@ -305,6 +313,18 @@ class ItemGroup(ItemTree):
             raise Exception("Group %s lacks an elements field" % self.code)
 
         self.elements = self.info["elements"]
+
+    def _should_ignore(self, fname):
+        """
+        Ignore dotfiles etc. and group description files
+        """
+        if super(ItemGroup, self)._should_ignore(fname):
+            return True
+
+        if fname == 'info' and isinstance(self, ItemGroup):
+            return True
+
+        return False
 
 
 class Inventory(object):

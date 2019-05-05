@@ -197,10 +197,13 @@ class ItemTree(object):
     """
 
     special_fnames = {
+        'README.md': "README files are only allowed within plain directories; "
+                     "use the 'info' file within an asset directory to store "
+                     "general information",
         'info': "group 'info' files may only exist within directories "
                 "which are themselves assets",
     }
-    ignore_fnames =  ()
+    ignore_fnames =  ('README.md',)
 
     def __init__(self, path, parent=None):
         """Create a new item tree."""

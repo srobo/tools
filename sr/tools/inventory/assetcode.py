@@ -13,6 +13,7 @@ from sr.tools.inventory import luhn
 ALPHABET = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C",
             "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R",
             "T", "U", "V", "W", "X", "Y"]
+ALPHABET_SET = set(ALPHABET)
 
 
 def normalise(asset_code):
@@ -41,6 +42,11 @@ def is_valid(asset_code):
     :rtype: bool
     """
     asset_code = normalise(asset_code)
+
+    invalid_characters = set(asset_code) - ALPHABET_SET
+    if invalid_characters:
+        return False
+
     return luhn.is_valid(asset_code, ALPHABET)
 
 
@@ -79,12 +85,12 @@ def code_to_num(asset_code):
     """
     Convert an alphanumeric asset code to a user/part number combo.
 
-    :param str asset_code: The asset code to convert.s
+    :param str asset_code: The asset code to convert.
     :returns: A tuple consisting of the user and part number.
     :rtype: pair of ints
     """
     asset_code = normalise(asset_code)
-    if not luhn.is_valid(asset_code, ALPHABET):
+    if not is_valid(asset_code):
         raise ValueError("Asset code '{}' is not valid".format(asset_code))
 
     # Remove checkdigit

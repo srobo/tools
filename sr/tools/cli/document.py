@@ -123,7 +123,7 @@ def add_subparser(subparser):
     import argparse
 
     parser = subparser.add_parser(
-        'document', description="Generate formatted documents.")
+        'document', help="Generate formatted documents.")
     parser.add_argument("source", metavar="FILE", type=argparse.FileType('r'),
                         help="Source markdown file")
     parser.add_argument("-o", "--output", dest="output",

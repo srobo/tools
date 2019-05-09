@@ -38,6 +38,19 @@ class NotAnInventoryError(OSError):
         self.directory = directory
 
 
+class InvalidFileError(ValueError):
+    """
+    Raised when an invalid file is found in the inventory.
+
+    :param path: The path to the file, relative to the inventory.
+                 Also accessible as the ``path`` attribute of this class.
+    """
+    def __init__(self, path, comment):
+        msg = "Invalid asset: '{}' {}.".format(path, comment)
+        super(InvalidFileError, self).__init__(msg)
+        self.path = path
+
+
 def find_top_level_dir(start_dir=None):
     """
     Find the top level of the inventory repo.
@@ -147,7 +160,8 @@ class Item(object):
         self.parent = parent
         m = RE_PART.match(os.path.basename(path))
         if m is None:
-            raise ValueError('Invalid asset: {}'.format(path))
+            raise InvalidFileError(path, "does not have a valid name (should be"
+                                   " in the form <name>-sr<part-code>)")
         self.name = m.group(1)
         self.code = m.group(2)
 
@@ -181,6 +195,13 @@ class ItemTree(object):
     :param str path: The path to the tree.
     :param parent: The parent item or tree.
     """
+
+    special_fnames = {
+        'info': "group 'info' files may only exist within directories "
+                "which are themselves assets",
+    }
+    ignore_fnames =  ()
+
     def __init__(self, path, parent=None):
         """Create a new item tree."""
         self.name = os.path.basename(path)
@@ -198,15 +219,29 @@ class ItemTree(object):
                 self.types[i.name] = []
             self.types[i.name].append(i)
 
+    def _should_ignore(self, fname):
+        """
+        Ignore dotfiles etc.
+        """
+        if should_ignore(fname):
+            return True
+
+        if fname in self.ignore_fnames:
+            return True
+
+        return False
+
     def _find_children(self):
         for fname in os.listdir(self.path):
-            if should_ignore(fname) or fname == "info":
-                # ignore dotfiles and group description files
+            if self._should_ignore(fname):
                 continue
 
             p = os.path.join(self.path, fname)
 
             if os.path.isfile(p):
+                if fname in self.special_fnames:
+                    raise InvalidFileError(p, self.special_fnames[fname])
+
                 # it's got to be an item
                 i = Item(p, parent=self)
                 self.children[i.code] = i
@@ -258,6 +293,9 @@ class ItemGroup(ItemTree):
     :param str path: The path to the item group.
     :param parent: The parent item or tree.
     """
+
+    ignore_fnames = ('info',)
+
     def __init__(self, path, parent=None):
         """Create a new item group."""
         ItemTree.__init__(self, path, parent=parent)

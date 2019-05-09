@@ -147,8 +147,7 @@ class Condition(Terminal):
             for name in expected:
                 count = 1
                 if isinstance(name, dict):
-                    count = name.values()[0]
-                    name = name.keys()[0]
+                    name, count = list(name.items())[0]
                 if name not in inv_node.types:
                     ret.append('broken')
                 if name in inv_node.types:

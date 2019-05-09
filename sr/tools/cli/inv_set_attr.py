@@ -35,7 +35,7 @@ def command(args):
     for code in args.asset:
         part = inv.root.parts[assetcode.normalise(code)]
         if part is not None:
-            replace_line(part.path, args.attrname, args.attrvalue)
+            replace_line(part.info_path, args.attrname, args.attrvalue)
         else:
             print("Could not find asset:", code, file=sys.stderr)
             sys.exit(1)

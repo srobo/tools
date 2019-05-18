@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v1.1.1
+------
+
+- Add changelog entry for v1.1.0.
+
 v1.1.0
 ------
 

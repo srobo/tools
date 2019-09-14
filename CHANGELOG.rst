@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v1.1.2
+------
+
+- Fix installation based on the sdist. (Thanks Kier!)
+
 v1.1.1
 ------
 

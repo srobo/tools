@@ -93,14 +93,6 @@ Environment
     :undoc-members:
     :show-inheritance:
 
-Gerrit
-------
-
-.. automodule:: sr.tools.gerrit
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 .. _api.inventory:
 
 Inventory

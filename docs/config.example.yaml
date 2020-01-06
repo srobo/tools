@@ -16,9 +16,6 @@ server: www.studentrobotics.org
 # The port to access HTTPS on
 https_port: 443
 
-# ssh URL for git to use with gerrit
-gerrit_ssh: "sr-gerrit"
-
 # Location of SR spending.git
 # (if set to null, then this setting is ignored)
 spending: null

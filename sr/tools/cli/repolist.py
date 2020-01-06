@@ -12,18 +12,13 @@ def command(args):
     if args.regex:
         matcher = re.compile(args.regex)
 
-    u = urlopen('https://www.studentrobotics.org/gerrit/projects/?d')
+    u = urlopen('https://api.github.com/orgs/srobo/repos')
     raw_json = u.read().decode('UTF-8')
 
-    NO_EXEC_PREFIX = ')]}\''
-    if raw_json.startswith(NO_EXEC_PREFIX):
-        raw_json = raw_json[len(NO_EXEC_PREFIX):].strip()
+    repos_data = json.loads(raw_json)
 
-    projects_map = json.loads(raw_json)
-
-    paths = sorted(projects_map.keys())
-    for path in paths:
-        path += '.git'
+    for repo in repos_data:
+        path = repo['name'] + '.git'
         if matcher is None or matcher.search(path):
             print(path)
 

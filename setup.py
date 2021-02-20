@@ -23,7 +23,12 @@ setup(
     name='sr.tools',
     version=__version__,
     keywords='sr student robotics tools utilities utils',
-    url='https://www.studentrobotics.org/trac/wiki/DevScripts',
+    url='https://github.com/srobo/tools',
+    project_urls={
+        'Code': 'https://github.com/srobo/tools',
+        'Documentation': 'https://srtools.readthedocs.io/en/latest/',
+        'Issue tracker': 'https://github.com/srobo/tools/issues',
+    },
     description=__description__,
     long_description=long_description,
     namespace_packages=['sr'],

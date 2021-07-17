@@ -20,7 +20,3 @@ The configuration file looks something like this:
     server: www.studentrobotics.org
     # The port to access HTTPS on
     https_port: 443
-
-    # Location of SR spending.git
-    # (if set to null, then this setting is ignored)
-    spending: null

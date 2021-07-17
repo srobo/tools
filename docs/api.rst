@@ -69,14 +69,6 @@ Bill of Materials
     :undoc-members:
     :show-inheritance:
 
-Budget
-------
-
-.. automodule:: sr.tools.budget
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 Configuration
 -------------
 
@@ -124,14 +116,6 @@ Inventory
     :show-inheritance:
 
 .. automodule:: sr.tools.inventory.query_parser
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-Spending
---------
-
-.. automodule:: sr.tools.spending
     :members:
     :undoc-members:
     :show-inheritance:

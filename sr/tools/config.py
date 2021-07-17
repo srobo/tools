@@ -32,7 +32,6 @@ class Config(dict):
         self['keyring_service'] = "SR tools"
         self['server'] = 'www.studentrobotics.org'
         self['https_port'] = 443
-        self['spending'] = None
 
         # override with the local config
         try:

@@ -41,7 +41,6 @@ setup(
     install_requires=[
         'PyYAML >=3.11, !=4.*, <6 ; python_version >= "3.5"',
         'PyYAML >=3.11, <4 ; python_version <= "3.4"',
-        'sympy >=0.7, <1',
         'pyparsing >=2.0, <3',
         'BeautifulSoup4 >=4.3, <5',
         'numpy >=1.9, <2',

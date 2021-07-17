@@ -141,7 +141,7 @@ def cached_yaml_load(path):
             except EOFError:
                 os.remove(p)  # cache file corrupted, recreate it
 
-    y = yaml.load(codecs.open(path, "r", encoding="utf-8"))
+    y = yaml.safe_load(codecs.open(path, "r", encoding="utf-8"))
     with open(p, 'wb') as file:
         pickle.dump(y, file)
     return y

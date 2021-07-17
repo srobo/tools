@@ -48,7 +48,7 @@ def command(args):
         open_editor(os.path.join(groupname, "info"))
 
     if args.create_all:
-        assy_data = yaml.load(open(templatefn))
+        assy_data = yaml.safe_load(open(templatefn))
         if "elements" in assy_data:
             os.chdir(groupname)
             for element in assy_data["elements"]:

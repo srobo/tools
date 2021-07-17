@@ -31,7 +31,7 @@ def command(args):
             os.execv("./check", ["./check"] + sys.argv[1:])
         exit(1)
 
-    funds_in = yaml.load(f)
+    funds_in = yaml.safe_load(f)
     total_in = D(0)
 
     for i in funds_in["incoming"]:

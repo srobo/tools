@@ -19,8 +19,8 @@ Running
 
     $ sr --help
 
-.. |Build Status| image:: https://circleci.com/gh/srobo/tools.svg?style=svg
-   :target: https://circleci.com/gh/srobo/tools
+.. |Build Status| image:: https://circleci.com/gh/srobo/tools/tree/master.svg?style=svg
+   :target: https://circleci.com/gh/srobo/tools/tree/master
 
 .. |Docs Status| image:: https://readthedocs.org/projects/srtools/badge/?version=latest
    :target: https://srtools.readthedocs.org/

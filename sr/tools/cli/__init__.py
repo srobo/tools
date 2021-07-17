@@ -23,8 +23,8 @@ __all__ = ['cam_serial', 'check_my_git',
            'list_commands', 'mcv4b_part_code', 'mouser',
            'pcb_lint', 'pcb_to_thou', 'price_graph', 'repolist', 'rs',
            'schedule_knockout', 'sd_serial', 'stockcheck',
-           'symbol_correct', 'trac_attach', 'trac_depends_on', 'trac_depgraph',
-           'trac_deps_add', 'trac_deps_rm', 'update', 'usb_key_serial']
+           'symbol_correct',
+           'update', 'usb_key_serial']
 
 
 def get_version():

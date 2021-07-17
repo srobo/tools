@@ -127,11 +127,3 @@ Team Git Repositories
     :members:
     :undoc-members:
     :show-inheritance:
-
-Trac
-----
-
-.. automodule:: sr.tools.trac
-    :members:
-    :undoc-members:
-    :show-inheritance:

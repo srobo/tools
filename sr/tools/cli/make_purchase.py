@@ -88,7 +88,7 @@ class SpendRequest(object):
         import yaml
 
         with open(self.fname, "r") as f:
-            data = yaml.load(f)
+            data = yaml.safe_load(f)
 
         self.username = data["username"]
         self.summary = data["summary"]

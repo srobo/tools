@@ -1,6 +1,5 @@
 from __future__ import print_function
 
-
 GIT_URL = 'https://{username}@www.studentrobotics.org/robogit/{team}/{project}.git'
 
 

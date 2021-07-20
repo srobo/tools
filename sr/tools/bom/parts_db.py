@@ -1,9 +1,10 @@
 """Student Robotics parts database access library."""
 import csv
+
 import pkg_resources
 import six
 
-from sr.tools.bom import farnell, rs, digikey, mouser
+from sr.tools.bom import digikey, farnell, mouser, rs
 
 
 def get_db():

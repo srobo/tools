@@ -1,8 +1,15 @@
-from pyparsing import oneOf, CaselessKeyword, Forward, Literal, Optional, Or, \
-    Regex, ZeroOrMore
+from pyparsing import (
+    CaselessKeyword,
+    Forward,
+    Literal,
+    oneOf,
+    Optional,
+    Or,
+    Regex,
+    ZeroOrMore,
+)
 
 from sr.tools.inventory import query_ast
-
 
 TRUE = CaselessKeyword("true")
 FALSE = CaselessKeyword("false")

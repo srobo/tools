@@ -1,12 +1,11 @@
 """Routines for extracting BOMs from schematics."""
 from __future__ import print_function
 
-from decimal import Decimal
 import os
+from decimal import Decimal
 
 from sr.tools.bom import schem
 from sr.tools.bom.threadpool import ThreadPool
-
 
 STOCK_OUT = 0
 STOCK_OK = 1

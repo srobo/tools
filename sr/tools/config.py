@@ -2,17 +2,18 @@
 from __future__ import print_function
 
 import getpass
-import six
 import sys
 
+import six
 import yaml
+
+from sr.tools.environment import get_config_filename
 
 try:
     import keyring
 except ImportError:
     keyring = None
 
-from sr.tools.environment import get_config_filename
 
 
 if six.PY2:

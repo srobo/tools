@@ -1,4 +1,5 @@
-from __future__ import print_function, division
+from __future__ import division, print_function
+
 import argparse
 from datetime import timedelta
 from math import ceil, floor

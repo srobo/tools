@@ -2,13 +2,13 @@ from __future__ import print_function
 
 import argparse
 import importlib
-import pkg_resources
 import sys
 import traceback
 
+import pkg_resources
+
 from sr.tools import __description__
 from sr.tools.inventory.inventory import NotAnInventoryError
-
 
 # make sure to update this with new tools if they are created
 __all__ = ['cam_serial', 'check_my_git',

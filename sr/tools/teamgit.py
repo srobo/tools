@@ -1,8 +1,7 @@
+import os
 import pipes
 import re
 import subprocess
-import os
-
 
 DEFAULT_SERVER = 'studentrobotics.org'
 DEFAULT_REPOROOT = '/var/www/html/ide/repos'

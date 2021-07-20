@@ -1,6 +1,5 @@
 from __future__ import print_function
 
-
 # Motorobards have FTDI ICs on them
 FTDI_ID_VENDOR = '0403'  # Future Technology Devices International, Ltd
 FTDI_ID_PRODUCT = '6001'  # FT232 USB-Serial (UART) IC

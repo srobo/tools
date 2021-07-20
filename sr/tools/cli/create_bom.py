@@ -1,6 +1,5 @@
 from __future__ import print_function
 
-
 res = 150  # Image resolution in DPI
 
 

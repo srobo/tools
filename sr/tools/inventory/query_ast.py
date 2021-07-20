@@ -1,5 +1,4 @@
 import fnmatch
-
 from functools import reduce
 
 from sr.tools.inventory import assetcode, inventory

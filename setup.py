@@ -1,10 +1,12 @@
 #!/usr/bin/env python
+
+import os
 from distutils.command.install_data import install_data
 from glob import glob
-import os
-from setuptools import setup, find_packages
 
-from sr.tools import __version__, __description__
+from setuptools import find_packages, setup
+
+from sr.tools import __description__, __version__
 
 
 class install_data_with_sphinx(install_data):

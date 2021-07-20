@@ -7,7 +7,6 @@ from __future__ import division
 
 from sr.tools.inventory import luhn
 
-
 # The characters used in asset codes. They have been chosen to avoid similar
 # looking characters to avoid errors when reading written codes.
 ALPHABET = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C",

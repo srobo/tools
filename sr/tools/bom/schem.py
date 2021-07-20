@@ -3,7 +3,6 @@ import re
 
 from sr.tools.bom import geda, parts_db
 
-
 GSCHEM = 1
 UNKNOWN = 2
 

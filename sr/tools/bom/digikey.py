@@ -1,7 +1,8 @@
 """Routines for scraping data about parts from digikey."""
-from bs4 import BeautifulSoup
-from decimal import Decimal
 import re
+from decimal import Decimal
+
+from bs4 import BeautifulSoup
 
 from sr.tools.bom import distpart
 from sr.tools.bom.cachedfetch import grab_url_cached

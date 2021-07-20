@@ -7,18 +7,16 @@ from __future__ import print_function
 import codecs
 import email.utils
 import hashlib
-import re
 import os
+import re
 import subprocess
 import sys
 
 import six.moves.cPickle as pickle
-
 import yaml
 
-from sr.tools.inventory import assetcode
 from sr.tools.environment import get_cache_dir
-
+from sr.tools.inventory import assetcode
 
 CACHE_DIR = get_cache_dir('inventory')
 RE_PART = re.compile("^(.+)-sr([%s]+)$" % "".join(assetcode.ALPHABET))

@@ -11,7 +11,8 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('sd-serial',
-                                   help='Displays the serial number of '
-                                        'connected mmc cards.')
+    parser = subparsers.add_parser(
+        'sd-serial',
+        help='Displays the serial number of connected mmc cards.',
+    )
     parser.set_defaults(func=command)

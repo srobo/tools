@@ -22,8 +22,9 @@ class NonTerminal(ASTNode):
 
         :returns: A list of matching nodes.
         """
-        raise NotImplementedError("match(...) not implemented"
-                                  " for {}".format(self.__class__))
+        raise NotImplementedError(
+            "match(...) not implemented for {}".format(self.__class__),
+        )
 
 
 class Terminal(ASTNode):
@@ -36,8 +37,9 @@ class Terminal(ASTNode):
 
         :returns: True or False depending on whether the node match.
         """
-        raise NotImplementedError("match_single(...) not implemented"
-                                  " for {}".format(self.__class__))
+        raise NotImplementedError(
+            "match_single(...) not implemented for {}".format(self.__class__),
+        )
 
     def match(self, inv_nodes):
         """
@@ -86,8 +88,9 @@ class And(NonTerminal):
     def match(self, inv_nodes):
         left_matches = self.left.match(inv_nodes)
         right_matches = self.right.match(inv_nodes)
-        return list({x for x in inv_nodes
-                     if (x in left_matches and x in right_matches)})
+        return list(
+            {x for x in inv_nodes if (x in left_matches and x in right_matches)},
+        )
 
     def sexpr(self):
         return "(AND {0} {1})".format(self.left.sexpr(), self.right.sexpr())
@@ -110,8 +113,7 @@ class Or(NonTerminal):
     def match(self, inv_nodes):
         left_matches = self.left.match(inv_nodes)
         right_matches = self.right.match(inv_nodes)
-        return list({x for x in inv_nodes
-                     if (x in left_matches or x in right_matches)})
+        return list({x for x in inv_nodes if (x in left_matches or x in right_matches)})
 
     def sexpr(self):
         return "(OR {0} {1})".format(self.left.sexpr(), self.right.sexpr())
@@ -233,14 +235,16 @@ class Assy(Terminal):
     :param assy: Whether or not the asset has an assembly.
     :type assy: A string representation of a bool ('true', '1', etc)
     """
+
     def __init__(self, assy):
         """Initialise the 'assy' check node."""
         super(Assy, self).__init__()
         self.assy = assy.lower() in ('true', '1', 'yes', 't')
 
     def match_single(self, inv_node):
-        return self.assy == (hasattr(inv_node, 'code')
-                             and hasattr(inv_node, 'children'))
+        return self.assy == (
+            hasattr(inv_node, 'code') and hasattr(inv_node, 'children')
+        )
 
     def sexpr(self):
         return "(Assy {0})".format(self.assy)
@@ -352,6 +356,7 @@ class Function(NonTerminal):
     :params str func_name: The name of the function.
     :params node: The node to run the functions on.
     """
+
     _functions = {}
 
     @classmethod
@@ -359,6 +364,7 @@ class Function(NonTerminal):
         def wrap(f):
             cls._functions[name] = f
             return f
+
         return wrap
 
     @classmethod
@@ -371,9 +377,15 @@ class Function(NonTerminal):
         self.node = node
 
     def match(self, inv_nodes):
-        return list(set(reduce(lambda x, y: list(x) + list(y),
-                               map(self._functions[self.func_name],
-                                   self.node.match(inv_nodes)), [])))
+        return list(
+            set(
+                reduce(
+                    lambda x, y: list(x) + list(y),
+                    map(self._functions[self.func_name], self.node.match(inv_nodes)),
+                    [],
+                ),
+            ),
+        )
 
     def sexpr(self):
         return "(Function '{0}' {1})".format(self.func_name, self.node.sexpr())
@@ -402,7 +414,9 @@ def _siblings(inv_node):
 @Function.register('descendants')
 def _descendants(inv_node):
     """A function which returns the descendants of a node."""
+
     def rec(node):
         children = getattr(node, 'children', {})
         return sum(map(rec, children.values()), [node])
+
     return rec(inv_node)[1:]

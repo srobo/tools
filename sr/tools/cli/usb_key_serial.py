@@ -11,7 +11,8 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('usb-key-serial',
-                                   help='Displays the serial number of '
-                                        'connected USB keys')
+    parser = subparsers.add_parser(
+        'usb-key-serial',
+        help='Displays the serial number of connected USB keys',
+    )
     parser.set_defaults(func=command)

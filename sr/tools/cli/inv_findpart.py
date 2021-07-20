@@ -30,16 +30,17 @@ def command(args):
             if c in inv.root.types:
                 spec_type = PART_TYPE
             else:
-                print("Error: %s is an invalid asset code or part type." %
-                      c, file=sys.stderr)
+                print(
+                    "Error: %s is an invalid asset code or part type." % c,
+                    file=sys.stderr,
+                )
                 sys.exit(1)
 
         if spec_type == ASSET_CODE:
             try:
                 part = inv.root.parts[code]
             except KeyError:
-                print("Error: There is no part with code %s." %
-                      code, file=sys.stderr)
+                print("Error: There is no part with code %s." % code, file=sys.stderr)
                 sys.exit(1)
 
             parts.append(part)
@@ -71,18 +72,33 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('inv-findpart',
-                                   help='Find the location of a specific item '
-                                        'in the inventory.')
-    parser.add_argument("-s", "--stat", action="store_true", default=False,
-                        dest="asset_stat",
-                        help="Show the status of each asset listed based upon "
-                             "the 'condition' field.")
-    parser.add_argument("-r", "--relpath", action="store_true", default=False,
-                        dest="relpath",
-                        help="Print relative, rather than absolute, paths.")
-    parser.add_argument("itemspecs", metavar="ITEM_SPEC", nargs="+",
-                        help="Either an SR asset code or part type. "
-                             "The nature of the specifier is auto-detected "
-                             "and asset codes/part types can be mixed.")
+    parser = subparsers.add_parser(
+        'inv-findpart',
+        help='Find the location of a specific item in the inventory.',
+    )
+    parser.add_argument(
+        "-s",
+        "--stat",
+        action="store_true",
+        default=False,
+        dest="asset_stat",
+        help="Show the status of each asset listed based upon "
+        "the 'condition' field.",
+    )
+    parser.add_argument(
+        "-r",
+        "--relpath",
+        action="store_true",
+        default=False,
+        dest="relpath",
+        help="Print relative, rather than absolute, paths.",
+    )
+    parser.add_argument(
+        "itemspecs",
+        metavar="ITEM_SPEC",
+        nargs="+",
+        help="Either an SR asset code or part type. "
+        "The nature of the specifier is auto-detected "
+        "and asset codes/part types can be mixed.",
+    )
     parser.set_defaults(func=command)

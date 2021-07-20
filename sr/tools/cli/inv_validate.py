@@ -26,9 +26,7 @@ def check_no_duplicates(inventory):
 def check_assets_are_valid(inventory):
     from sr.tools.inventory.assetcode import is_valid
 
-    invalid_asset_codes = [
-        code for code in inventory.asset_codes if not is_valid(code)
-    ]
+    invalid_asset_codes = [code for code in inventory.asset_codes if not is_valid(code)]
 
     if invalid_asset_codes:
         codes_str = ", ".join(invalid_asset_codes)
@@ -52,6 +50,8 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('inv-validate',
-                                   help='Check the state of the inventory.')
+    parser = subparsers.add_parser(
+        'inv-validate',
+        help='Check the state of the inventory.',
+    )
     parser.set_defaults(func=command)

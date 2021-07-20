@@ -15,7 +15,6 @@ except ImportError:
     keyring = None
 
 
-
 if six.PY2:
     input = raw_input
 
@@ -103,8 +102,7 @@ class Config(dict):
                 user = self["user"]
 
             if keyring is None:
-                print("Warning: Cannot import keyring module.",
-                      file=sys.stderr)
+                print("Warning: Cannot import keyring module.", file=sys.stderr)
             else:
                 password = keyring.get_password(self["keyring_service"], user)
                 if password is not None:

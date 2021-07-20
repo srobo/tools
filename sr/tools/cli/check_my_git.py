@@ -24,7 +24,8 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('check-my-git',
-                                   help='Checks whether you have git '
-                                        'configured sanely.')
+    parser = subparsers.add_parser(
+        'check-my-git',
+        help='Checks whether you have git configured sanely.',
+    )
     parser.set_defaults(func=command)

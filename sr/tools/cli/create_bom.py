@@ -5,12 +5,11 @@ res = 150  # Image resolution in DPI
 
 def html_header(f, names=None, image=None, xy=None):
     import base64
-    import pkg_resources
 
+    import pkg_resources
     from six.moves import reduce
 
-    header_file = pkg_resources.resource_stream('sr.tools.cli',
-                                                'bom_header.html')
+    header_file = pkg_resources.resource_stream('sr.tools.cli', 'bom_header.html')
     header = header_file.read().decode('UTF-8')
 
     title = ""
@@ -21,8 +20,10 @@ def html_header(f, names=None, image=None, xy=None):
     img_tag = ""
     cross_hair = ""
     if image is not None:
-        img_tag = """<img id="top" src="data:image/png;base64,%s" />""" \
-                  % base64.b64encode(image)
+        img_tag = (
+            """<img id="top" src="data:image/png;base64,%s" />"""
+            % base64.b64encode(image)
+        )
         cross_hair = """<img id="crosshair" src="data:image/png;base64,iVBOR
 w0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOx
 AAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADeSURBVFiF7
@@ -37,18 +38,28 @@ UVORK5CYII=" />"""
         jsondata = convert_xy_to_json(xy)
         xy_array = """var xy = %s;""" % jsondata
 
-    f.write(header % {'title': title, 'img_tag': img_tag,
-                      'xy': xy_array, 'cross_hair': cross_hair})
+    f.write(
+        header
+        % {
+            'title': title,
+            'img_tag': img_tag,
+            'xy': xy_array,
+            'cross_hair': cross_hair,
+        },
+    )
 
 
 def html_footer(f):
     import os
     import time
 
-    f.write("""
+    f.write(
+        """
 <p>Generated on %s with %s.</p>
 </body>
-</html>""" % (time.asctime(), os.path.basename('create-bom')))
+</html>"""
+        % (time.asctime(), os.path.basename('create-bom')),
+    )
 
 
 def pcode_extract_str(pcode):
@@ -157,8 +168,12 @@ def writeHTML(lines, out_fn, args, pcb=None):
         pcb_image = pcb.get_image(res)
         pcb_xy = pcb.get_xy()
 
-    html_header(outf, map(lambda n: os.path.basename(n), args.schematic),
-                image=pcb_image, xy=pcb_xy)
+    html_header(
+        outf,
+        map(lambda n: os.path.basename(n), args.schematic),
+        image=pcb_image,
+        xy=pcb_xy,
+    )
 
     line_num = 1
     total_parts = 0
@@ -176,14 +191,13 @@ def writeHTML(lines, out_fn, args, pcb=None):
 
         quantity = len(line)
 
-        p.update({"line-no": line_num,
-                  "order-no": order_num_html,
-                  "qty": quantity})
+        p.update({"line-no": line_num, "order-no": order_num_html, "qty": quantity})
 
         if p["part-number"] == "":
             p["part-number"] = "&nbsp;"
 
-        outf.write("""
+        outf.write(
+            """
             <td>%(line-no)i</td>
             <td>%(sr-code)s</td>
             <td>%(qty)i</td>
@@ -193,15 +207,20 @@ def writeHTML(lines, out_fn, args, pcb=None):
             <td>%(order-no)s</td>
             <td>%(manufacturer)s</td>
             <td>%(part-number)s</td>
-        """ % p)
+        """
+            % p,
+        )
         line_num += 1
 
         total_parts += quantity
 
         pcodes = get_sorted_pcodes(line)
         if pcb is not None:
-            pcodes = ["""<a onmouseover="highlight('%(x)s');return false" """
-                      """href="#">%(x)s</a>""" % {'x': x} for x in pcodes]
+            pcodes = [
+                """<a onmouseover="highlight('%(x)s');return false" """
+                """href="#">%(x)s</a>""" % {'x': x}
+                for x in pcodes
+            ]
         outf.write("<td>%s</td>" % "|".join(pcodes))
 
         outf.write("</tr>")
@@ -214,20 +233,23 @@ def writeHTML(lines, out_fn, args, pcb=None):
 
 def writeXLS(lines, out_fn):
     import xlwt
+
     book = xlwt.Workbook()
     sheet = book.add_sheet('BOM')
     rowx = 0
 
-    headings = [("Line No.", "line-no"),
-                ("Internal Part No.", "sr-code"),
-                ("Qty", "qty"),
-                ("Value/Description", "description"),
-                ("Package", "package"),
-                ("Distributor", "supplier"),
-                ("Distributor Order No.", "order-number"),
-                ("Manufacturer", "manufacturer"),
-                ("Part No.", "part-number"),
-                ("Reference Designators", "pcodes")]
+    headings = [
+        ("Line No.", "line-no"),
+        ("Internal Part No.", "sr-code"),
+        ("Qty", "qty"),
+        ("Value/Description", "description"),
+        ("Package", "package"),
+        ("Distributor", "supplier"),
+        ("Distributor Order No.", "order-number"),
+        ("Manufacturer", "manufacturer"),
+        ("Part No.", "part-number"),
+        ("Reference Designators", "pcodes"),
+    ]
 
     # Keep try of the longest line in a column so that we can set the column
     # width
@@ -241,13 +263,16 @@ def writeXLS(lines, out_fn):
 
     for line in lines:
         p = line.part
-        p.update({"line-no": rowx,
-                  "qty": len(line),
-                  "pcodes": ", ".join(get_sorted_pcodes(line))})
+        p.update(
+            {
+                "line-no": rowx,
+                "qty": len(line),
+                "pcodes": ", ".join(get_sorted_pcodes(line)),
+            },
+        )
         for colx, (heading, field) in enumerate(headings):
             sheet.write(rowx, colx, p[field])
-            col_char_count[colx] = max(
-                col_char_count[colx], len(str(p[field])))
+            col_char_count[colx] = max(col_char_count[colx], len(str(p[field])))
         rowx += 1
 
     for colx, c in enumerate(col_char_count):
@@ -262,14 +287,16 @@ def command(args):
     import os
     import sys
 
-    import sr.tools.bom.parts_db as parts_db
     import sr.tools.bom.bom as bom
     import sr.tools.bom.geda as geda
+    import sr.tools.bom.parts_db as parts_db
 
     lib = parts_db.get_db()
     if os.path.splitext(args.outfile)[1] == '.sch':
-        print("Output file has extension 'sch', "
-              "aborting as this is almost certainly a mistake")
+        print(
+            "Output file has extension 'sch', "
+            "aborting as this is almost certainly a mistake",
+        )
         sys.exit(1)
 
     pcb = None
@@ -295,24 +322,19 @@ def command(args):
 def command_deprecated(args):
     import sys
 
-    print("This is deprecated, please use 'create-bom' instead.",
-          file=sys.stderr)
+    print("This is deprecated, please use 'create-bom' instead.", file=sys.stderr)
     command(args)
 
 
 def add_subparser(subparsers):
     parser = subparsers.add_parser('create_bom', help='Create a BOM.')
-    parser.add_argument(
-        'schematic', nargs='+', help='The schematic to read from.')
+    parser.add_argument('schematic', nargs='+', help='The schematic to read from.')
     parser.add_argument('outfile', help='The output HTML/XLS file.')
-    parser.add_argument(
-        '--layout', '-l', help='The PCB layout for a single design.')
+    parser.add_argument('--layout', '-l', help='The PCB layout for a single design.')
     parser.set_defaults(func=command_deprecated)
 
     parser = subparsers.add_parser('create-bom', help='Create a BOM.')
-    parser.add_argument(
-        'schematic', nargs='+', help='The schematic to read from.')
+    parser.add_argument('schematic', nargs='+', help='The schematic to read from.')
     parser.add_argument('outfile', help='The output HTML/XLS file.')
-    parser.add_argument(
-        '--layout', '-l', help='The PCB layout for a single design.')
+    parser.add_argument('--layout', '-l', help='The PCB layout for a single design.')
     parser.set_defaults(func=command)

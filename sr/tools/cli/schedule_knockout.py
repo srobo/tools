@@ -15,6 +15,7 @@ def reverse_bits(n, width):
 def command(args):
     import math
     import sys
+
     import yaml
 
     # Round the number of teams up to a power of two
@@ -57,9 +58,10 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('schedule-knockout',
-                                   help="Create the schedule for the first "
-                                        "round of a knock-out")
+    parser = subparsers.add_parser(
+        'schedule-knockout',
+        help="Create the schedule for the first round of a knock-out",
+    )
     parser.add_argument("n_teams", type=int, help="The number of teams")
     parser.add_argument("--yaml", action="store_true", help="Output YAML")
     parser.set_defaults(func=command)

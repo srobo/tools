@@ -26,8 +26,7 @@ class Item(distpart.DistItem):
         self.cost = []
         self.qty_range = 0
 
-        page = grab_url_cached(
-            'https://xgoat.com/p/digikey/' + str(partNumber))
+        page = grab_url_cached('https://xgoat.com/p/digikey/' + str(partNumber))
         soup = BeautifulSoup(page)
 
         # Extract availability
@@ -45,8 +44,7 @@ class Item(distpart.DistItem):
 
         # Extract order multiple
         sp_heading = soup.find(text='Standard Package')
-        self.multi = int(sp_heading.parent.findNext('td')
-                         .contents[0].replace(',', ''))
+        self.multi = int(sp_heading.parent.findNext('td').contents[0].replace(',', ''))
 
         # Extract pricing
         # Get a list of the table rows, the first one is the heading row
@@ -57,8 +55,7 @@ class Item(distpart.DistItem):
             # Skip first row as it contains headings, it does however give
             # access to the minimum quantity value on the next row.
             if row.find('th') is not None:
-                self.min_order = int(next_row.contents[0].string.replace(',',
-                                                                         ''))
+                self.min_order = int(next_row.contents[0].string.replace(',', ''))
                 continue
             if next_row is not None:
                 # Get top range of quantity from the next row
@@ -72,9 +69,11 @@ class Item(distpart.DistItem):
 
     def get_info(self):
         """Return a dictionary of the info."""
-        return dict(qty=self.qty_range,
-                    price=self.cost,
-                    num_for_price=self.price_for,
-                    min_order=self.min_order,
-                    multiple=self.multi,
-                    number_available=self.avail)
+        return dict(
+            qty=self.qty_range,
+            price=self.cost,
+            num_for_price=self.price_for,
+            min_order=self.min_order,
+            multiple=self.multi,
+            number_available=self.avail,
+        )

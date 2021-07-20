@@ -9,9 +9,40 @@ from sr.tools.inventory import luhn
 
 # The characters used in asset codes. They have been chosen to avoid similar
 # looking characters to avoid errors when reading written codes.
-ALPHABET = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C",
-            "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R",
-            "T", "U", "V", "W", "X", "Y"]
+ALPHABET = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "P",
+    "Q",
+    "R",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+]
 ALPHABET_SET = set(ALPHABET)
 
 
@@ -59,8 +90,10 @@ def num_to_code(user_number, part_number):
     :rtype: str
     """
     if user_number < 0 or part_number < 0:
-        raise ValueError('User ({0}) or part ({1}) number cannot be '
-                         'negative. '.format(user_number, part_number))
+        raise ValueError(
+            'User ({0}) or part ({1}) number cannot be '
+            'negative. '.format(user_number, part_number),
+        )
 
     assetno = ''
     for num in (user_number, part_number):
@@ -100,8 +133,9 @@ def code_to_num(asset_code):
     i = 0
     for c in asset_code:
         if fieldno == 2:
-            raise ValueError("Error in asset code '{}', too many fields"
-                             .format(asset_code))
+            raise ValueError(
+                "Error in asset code '{}', too many fields".format(asset_code),
+            )
         num = ALPHABET.index(c)
         if num > 15:
             field[fieldno] = field[fieldno] + (num - 16) * (16 ** i)

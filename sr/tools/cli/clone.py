@@ -11,7 +11,7 @@ def command(args):
     prefix = 'https://github.com/srobo/'
 
     repo = args.repo
-    if repo[:len(prefix)] != prefix:
+    if repo[: len(prefix)] != prefix:
         repo = "{0}{1}".format(prefix, repo)
 
     cmd = ["git", "clone", "--recursive", repo]
@@ -31,12 +31,10 @@ def command_deprecated(args):
 def add_subparser(subparsers):
     parser = subparsers.add_parser('cog', help="Clone an SR git repository")
     parser.add_argument("repo", help="Repository path -- e.g. tools.git")
-    parser.add_argument("dir", nargs="?",
-                        help="Directory to clone to (optional)")
+    parser.add_argument("dir", nargs="?", help="Directory to clone to (optional)")
     parser.set_defaults(func=command_deprecated)
 
     parser = subparsers.add_parser('clone', help="Clone an SR git repository")
     parser.add_argument("repo", help="Repository path -- e.g. tools.git")
-    parser.add_argument("dir", nargs="?",
-                        help="Directory to clone to (optional)")
+    parser.add_argument("dir", nargs="?", help="Directory to clone to (optional)")
     parser.set_defaults(func=command)

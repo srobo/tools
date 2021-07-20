@@ -13,8 +13,11 @@ def replace_line(path, key, value):
     for i, line in enumerate(lines):
         match = re.match(pattern, line)
         if match is not None:
-            lines[i] = "{key}{0}:{1}{value}{2}\n".format(*match.groups(),
-                                                         key=key, value=value)
+            lines[i] = "{key}{0}:{1}{value}{2}\n".format(
+                *match.groups(),
+                key=key,
+                value=value,
+            )
             break
     else:
         lines.append("{}: {}\n".format(key, value))
@@ -42,12 +45,16 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('inv-set-attr',
-                                   help="Sets an attribute on one or more "
-                                        "items or assemblies.")
-    parser.add_argument('attrname', type=str,
-                        help="The name of the attribute.")
+    parser = subparsers.add_parser(
+        'inv-set-attr',
+        help="Sets an attribute on one or more " "items or assemblies.",
+    )
+    parser.add_argument('attrname', type=str, help="The name of the attribute.")
     parser.add_argument('attrvalue', type=str, help="The value to set.")
-    parser.add_argument('asset', type=str, nargs='+',
-                        help="The codes of the assets to modify.")
+    parser.add_argument(
+        'asset',
+        type=str,
+        nargs='+',
+        help="The codes of the assets to modify.",
+    )
     parser.set_defaults(func=command)

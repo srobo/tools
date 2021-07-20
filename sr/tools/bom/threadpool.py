@@ -45,4 +45,5 @@ class ThreadPool:
         """Wait for completion of all the tasks in the queue."""
         self.tasks.join()
 
+
 # end of http://code.activestate.com/recipes/577187/ }}}

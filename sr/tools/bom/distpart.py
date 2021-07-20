@@ -4,6 +4,7 @@ from __future__ import print_function
 
 class NonExistentPart(Exception):
     """The part does not exist."""
+
     pass
 
 
@@ -85,7 +86,6 @@ class DistItem(object):
                 if i + 1 < len(self.prices):
                     n_quant = self.prices[i + 1][0]
 
-                    print("\t\t %i - %i: £%s" %
-                          (quantity, n_quant - self.multi, price))
+                    print("\t\t %i - %i: £%s" % (quantity, n_quant - self.multi, price))
                 else:
                     print("\t\t %i+: £%s" % (quantity, price))

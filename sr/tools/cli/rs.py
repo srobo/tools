@@ -21,8 +21,9 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('rs',
-                                   help='Get information about a part from '
-                                        'RS.')
+    parser = subparsers.add_parser(
+        'rs',
+        help='Get information about a part from RS.',
+    )
     parser.add_argument('id', nargs='*', help='IDs to get information about.')
     parser.set_defaults(func=command)

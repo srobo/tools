@@ -14,7 +14,9 @@ class install_data_with_sphinx(install_data):
         self.run_command('build_sphinx')
         self.data_files.remove('docs')
         sphinx = self.get_finalized_command('build_sphinx')
-        self.data_files += [('share/man/man1', glob(os.path.join(sphinx.build_dir, 'man', '*.1')))]
+        self.data_files += [
+            ('share/man/man1', glob(os.path.join(sphinx.build_dir, 'man', '*.1'))),
+        ]
         install_data.run(self)
 
 

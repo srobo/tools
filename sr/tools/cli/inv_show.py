@@ -18,17 +18,18 @@ def command(args):
         pager_text += info_file.read() + '\n'
 
     pager_text += "Log\n===\n"
-    pager_text += subprocess.check_output(['git', '--no-pager', 'log',
-                                           '--color', '--follow', '-C', '-M',
-                                           part.path],
-                                          universal_newlines=True)
+    pager_text += subprocess.check_output(
+        ['git', '--no-pager', 'log', '--color', '--follow', '-C', '-M', part.path],
+        universal_newlines=True,
+    )
 
     pydoc.pager(pager_text)
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('inv-show',
-                                   help='Show the metadata of a given part, '
-                                        'and its git history.')
+    parser = subparsers.add_parser(
+        'inv-show',
+        help='Show the metadata of a given part, and its git history.',
+    )
     parser.add_argument('partcode', type=str, help="The part code to look up.")
     parser.set_defaults(func=command)

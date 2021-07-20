@@ -87,8 +87,7 @@ class PartGroup(list):
             # round up to minimum order
             n = self.part.get_min_order()
         elif (n % self.part.get_increments()) != 0:
-            n = n + (self.part.get_increments() -
-                     (n % self.part.get_increments()))
+            n = n + (self.part.get_increments() - (n % self.part.get_increments()))
 
         # Some (hopefully) sane assertions
         assert n % self.part.get_increments() == 0
@@ -107,8 +106,10 @@ class PartGroup(list):
 
         p = self.part.get_price(n)
         if p is None:
-            print("Warning: couldn't get price for %s (%s)" %
-                  (self.part["sr-code"], self.part["supplier"]))
+            print(
+                "Warning: couldn't get price for %s (%s)"
+                % (self.part["sr-code"], self.part["supplier"]),
+            )
             return Decimal(0)
 
         return p * Decimal(n)

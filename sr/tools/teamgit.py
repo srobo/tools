@@ -31,9 +31,11 @@ def remote_cmd(cmd, server=DEFAULT_SERVER):
         hostname = server
         port = 22
 
-    cmdline = "ssh {hostname} -p {port} {cmd}".format(hostname=hostname,
-                                                      port=port,
-                                                      cmd=pipes.quote(cmd))
+    cmdline = "ssh {hostname} -p {port} {cmd}".format(
+        hostname=hostname,
+        port=port,
+        cmd=pipes.quote(cmd),
+    )
     p = subprocess.Popen(cmdline, stdout=subprocess.PIPE, shell=True)
     so, se = p.communicate()
     assert p.wait() == 0
@@ -96,8 +98,7 @@ class Team(object):
     :param str reporoot: The root of the repositories on that server.
     """
 
-    def __init__(self, identifier, server=DEFAULT_SERVER,
-                 reporoot=DEFAULT_REPOROOT):
+    def __init__(self, identifier, server=DEFAULT_SERVER, reporoot=DEFAULT_REPOROOT):
         """Create a new team object."""
         self.identifier = identifier
         self.server = server
@@ -106,14 +107,18 @@ class Team(object):
         self._load_repos()
 
     def _load_repos(self):
-        cmd = "ls {reporoot}/{team}/master/".format(reporoot=self.reporoot,
-                                                    team=self.identifier)
+        cmd = "ls {reporoot}/{team}/master/".format(
+            reporoot=self.reporoot,
+            team=self.identifier,
+        )
         so, se = remote_cmd(cmd, self.server)
         repos = so.splitlines()
 
         self.repos = []
         for r in repos:
-            path = '{root}/{team}/master/{repo}'.format(root=self.reporoot,
-                                                        team=self.identifier,
-                                                        repo=r)
+            path = '{root}/{team}/master/{repo}'.format(
+                root=self.reporoot,
+                team=self.identifier,
+                repo=r,
+            )
             self.repos.append(Repo(path, self.server))

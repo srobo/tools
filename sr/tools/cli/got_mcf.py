@@ -6,19 +6,21 @@ USERMAN_URL = "https://{server}:{port}/userman/"
 
 
 class UsermanServer(object):
-
     @classmethod
     def from_config(cls, config):
         username = config.get_user()
         password = config.get_password(user=username)
 
-        base_url = USERMAN_URL.format(server=config['server'],
-                                      port=config['https_port'])
+        base_url = USERMAN_URL.format(
+            server=config['server'],
+            port=config['https_port'],
+        )
 
         return cls(base_url, username, password)
 
     def __init__(self, base_url, username, password):
         import requests
+
         self._session = requests.Session()
         self._session.auth = (username, password)
         self._base_url = base_url
@@ -41,13 +43,16 @@ class UsermanServer(object):
             if auth_errors:
                 exit(', '.join(auth_errors))
             else:
-                exit("You are not authorized to access data from '{0}'." \
-                        .format(url))
+                exit("You are not authorized to access data from '{0}'.".format(url))
 
         if response.status_code != 200:
             # Some other fail. Maybe the user doesn't exist?
-            error("Failed to fetch data from '{0}' (code: {1})." \
-                    .format(url, response.status_code))
+            error(
+                "Failed to fetch data from '{0}' (code: {1}).".format(
+                    url,
+                    response.status_code,
+                ),
+            )
             exit(response.text)
 
     def _get_url(self, args):
@@ -69,6 +74,7 @@ class UsermanServer(object):
 
 def error(msg):
     import sys
+
     print(msg, file=sys.stderr)
 
 
@@ -94,9 +100,11 @@ def describe_user(user_info, userman):
         college_info = userman.get('colleges', colleges[0])
         college = college_info['name']
 
-    description = "'{0} {1}' at '{2}'".format(user_info['first_name'],
-                                              user_info['last_name'],
-                                              college)
+    description = "'{0} {1}' at '{2}'".format(
+        user_info['first_name'],
+        user_info['last_name'],
+        college,
+    )
     return description
 
 

@@ -56,20 +56,23 @@ def command(args):
                 fix_object_with_coords(line, "A ", "3", 6)
             elif line.find("Circle with center") != -1:
                 fix_object_with_coords(line, "C ", "3", 4)
-            elif (line.find("Text") != -1 and
-                  line.find("not using text color") != -1):
+            elif line.find("Text") != -1 and line.find("not using text color") != -1:
                 fix_object_with_coords(line, "T ", "9", 3)
-            elif (line.find("refdes=") != -1 and
-                  line.find("detached attribute color") != -1):
+            elif (
+                line.find("refdes=") != -1 and
+                line.find("detached attribute color") != -1
+            ):
                 fix_line_colour("refdes=", "8", 3, -1)
-            elif (line.find("pinnumber=") != -1 and
-                  line.find("attribute color") != -1):
-                fix_line_colour(line[0:line.find(' ')], "5", 3, -1)
-            elif (line.find("pinlabel=") != -1 and
-                  line.find("text color") != -1):
-                print(line[line.find("pinlabel"):line.find(' not')])
-                fix_line_colour(line[line.find("pinlabel"):line.find(' not')],
-                                "9", 3, -1)
+            elif line.find("pinnumber=") != -1 and line.find("attribute color") != -1:
+                fix_line_colour(line[0: line.find(' ')], "5", 3, -1)
+            elif line.find("pinlabel=") != -1 and line.find("text color") != -1:
+                print(line[line.find("pinlabel"): line.find(' not')])
+                fix_line_colour(
+                    line[line.find("pinlabel"): line.find(' not')],
+                    "9",
+                    3,
+                    -1,
+                )
         return symbolfile
 
     # Write modified symbol file to a new file.
@@ -101,8 +104,10 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('symbol-correct',
-                                   help='Check if symbols are correct.')
+    parser = subparsers.add_parser(
+        'symbol-correct',
+        help='Check if symbols are correct.',
+    )
     parser.add_argument('inputfile', help='Input filename.')
     parser.add_argument('outputfile', help='Output filename.')
     parser.set_defaults(func=command)

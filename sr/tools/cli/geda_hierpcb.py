@@ -9,8 +9,8 @@ class ParseState:
 
 
 def command(args):
-    import re
     import os
+    import re
     import sys
 
     # Read a list of the schematics to process from the gEDA project file
@@ -20,7 +20,7 @@ def command(args):
         project_file = open(project_filename, 'r')
         # Get list of schematics
         for line in project_file:
-            if (line.split(' ')[0] == "schematics"):
+            if line.split(' ')[0] == "schematics":
                 clean_line = line.strip('\n')
                 schematic_filenames = clean_line.split(' ')[1:]
         project_file.close()
@@ -44,8 +44,10 @@ def command(args):
                 search_path.append(value)
         gafrc.close()
     except IOError:
-        print('Unable to open gafrc, will only look in the current '
-              'directory for schematics.')
+        print(
+            'Unable to open gafrc, will only look in the current '
+            'directory for schematics.',
+        )
 
     sub_schematic_components = []
     # Iterate over each schematic looking for components with 'source'
@@ -101,8 +103,7 @@ def command(args):
         print("Did not find any sub-schematic components.")
         sys.exit(0)
     else:
-        print("Found %s sub-schematic components." %
-              len(sub_schematic_components))
+        print("Found %s sub-schematic components." % len(sub_schematic_components))
 
     for sub_sche in sub_schematic_components:
         # Find out if a PCB layout already exists for the sub-schematic
@@ -113,15 +114,16 @@ def command(args):
         for path in search_path:
             if os.path.exists(os.path.join(path, block_filename + ".pcb")):
                 pcb_filename = os.path.join(path, block_filename + ".pcb")
-                print("Found pre-existing PCB layout for %s in %s" %
-                      (refdes, pcb_filename))
+                print(
+                    "Found pre-existing PCB layout for %s in %s"
+                    % (refdes, pcb_filename),
+                )
 
         if pcb_filename is None:
             # Did not find pre-existing PCB layout
             continue
 
-        dst_filename = os.path.join('.', block_filename + '_' +
-                                    refdes + ".pcb")
+        dst_filename = os.path.join('.', block_filename + '_' + refdes + ".pcb")
         try:
             # Open the original PCB layout
             src_pcb = open(pcb_filename, 'r')
@@ -130,8 +132,10 @@ def command(args):
 
             for line in src_pcb:
                 if "Element[" in line:
-                    regex = r"(Element\[\".*?\" \".*?\" \")(.*)", r"\1" + \
-                            refdes + r"/\2"
+                    regex = (
+                        r"(Element\[\".*?\" \".*?\" \")(.*)",
+                        r"\1" + refdes + r"/\2",
+                    )
                     dst_pcb.write(re.sub(regex, line))
                 else:
                     dst_pcb.write(line)

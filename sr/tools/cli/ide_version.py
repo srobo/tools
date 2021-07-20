@@ -21,6 +21,8 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('ide-version',
-                                   help='Display the version of the IDE.')
+    parser = subparsers.add_parser(
+        'ide-version',
+        help='Display the version of the IDE.',
+    )
     parser.set_defaults(func=command)

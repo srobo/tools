@@ -15,8 +15,10 @@ def command(args):
     # Check that a template for the new asset exists
     templatefn = os.path.join(gitdir, ".meta", "parts", assetname)
     if not os.path.isfile(templatefn):
-        print('A template for the asset "{}" could not be found. '
-              'The default template will be used.'.format(assetname))
+        print(
+            'A template for the asset "{}" could not be found. '
+            'The default template will be used.'.format(assetname),
+        )
         templatefn = os.path.join(gitdir, ".meta", "parts", "default")
 
     # Get the git name/email of the user
@@ -25,8 +27,12 @@ def command(args):
 
     assetfn = "%s-sr%s" % (assetname, assetcd)
 
-    print('Created new asset with name "{0}-\033[1msr{1}\033[0m"'
-          .format(assetname, assetcd))
+    print(
+        'Created new asset with name "{0}-\033[1msr{1}\033[0m"'.format(
+            assetname,
+            assetcd,
+        ),
+    )
 
     # Copy the template to the actual asset file
     # Insert the asset code into the file while we're at it
@@ -44,13 +50,21 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('inv-new-asset',
-                                   help="Create a new instance of an asset "
-                                        "with a unique asset code.")
-    parser.add_argument("-e", "--editor", action="store_true", default=False,
-                        dest="start_editor",
-                        help="Open up the newly created asset file in $EDITOR")
-    parser.add_argument("assetname", metavar="ASSET",
-                        help="The name of an asset template file in "
-                             "/.meta/parts.")
+    parser = subparsers.add_parser(
+        'inv-new-asset',
+        help="Create a new instance of an asset with a unique asset code.",
+    )
+    parser.add_argument(
+        "-e",
+        "--editor",
+        action="store_true",
+        default=False,
+        dest="start_editor",
+        help="Open up the newly created asset file in $EDITOR",
+    )
+    parser.add_argument(
+        "assetname",
+        metavar="ASSET",
+        help="The name of an asset template file in /.meta/parts.",
+    )
     parser.set_defaults(func=command)

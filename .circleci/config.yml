@@ -6,7 +6,20 @@ references:
       name: Build checksum file
       command: |
         declare -a FILES=(
+          "script/linting/requirements.txt"
+        )
+        for f in ${FILES[@]}
+        do
+          echo "# $f" >> all-requirements.txt
+          cat $f >> all-requirements.txt
+        done
+
+        echo "# self" >> all-requirements.txt
+        echo "." >> all-requirements.txt
+
+        declare -a FILES=(
           "setup.py"
+          "all-requirements.txt"
         )
         for f in ${FILES[@]}
         do
@@ -23,7 +36,7 @@ references:
       command: |
         python3 -m venv venv
         venv/bin/pip install -U pip setuptools wheel
-        venv/bin/pip install -e .
+        venv/bin/pip install -r all-requirements.txt
   save-dependencies-cache: &save-dependencies-cache
     save_cache:
       key: deps-1-py<< parameters.version >>-{{ checksum ".checksum" }}
@@ -40,6 +53,10 @@ references:
     matrix:
       parameters:
         version: ["3.6", "3.7", "3.8", "3.9"]
+  python-top-and-bottom-version-matrix: &python-top-and-bottom-version-matrix
+    matrix:
+      parameters:
+        version: ["3.6", "3.9"]
   filter-tags: &filter-tags
     filters:
       branches:
@@ -74,6 +91,25 @@ jobs:
             source venv/bin/activate
             ./run-tests --verbose
 
+  lint:
+    <<: *parametrised-python-executor
+
+    steps:
+      - checkout
+
+      - *build-checksum-file
+      - *restore-dependencies-cache
+      - *install-dependencies
+      - *save-dependencies-cache
+
+      - run:
+          name: Run Flake8
+          command: |
+            source venv/bin/activate
+            # Ignore TODOs on CI, for now, even though we do want them
+            # highlighted in development.
+            ./script/linting/lint --extend-ignore=T000
+
   release:
     docker:
       - image: circleci/python:3.9
@@ -101,13 +137,19 @@ workflows:
     jobs:
       - test:
           <<: *python-full-version-matrix
+      - lint:
+          <<: *python-top-and-bottom-version-matrix
 
   release:
     jobs:
       - test:
           <<: *python-full-version-matrix
           <<: *filter-tags
+      - lint:
+          <<: *python-top-and-bottom-version-matrix
+          <<: *filter-tags
       - release:
           <<: *filter-tags
           requires:
             - test
+            - lint

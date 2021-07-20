@@ -1,5 +1,4 @@
 """Routines for extracting BOMs from schematics."""
-from __future__ import print_function
 
 import os
 from decimal import Decimal

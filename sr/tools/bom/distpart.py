@@ -1,5 +1,4 @@
 """Superclass for distributor items."""
-from __future__ import print_function
 
 
 class NonExistentPart(Exception):
@@ -13,7 +12,7 @@ class UnsupportedFormat(Exception):
     pass
 
 
-class DistItem(object):
+class DistItem:
     """
     A distributor item.
 

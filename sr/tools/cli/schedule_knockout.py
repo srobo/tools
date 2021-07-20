@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def bit_mask(n):
     """Return an n-bit mask of 1's."""
     return 2 ** n - 1
@@ -54,7 +51,7 @@ def command(args):
         sys.stdout.write(yaml.dump(matches))
     else:
         for n, match in enumerate(matches):
-            print(" {0}:\t{1}".format(n, "\t".join([str(x) for x in match])))
+            print(" {}:\t{}".format(n, "\t".join([str(x) for x in match])))
 
 
 def add_subparser(subparsers):

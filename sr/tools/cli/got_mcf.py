@@ -1,11 +1,9 @@
-from __future__ import print_function
-
 '''Record that we have received a Media Consent Form for a given user.'''
 
 USERMAN_URL = "https://{server}:{port}/userman/"
 
 
-class UsermanServer(object):
+class UsermanServer:
     @classmethod
     def from_config(cls, config):
         username = config.get_user()
@@ -43,15 +41,12 @@ class UsermanServer(object):
             if auth_errors:
                 exit(', '.join(auth_errors))
             else:
-                exit("You are not authorized to access data from '{0}'.".format(url))
+                exit(f"You are not authorized to access data from '{url}'.")
 
         if response.status_code != 200:
             # Some other fail. Maybe the user doesn't exist?
             error(
-                "Failed to fetch data from '{0}' (code: {1}).".format(
-                    url,
-                    response.status_code,
-                ),
+                f"Failed to fetch data from '{url}' (code: {response.status_code}).",
             )
             exit(response.text)
 
@@ -100,7 +95,7 @@ def describe_user(user_info, userman):
         college_info = userman.get('colleges', colleges[0])
         college = college_info['name']
 
-    description = "'{0} {1}' at '{2}'".format(
+    description = "'{} {}' at '{}'".format(
         user_info['first_name'],
         user_info['last_name'],
         college,
@@ -116,9 +111,9 @@ def command(args):
         description = describe_user(user_info, userman)
 
         if user_info['has_media_consent']:
-            exit("{0} already granted media-consent!".format(description))
+            exit(f"{description} already granted media-consent!")
 
-        question = "Confirm media-consent for {0}? [Y/n]: ".format(description)
+        question = f"Confirm media-consent for {description}? [Y/n]: "
         confirm = query(question, ('', 'y'), ('n',))
 
         if not confirm:

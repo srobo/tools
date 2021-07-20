@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def which(name):
     import os
 
@@ -21,7 +18,7 @@ def ensure_callable(*names):
     if len(missing) == 0:
         return
     end = 'y' if len(missing) == 1 else 'ies'
-    print("Missing dependenc{0}: {1}".format(end, ", ".join(missing)))
+    print("Missing dependenc{}: {}".format(end, ", ".join(missing)))
     sys.exit(1)
 
 
@@ -51,9 +48,9 @@ def command(args):
     generated = pandoc_process.stdout.read()
     pandoc_process.wait()
 
-    generated = generated.replace('\section', '\section*').replace(
-        '\subsection',
-        '\subsection*',
+    generated = generated.replace(r'\section', r'\section*').replace(
+        r'\subsection',
+        r'\subsection*',
     )
 
     prefix_file = pkg_resources.resource_stream('sr.tools.cli', 'document_prefix.tex')
@@ -70,9 +67,9 @@ def command(args):
         else:
             signature_username, signature_title = signature_elements
         signature_block = '\n'.join([r'\bigskip'] * 5)
-        signature_block += '\n{0}\n'.format(signature_username)
+        signature_block += f'\n{signature_username}\n'
         if signature_title:
-            signature_block += '\\\\ {0}\n'.format(signature_title)
+            signature_block += f'\\\\ {signature_title}\n'
 
     total = '\n'.join((prefix, generated, signature_block, suffix))
 

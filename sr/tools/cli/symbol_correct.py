@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def command(args):
     import subprocess
 
@@ -10,7 +7,7 @@ def command(args):
     outputfile = args.outputfile
 
     def readfile(filename):
-        with open(filename, 'r') as f:
+        with open(filename) as f:
             symbolfile = [line.strip() for line in f]
         return symbolfile
 

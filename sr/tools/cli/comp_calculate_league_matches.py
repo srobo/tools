@@ -1,5 +1,3 @@
-from __future__ import division, print_function
-
 from datetime import timedelta
 from math import ceil, floor
 
@@ -16,14 +14,14 @@ def parse_time_hours(x):
 def command(args):
     vprint = print if args.verbose else nop
     slots = int(floor(args.time.total_seconds() / (60 * args.match_length)))
-    vprint('{} slots'.format(slots))
+    vprint(f'{slots} slots')
 
     entrants_per_slot = args.arenas * args.entrants
     slots_required_for_allvsall = int(ceil(args.teams / entrants_per_slot))
-    vprint('{} slots required for an all vs all'.format(slots_required_for_allvsall))
+    vprint(f'{slots_required_for_allvsall} slots required for an all vs all')
 
     rounds = int(floor(slots / slots_required_for_allvsall))
-    print('{} matches per team (rounds)'.format(rounds))
+    print(f'{rounds} matches per team (rounds)')
     time_between_matches_seconds = args.time.total_seconds() / (rounds + 1)
     print(
         'Average time between matches: {}'.format(

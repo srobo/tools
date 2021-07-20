@@ -2,7 +2,6 @@
 A set of classes and functions for working with
 :doc:`The Inventory </inventory/index>`.
 """
-from __future__ import print_function
 
 import codecs
 import email.utils
@@ -32,8 +31,8 @@ class NotAnInventoryError(OSError):
     """
 
     def __init__(self, directory):
-        msg = "'{directory}' is not an inventory.".format(directory=directory)
-        super(NotAnInventoryError, self).__init__(msg)
+        msg = f"'{directory}' is not an inventory."
+        super().__init__(msg)
         self.directory = directory
 
 
@@ -46,8 +45,8 @@ class InvalidFileError(ValueError):
     """
 
     def __init__(self, path, comment):
-        msg = "Invalid asset: '{}' {}.".format(path, comment)
-        super(InvalidFileError, self).__init__(msg)
+        msg = f"Invalid asset: '{path}' {comment}."
+        super().__init__(msg)
         self.path = path
 
 
@@ -150,7 +149,7 @@ def cached_yaml_load(path):
     return y
 
 
-class Item(object):
+class Item:
     """
     An item in the inventory.
 
@@ -193,11 +192,11 @@ class Item(object):
                 setattr(self, pname, self.info[pname])
             except KeyError:
                 raise ValueError(
-                    "Part sr{} is missing '{}' property.".format(self.code, pname),
+                    f"Part sr{self.code} is missing '{pname}' property.",
                 )
 
 
-class ItemTree(object):
+class ItemTree:
     """
     A tree of items in the inventory.
 
@@ -272,8 +271,7 @@ class ItemTree(object):
         """
         for child in self.children.values():
             if hasattr(child, "walk"):
-                for c in child.walk():
-                    yield c
+                yield from child.walk()
 
             if hasattr(child, "code"):
                 yield child
@@ -338,7 +336,7 @@ class ItemGroup(ItemTree):
         self.elements = self.info["elements"]
 
 
-class Inventory(object):
+class Inventory:
     """
     An inventory.
 

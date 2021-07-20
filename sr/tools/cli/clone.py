@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def command(args):
     import subprocess
 
@@ -12,7 +9,7 @@ def command(args):
 
     repo = args.repo
     if repo[: len(prefix)] != prefix:
-        repo = "{0}{1}".format(prefix, repo)
+        repo = f"{prefix}{repo}"
 
     cmd = ["git", "clone", "--recursive", repo]
     if args.dir is not None:

@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 res = 150  # Image resolution in DPI
 
 
@@ -187,7 +185,7 @@ def writeHTML(lines, out_fn, args, pcb=None):
         if url is None:
             order_num_html = order_num
         else:
-            order_num_html = """<a href="%s">%s</a>""" % (url, order_num)
+            order_num_html = f"""<a href="{url}">{order_num}</a>"""
 
         quantity = len(line)
 

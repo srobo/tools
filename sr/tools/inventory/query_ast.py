@@ -4,7 +4,7 @@ from functools import reduce
 from sr.tools.inventory import assetcode, inventory
 
 
-class ASTNode(object):
+class ASTNode:
     """An abstract syntax tree node."""
 
     def sexpr(self):
@@ -23,7 +23,7 @@ class NonTerminal(ASTNode):
         :returns: A list of matching nodes.
         """
         raise NotImplementedError(
-            "match(...) not implemented for {}".format(self.__class__),
+            f"match(...) not implemented for {self.__class__}",
         )
 
 
@@ -38,7 +38,7 @@ class Terminal(ASTNode):
         :returns: True or False depending on whether the node match.
         """
         raise NotImplementedError(
-            "match_single(...) not implemented for {}".format(self.__class__),
+            f"match_single(...) not implemented for {self.__class__}",
         )
 
     def match(self, inv_nodes):
@@ -60,15 +60,15 @@ class Not(NonTerminal):
 
     def __init__(self, node):
         """Initialise a 'not' operation."""
-        super(Not, self).__init__()
+        super().__init__()
         self.node = node
 
     def match(self, inv_nodes):
         matches = self.node.match(inv_nodes)
-        return list(set([x for x in inv_nodes if x not in matches]))
+        return list({x for x in inv_nodes if x not in matches})
 
     def sexpr(self):
-        return "(NOT {0})".format(self.node.sexpr())
+        return f"(NOT {self.node.sexpr()})"
 
 
 class And(NonTerminal):
@@ -81,7 +81,7 @@ class And(NonTerminal):
 
     def __init__(self, left, right):
         """Initialise an 'and' operation."""
-        super(And, self).__init__()
+        super().__init__()
         self.left = left
         self.right = right
 
@@ -93,7 +93,7 @@ class And(NonTerminal):
         )
 
     def sexpr(self):
-        return "(AND {0} {1})".format(self.left.sexpr(), self.right.sexpr())
+        return f"(AND {self.left.sexpr()} {self.right.sexpr()})"
 
 
 class Or(NonTerminal):
@@ -106,7 +106,7 @@ class Or(NonTerminal):
 
     def __init__(self, left, right):
         """Initialise an 'or' operation."""
-        super(Or, self).__init__()
+        super().__init__()
         self.left = left
         self.right = right
 
@@ -116,7 +116,7 @@ class Or(NonTerminal):
         return list({x for x in inv_nodes if (x in left_matches or x in right_matches)})
 
     def sexpr(self):
-        return "(OR {0} {1})".format(self.left.sexpr(), self.right.sexpr())
+        return f"(OR {self.left.sexpr()} {self.right.sexpr()})"
 
 
 class Condition(Terminal):
@@ -129,7 +129,7 @@ class Condition(Terminal):
 
     def __init__(self, *conditions):
         """Initialise the node with conditions."""
-        super(Condition, self).__init__()
+        super().__init__()
         self.conditions = set(conditions)
 
     def _flatten(self, l):
@@ -180,7 +180,7 @@ class Condition(Terminal):
         return self._state(inv_node) in self.conditions
 
     def sexpr(self):
-        return "(Condition {0})".format(list(self.conditions))
+        return f"(Condition {list(self.conditions)})"
 
 
 class Type(Terminal):
@@ -192,7 +192,7 @@ class Type(Terminal):
 
     def __init__(self, *types):
         """Initialise the node."""
-        super(Type, self).__init__()
+        super().__init__()
         self.types = types
 
     def match_single(self, inv_node):
@@ -203,7 +203,7 @@ class Type(Terminal):
         return False
 
     def sexpr(self):
-        return "(Type {0})".format(list(self.types))
+        return f"(Type {list(self.types)})"
 
 
 class Labelled(Terminal):
@@ -216,7 +216,7 @@ class Labelled(Terminal):
 
     def __init__(self, labelled):
         """Initialise the 'labelled' check node."""
-        super(Labelled, self).__init__()
+        super().__init__()
         self.labelled = labelled.lower() in ('true', '1', 'yes', 't')
 
     def match_single(self, inv_node):
@@ -225,7 +225,7 @@ class Labelled(Terminal):
         return False
 
     def sexpr(self):
-        return "(Labelled {0})".format(self.labelled)
+        return f"(Labelled {self.labelled})"
 
 
 class Assy(Terminal):
@@ -238,7 +238,7 @@ class Assy(Terminal):
 
     def __init__(self, assy):
         """Initialise the 'assy' check node."""
-        super(Assy, self).__init__()
+        super().__init__()
         self.assy = assy.lower() in ('true', '1', 'yes', 't')
 
     def match_single(self, inv_node):
@@ -247,7 +247,7 @@ class Assy(Terminal):
         )
 
     def sexpr(self):
-        return "(Assy {0})".format(self.assy)
+        return f"(Assy {self.assy})"
 
 
 class TriState(Terminal):
@@ -260,7 +260,7 @@ class TriState(Terminal):
 
     def __init__(self, key, desired_val):
         """Initialise a 'tri' check node."""
-        super(TriState, self).__init__()
+        super().__init__()
         self.key = key
         self.desired_val = desired_val.lower()
 
@@ -275,7 +275,7 @@ class TriState(Terminal):
         return False
 
     def sexpr(self):
-        return "(TriState {0}: {1})".format(self.key, self.desired_val)
+        return f"(TriState {self.key}: {self.desired_val})"
 
 
 class Path(Terminal):
@@ -288,7 +288,7 @@ class Path(Terminal):
 
     def __init__(self, *paths):
         """Initialise the 'path' check node."""
-        super(Path, self).__init__()
+        super().__init__()
         paths = [path[1:] if path[0] == '/' else path for path in paths]
         self.paths = [path + '*' for path in paths]
 
@@ -308,7 +308,7 @@ class Path(Terminal):
         return False
 
     def sexpr(self):
-        return "(Path {0})".format(list(self.paths))
+        return f"(Path {list(self.paths)})"
 
 
 class Code(Terminal):
@@ -327,7 +327,7 @@ class Code(Terminal):
         return inv_node.code in self.codes
 
     def sexpr(self):
-        return "(Code {0})".format(list(self.codes))
+        return f"(Code {list(self.codes)})"
 
 
 class Serial(Terminal):
@@ -346,7 +346,7 @@ class Serial(Terminal):
         return serial in self.serials
 
     def sexpr(self):
-        return "(Serial {0})".format(list(self.serials))
+        return f"(Serial {list(self.serials)})"
 
 
 class Function(NonTerminal):
@@ -388,7 +388,7 @@ class Function(NonTerminal):
         )
 
     def sexpr(self):
-        return "(Function '{0}' {1})".format(self.func_name, self.node.sexpr())
+        return f"(Function '{self.func_name}' {self.node.sexpr()})"
 
 
 @Function.register('parent')

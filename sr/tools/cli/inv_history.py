@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 class CachedAssetFinder:
     """
     A class that can be used for finding assets in trees.
@@ -139,7 +136,7 @@ def command(args):
     inventory = get_inventory()
     repo = pygit2.Repository(inventory.root_path)
 
-    asset_code = 'sr{}'.format(assetcode.normalise(args.asset_code))
+    asset_code = f'sr{assetcode.normalise(args.asset_code)}'
 
     for event in get_history(repo, asset_code):
         status = event[0]
@@ -150,7 +147,7 @@ def command(args):
         else:
             description = ''
             if status == 'A':
-                description = "'{}' created.".format(event[2])
+                description = f"'{event[2]}' created."
             elif status == 'R':
                 old_path = event[2][0]
                 new_path = event[2][1]

@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def command(args):
     import os
 
@@ -16,8 +13,8 @@ def command(args):
     templatefn = os.path.join(gitdir, ".meta", "parts", assetname)
     if not os.path.isfile(templatefn):
         print(
-            'A template for the asset "{}" could not be found. '
-            'The default template will be used.'.format(assetname),
+            f'A template for the asset "{assetname}" could not be found. '
+            'The default template will be used.',
         )
         templatefn = os.path.join(gitdir, ".meta", "parts", "default")
 
@@ -25,13 +22,10 @@ def command(args):
     userno = inventory.current_user_number
     assetcd = inventory.get_next_asset_code(userno)
 
-    assetfn = "%s-sr%s" % (assetname, assetcd)
+    assetfn = f"{assetname}-sr{assetcd}"
 
     print(
-        'Created new asset with name "{0}-\033[1msr{1}\033[0m"'.format(
-            assetname,
-            assetcd,
-        ),
+        f'Created new asset with name "{assetname}-\033[1msr{assetcd}\033[0m"',
     )
 
     # Copy the template to the actual asset file

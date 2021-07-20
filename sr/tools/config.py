@@ -1,5 +1,4 @@
 """Configuration for the tools."""
-from __future__ import print_function
 
 import getpass
 import sys
@@ -37,7 +36,7 @@ class Config(dict):
         # override with the local config
         try:
             self.update_from_file(get_config_filename())
-        except IOError:
+        except OSError:
             pass
 
     def update_from_file(self, fname):

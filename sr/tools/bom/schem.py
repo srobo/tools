@@ -48,7 +48,7 @@ def open_schem(fname):
                 if s == "+":
                     continue
 
-                r = re.compile("([0-9]+)\(([^)]+)\)")
+                r = re.compile(r"([0-9]+)\(([^)]+)\)")
                 m = r.match(s)
                 if m:
 

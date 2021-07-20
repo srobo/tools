@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 class ParseState:
     IDLE = 1
     STARTCOMP = 2
@@ -17,14 +14,14 @@ def command(args):
     project_filename = args.project
     schematic_filenames = None
     try:
-        project_file = open(project_filename, 'r')
+        project_file = open(project_filename)
         # Get list of schematics
         for line in project_file:
             if line.split(' ')[0] == "schematics":
                 clean_line = line.strip('\n')
                 schematic_filenames = clean_line.split(' ')[1:]
         project_file.close()
-    except IOError:
+    except OSError:
         print("File not found: %s" % project_filename)
         sys.exit(1)
 
@@ -35,7 +32,7 @@ def command(args):
     # Get path to sub-schematics from gafrc file
     search_path = ['.']
     try:
-        gafrc = open('gafrc', 'r')
+        gafrc = open('gafrc')
         for line in gafrc:
             key = line.split(' ')[0].strip('(')
             if key == "source-library":
@@ -43,7 +40,7 @@ def command(args):
                 value = value.strip('"')
                 search_path.append(value)
         gafrc.close()
-    except IOError:
+    except OSError:
         print(
             'Unable to open gafrc, will only look in the current '
             'directory for schematics.',
@@ -55,7 +52,7 @@ def command(args):
     state = ParseState.IDLE
     for schematic_filename in schematic_filenames:
         try:
-            schematic = open(schematic_filename, 'r')
+            schematic = open(schematic_filename)
             for line in schematic:
                 if state == ParseState.STARTCOMP:
                     if line[0] == '{':
@@ -97,13 +94,13 @@ def command(args):
 
             schematic.close()
         except:
-            print("Unable to open schematic '%s'" % schematic_filename)
+            print(f"Unable to open schematic '{schematic_filename}'")
 
     if len(sub_schematic_components) == 0:
         print("Did not find any sub-schematic components.")
         sys.exit(0)
     else:
-        print("Found %s sub-schematic components." % len(sub_schematic_components))
+        print(f"Found {len(sub_schematic_components)} sub-schematic components.")
 
     for sub_sche in sub_schematic_components:
         # Find out if a PCB layout already exists for the sub-schematic
@@ -114,10 +111,7 @@ def command(args):
         for path in search_path:
             if os.path.exists(os.path.join(path, block_filename + ".pcb")):
                 pcb_filename = os.path.join(path, block_filename + ".pcb")
-                print(
-                    "Found pre-existing PCB layout for %s in %s"
-                    % (refdes, pcb_filename),
-                )
+                print(f"Found pre-existing PCB layout for {refdes} in {pcb_filename}")
 
         if pcb_filename is None:
             # Did not find pre-existing PCB layout
@@ -126,7 +120,7 @@ def command(args):
         dst_filename = os.path.join('.', block_filename + '_' + refdes + ".pcb")
         try:
             # Open the original PCB layout
-            src_pcb = open(pcb_filename, 'r')
+            src_pcb = open(pcb_filename)
             # Open the new PCB layout
             dst_pcb = open(dst_filename, 'w')
 
@@ -143,9 +137,9 @@ def command(args):
             dst_pcb.close()
             src_pcb.close()
 
-            print("Created %s for %s" % (dst_filename, refdes))
+            print(f"Created {dst_filename} for {refdes}")
         except:
-            print("Failed to copy %s to %s" % (pcb_filename, dst_filename))
+            print(f"Failed to copy {pcb_filename} to {dst_filename}")
             continue
 
 

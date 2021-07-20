@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 # Motorobards have FTDI ICs on them
 FTDI_ID_VENDOR = '0403'  # Future Technology Devices International, Ltd
 FTDI_ID_PRODUCT = '6001'  # FT232 USB-Serial (UART) IC
@@ -46,7 +44,7 @@ def partcode_match(device):
         return False
 
     ALPHA = "".join(assetcode.alphabet_lut)
-    PARTCODE_RE = re.compile("sr([{0}]+)$".format(ALPHA), re.IGNORECASE)
+    PARTCODE_RE = re.compile(f"sr([{ALPHA}]+)$", re.IGNORECASE)
 
     # does it look like a partcode?
     match = PARTCODE_RE.match(device.attributes['serial'])
@@ -122,7 +120,7 @@ def command(args):
             print(serial)
         else:
             os.chdir(args.inv_dir)
-            res = query.query("code:{0}".format(serial))[0]
+            res = query.query(f"code:{serial}")[0]
 
             if args.output == "path":
                 print(res.path)

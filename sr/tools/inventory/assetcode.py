@@ -3,7 +3,6 @@ A set of functions for dealing with asset codes in the inventory.
 
 Asset codes are constructed from part numbers and user numbers.
 """
-from __future__ import division
 
 from sr.tools.inventory import luhn
 
@@ -91,7 +90,7 @@ def num_to_code(user_number, part_number):
     """
     if user_number < 0 or part_number < 0:
         raise ValueError(
-            'User ({0}) or part ({1}) number cannot be '
+            'User ({}) or part ({}) number cannot be '
             'negative. '.format(user_number, part_number),
         )
 
@@ -123,7 +122,7 @@ def code_to_num(asset_code):
     """
     asset_code = normalise(asset_code)
     if not is_valid(asset_code):
-        raise ValueError("Asset code '{}' is not valid".format(asset_code))
+        raise ValueError(f"Asset code '{asset_code}' is not valid")
 
     # Remove checkdigit
     asset_code = asset_code[:-1]
@@ -134,7 +133,7 @@ def code_to_num(asset_code):
     for c in asset_code:
         if fieldno == 2:
             raise ValueError(
-                "Error in asset code '{}', too many fields".format(asset_code),
+                f"Error in asset code '{asset_code}', too many fields",
             )
         num = ALPHABET.index(c)
         if num > 15:

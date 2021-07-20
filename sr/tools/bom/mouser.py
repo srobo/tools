@@ -110,13 +110,13 @@ class Item(distpart.DistItem):
         av = av.find_all("tr")[1]
         av = av.find_all("td")[1]
 
-        mo = re.search("\d", av.text).group(0)
+        mo = re.search(r"\d", av.text).group(0)
 
         # mo now contains the minimum order quantity in string form
         self.min_order = int(mo)
 
         om = av.find("div")
-        om = re.search("\d", om.text).group(0)
+        om = re.search(r"\d", om.text).group(0)
 
         # om now contains the order multiple in string form
         om = om.replace(",", "")

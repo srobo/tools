@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def command(args):
     import sys
 
@@ -20,7 +17,7 @@ def command(args):
             count += 1
             print(asset.code if style == 'codes' else asset.path)
         if verbose:
-            print("# {0} results".format(count), file=sys.stderr)
+            print(f"# {count} results", file=sys.stderr)
     except ParseException as e:
         print("Query Error:", e, file=sys.stderr)
         sys.exit(1)

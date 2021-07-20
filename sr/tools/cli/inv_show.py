@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def command(args):
     import pydoc
     import subprocess
@@ -14,7 +11,7 @@ def command(args):
     part = inv.root.parts[partcode]
 
     pager_text = "Full path: " + part.path + '\n'
-    with open(part.info_path, 'r') as info_file:
+    with open(part.info_path) as info_file:
         pager_text += info_file.read() + '\n'
 
     pager_text += "Log\n===\n"

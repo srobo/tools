@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def command(args):
     import sys
 
@@ -31,10 +28,10 @@ def command(args):
         print("# item -> parent")
 
         if hasattr(part.parent, "code"):
-            print("%s -> %s" % (part.code, part.parent.code))
+            print(f"{part.code} -> {part.parent.code}")
 
         elif hasattr(part.parent, "name"):
-            print("%s -> dir(%s)" % (part.code, part.parent.name))
+            print(f"{part.code} -> dir({part.parent.name})")
 
 
 def command_deprecated(args):

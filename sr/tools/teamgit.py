@@ -51,14 +51,14 @@ def list_teams(reporoot=DEFAULT_REPOROOT, server=DEFAULT_SERVER):
     :returns: A list of teams.
     :rtype: list of str
     """
-    so, se = remote_cmd("ls {0}".format(reporoot), server)
+    so, se = remote_cmd(f"ls {reporoot}", server)
 
     r = re.compile("^[A-Z0-9]+$")
     teams = [x for x in so.splitlines() if r.match(x) is not None]
     return [x.strip() for x in teams]
 
 
-class Repo(object):
+class Repo:
     """
     Representing a repository on the IDE.
 
@@ -89,7 +89,7 @@ class Repo(object):
         return os.path.basename(self.path)
 
 
-class Team(object):
+class Team:
     """
     Representing a team in the IDE.
 

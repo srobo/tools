@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def command(args):
     import argparse
     import os
@@ -24,7 +21,7 @@ def command(args):
     userno = inventory.current_user_number
     assetcd = inventory.get_next_asset_code(userno)
 
-    groupname = "%s-sr%s" % (dirname, assetcd)
+    groupname = f"{dirname}-sr{assetcd}"
 
     if os.path.isdir(dirname):
         os.rename(dirname, groupname)

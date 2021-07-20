@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def command(args):
     import os
     import subprocess
@@ -19,17 +16,17 @@ def command(args):
         try:
             assetcode.code_to_num(code)
         except:
-            print("Error: {} is an invalid asset code.".format(c), file=sys.stderr)
+            print(f"Error: {c} is an invalid asset code.", file=sys.stderr)
             sys.exit(1)
 
         try:
             part = inv.root.parts[code]
         except:
-            print("Error: There is no part with code {}.".format(code), file=sys.stderr)
+            print(f"Error: There is no part with code {code}.", file=sys.stderr)
             sys.exit(1)
 
         if part.parent.path == cwd:
-            print("Warning: Part {} is already in {}.".format(code, cwd))
+            print(f"Warning: Part {code} is already in {cwd}.")
             continue
 
         if hasattr(part.parent, "code"):
@@ -37,7 +34,7 @@ def command(args):
                 parts.append(part.parent)
             else:
                 print(
-                    "Warning: Part {} is in an assembly.".format(code),
+                    f"Warning: Part {code} is in an assembly.",
                     "To move the assembly, use the -a switch.",
                     file=sys.stderr,
                 )

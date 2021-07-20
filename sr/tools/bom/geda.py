@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import hashlib
 import os
 import re
@@ -32,7 +30,7 @@ class GSchem(dict):
         self.__load_bom()
 
     def __export_bom(self, ofname):
-        command = 'gnetlist -g partslist1 -o %s %s' % (ofname, self.fname)
+        command = f'gnetlist -g partslist1 -o {ofname} {self.fname}'
         subprocess.check_call(command, shell=True)
 
     def __load_bom(self):
@@ -63,7 +61,7 @@ class GSchem(dict):
         self.__parse_bom_fname(cfname)
 
     def __parse_bom_fname(self, fname):
-        f = open(fname, "r")
+        f = open(fname)
 
         # Skip the first two lines
         f.readline()
@@ -109,7 +107,7 @@ class PCB:
 
     def __export_xy(self, ofname):
         p = subprocess.Popen(
-            """pcb -x bom --xyfile %s %s""" % (ofname, self.fname),
+            f"""pcb -x bom --xyfile {ofname} {self.fname}""",
             shell=True,
         )
         p.communicate()
@@ -175,7 +173,7 @@ class PCB:
         else:
             print("Using cached PCB xy-data for %s" % os.path.basename(self.fname))
 
-        f = open(cfname, "r")
+        f = open(cfname)
         xy = f.read()
         f.close()
         return xy

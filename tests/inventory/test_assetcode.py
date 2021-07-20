@@ -15,12 +15,12 @@ class TestValidity(unittest.TestCase):
 
     def test_valid(self):
         for code in ['srp1u28']:
-            msg = "{} should be valid".format(code)
+            msg = f"{code} should be valid"
             self.assertTrue(assetcode.is_valid(code), msg)
 
     def test_invalid(self):
         for code in ['abc', 'sr2017', '2017', '2017-KICKSTART']:
-            msg = "{} should not be valid".format(code)
+            msg = f"{code} should not be valid"
             self.assertFalse(assetcode.is_valid(code), msg)
 
 

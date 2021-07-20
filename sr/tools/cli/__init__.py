@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import argparse
 import importlib
 import sys
@@ -81,7 +79,7 @@ def main():
 
     subparsers = parser.add_subparsers()
     for command in __all__:
-        name = '{}.{}'.format(__name__, command)
+        name = f'{__name__}.{command}'
         importlib.import_module(name).add_subparser(subparsers)
 
     args = parser.parse_args()

@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def command(args):
     import sys
 
@@ -31,7 +28,7 @@ def command(args):
         print("The following %i parts are not in the SR parts database:" % error)
 
         for name, components in err_parts.items():
-            print("\t'%s': %s" % (name, " ".join(components)))
+            print("\t'{}': {}".format(name, " ".join(components)))
 
         sys.exit(2)
 

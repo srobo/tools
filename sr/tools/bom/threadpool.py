@@ -2,7 +2,6 @@
 # http://code.activestate.com/recipes/577187-python-thread-pool/
 
 # {{{ http://code.activestate.com/recipes/577187/ (r9)
-from __future__ import print_function
 
 from threading import Thread
 

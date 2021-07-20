@@ -1,11 +1,8 @@
-from __future__ import print_function
-
-
 def replace_line(path, key, value):
     import re
 
     print("Replacing:", key, "->", value, "in", path)
-    pattern = r"{key}( *):( *)(?:[^#\s]*)(.*)".format(key=key)
+    pattern = fr"{key}( *):( *)(?:[^#\s]*)(.*)"
 
     with open(path) as fd:
         lines = list(fd)
@@ -20,7 +17,7 @@ def replace_line(path, key, value):
             )
             break
     else:
-        lines.append("{}: {}\n".format(key, value))
+        lines.append(f"{key}: {value}\n")
 
     with open(path, "w") as fd:
         for line in lines:

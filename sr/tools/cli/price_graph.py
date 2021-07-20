@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def command(args):
     from numpy import arange
     from pylab import bar, show, subplots_adjust, yticks

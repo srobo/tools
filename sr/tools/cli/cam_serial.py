@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 # Vendor ID, Product ID
 SR_CAMERA_IDS = [
     # The Logitech C500

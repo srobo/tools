@@ -35,7 +35,7 @@ class Item(distpart.DistItem):
             raise distpart.NonExistentPart(self.part_number)
 
         qa = qa_heading.findNext('td').text
-        qa = re.search("[1-9](?:\d{0,2})(?:,\d{3})*", qa)
+        qa = re.search(r"[1-9](?:\d{0,2})(?:,\d{3})*", qa)
         if qa is not None:
             qa = qa.group(0)
             self.avail = int(qa.replace(',', ''))

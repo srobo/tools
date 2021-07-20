@@ -69,11 +69,11 @@ class Item(distpart.DistItem):
 
     def get_info(self):
         """Return a dictionary of the info."""
-        return dict(
-            qty=self.qty_range,
-            price=self.cost,
-            num_for_price=self.price_for,
-            min_order=self.min_order,
-            multiple=self.multi,
-            number_available=self.avail,
-        )
+        return {
+            'qty': self.qty_range,
+            'price': self.cost,
+            'num_for_price': self.price_for,
+            'min_order': self.min_order,
+            'multiple': self.multi,
+            'number_available': self.avail,
+        }

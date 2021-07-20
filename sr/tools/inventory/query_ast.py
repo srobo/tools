@@ -132,11 +132,11 @@ class Condition(Terminal):
         super().__init__()
         self.conditions = set(conditions)
 
-    def _flatten(self, l):
-        if type(l) not in (list, tuple):
-            return l
+    def _flatten(self, lst):
+        if type(lst) not in (list, tuple):
+            return lst
         ret = []
-        for i in l:
+        for i in lst:
             if type(i) in (list, tuple):
                 ret.extend(self._flatten(i))
             else:

@@ -72,7 +72,7 @@ jobs:
           name: Run Tests
           command: |
             source venv/bin/activate
-            python setup.py test
+            ./run-tests
 
   release:
     docker:

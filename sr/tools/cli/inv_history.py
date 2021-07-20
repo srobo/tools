@@ -10,7 +10,7 @@ class CachedAssetFinder:
     def __init__(self, repo):
         self.repo = repo
 
-    def search(self, code=None, id=None, path=None):
+    def search(self, code=None, id=None, path=None):  # noqa: A002
         """
         Set the search mode.
 
@@ -26,9 +26,9 @@ class CachedAssetFinder:
         self.search_id = id
         self.search_path = path
 
-    def _test_object(self, id, name, path):
+    def _test_object(self, id_, name, path):
         if self.search_id and self.search_path:
-            if id == self.search_id and self.search_path == path:
+            if id_ == self.search_id and self.search_path == path:
                 return True
         else:
             if self.search_code in name:

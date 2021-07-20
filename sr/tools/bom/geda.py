@@ -75,9 +75,9 @@ class GSchem(dict):
             fields = line.split()
 
             value = fields[2].strip().lower()
-            id = fields[0].strip().upper()
+            id_ = fields[0].strip().upper()
 
-            self[id] = value
+            self[id_] = value
 
         f.close()
 

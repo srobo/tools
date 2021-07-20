@@ -197,8 +197,8 @@ class Type(Terminal):
 
     def match_single(self, inv_node):
         if hasattr(inv_node, 'name'):
-            for type in self.types:
-                if fnmatch.fnmatch(inv_node.name, type):
+            for type_ in self.types:
+                if fnmatch.fnmatch(inv_node.name, type_):
                     return True
         return False
 

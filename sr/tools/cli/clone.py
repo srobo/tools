@@ -2,7 +2,6 @@ from __future__ import print_function
 
 
 def command(args):
-    import os
     import subprocess
 
     from sr.tools.config import Config

@@ -57,6 +57,7 @@ def generate_in_expr(prop, val_type):
             val_type + ZeroOrMore(COMMA + val_type) +
             R_C_BRKT)
 
+
 code_single = CODE + EQUALITY + ASSET_CODE
 code_list = generate_in_expr(CODE, ASSET_CODE)
 code_expr = code_list | code_single
@@ -123,6 +124,7 @@ def _pa_func_expr(x):
         return x[0]
     else:
         return query_ast.Function(x[0], x[2])
+
 
 code_single.setParseAction(lambda x: query_ast.Code(x[2]))
 code_list.setParseAction(lambda x: query_ast.Code(*x[3::2]))

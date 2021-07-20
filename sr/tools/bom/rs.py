@@ -12,6 +12,7 @@ class Item(distpart.DistItem):
 
     :param part_number: The number of the part.
     """
+
     def __init__(self, part_number):
         """Initialise an RS item."""
         distpart.DistItem.__init__(self, part_number)

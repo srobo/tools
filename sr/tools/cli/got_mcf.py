@@ -4,6 +4,7 @@ from __future__ import print_function
 
 USERMAN_URL = "https://{server}:{port}/userman/"
 
+
 class UsermanServer(object):
 
     @classmethod
@@ -65,9 +66,11 @@ class UsermanServer(object):
         self._check_response(response)
         return response.json()
 
+
 def error(msg):
     import sys
     print(msg, file=sys.stderr)
+
 
 def query(question, yes_opts, no_opts):
     import six
@@ -82,6 +85,7 @@ def query(question, yes_opts, no_opts):
 
     return answer in yes_opts
 
+
 def describe_user(user_info, userman):
     colleges = user_info['colleges']
     if not colleges:
@@ -94,6 +98,7 @@ def describe_user(user_info, userman):
                                               user_info['last_name'],
                                               college)
     return description
+
 
 def command(args):
     from sr.tools.config import Config

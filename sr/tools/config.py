@@ -21,6 +21,7 @@ if six.PY2:
 
 class Config(dict):
     """Configuration reader for the tools."""
+
     def __init__(self):
         """
         Create a new configuration reader with the default configuration values

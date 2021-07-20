@@ -32,6 +32,7 @@ class NotAnInventoryError(OSError):
     :param directory: The directory that is not an inventory. Also accessible
                       as the ``directory`` attribute of this class.
     """
+
     def __init__(self, directory):
         msg = "'{directory}' is not an inventory.".format(directory=directory)
         super(NotAnInventoryError, self).__init__(msg)
@@ -45,6 +46,7 @@ class InvalidFileError(ValueError):
     :param path: The path to the file, relative to the inventory.
                  Also accessible as the ``path`` attribute of this class.
     """
+
     def __init__(self, path, comment):
         msg = "Invalid asset: '{}' {}.".format(path, comment)
         super(InvalidFileError, self).__init__(msg)
@@ -154,6 +156,7 @@ class Item(object):
     :param str path: The path to the item.
     :param parent: The item parent.
     """
+
     def __init__(self, path, parent=None):
         """Create a new ``Item`` object."""
         self.path = path
@@ -200,7 +203,7 @@ class ItemTree(object):
         'info': "group 'info' files may only exist within directories "
                 "which are themselves assets",
     }
-    ignore_fnames =  ()
+    ignore_fnames = ()
 
     def __init__(self, path, parent=None):
         """Create a new item tree."""
@@ -332,6 +335,7 @@ class Inventory(object):
 
     :param str root_path: The root path to the inventory.
     """
+
     def __init__(self, root_path):
         """Create a new inventory."""
         self.root_path = root_path

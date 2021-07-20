@@ -25,6 +25,7 @@ class GSchem(dict):
 
     :param str fname: The filename of the schematic.
     """
+
     def __init__(self, fname):
         """Create a new gEDA schematic object."""
         self.fname = fname
@@ -89,6 +90,7 @@ class PCB:
 
     :param str fname: The filename of the PCB file.
     """
+
     def __init__(self, fname):
         """Create a new PCB object."""
         self.fname = fname

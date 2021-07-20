@@ -23,6 +23,7 @@ class PartGroup(list):
     :param str name: The name of the group.
     :param list designators: A list of designators
     """
+
     def __init__(self, part, name="", designators=[]):
         """Create a new part group."""
         list.__init__(self)
@@ -116,6 +117,7 @@ class PartGroup(list):
 
 class Bom(dict):
     """A bill of materials."""
+
     def stockcheck(self):
         """
         Check that all items in the schematic are in stock.
@@ -158,6 +160,7 @@ class BoardBom(Bom):
     :param fname: The schematic to load from.
     :param name: The name to give the schematic.
     """
+
     def __init__(self, db, fname, name):
         """Create a new ``BoardBom`` object."""
         Bom.__init__(self)
@@ -180,6 +183,7 @@ class MultiBoardBom(Bom):
     A bill of materials with multiple boards.
 
     :param db: A parts DB instance."""
+
     def __init__(self, db):
         """Create multiple board BOM."""
         Bom.__init__(self)

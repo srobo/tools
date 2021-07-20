@@ -52,6 +52,7 @@ def command(args):
     else:
         print("Warning: No parts to move", file=sys.stderr)
 
+
 def add_subparser(subparsers):
     parser = subparsers.add_parser('inv-mv',
                                    help="Move inventory items into the CWD.")

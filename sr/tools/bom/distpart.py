@@ -18,6 +18,7 @@ class DistItem(object):
 
     :param part_number: The part number of the item.
     """
+
     def __init__(self, part_number):
         """Create a new distributor item."""
         self.part_number = part_number

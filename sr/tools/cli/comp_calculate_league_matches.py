@@ -3,16 +3,19 @@ import argparse
 from datetime import timedelta
 from math import ceil, floor
 
+
 def nop(*args, **kwargs):
     pass
+
 
 def parse_time_hours(x):
     hours, minutes = x.split(':')
     return timedelta(hours=int(hours), minutes=int(minutes))
 
+
 def command(args):
     vprint = print if args.verbose else nop
-    slots = int(floor(args.time.total_seconds() / (60*args.match_length)))
+    slots = int(floor(args.time.total_seconds() / (60 * args.match_length)))
     vprint('{} slots'.format(slots))
 
     entrants_per_slot = args.arenas * args.entrants
@@ -25,7 +28,8 @@ def command(args):
     print('Average time between matches: {}'.format(timedelta(seconds=time_between_matches_seconds)))
 
     float_periods = slots - (rounds * slots_required_for_allvsall)
-    vprint('Float time: {} ({} match periods)'.format(timedelta(minutes=float_periods*args.match_length), float_periods))
+    vprint('Float time: {} ({} match periods)'.format(timedelta(minutes=float_periods * args.match_length), float_periods))
+
 
 def add_subparser(subparsers):
     parser = subparsers.add_parser('comp-calculate-league-matches',
@@ -54,4 +58,3 @@ def add_subparser(subparsers):
                         action='store_true',
                         help='verbose output')
     parser.set_defaults(func=command)
-

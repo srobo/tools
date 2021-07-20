@@ -8,6 +8,7 @@ def command(args):
         url = URL_PATTERN.format(cmd=cmd)
         webbrowser.open_new_tab(url)
 
+
 def add_subparser(subparsers):
     parser = subparsers.add_parser('help',
                                    help='Get information about an sr command.')

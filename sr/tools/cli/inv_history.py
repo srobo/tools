@@ -9,6 +9,7 @@ class CachedAssetFinder:
 
     :param repo: The repository to work on.
     """
+
     def __init__(self, repo):
         self.repo = repo
 
@@ -169,7 +170,7 @@ def command(args):
                     datetime.datetime.fromtimestamp(commit.commit_time)
                 ))
 
-                for line in textwrap.wrap(description, width=terminal_width-2):
+                for line in textwrap.wrap(description, width=terminal_width - 2):
                     print(' ', line)
                 print()
             else:

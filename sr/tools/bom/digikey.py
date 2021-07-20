@@ -13,6 +13,7 @@ class Item(distpart.DistItem):
 
     :param partNumber: The number of the part.
     """
+
     def __init__(self, partNumber):
         distpart.DistItem.__init__(self, partNumber)
 

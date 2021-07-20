@@ -64,6 +64,7 @@ class Repo(object):
     :param str path: The path to the repository.
     :param str server: The server that the repository is on.
     """
+
     def __init__(self, path, server=DEFAULT_SERVER):
         """Create a new repository object."""
         self.path = path
@@ -95,6 +96,7 @@ class Team(object):
     :param str server: The server that the team resides in.
     :param str reporoot: The root of the repositories on that server.
     """
+
     def __init__(self, identifier, server=DEFAULT_SERVER,
                  reporoot=DEFAULT_REPOROOT):
         """Create a new team object."""

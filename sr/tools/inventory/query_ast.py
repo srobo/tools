@@ -7,6 +7,7 @@ from sr.tools.inventory import assetcode, inventory
 
 class ASTNode(object):
     """An abstract syntax tree node."""
+
     def sexpr(self):
         """Get a string symbolic expression of the node."""
         return ""
@@ -14,6 +15,7 @@ class ASTNode(object):
 
 class NonTerminal(ASTNode):
     """A non-terminal AST node."""
+
     def match(self, inv_nodes):
         """
         Check whether the inventory nodes match the operation defined in this
@@ -27,6 +29,7 @@ class NonTerminal(ASTNode):
 
 class Terminal(ASTNode):
     """A terminal AST node."""
+
     def match_single(self, inv_node):
         """
         Check whether the inventory node matches the operation definied in this
@@ -53,6 +56,7 @@ class Not(NonTerminal):
 
     :param node: The node to be not-ed.
     """
+
     def __init__(self, node):
         """Initialise a 'not' operation."""
         super(Not, self).__init__()
@@ -73,6 +77,7 @@ class And(NonTerminal):
     :param left: The left side of the operation.
     :param right: The right side of the operation.
     """
+
     def __init__(self, left, right):
         """Initialise an 'and' operation."""
         super(And, self).__init__()
@@ -96,6 +101,7 @@ class Or(NonTerminal):
     :param left: The left side of the operation.
     :param right: The right side of the operation.
     """
+
     def __init__(self, left, right):
         """Initialise an 'or' operation."""
         super(Or, self).__init__()
@@ -119,6 +125,7 @@ class Condition(Terminal):
     :param conditions: A list of conditions that should be matched.
     :type conditions: list of strs
     """
+
     def __init__(self, *conditions):
         """Initialise the node with conditions."""
         super(Condition, self).__init__()
@@ -181,6 +188,7 @@ class Type(Terminal):
 
     :param types: A list of types that should be checked.
     """
+
     def __init__(self, *types):
         """Initialise the node."""
         super(Type, self).__init__()
@@ -204,6 +212,7 @@ class Labelled(Terminal):
     :param labelled: Whether or not the asset is labelled.
     :type labelled: A string representation of a bool ('true', '1', etc)
     """
+
     def __init__(self, labelled):
         """Initialise the 'labelled' check node."""
         super(Labelled, self).__init__()
@@ -245,6 +254,7 @@ class TriState(Terminal):
     :param str key: The key to check.
     :param str desired_val: One of 'unset', 'true', 'false'.
     """
+
     def __init__(self, key, desired_val):
         """Initialise a 'tri' check node."""
         super(TriState, self).__init__()
@@ -272,6 +282,7 @@ class Path(Terminal):
     :param paths: A list of paths that are deamed valid.
     :type paths: list of str
     """
+
     def __init__(self, *paths):
         """Initialise the 'path' check node."""
         super(Path, self).__init__()
@@ -304,6 +315,7 @@ class Code(Terminal):
     :param codes: A list of valid codes.
     :type codes: list of str
     """
+
     def __init__(self, *codes):
         """Initialise the 'code' check node."""
         self.codes = set(map(assetcode.normalise, codes))
@@ -321,6 +333,7 @@ class Serial(Terminal):
 
     :param str serials: A list of valid serials.
     """
+
     def __init__(self, *serials):
         """Initialise the 'serial' check node."""
         self.serials = set(serials)

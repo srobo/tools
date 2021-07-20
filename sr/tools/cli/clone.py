@@ -21,6 +21,7 @@ def command(args):
 
     subprocess.check_call(cmd)
 
+
 def command_deprecated(args):
     import sys
 

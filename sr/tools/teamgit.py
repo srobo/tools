@@ -77,7 +77,7 @@ class Repo(object):
         :rtype: int
         """
         cmd = 'cd {path}; git log -1 --format="format:%ct"'.format(
-            path=pipes.quote(self.path)
+            path=pipes.quote(self.path),
         )
 
         so, se = remote_cmd(cmd, self.server)

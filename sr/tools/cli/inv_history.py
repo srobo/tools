@@ -167,7 +167,7 @@ def command(args):
                 print('Commit {} by {} on {}'.format(
                     commit.id,
                     commit.committer.name,
-                    datetime.datetime.fromtimestamp(commit.commit_time)
+                    datetime.datetime.fromtimestamp(commit.commit_time),
                 ))
 
                 for line in textwrap.wrap(description, width=terminal_width - 2):

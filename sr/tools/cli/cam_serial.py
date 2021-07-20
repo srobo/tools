@@ -5,7 +5,7 @@ SR_CAMERA_IDS = [
     # The Logitech C500
     (0x046d, 0x0807),
     # The Logitech C270
-    (0x046d, 0x0825)
+    (0x046d, 0x0825),
 ]
 
 

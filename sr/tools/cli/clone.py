@@ -1,10 +1,6 @@
 def command(args):
     import subprocess
 
-    from sr.tools.config import Config
-
-    config = Config()
-
     prefix = 'https://github.com/srobo/'
 
     repo = args.repo

@@ -1,2 +1,2 @@
 #!/bin/sh
-exec python setup.py test "$@"
+exec python -m unittest "$@"

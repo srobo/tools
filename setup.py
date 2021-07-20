@@ -52,7 +52,6 @@ setup(
         'docutils <0.16',  # https://github.com/sphinx-doc/sphinx/issues/6887; https://github.com/sphinx-doc/sphinx/pull/6918
         'Sphinx >=1.3, <2',  # Upgrading beyond 2.x? See if we can remove the docutils pin above.
         'Pygments >=2.0, <3',
-        'nose >=1.3, <2',
         'numpy >=1.9, <2'  # https://github.com/numpy/numpy/issues/2434#issuecomment-65252402
     ],
     extras_require={
@@ -62,7 +61,6 @@ setup(
     },
     include_package_data=True,
     zip_safe=False,
-    test_suite='nose.collector',
     cmdclass={
         'install_data': install_data_with_sphinx
     },

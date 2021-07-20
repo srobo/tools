@@ -72,7 +72,7 @@ jobs:
           name: Run Tests
           command: |
             source venv/bin/activate
-            ./run-tests
+            ./run-tests --verbose
 
   release:
     docker:

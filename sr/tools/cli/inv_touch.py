@@ -28,7 +28,7 @@ def command(args):
                 )
 
             new.write(line)
-    except:
+    except Exception:
         print("Failed to update revision number:", sys.exc_info()[0])
         os.rename(f"{assetname}-tmp", assetname)
     else:

@@ -93,7 +93,7 @@ def command(args):
                     state = ParseState.INCOMP
 
             schematic.close()
-        except:
+        except Exception:
             print(f"Unable to open schematic '{schematic_filename}'")
 
     if len(sub_schematic_components) == 0:
@@ -138,7 +138,7 @@ def command(args):
             src_pcb.close()
 
             print(f"Created {dst_filename} for {refdes}")
-        except:
+        except Exception:
             print(f"Failed to copy {pcb_filename} to {dst_filename}")
             continue
 

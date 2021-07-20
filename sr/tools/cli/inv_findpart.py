@@ -23,7 +23,7 @@ def command(args):
         try:
             assetcode.code_to_num(code)
             spec_type = ASSET_CODE
-        except:
+        except ValueError:
             if c in inv.root.types:
                 spec_type = PART_TYPE
             else:
@@ -44,7 +44,7 @@ def command(args):
         else:
             try:
                 parts.extend(inv.root.types[c])
-            except:
+            except KeyError:
                 print("Error: There is no part type %s." % c, file=sys.stderr)
                 sys.exit(1)
 

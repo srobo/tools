@@ -92,7 +92,7 @@ class Item(distpart.DistItem):
                     price = D(ps[1:])
 
                     prices.append((quantity, price))
-                except:
+                except ValueError:
                     # Sometimes Mouser say 'Quote'
                     pass
 

@@ -54,7 +54,7 @@ def partcode_match(device):
         # is the partcode valid?
         assetcode.code_to_num(match.groups()[0])
         return True
-    except:
+    except ValueError:
         return False
 
 

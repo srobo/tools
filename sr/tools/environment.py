@@ -130,7 +130,7 @@ def _get_terminal_size_windows():
             sizex = right - left + 1
             sizey = bottom - top + 1
             return sizex, sizey
-    except:
+    except Exception:
         pass
 
 
@@ -139,7 +139,7 @@ def _get_terminal_size_tput():
         cols = int(subprocess.check_call(shlex.split('tput cols')))
         rows = int(subprocess.check_call(shlex.split('tput lines')))
         return (cols, rows)
-    except:
+    except Exception:
         pass
 
 
@@ -151,7 +151,7 @@ def _get_terminal_size_linux():
 
             cr = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
             return cr
-        except:
+        except Exception:
             pass
 
     cr = ioctl_GWINSZ(0) or ioctl_GWINSZ(1) or ioctl_GWINSZ(2)
@@ -160,11 +160,11 @@ def _get_terminal_size_linux():
             fd = os.open(os.ctermid(), os.O_RDONLY)
             cr = ioctl_GWINSZ(fd)
             os.close(fd)
-        except:
+        except Exception:
             pass
     if not cr:
         try:
             cr = (os.environ['LINES'], os.environ['COLUMNS'])
-        except:
+        except Exception:
             return None
     return int(cr[1]), int(cr[0])

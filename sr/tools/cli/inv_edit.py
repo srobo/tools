@@ -13,7 +13,7 @@ def command(args):
 
         try:
             assetcode.code_to_num(code)
-        except:
+        except ValueError:
             print("Error: %s is an invalid code." % code, file=sys.stderr)
             sys.exit(1)
 

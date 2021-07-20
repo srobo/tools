@@ -15,13 +15,13 @@ def command(args):
 
         try:
             assetcode.code_to_num(code)
-        except:
+        except ValueError:
             print(f"Error: {c} is an invalid asset code.", file=sys.stderr)
             sys.exit(1)
 
         try:
             part = inv.root.parts[code]
-        except:
+        except KeyError:
             print(f"Error: There is no part with code {code}.", file=sys.stderr)
             sys.exit(1)
 

@@ -3,7 +3,6 @@
 import getpass
 import sys
 
-import six
 import yaml
 
 from sr.tools.environment import get_config_filename
@@ -12,10 +11,6 @@ try:
     import keyring
 except ImportError:
     keyring = None
-
-
-if six.PY2:
-    input = raw_input
 
 
 class Config(dict):

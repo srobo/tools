@@ -15,9 +15,9 @@ def command(args):
     # Erroneous parts (key is type)
     err_parts = {}
 
-    for id_ in parts.keys():
-        if parts[id_] not in lib:
-            err_parts.setdefault(parts[id_], []).append(id_)
+    for id_, part in parts.items():
+        if part not in lib:
+            err_parts.setdefault(part, []).append(id_)
             error += 1
         else:
             found += 1

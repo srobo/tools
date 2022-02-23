@@ -211,7 +211,7 @@ class ItemTree:
         'info': "group 'info' files may only exist within directories "
         "which are themselves assets",
     }
-    ignore_fnames =  ('README.md',)
+    ignore_fnames = ('README.md',)
 
     def __init__(self, path, parent=None):
         """Create a new item tree."""

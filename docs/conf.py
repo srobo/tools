@@ -60,8 +60,8 @@ for f in glob.glob('commands/*.rst'):
     if 'index.rst' in f:
         continue  # we don't want this in the man pages
     command_name = f[9:-4]
-    name = 'sr-{}'.format(command_name)
-    description = 'Help for "{}" tool.'.format(command_name)
+    name = f'sr-{command_name}'
+    description = f'Help for "{command_name}" tool.'
     man_pages.append((f[:-4], name, description, ['Student Robotics'], 1))
 
 

@@ -1,12 +1,9 @@
-from __future__ import print_function
-
-
 def command(args):
     import sys
 
+    from sr.tools.environment import open_editor
     from sr.tools.inventory import assetcode
     from sr.tools.inventory.inventory import get_inventory
-    from sr.tools.environment import open_editor
 
     inv = get_inventory()
 
@@ -16,15 +13,14 @@ def command(args):
 
         try:
             assetcode.code_to_num(code)
-        except:
+        except ValueError:
             print("Error: %s is an invalid code." % code, file=sys.stderr)
             sys.exit(1)
 
         try:
             part = inv.root.parts[code]
         except KeyError:
-            print("Error: There is no part with code %s." %
-                  code, file=sys.stderr)
+            print("Error: There is no part with code %s." % code, file=sys.stderr)
             sys.exit(1)
 
         parts.append(part)
@@ -34,7 +30,9 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('inv-edit',
-                                   help='Edit inventory items by part code.')
+    parser = subparsers.add_parser(
+        'inv-edit',
+        help='Edit inventory items by part code.',
+    )
     parser.add_argument('part_code', nargs='+', help='Part codes to edit.')
     parser.set_defaults(func=command)

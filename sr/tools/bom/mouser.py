@@ -1,7 +1,8 @@
 """Routines for scraping data about parts from Mouser."""
-from bs4 import BeautifulSoup
-from decimal import Decimal as D
 import re
+from decimal import Decimal as D
+
+from bs4 import BeautifulSoup
 
 from sr.tools.bom import distpart
 from sr.tools.bom.cachedfetch import grab_url_cached
@@ -13,6 +14,7 @@ class Item(distpart.DistItem):
 
     :param part_number: The number of the part.
     """
+
     def __init__(self, part_number):
         """Initialise a Mouser item."""
         distpart.DistItem.__init__(self, part_number)
@@ -90,7 +92,7 @@ class Item(distpart.DistItem):
                     price = D(ps[1:])
 
                     prices.append((quantity, price))
-                except:
+                except ValueError:
                     # Sometimes Mouser say 'Quote'
                     pass
 
@@ -108,13 +110,13 @@ class Item(distpart.DistItem):
         av = av.find_all("tr")[1]
         av = av.find_all("td")[1]
 
-        mo = re.search("\d", av.text).group(0)
+        mo = re.search(r"\d", av.text).group(0)
 
         # mo now contains the minimum order quantity in string form
         self.min_order = int(mo)
 
         om = av.find("div")
-        om = re.search("\d", om.text).group(0)
+        om = re.search(r"\d", om.text).group(0)
 
         # om now contains the order multiple in string form
         om = om.replace(",", "")

@@ -3,7 +3,6 @@ import re
 
 from sr.tools.bom import geda, parts_db
 
-
 GSCHEM = 1
 UNKNOWN = 2
 
@@ -28,8 +27,7 @@ def open_schem(fname):
     if s == GSCHEM:
         schem = geda.GSchem(fname)
     else:
-        raise ValueError("We don't yet support exporting BOMs from "
-                         "gschem things.")
+        raise ValueError("We don't yet support exporting BOMs from gschem things.")
 
     # New items to add to the schematic
     new_items = {}
@@ -40,7 +38,7 @@ def open_schem(fname):
     for des, srcode in schem.items():
         num = 1
 
-        if srcode[0:len("sr-asm-")] == "sr-asm-":
+        if srcode[0: len("sr-asm-")] == "sr-asm-":
             # TODO: Don't parse the Db again!
             db = parts_db.get_db()
 
@@ -50,7 +48,7 @@ def open_schem(fname):
                 if s == "+":
                     continue
 
-                r = re.compile("([0-9]+)\(([^)]+)\)")
+                r = re.compile(r"([0-9]+)\(([^)]+)\)")
                 m = r.match(s)
                 if m:
 

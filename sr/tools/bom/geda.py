@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import hashlib
 import os
 import re
@@ -25,13 +23,14 @@ class GSchem(dict):
 
     :param str fname: The filename of the schematic.
     """
+
     def __init__(self, fname):
         """Create a new gEDA schematic object."""
         self.fname = fname
         self.__load_bom()
 
     def __export_bom(self, ofname):
-        command = 'gnetlist -g partslist1 -o %s %s' % (ofname, self.fname)
+        command = f'gnetlist -g partslist1 -o {ofname} {self.fname}'
         subprocess.check_call(command, shell=True)
 
     def __load_bom(self):
@@ -62,7 +61,7 @@ class GSchem(dict):
         self.__parse_bom_fname(cfname)
 
     def __parse_bom_fname(self, fname):
-        f = open(fname, "r")
+        f = open(fname)
 
         # Skip the first two lines
         f.readline()
@@ -76,9 +75,9 @@ class GSchem(dict):
             fields = line.split()
 
             value = fields[2].strip().lower()
-            id = fields[0].strip().upper()
+            id_ = fields[0].strip().upper()
 
-            self[id] = value
+            self[id_] = value
 
         f.close()
 
@@ -89,21 +88,28 @@ class PCB:
 
     :param str fname: The filename of the PCB file.
     """
+
     def __init__(self, fname):
         """Create a new PCB object."""
         self.fname = fname
 
     def __export_image(self, res, ofname):
-        cmd = 'pcb -x png --as-shown --layer-stack "outline,component,silk" ' \
-              '--dpi {dpi} --outfile {outfile} {filename}'
-        p = subprocess.Popen(cmd.format(dpi=res, outfile=ofname,
-                                        filename=self.fname), shell=True)
+        cmd = (
+            'pcb -x png --as-shown --layer-stack "outline,component,silk" '
+            '--dpi {dpi} --outfile {outfile} {filename}'
+        )
+        p = subprocess.Popen(
+            cmd.format(dpi=res, outfile=ofname, filename=self.fname),
+            shell=True,
+        )
         p.communicate()
         p.wait()
 
     def __export_xy(self, ofname):
-        p = subprocess.Popen("""pcb -x bom --xyfile %s %s""" %
-                             (ofname, self.fname), shell=True)
+        p = subprocess.Popen(
+            f"""pcb -x bom --xyfile {ofname} {self.fname}""",
+            shell=True,
+        )
         p.communicate()
         p.wait()
 
@@ -133,8 +139,7 @@ class PCB:
         if not cache_good:
             self.__export_image(res, cfname)
         else:
-            print('Using cached PCB image for %s.' %
-                  os.path.basename(self.fname))
+            print('Using cached PCB image for %s.' % os.path.basename(self.fname))
 
         with open(cfname) as file:
             img = file.read()
@@ -166,10 +171,9 @@ class PCB:
         if not cache_good:
             self.__export_xy(cfname)
         else:
-            print("Using cached PCB xy-data for %s" %
-                  os.path.basename(self.fname))
+            print("Using cached PCB xy-data for %s" % os.path.basename(self.fname))
 
-        f = open(cfname, "r")
+        f = open(cfname)
         xy = f.read()
         f.close()
         return xy

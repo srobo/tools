@@ -1,8 +1,7 @@
+import os
 import pipes
 import re
 import subprocess
-import os
-
 
 DEFAULT_SERVER = 'studentrobotics.org'
 DEFAULT_REPOROOT = '/var/www/html/ide/repos'
@@ -32,9 +31,11 @@ def remote_cmd(cmd, server=DEFAULT_SERVER):
         hostname = server
         port = 22
 
-    cmdline = "ssh {hostname} -p {port} {cmd}".format(hostname=hostname,
-                                                      port=port,
-                                                      cmd=pipes.quote(cmd))
+    cmdline = "ssh {hostname} -p {port} {cmd}".format(
+        hostname=hostname,
+        port=port,
+        cmd=pipes.quote(cmd),
+    )
     p = subprocess.Popen(cmdline, stdout=subprocess.PIPE, shell=True)
     so, se = p.communicate()
     assert p.wait() == 0
@@ -50,20 +51,21 @@ def list_teams(reporoot=DEFAULT_REPOROOT, server=DEFAULT_SERVER):
     :returns: A list of teams.
     :rtype: list of str
     """
-    so, se = remote_cmd("ls {0}".format(reporoot), server)
+    so, se = remote_cmd(f"ls {reporoot}", server)
 
     r = re.compile("^[A-Z0-9]+$")
     teams = [x for x in so.splitlines() if r.match(x) is not None]
     return [x.strip() for x in teams]
 
 
-class Repo(object):
+class Repo:
     """
     Representing a repository on the IDE.
 
     :param str path: The path to the repository.
     :param str server: The server that the repository is on.
     """
+
     def __init__(self, path, server=DEFAULT_SERVER):
         """Create a new repository object."""
         self.path = path
@@ -77,7 +79,7 @@ class Repo(object):
         :rtype: int
         """
         cmd = 'cd {path}; git log -1 --format="format:%ct"'.format(
-            path=pipes.quote(self.path)
+            path=pipes.quote(self.path),
         )
 
         so, se = remote_cmd(cmd, self.server)
@@ -87,7 +89,7 @@ class Repo(object):
         return os.path.basename(self.path)
 
 
-class Team(object):
+class Team:
     """
     Representing a team in the IDE.
 
@@ -95,8 +97,8 @@ class Team(object):
     :param str server: The server that the team resides in.
     :param str reporoot: The root of the repositories on that server.
     """
-    def __init__(self, identifier, server=DEFAULT_SERVER,
-                 reporoot=DEFAULT_REPOROOT):
+
+    def __init__(self, identifier, server=DEFAULT_SERVER, reporoot=DEFAULT_REPOROOT):
         """Create a new team object."""
         self.identifier = identifier
         self.server = server
@@ -105,14 +107,18 @@ class Team(object):
         self._load_repos()
 
     def _load_repos(self):
-        cmd = "ls {reporoot}/{team}/master/".format(reporoot=self.reporoot,
-                                                    team=self.identifier)
+        cmd = "ls {reporoot}/{team}/master/".format(
+            reporoot=self.reporoot,
+            team=self.identifier,
+        )
         so, se = remote_cmd(cmd, self.server)
         repos = so.splitlines()
 
         self.repos = []
         for r in repos:
-            path = '{root}/{team}/master/{repo}'.format(root=self.reporoot,
-                                                        team=self.identifier,
-                                                        repo=r)
+            path = '{root}/{team}/master/{repo}'.format(
+                root=self.reporoot,
+                team=self.identifier,
+                repo=r,
+            )
             self.repos.append(Repo(path, self.server))

@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def bit_mask(n):
     """Return an n-bit mask of 1's."""
     return 2 ** n - 1
@@ -15,6 +12,7 @@ def reverse_bits(n, width):
 def command(args):
     import math
     import sys
+
     import yaml
 
     # Round the number of teams up to a power of two
@@ -53,13 +51,14 @@ def command(args):
         sys.stdout.write(yaml.dump(matches))
     else:
         for n, match in enumerate(matches):
-            print(" {0}:\t{1}".format(n, "\t".join([str(x) for x in match])))
+            print(" {}:\t{}".format(n, "\t".join([str(x) for x in match])))
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('schedule-knockout',
-                                   help="Create the schedule for the first "
-                                        "round of a knock-out")
+    parser = subparsers.add_parser(
+        'schedule-knockout',
+        help="Create the schedule for the first round of a knock-out",
+    )
     parser.add_argument("n_teams", type=int, help="The number of teams")
     parser.add_argument("--yaml", action="store_true", help="Output YAML")
     parser.set_defaults(func=command)

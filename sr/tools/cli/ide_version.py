@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 
 
 def command(args):
@@ -14,13 +13,15 @@ def command(args):
     data = json.loads(page.decode('utf-8'))
 
     if data is None:
-        print('Failed to download from: {url}.'.format(url=url))
+        print(f'Failed to download from: {url}.')
         sys.exit(1)
 
     print(data['info']['Version'])
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('ide-version',
-                                   help='Display the version of the IDE.')
+    parser = subparsers.add_parser(
+        'ide-version',
+        help='Display the version of the IDE.',
+    )
     parser.set_defaults(func=command)

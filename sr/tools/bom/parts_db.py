@@ -1,9 +1,10 @@
 """Student Robotics parts database access library."""
 import csv
+
 import pkg_resources
 import six
 
-from sr.tools.bom import farnell, rs, digikey, mouser
+from sr.tools.bom import digikey, farnell, mouser, rs
 
 
 def get_db():
@@ -18,6 +19,7 @@ class Part(dict):
 
     :param dict d: A part dictionary from the database.
     """
+
     def __init__(self, d):
         """Initialise with a dict from the DB."""
         for k in d.keys():
@@ -117,6 +119,7 @@ class Db(dict):
     :param file: A file-like object to read the parts DB from.
     :type file: file-like
     """
+
     def __init__(self, file):
         for line in csv.DictReader(file):
             # discard commented out lines

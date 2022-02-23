@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 class CachedAssetFinder:
     """
     A class that can be used for finding assets in trees.
@@ -9,10 +6,11 @@ class CachedAssetFinder:
 
     :param repo: The repository to work on.
     """
+
     def __init__(self, repo):
         self.repo = repo
 
-    def search(self, code=None, id=None, path=None):
+    def search(self, code=None, id=None, path=None):  # noqa: A002
         """
         Set the search mode.
 
@@ -28,9 +26,9 @@ class CachedAssetFinder:
         self.search_id = id
         self.search_path = path
 
-    def _test_object(self, id, name, path):
+    def _test_object(self, id_, name, path):
         if self.search_id and self.search_path:
-            if id == self.search_id and self.search_path == path:
+            if id_ == self.search_id and self.search_path == path:
                 return True
         else:
             if self.search_code in name:
@@ -102,9 +100,11 @@ def get_history(repo, asset_code):
     sort_mode = pygit2.GIT_SORT_TOPOLOGICAL | pygit2.GIT_SORT_REVERSE
     all_commits = repo.walk(repo.head.target, sort_mode)
 
-    old_res, _ = added_res, added_commit = find_asset_by_code(asset_finder,
-                                                              asset_code,
-                                                              all_commits)
+    old_res, _ = added_res, added_commit = find_asset_by_code(
+        asset_finder,
+        asset_code,
+        all_commits,
+    )
     asset_finder.search(id=added_res[1], path=added_res[2])
 
     yield ('A', added_commit, added_res[2])
@@ -112,8 +112,7 @@ def get_history(repo, asset_code):
     for commit in all_commits:
         res = asset_finder.test(commit.tree)
         if res is None:
-            res2, commit = find_asset_by_code(asset_finder, asset_code,
-                                              all_commits)
+            res2, commit = find_asset_by_code(asset_finder, asset_code, all_commits)
             asset_finder.search(id=res2[1], path=res2[2])
 
             if old_res[2] != res2[2]:
@@ -137,7 +136,7 @@ def command(args):
     inventory = get_inventory()
     repo = pygit2.Repository(inventory.root_path)
 
-    asset_code = 'sr{}'.format(assetcode.normalise(args.asset_code))
+    asset_code = f'sr{assetcode.normalise(args.asset_code)}'
 
     for event in get_history(repo, asset_code):
         status = event[0]
@@ -148,13 +147,14 @@ def command(args):
         else:
             description = ''
             if status == 'A':
-                description = "'{}' created.".format(event[2])
+                description = f"'{event[2]}' created."
             elif status == 'R':
                 old_path = event[2][0]
                 new_path = event[2][1]
-                description = "Moved from '{}' into '{}'." \
-                              .format(os.path.dirname(old_path),
-                                      os.path.dirname(new_path))
+                description = "Moved from '{}' into '{}'.".format(
+                    os.path.dirname(old_path),
+                    os.path.dirname(new_path),
+                )
             elif status == 'M':
                 description = 'Contents modifed.'
             else:
@@ -163,13 +163,15 @@ def command(args):
             terminal_width, terminal_height = get_terminal_size()
 
             if args.output == 'full':
-                print('Commit {} by {} on {}'.format(
-                    commit.id,
-                    commit.committer.name,
-                    datetime.datetime.fromtimestamp(commit.commit_time)
-                ))
+                print(
+                    'Commit {} by {} on {}'.format(
+                        commit.id,
+                        commit.committer.name,
+                        datetime.datetime.fromtimestamp(commit.commit_time),
+                    ),
+                )
 
-                for line in textwrap.wrap(description, width=terminal_width-2):
+                for line in textwrap.wrap(description, width=terminal_width - 2):
                     print(' ', line)
                 print()
             else:
@@ -177,10 +179,12 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('inv-history',
-                                   help='Get the history of an asset.')
+    parser = subparsers.add_parser('inv-history', help='Get the history of an asset.')
     parser.add_argument('asset_code', help='The code of the asset to inspect.')
-    parser.add_argument('--output', '-o',
-                        choices=['commits', 'description', 'full'],
-                        default='full')
+    parser.add_argument(
+        '--output',
+        '-o',
+        choices=['commits', 'description', 'full'],
+        default='full',
+    )
     parser.set_defaults(func=command)

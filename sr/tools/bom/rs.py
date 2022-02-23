@@ -1,6 +1,7 @@
 """Routines for scraping data about parts from RS."""
-from bs4 import BeautifulSoup
 from decimal import Decimal as D
+
+from bs4 import BeautifulSoup
 
 from sr.tools.bom import distpart
 from sr.tools.bom.cachedfetch import grab_url_cached
@@ -12,6 +13,7 @@ class Item(distpart.DistItem):
 
     :param part_number: The number of the part.
     """
+
     def __init__(self, part_number):
         """Initialise an RS item."""
         distpart.DistItem.__init__(self, part_number)

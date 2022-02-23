@@ -2,23 +2,20 @@
 A set of classes and functions for working with
 :doc:`The Inventory </inventory/index>`.
 """
-from __future__ import print_function
 
 import codecs
 import email.utils
 import hashlib
-import re
 import os
+import re
 import subprocess
 import sys
 
 import six.moves.cPickle as pickle
-
 import yaml
 
-from sr.tools.inventory import assetcode
 from sr.tools.environment import get_cache_dir
-
+from sr.tools.inventory import assetcode
 
 CACHE_DIR = get_cache_dir('inventory')
 RE_PART = re.compile("^(.+)-sr([%s]+)$" % "".join(assetcode.ALPHABET))
@@ -32,9 +29,10 @@ class NotAnInventoryError(OSError):
     :param directory: The directory that is not an inventory. Also accessible
                       as the ``directory`` attribute of this class.
     """
+
     def __init__(self, directory):
-        msg = "'{directory}' is not an inventory.".format(directory=directory)
-        super(NotAnInventoryError, self).__init__(msg)
+        msg = f"'{directory}' is not an inventory."
+        super().__init__(msg)
         self.directory = directory
 
 
@@ -45,9 +43,10 @@ class InvalidFileError(ValueError):
     :param path: The path to the file, relative to the inventory.
                  Also accessible as the ``path`` attribute of this class.
     """
+
     def __init__(self, path, comment):
-        msg = "Invalid asset: '{}' {}.".format(path, comment)
-        super(InvalidFileError, self).__init__(msg)
+        msg = f"Invalid asset: '{path}' {comment}."
+        super().__init__(msg)
         self.path = path
 
 
@@ -62,8 +61,11 @@ def find_top_level_dir(start_dir=None):
     """
     try:
         cmd = ['git', 'rev-parse', '--show-toplevel']
-        gitdir = subprocess.check_output(cmd, universal_newlines=True,
-                                         cwd=start_dir).strip()
+        gitdir = subprocess.check_output(
+            cmd,
+            universal_newlines=True,
+            cwd=start_dir,
+        ).strip()
     except subprocess.CalledProcessError:
         return None
 
@@ -147,21 +149,25 @@ def cached_yaml_load(path):
     return y
 
 
-class Item(object):
+class Item:
     """
     An item in the inventory.
 
     :param str path: The path to the item.
     :param parent: The item parent.
     """
+
     def __init__(self, path, parent=None):
         """Create a new ``Item`` object."""
         self.path = path
         self.parent = parent
         m = RE_PART.match(os.path.basename(path))
         if m is None:
-            raise InvalidFileError(path, "does not have a valid name (should be"
-                                   " in the form <name>-sr<part-code>)")
+            raise InvalidFileError(
+                path,
+                "does not have a valid name (should be"
+                " in the form <name>-sr<part-code>)",
+            )
         self.name = m.group(1)
         self.code = m.group(2)
 
@@ -171,11 +177,12 @@ class Item(object):
 
         # Verify that assetcode matches filename
         if self.info["assetcode"] != self.code:
-            print("Code in asset filename does not match contents of file:",
-                  file=sys.stderr)
+            print(
+                "Code in asset filename does not match contents of file:",
+                file=sys.stderr,
+            )
             print("\t code in filename: '%s'" % self.code, file=sys.stderr)
-            print("\t code in contents: '%s'" % self.info["assetcode"],
-                  file=sys.stderr)
+            print("\t code in contents: '%s'" % self.info["assetcode"], file=sys.stderr)
             print("\n\tOffending file:", self.path, file=sys.stderr)
             sys.exit(1)
 
@@ -184,11 +191,12 @@ class Item(object):
             try:
                 setattr(self, pname, self.info[pname])
             except KeyError:
-                raise ValueError("Part sr{} is missing '{}' property."
-                                 .format(self.code, pname))
+                raise ValueError(
+                    f"Part sr{self.code} is missing '{pname}' property.",
+                )
 
 
-class ItemTree(object):
+class ItemTree:
     """
     A tree of items in the inventory.
 
@@ -198,9 +206,9 @@ class ItemTree(object):
 
     special_fnames = {
         'info': "group 'info' files may only exist within directories "
-                "which are themselves assets",
+        "which are themselves assets",
     }
-    ignore_fnames =  ()
+    ignore_fnames = ()
 
     def __init__(self, path, parent=None):
         """Create a new item tree."""
@@ -263,8 +271,7 @@ class ItemTree(object):
         """
         for child in self.children.values():
             if hasattr(child, "walk"):
-                for c in child.walk():
-                    yield c
+                yield from child.walk()
 
             if hasattr(child, "code"):
                 yield child
@@ -309,12 +316,15 @@ class ItemGroup(ItemTree):
         self.info = cached_yaml_load(self.info_path)
 
         if self.info["assetcode"] != self.code:
-            print("Code in group directory name does not match info file:",
-                  file=sys.stderr)
-            print("\t code in directory name: '%s'" % self.code,
-                  file=sys.stderr)
-            print("\t           code in info: '%s'" % self.info["assetcode"],
-                  file=sys.stderr)
+            print(
+                "Code in group directory name does not match info file:",
+                file=sys.stderr,
+            )
+            print("\t code in directory name: '%s'" % self.code, file=sys.stderr)
+            print(
+                "\t           code in info: '%s'" % self.info["assetcode"],
+                file=sys.stderr,
+            )
             print("\n\tOffending group:", self.path, file=sys.stderr)
             sys.exit(1)
 
@@ -326,12 +336,13 @@ class ItemGroup(ItemTree):
         self.elements = self.info["elements"]
 
 
-class Inventory(object):
+class Inventory:
     """
     An inventory.
 
     :param str root_path: The root path to the inventory.
     """
+
     def __init__(self, root_path):
         """Create a new inventory."""
         self.root_path = root_path
@@ -367,10 +378,14 @@ class Inventory(object):
         :returns: A tuple containing the name and email address.
         :rtype: tuple
         """
-        name = subprocess.check_output(["git", "config", "user.name"],
-                                       universal_newlines=True).strip()
-        email = subprocess.check_output(["git", "config", "user.email"],
-                                        universal_newlines=True).strip()
+        name = subprocess.check_output(
+            ["git", "config", "user.name"],
+            universal_newlines=True,
+        ).strip()
+        email = subprocess.check_output(
+            ["git", "config", "user.email"],
+            universal_newlines=True,
+        ).strip()
         return (name, email)
 
     @property

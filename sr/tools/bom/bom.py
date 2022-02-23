@@ -1,12 +1,10 @@
 """Routines for extracting BOMs from schematics."""
-from __future__ import print_function
 
-from decimal import Decimal
 import os
+from decimal import Decimal
 
 from sr.tools.bom import schem
 from sr.tools.bom.threadpool import ThreadPool
-
 
 STOCK_OUT = 0
 STOCK_OK = 1
@@ -23,6 +21,7 @@ class PartGroup(list):
     :param str name: The name of the group.
     :param list designators: A list of designators
     """
+
     def __init__(self, part, name="", designators=[]):
         """Create a new part group."""
         list.__init__(self)
@@ -87,8 +86,7 @@ class PartGroup(list):
             # round up to minimum order
             n = self.part.get_min_order()
         elif (n % self.part.get_increments()) != 0:
-            n = n + (self.part.get_increments() -
-                     (n % self.part.get_increments()))
+            n = n + (self.part.get_increments() - (n % self.part.get_increments()))
 
         # Some (hopefully) sane assertions
         assert n % self.part.get_increments() == 0
@@ -107,8 +105,10 @@ class PartGroup(list):
 
         p = self.part.get_price(n)
         if p is None:
-            print("Warning: couldn't get price for %s (%s)" %
-                  (self.part["sr-code"], self.part["supplier"]))
+            print(
+                "Warning: couldn't get price for %s (%s)"
+                % (self.part["sr-code"], self.part["supplier"]),
+            )
             return Decimal(0)
 
         return p * Decimal(n)
@@ -116,6 +116,7 @@ class PartGroup(list):
 
 class Bom(dict):
     """A bill of materials."""
+
     def stockcheck(self):
         """
         Check that all items in the schematic are in stock.
@@ -158,6 +159,7 @@ class BoardBom(Bom):
     :param fname: The schematic to load from.
     :param name: The name to give the schematic.
     """
+
     def __init__(self, db, fname, name):
         """Create a new ``BoardBom`` object."""
         Bom.__init__(self)
@@ -180,6 +182,7 @@ class MultiBoardBom(Bom):
     A bill of materials with multiple boards.
 
     :param db: A parts DB instance."""
+
     def __init__(self, db):
         """Create multiple board BOM."""
         Bom.__init__(self)

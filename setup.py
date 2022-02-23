@@ -1,10 +1,12 @@
 #!/usr/bin/env python
+
+import os
 from distutils.command.install_data import install_data
 from glob import glob
-import os
-from setuptools import setup, find_packages
 
-from sr.tools import __version__, __description__
+from setuptools import find_packages, setup
+
+from sr.tools import __description__, __version__
 
 
 class install_data_with_sphinx(install_data):
@@ -12,7 +14,9 @@ class install_data_with_sphinx(install_data):
         self.run_command('build_sphinx')
         self.data_files.remove('docs')
         sphinx = self.get_finalized_command('build_sphinx')
-        self.data_files += [('share/man/man1', glob(os.path.join(sphinx.build_dir, 'man', '*.1')))]
+        self.data_files += [
+            ('share/man/man1', glob(os.path.join(sphinx.build_dir, 'man', '*.1'))),
+        ]
         install_data.run(self)
 
 
@@ -34,7 +38,7 @@ setup(
     namespace_packages=['sr'],
     packages=find_packages(exclude=['tests', 'tests.*']),
     entry_points={
-        'console_scripts': ['sr = sr.tools.cli:main']
+        'console_scripts': ['sr = sr.tools.cli:main'],
     },
     author='Student Robotics',
     author_email='info@studentrobotics.org',
@@ -46,7 +50,7 @@ setup(
         'requests >=2.9, <3',
         'six >=1.9, <2',
         'tabulate >=0.7, <1',
-        'xlwt-future >=0.8, <1'
+        'xlwt-future >=0.8, <1',
     ],
     setup_requires=[
         'docutils <0.16',  # https://github.com/sphinx-doc/sphinx/issues/6887; https://github.com/sphinx-doc/sphinx/pull/6918
@@ -56,15 +60,15 @@ setup(
     extras_require={
         'cam-serial, usb-key-serial, sd-serial, mcv4b-part-code': ['pyudev'],
         'price-graph': ['matplotlib'],
-        'save passwords': ['keyring']
+        'save passwords': ['keyring'],
     },
     include_package_data=True,
     zip_safe=False,
     cmdclass={
-        'install_data': install_data_with_sphinx
+        'install_data': install_data_with_sphinx,
     },
     data_files=[
-        'docs'  # there has to be an entry for 'install_data' to run
+        'docs',  # there has to be an entry for 'install_data' to run
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -82,6 +86,6 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
-        'Topic :: Utilities'
-    ]
+        'Topic :: Utilities',
+    ],
 )

@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 OUTPUT_DIR = "./gerbers"
 
 
@@ -39,8 +36,9 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('export-gerber',
-                                   help='Export gerbers. Will output gerbers '
-                                        'to directory %s' % OUTPUT_DIR)
+    parser = subparsers.add_parser(
+        'export-gerber',
+        help='Export gerbers. Will output gerbers to directory %s' % OUTPUT_DIR,
+    )
     parser.add_argument('board', help='Board to export.')
     parser.set_defaults(func=command)

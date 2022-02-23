@@ -1,8 +1,15 @@
-from pyparsing import oneOf, CaselessKeyword, Forward, Literal, Optional, Or, \
-    Regex, ZeroOrMore
+from pyparsing import (
+    CaselessKeyword,
+    Forward,
+    Literal,
+    oneOf,
+    Optional,
+    Or,
+    Regex,
+    ZeroOrMore,
+)
 
 from sr.tools.inventory import query_ast
-
 
 TRUE = CaselessKeyword("true")
 FALSE = CaselessKeyword("false")
@@ -33,12 +40,20 @@ LABELLED = Literal("labelled")
 PATH = Literal("path")
 ASSY = Literal("assy")
 
-_TRI_STATE_KEY_NAMES = ("development", "v-sense-move-1213",
-                        "motor-rail-mod-1360", "tested",
-                        "has_headers", "velcro-attached",
-                        "cased", "umbilical", "climit_disabled",
-                        "dremel-mod", "tvs-mod-698",
-                        "battery-aa-mod-1270")
+_TRI_STATE_KEY_NAMES = (
+    "development",
+    "v-sense-move-1213",
+    "motor-rail-mod-1360",
+    "tested",
+    "has_headers",
+    "velcro-attached",
+    "cased",
+    "umbilical",
+    "climit_disabled",
+    "dremel-mod",
+    "tvs-mod-698",
+    "battery-aa-mod-1270",
+)
 TRI_STATE_KEYS = [Literal(x) for x in _TRI_STATE_KEY_NAMES]
 
 ASSET_CODE = Regex(r"(sr)?[a-zA-Z0-9]+")
@@ -53,9 +68,8 @@ FUNCTIONS = oneOf(' '.join(query_ast.Function.registered_names()))
 
 def generate_in_expr(prop, val_type):
     """Generate an 'in' expression."""
-    return (prop + IN + L_C_BRKT +
-            val_type + ZeroOrMore(COMMA + val_type) +
-            R_C_BRKT)
+    return prop + IN + L_C_BRKT + val_type + ZeroOrMore(COMMA + val_type) + R_C_BRKT
+
 
 code_single = CODE + EQUALITY + ASSET_CODE
 code_list = generate_in_expr(CODE, ASSET_CODE)
@@ -88,8 +102,17 @@ not_expr = Forward()
 primary = Forward()
 func_expr = Forward()
 
-base_expr = (not_expr | code_expr | serial_expr | type_expr | cond_expr |
-             path_expr | label_expr | assy_expr | tristate_expr)
+base_expr = (
+    not_expr |
+    code_expr |
+    serial_expr |
+    type_expr |
+    cond_expr |
+    path_expr |
+    label_expr |
+    assy_expr |
+    tristate_expr
+)
 paren_expr = L_BRKT + or_expr + R_BRKT
 
 primary << (base_expr | paren_expr)
@@ -123,6 +146,7 @@ def _pa_func_expr(x):
         return x[0]
     else:
         return query_ast.Function(x[0], x[2])
+
 
 code_single.setParseAction(lambda x: query_ast.Code(x[2]))
 code_list.setParseAction(lambda x: query_ast.Code(*x[3::2]))

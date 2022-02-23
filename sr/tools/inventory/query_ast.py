@@ -1,12 +1,12 @@
 import fnmatch
-
 from functools import reduce
 
 from sr.tools.inventory import assetcode, inventory
 
 
-class ASTNode(object):
+class ASTNode:
     """An abstract syntax tree node."""
+
     def sexpr(self):
         """Get a string symbolic expression of the node."""
         return ""
@@ -14,6 +14,7 @@ class ASTNode(object):
 
 class NonTerminal(ASTNode):
     """A non-terminal AST node."""
+
     def match(self, inv_nodes):
         """
         Check whether the inventory nodes match the operation defined in this
@@ -21,12 +22,14 @@ class NonTerminal(ASTNode):
 
         :returns: A list of matching nodes.
         """
-        raise NotImplementedError("match(...) not implemented"
-                                  " for {}".format(self.__class__))
+        raise NotImplementedError(
+            f"match(...) not implemented for {self.__class__}",
+        )
 
 
 class Terminal(ASTNode):
     """A terminal AST node."""
+
     def match_single(self, inv_node):
         """
         Check whether the inventory node matches the operation definied in this
@@ -34,8 +37,9 @@ class Terminal(ASTNode):
 
         :returns: True or False depending on whether the node match.
         """
-        raise NotImplementedError("match_single(...) not implemented"
-                                  " for {}".format(self.__class__))
+        raise NotImplementedError(
+            f"match_single(...) not implemented for {self.__class__}",
+        )
 
     def match(self, inv_nodes):
         """
@@ -53,17 +57,18 @@ class Not(NonTerminal):
 
     :param node: The node to be not-ed.
     """
+
     def __init__(self, node):
         """Initialise a 'not' operation."""
-        super(Not, self).__init__()
+        super().__init__()
         self.node = node
 
     def match(self, inv_nodes):
         matches = self.node.match(inv_nodes)
-        return list(set([x for x in inv_nodes if x not in matches]))
+        return list({x for x in inv_nodes if x not in matches})
 
     def sexpr(self):
-        return "(NOT {0})".format(self.node.sexpr())
+        return f"(NOT {self.node.sexpr()})"
 
 
 class And(NonTerminal):
@@ -73,20 +78,22 @@ class And(NonTerminal):
     :param left: The left side of the operation.
     :param right: The right side of the operation.
     """
+
     def __init__(self, left, right):
         """Initialise an 'and' operation."""
-        super(And, self).__init__()
+        super().__init__()
         self.left = left
         self.right = right
 
     def match(self, inv_nodes):
         left_matches = self.left.match(inv_nodes)
         right_matches = self.right.match(inv_nodes)
-        return list({x for x in inv_nodes
-                     if (x in left_matches and x in right_matches)})
+        return list(
+            {x for x in inv_nodes if (x in left_matches and x in right_matches)},
+        )
 
     def sexpr(self):
-        return "(AND {0} {1})".format(self.left.sexpr(), self.right.sexpr())
+        return f"(AND {self.left.sexpr()} {self.right.sexpr()})"
 
 
 class Or(NonTerminal):
@@ -96,20 +103,20 @@ class Or(NonTerminal):
     :param left: The left side of the operation.
     :param right: The right side of the operation.
     """
+
     def __init__(self, left, right):
         """Initialise an 'or' operation."""
-        super(Or, self).__init__()
+        super().__init__()
         self.left = left
         self.right = right
 
     def match(self, inv_nodes):
         left_matches = self.left.match(inv_nodes)
         right_matches = self.right.match(inv_nodes)
-        return list({x for x in inv_nodes
-                     if (x in left_matches or x in right_matches)})
+        return list({x for x in inv_nodes if (x in left_matches or x in right_matches)})
 
     def sexpr(self):
-        return "(OR {0} {1})".format(self.left.sexpr(), self.right.sexpr())
+        return f"(OR {self.left.sexpr()} {self.right.sexpr()})"
 
 
 class Condition(Terminal):
@@ -119,16 +126,17 @@ class Condition(Terminal):
     :param conditions: A list of conditions that should be matched.
     :type conditions: list of strs
     """
+
     def __init__(self, *conditions):
         """Initialise the node with conditions."""
-        super(Condition, self).__init__()
+        super().__init__()
         self.conditions = set(conditions)
 
-    def _flatten(self, l):
-        if type(l) not in (list, tuple):
-            return l
+    def _flatten(self, lst):
+        if type(lst) not in (list, tuple):
+            return lst
         ret = []
-        for i in l:
+        for i in lst:
             if type(i) in (list, tuple):
                 ret.extend(self._flatten(i))
             else:
@@ -172,7 +180,7 @@ class Condition(Terminal):
         return self._state(inv_node) in self.conditions
 
     def sexpr(self):
-        return "(Condition {0})".format(list(self.conditions))
+        return f"(Condition {list(self.conditions)})"
 
 
 class Type(Terminal):
@@ -181,20 +189,21 @@ class Type(Terminal):
 
     :param types: A list of types that should be checked.
     """
+
     def __init__(self, *types):
         """Initialise the node."""
-        super(Type, self).__init__()
+        super().__init__()
         self.types = types
 
     def match_single(self, inv_node):
         if hasattr(inv_node, 'name'):
-            for type in self.types:
-                if fnmatch.fnmatch(inv_node.name, type):
+            for type_ in self.types:
+                if fnmatch.fnmatch(inv_node.name, type_):
                     return True
         return False
 
     def sexpr(self):
-        return "(Type {0})".format(list(self.types))
+        return f"(Type {list(self.types)})"
 
 
 class Labelled(Terminal):
@@ -204,9 +213,10 @@ class Labelled(Terminal):
     :param labelled: Whether or not the asset is labelled.
     :type labelled: A string representation of a bool ('true', '1', etc)
     """
+
     def __init__(self, labelled):
         """Initialise the 'labelled' check node."""
-        super(Labelled, self).__init__()
+        super().__init__()
         self.labelled = labelled.lower() in ('true', '1', 'yes', 't')
 
     def match_single(self, inv_node):
@@ -215,7 +225,7 @@ class Labelled(Terminal):
         return False
 
     def sexpr(self):
-        return "(Labelled {0})".format(self.labelled)
+        return f"(Labelled {self.labelled})"
 
 
 class Assy(Terminal):
@@ -225,17 +235,19 @@ class Assy(Terminal):
     :param assy: Whether or not the asset has an assembly.
     :type assy: A string representation of a bool ('true', '1', etc)
     """
+
     def __init__(self, assy):
         """Initialise the 'assy' check node."""
-        super(Assy, self).__init__()
+        super().__init__()
         self.assy = assy.lower() in ('true', '1', 'yes', 't')
 
     def match_single(self, inv_node):
-        return self.assy == (hasattr(inv_node, 'code')
-                             and hasattr(inv_node, 'children'))
+        return self.assy == (
+            hasattr(inv_node, 'code') and hasattr(inv_node, 'children')
+        )
 
     def sexpr(self):
-        return "(Assy {0})".format(self.assy)
+        return f"(Assy {self.assy})"
 
 
 class TriState(Terminal):
@@ -245,9 +257,10 @@ class TriState(Terminal):
     :param str key: The key to check.
     :param str desired_val: One of 'unset', 'true', 'false'.
     """
+
     def __init__(self, key, desired_val):
         """Initialise a 'tri' check node."""
-        super(TriState, self).__init__()
+        super().__init__()
         self.key = key
         self.desired_val = desired_val.lower()
 
@@ -262,7 +275,7 @@ class TriState(Terminal):
         return False
 
     def sexpr(self):
-        return "(TriState {0}: {1})".format(self.key, self.desired_val)
+        return f"(TriState {self.key}: {self.desired_val})"
 
 
 class Path(Terminal):
@@ -272,9 +285,10 @@ class Path(Terminal):
     :param paths: A list of paths that are deamed valid.
     :type paths: list of str
     """
+
     def __init__(self, *paths):
         """Initialise the 'path' check node."""
-        super(Path, self).__init__()
+        super().__init__()
         paths = [path[1:] if path[0] == '/' else path for path in paths]
         self.paths = [path + '*' for path in paths]
 
@@ -294,7 +308,7 @@ class Path(Terminal):
         return False
 
     def sexpr(self):
-        return "(Path {0})".format(list(self.paths))
+        return f"(Path {list(self.paths)})"
 
 
 class Code(Terminal):
@@ -304,6 +318,7 @@ class Code(Terminal):
     :param codes: A list of valid codes.
     :type codes: list of str
     """
+
     def __init__(self, *codes):
         """Initialise the 'code' check node."""
         self.codes = set(map(assetcode.normalise, codes))
@@ -312,7 +327,7 @@ class Code(Terminal):
         return inv_node.code in self.codes
 
     def sexpr(self):
-        return "(Code {0})".format(list(self.codes))
+        return f"(Code {list(self.codes)})"
 
 
 class Serial(Terminal):
@@ -321,6 +336,7 @@ class Serial(Terminal):
 
     :param str serials: A list of valid serials.
     """
+
     def __init__(self, *serials):
         """Initialise the 'serial' check node."""
         self.serials = set(serials)
@@ -330,7 +346,7 @@ class Serial(Terminal):
         return serial in self.serials
 
     def sexpr(self):
-        return "(Serial {0})".format(list(self.serials))
+        return f"(Serial {list(self.serials)})"
 
 
 class Function(NonTerminal):
@@ -340,6 +356,7 @@ class Function(NonTerminal):
     :params str func_name: The name of the function.
     :params node: The node to run the functions on.
     """
+
     _functions = {}
 
     @classmethod
@@ -347,6 +364,7 @@ class Function(NonTerminal):
         def wrap(f):
             cls._functions[name] = f
             return f
+
         return wrap
 
     @classmethod
@@ -359,12 +377,18 @@ class Function(NonTerminal):
         self.node = node
 
     def match(self, inv_nodes):
-        return list(set(reduce(lambda x, y: list(x) + list(y),
-                               map(self._functions[self.func_name],
-                                   self.node.match(inv_nodes)), [])))
+        return list(
+            set(
+                reduce(
+                    lambda x, y: list(x) + list(y),
+                    map(self._functions[self.func_name], self.node.match(inv_nodes)),
+                    [],
+                ),
+            ),
+        )
 
     def sexpr(self):
-        return "(Function '{0}' {1})".format(self.func_name, self.node.sexpr())
+        return f"(Function '{self.func_name}' {self.node.sexpr()})"
 
 
 @Function.register('parent')
@@ -390,7 +414,9 @@ def _siblings(inv_node):
 @Function.register('descendants')
 def _descendants(inv_node):
     """A function which returns the descendants of a node."""
+
     def rec(node):
         children = getattr(node, 'children', {})
         return sum(map(rec, children.values()), [node])
+
     return rec(inv_node)[1:]

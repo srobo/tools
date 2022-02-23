@@ -3,16 +3,45 @@ A set of functions for dealing with asset codes in the inventory.
 
 Asset codes are constructed from part numbers and user numbers.
 """
-from __future__ import division
 
 from sr.tools.inventory import luhn
 
-
 # The characters used in asset codes. They have been chosen to avoid similar
 # looking characters to avoid errors when reading written codes.
-ALPHABET = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C",
-            "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R",
-            "T", "U", "V", "W", "X", "Y"]
+ALPHABET = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "P",
+    "Q",
+    "R",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+]
 ALPHABET_SET = set(ALPHABET)
 
 
@@ -60,8 +89,10 @@ def num_to_code(user_number, part_number):
     :rtype: str
     """
     if user_number < 0 or part_number < 0:
-        raise ValueError('User ({0}) or part ({1}) number cannot be '
-                         'negative. '.format(user_number, part_number))
+        raise ValueError(
+            'User ({}) or part ({}) number cannot be '
+            'negative. '.format(user_number, part_number),
+        )
 
     assetno = ''
     for num in (user_number, part_number):
@@ -91,7 +122,7 @@ def code_to_num(asset_code):
     """
     asset_code = normalise(asset_code)
     if not is_valid(asset_code):
-        raise ValueError("Asset code '{}' is not valid".format(asset_code))
+        raise ValueError(f"Asset code '{asset_code}' is not valid")
 
     # Remove checkdigit
     asset_code = asset_code[:-1]
@@ -101,8 +132,9 @@ def code_to_num(asset_code):
     i = 0
     for c in asset_code:
         if fieldno == 2:
-            raise ValueError("Error in asset code '{}', too many fields"
-                             .format(asset_code))
+            raise ValueError(
+                f"Error in asset code '{asset_code}', too many fields",
+            )
         num = ALPHABET.index(c)
         if num > 15:
             field[fieldno] = field[fieldno] + (num - 16) * (16 ** i)

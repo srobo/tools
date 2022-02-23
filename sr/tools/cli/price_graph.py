@@ -1,9 +1,6 @@
-from __future__ import print_function
-
-
 def command(args):
-    from pylab import bar, yticks, subplots_adjust, show
     from numpy import arange
+    from pylab import bar, show, subplots_adjust, yticks
 
     import sr.tools.bom.bom as bom
     import sr.tools.bom.parts_db as parts_db
@@ -23,8 +20,13 @@ def command(args):
 
     prices.sort(key=lambda x: x[1])
 
-    bar(0, 0.8, bottom=range(0, len(prices)), width=[x[1] for x in prices],
-        orientation='horizontal')
+    bar(
+        0,
+        0.8,
+        bottom=range(0, len(prices)),
+        width=[x[1] for x in prices],
+        orientation='horizontal',
+    )
 
     yticks(arange(0, len(prices)) + 0.4, [x[0] for x in prices])
 
@@ -34,8 +36,11 @@ def command(args):
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('price-graph',
-                                   help="Create a price graph.")
-    parser.add_argument('arg', nargs='+', help="""DIR -N SCHEMATIC1 -M SCHEMATIC2 ...
-Where N and M are multipliers for the number of boards""")
+    parser = subparsers.add_parser('price-graph', help="Create a price graph.")
+    parser.add_argument(
+        'arg',
+        nargs='+',
+        help="""DIR -N SCHEMATIC1 -M SCHEMATIC2 ...
+Where N and M are multipliers for the number of boards""",
+    )
     parser.set_defaults(func=command)

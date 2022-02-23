@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 def command(args):
     print('Please update with pip:')
     print('$ pip install -U sr.tools')

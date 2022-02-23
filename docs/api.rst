@@ -69,14 +69,6 @@ Bill of Materials
     :undoc-members:
     :show-inheritance:
 
-Budget
-------
-
-.. automodule:: sr.tools.budget
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 Configuration
 -------------
 
@@ -89,14 +81,6 @@ Environment
 -----------
 
 .. automodule:: sr.tools.environment
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-Gerrit
-------
-
-.. automodule:: sr.tools.gerrit
     :members:
     :undoc-members:
     :show-inheritance:
@@ -136,26 +120,10 @@ Inventory
     :undoc-members:
     :show-inheritance:
 
-Spending
---------
-
-.. automodule:: sr.tools.spending
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 Team Git Repositories
 ---------------------
 
 .. automodule:: sr.tools.teamgit
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-Trac
-----
-
-.. automodule:: sr.tools.trac
     :members:
     :undoc-members:
     :show-inheritance:

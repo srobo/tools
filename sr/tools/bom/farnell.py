@@ -1,9 +1,11 @@
 """Routines for scraping data about parts from Farnell."""
+import re
+from decimal import Decimal as D
+
 from bs4 import BeautifulSoup
+
 from sr.tools.bom import distpart
 from sr.tools.bom.cachedfetch import grab_url_cached
-from decimal import Decimal as D
-import re
 
 
 class Item(distpart.DistItem):
@@ -12,6 +14,7 @@ class Item(distpart.DistItem):
 
     :param part_number: The number of the part.
     """
+
     def __init__(self, part_number):
         """Initialise a Farnell item object."""
         distpart.DistItem.__init__(self, part_number)
@@ -158,8 +161,7 @@ class Item(distpart.DistItem):
         av = soup.find("div", attrs={"class": "availability"})
 
         # The "Price For" row
-        pf = av.find(text=re.compile(".*Price For.*")) \
-            .parent.next_sibling.strip()
+        pf = av.find(text=re.compile(".*Price For.*")).parent.next_sibling.strip()
 
         # pf now contains a string like "1 each" or "Reel of 5,000"
         e = re.search("([0-9,]+)", pf).group(1)
@@ -167,16 +169,16 @@ class Item(distpart.DistItem):
         self.price_for = D(e)
 
         # The minimum order quantity row
-        mo = av.find(text=re.compile(".*Minimum Order Quantity.*")) \
-            .parent.next_sibling.strip()
+        mo = av.find(
+            text=re.compile(".*Minimum Order Quantity.*"),
+        ).parent.next_sibling.strip()
 
         # mo now contains the minimum order quantity in string form
         mo = mo.replace(",", "")
         self.min_order = int(mo)
 
         # The order multiple row
-        om = av.find(text=re.compile(".*Order Multiple.*")) \
-            .parent.next_sibling.strip()
+        om = av.find(text=re.compile(".*Order Multiple.*")).parent.next_sibling.strip()
 
         # om now contains the order multiple in string form
         om = om.replace(",", "")

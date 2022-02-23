@@ -56,8 +56,7 @@ def checksum(number, alphabet='0123456789'):
     """
     n = len(alphabet)
     number = tuple(alphabet.index(i) for i in reversed(str(number)))
-    return (sum(number[::2]) +
-            sum(sum(divmod(i * 2, n)) for i in number[1::2])) % n
+    return (sum(number[::2]) + sum(sum(divmod(i * 2, n)) for i in number[1::2])) % n
 
 
 def is_valid(number, alphabet='0123456789'):

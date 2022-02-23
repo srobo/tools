@@ -43,7 +43,6 @@ or ``Setuptools`` to do so for you, perhaps to use a system–wide package
 manager, you should install the following packages.
 
 - pyyaml
-- sympy
 - pyparsing
 - beautifulsoup4
 - numpy

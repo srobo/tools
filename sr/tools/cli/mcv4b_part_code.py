@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-
 # Motorobards have FTDI ICs on them
 FTDI_ID_VENDOR = '0403'  # Future Technology Devices International, Ltd
 FTDI_ID_PRODUCT = '6001'  # FT232 USB-Serial (UART) IC
@@ -18,10 +15,20 @@ def _has_attr(device, key, value):
     return key in attrs.keys() and attrs[key] == value
 
 
-id_vendor_match = lambda d: _has_attr(d, 'idVendor',     FTDI_ID_VENDOR)
-id_product_match = lambda d: _has_attr(d, 'idProduct',    FTDI_ID_PRODUCT)
-product_match = lambda d: _has_attr(d, 'product',      MCV4B_PRODUCT)
-manufacturer_match = lambda d: _has_attr(d, 'manufacturer', MCV4B_MANUFACTURER)
+def id_vendor_match(d):
+    return _has_attr(d, 'idVendor', FTDI_ID_VENDOR)
+
+
+def id_product_match(d):
+    return _has_attr(d, 'idProduct', FTDI_ID_PRODUCT)
+
+
+def product_match(d):
+    return _has_attr(d, 'product', MCV4B_PRODUCT)
+
+
+def manufacturer_match(d):
+    return _has_attr(d, 'manufacturer', MCV4B_MANUFACTURER)
 
 
 def partcode_match(device):
@@ -37,7 +44,7 @@ def partcode_match(device):
         return False
 
     ALPHA = "".join(assetcode.alphabet_lut)
-    PARTCODE_RE = re.compile("sr([{0}]+)$".format(ALPHA), re.IGNORECASE)
+    PARTCODE_RE = re.compile(f"sr([{ALPHA}]+)$", re.IGNORECASE)
 
     # does it look like a partcode?
     match = PARTCODE_RE.match(device.attributes['serial'])
@@ -47,7 +54,7 @@ def partcode_match(device):
         # is the partcode valid?
         assetcode.code_to_num(match.groups()[0])
         return True
-    except:
+    except ValueError:
         return False
 
 
@@ -55,9 +62,13 @@ def is_motorboard(device):
     """
     Returns True if all of the match conditions are met.
     """
-    for matcher in (id_vendor_match, id_product_match,
-                    product_match, manufacturer_match,
-                    partcode_match):
+    for matcher in (
+        id_vendor_match,
+        id_product_match,
+        product_match,
+        manufacturer_match,
+        partcode_match,
+    ):
         if not matcher(device):
             return False
 
@@ -109,27 +120,39 @@ def command(args):
             print(serial)
         else:
             os.chdir(args.inv_dir)
-            res = query.query("code:{0}".format(serial))[0]
+            res = query.query(f"code:{serial}")[0]
 
             if args.output == "path":
                 print(res.path)
 
 
 def add_subparser(subparsers):
-    parser = subparsers.add_parser('mcv4b-part-code',
-                                   help="Finds connected MCv4b motorboards by "
-                                        "searching or waiting for insertion.  "
-                                        "Two output formats are provided: "
-                                        "'code' - just the SR part code; "
-                                        "'path' - just the local "
-                                        "inventory.git path (see --inv-dir)")
-    parser.add_argument("--wait", action="store_true",
-                        help="Wait for a MCv4b to be inserted instead of "
-                             "searching")
-    parser.add_argument("-o", "--output", type=str, default="code",
-                        choices=["code", "path"],
-                        help="Selects an output style (Default: code)")
-    parser.add_argument("--inv-dir", type=str, default=".",
-                        help="The root of the local inventory checkout, if "
-                             "not pwd")
+    parser = subparsers.add_parser(
+        'mcv4b-part-code',
+        help="Finds connected MCv4b motorboards by "
+        "searching or waiting for insertion.  "
+        "Two output formats are provided: "
+        "'code' - just the SR part code; "
+        "'path' - just the local "
+        "inventory.git path (see --inv-dir)",
+    )
+    parser.add_argument(
+        "--wait",
+        action="store_true",
+        help="Wait for a MCv4b to be inserted instead of searching",
+    )
+    parser.add_argument(
+        "-o",
+        "--output",
+        type=str,
+        default="code",
+        choices=["code", "path"],
+        help="Selects an output style (Default: code)",
+    )
+    parser.add_argument(
+        "--inv-dir",
+        type=str,
+        default=".",
+        help="The root of the local inventory checkout, if not pwd",
+    )
     parser.set_defaults(func=command)

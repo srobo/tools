@@ -4,3 +4,4 @@ include sr/tools/cli/latex-assets.zip
 include sr/tools/cli/document_prefix.tex
 include sr/tools/cli/document_suffix.tex
 include sr/tools/cli/spend-template.yaml
+recursive-include docs *.rst conf.py config.example.yaml

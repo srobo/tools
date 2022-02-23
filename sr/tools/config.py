@@ -1,26 +1,21 @@
 """Configuration for the tools."""
-from __future__ import print_function
 
 import getpass
-import six
 import sys
 
 import yaml
+
+from sr.tools.environment import get_config_filename
 
 try:
     import keyring
 except ImportError:
     keyring = None
 
-from sr.tools.environment import get_config_filename
-
-
-if six.PY2:
-    input = raw_input
-
 
 class Config(dict):
     """Configuration reader for the tools."""
+
     def __init__(self):
         """
         Create a new configuration reader with the default configuration values
@@ -32,13 +27,11 @@ class Config(dict):
         self['keyring_service'] = "SR tools"
         self['server'] = 'www.studentrobotics.org'
         self['https_port'] = 443
-        self['gerrit_ssh'] = "sr-gerrit"
-        self['spending'] = None
 
         # override with the local config
         try:
             self.update_from_file(get_config_filename())
-        except IOError:
+        except OSError:
             pass
 
     def update_from_file(self, fname):
@@ -103,8 +96,7 @@ class Config(dict):
                 user = self["user"]
 
             if keyring is None:
-                print("Warning: Cannot import keyring module.",
-                      file=sys.stderr)
+                print("Warning: Cannot import keyring module.", file=sys.stderr)
             else:
                 password = keyring.get_password(self["keyring_service"], user)
                 if password is not None:

@@ -9,17 +9,6 @@ from setuptools import find_packages, setup
 from sr.tools import __description__, __version__
 
 
-class install_data_with_sphinx(install_data):
-    def run(self):
-        self.run_command('build_sphinx')
-        self.data_files.remove('docs')
-        sphinx = self.get_finalized_command('build_sphinx')
-        self.data_files += [
-            ('share/man/man1', glob(os.path.join(sphinx.build_dir, 'man', '*.1'))),
-        ]
-        install_data.run(self)
-
-
 with open('README.rst') as file:
     long_description = file.read()
 
@@ -52,24 +41,12 @@ setup(
         'tabulate >=0.7, <1',
         'xlwt-future >=0.8, <1',
     ],
-    setup_requires=[
-        'docutils <0.16',  # https://github.com/sphinx-doc/sphinx/issues/6887; https://github.com/sphinx-doc/sphinx/pull/6918
-        'Sphinx >=1.3, <2',  # Upgrading beyond 2.x? See if we can remove the docutils pin above.
-        'Pygments >=2.0, <3',
-    ],
     extras_require={
         'cam-serial, usb-key-serial, sd-serial, mcv4b-part-code': ['pyudev'],
         'price-graph': ['matplotlib'],
         'save passwords': ['keyring'],
     },
     include_package_data=True,
-    zip_safe=False,
-    cmdclass={
-        'install_data': install_data_with_sphinx,
-    },
-    data_files=[
-        'docs',  # there has to be an entry for 'install_data' to run
-    ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',

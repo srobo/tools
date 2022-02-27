@@ -58,7 +58,7 @@ setup(
         'Pygments >=2.0, <3',
     ],
     extras_require={
-        'cam-serial, sd-serial, mcv4b-part-code': ['pyudev'],
+        'cam-serial, mcv4b-part-code': ['pyudev'],
         'price-graph': ['matplotlib'],
         'save passwords': ['keyring'],
     },

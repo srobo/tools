@@ -18,7 +18,6 @@ __all__ = [
     'create_bom',
     'create_order',
     'digikey',
-    'document',
     'export_gerber',
     'farnell',
     'geda_hierpcb',

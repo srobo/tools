@@ -51,7 +51,6 @@ __all__ = [
     'repolist',
     'rs',
     'schedule_knockout',
-    'sd_serial',
     'stockcheck',
     'symbol_correct',
     'update',

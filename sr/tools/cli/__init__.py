@@ -54,7 +54,6 @@ __all__ = [
     'stockcheck',
     'symbol_correct',
     'update',
-    'usb_key_serial',
 ]
 
 
@@ -66,7 +65,7 @@ def get_version():
     )
 
 
-def main():
+def main(args = sys.argv):
     parser = argparse.ArgumentParser(description=__description__)
     parser.add_argument(
         '--version',

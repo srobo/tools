@@ -80,7 +80,7 @@ def main(args=sys.argv):
         name = f'{__name__}.{command}'
         importlib.import_module(name).add_subparser(subparsers)
 
-    args = parser.parse_args()
+    args = parser.parse_args(args=args)
 
     if 'func' in args:
         try:

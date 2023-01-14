@@ -19,6 +19,7 @@ references:
 
         declare -a FILES=(
           "setup.py"
+          "pyproject.toml"
           "all-requirements.txt"
         )
         for f in ${FILES[@]}

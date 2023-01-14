@@ -19,6 +19,7 @@ references:
 
         declare -a FILES=(
           "setup.py"
+          "setup.cfg"
           "pyproject.toml"
           "all-requirements.txt"
         )

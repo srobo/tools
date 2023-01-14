@@ -65,7 +65,7 @@ def get_version():
     )
 
 
-def main(args = sys.argv):
+def main(args=sys.argv):
     parser = argparse.ArgumentParser(description=__description__)
     parser.add_argument(
         '--version',

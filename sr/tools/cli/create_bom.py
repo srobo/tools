@@ -168,7 +168,7 @@ def writeHTML(lines, out_fn, args, pcb=None):
 
     html_header(
         outf,
-        map(lambda n: os.path.basename(n), args.schematic),
+        map(os.path.basename, args.schematic),
         image=pcb_image,
         xy=pcb_xy,
     )

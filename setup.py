@@ -43,7 +43,7 @@ setup(
     author='Student Robotics',
     author_email='info@studentrobotics.org',
     install_requires=[
-        'PyYAML >=5, <6',
+        'PyYAML >=5, <7',
         'pyparsing >=2.0, <3',
         'BeautifulSoup4 >=4.3, <5',
         'numpy >=1.9, <2',

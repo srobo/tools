@@ -52,10 +52,6 @@ setup(
         'tabulate >=0.7, <1',
         'xlwt-future >=0.8, <1',
     ],
-    setup_requires=[
-        'Sphinx >=2, <7',
-        'Pygments >=2.0, <3',
-    ],
     extras_require={
         'cam-serial, mcv4b-part-code': ['pyudev'],
         'price-graph': ['matplotlib'],

@@ -53,6 +53,8 @@ setup(
         'xlwt-future >=0.8, <1',
     ],
     setup_requires=[
+        # Note: Sphinx needs to be manually installed before running `setup.py`
+        # to avoid issues importing `sphinxcontrib.applehelp`.
         'Sphinx >=2, <7',
         'Pygments >=2.0, <3',
     ],

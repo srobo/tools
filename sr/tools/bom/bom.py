@@ -22,12 +22,9 @@ class PartGroup(list):
     :param list designators: A list of designators
     """
 
-    def __init__(self, part, name="", designators=[]):
+    def __init__(self, part, name=""):
         """Create a new part group."""
         list.__init__(self)
-
-        for x in designators:
-            self.append((name, designators))
 
         self.part = part
         self.name = name

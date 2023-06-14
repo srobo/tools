@@ -11,7 +11,7 @@ def file_is_geda_pcb(f):
     f.seek(0)
 
     # 'PCB[' will occur at the start of one of the first 20 or so lines
-    for i in range(20):
+    for _ in range(20):
         if re.search(r"^\s*PCB[ \t]*\[", f.readline()) is not None:
             return True
     return False

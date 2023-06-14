@@ -238,7 +238,7 @@ class MultiBoardBom(Bom):
 
         for num, board in self.boards:
             # Mmmmm. Horrible.
-            for i in range(num):
+            for _ in range(num):
                 for srcode, bpg in board.items():
                     if srcode not in self:
                         self[srcode] = PartGroup(bpg.part)

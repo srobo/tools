@@ -1,0 +1,7 @@
+[build-system]
+requires = [
+    "setuptools >= 40.9.0",
+    "Sphinx >=2, <7",
+    "Pygments >=2.0, <3",
+]
+build-backend = "setuptools.build_meta"

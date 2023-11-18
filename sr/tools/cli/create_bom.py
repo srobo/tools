@@ -254,7 +254,7 @@ def writeXLS(lines, out_fn):
     col_char_count = [0] * len(headings)
 
     bold_style = xlwt.easyxf("font: bold on;")
-    for colx, (heading, field) in enumerate(headings):
+    for colx, (heading, _field) in enumerate(headings):
         sheet.write(rowx, colx, heading, bold_style)
         col_char_count[colx] = max(col_char_count[colx], len(heading))
     rowx += 1
@@ -268,7 +268,7 @@ def writeXLS(lines, out_fn):
                 "pcodes": ", ".join(get_sorted_pcodes(line)),
             },
         )
-        for colx, (heading, field) in enumerate(headings):
+        for colx, (_heading, field) in enumerate(headings):
             sheet.write(rowx, colx, p[field])
             col_char_count[colx] = max(col_char_count[colx], len(str(p[field])))
         rowx += 1

@@ -55,7 +55,7 @@ def open_schem(fname):
                     quantity = int(m.group(1))
                     code = m.group(2)
 
-                    for x in range(quantity):
+                    for _ in range(quantity):
                         newdes = "%s.%i" % (des, num)
 
                         new_items[newdes] = code

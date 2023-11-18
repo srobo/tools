@@ -61,7 +61,7 @@ setup(
     extras_require={
         'cam-serial, mcv4b-part-code': ['pyudev'],
         'price-graph': ['matplotlib'],
-        'save passwords': ['keyring'],
+        'save-passwords': ['keyring'],
     },
     include_package_data=True,
     zip_safe=False,

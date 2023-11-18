@@ -1,0 +1,9 @@
+[build-system]
+# Note: Sphinx needs to be manually installed before running `setup.py`
+# to avoid issues importing `sphinxcontrib.applehelp`.
+requires = [
+    "setuptools >= 40.9.0",
+    "Sphinx >=2, <7",
+    "Pygments >=2.0, <3",
+]
+build-backend = "setuptools.build_meta"

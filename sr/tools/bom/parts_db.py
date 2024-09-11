@@ -1,16 +1,18 @@
 """Student Robotics parts database access library."""
 import csv
 
-import pkg_resources
 import six
+from pathlib import Path
 
 from sr.tools.bom import digikey, farnell, mouser, rs
+
+module_dir = Path(__file__).resolve().parent
 
 
 def get_db():
     """Get the parts DB that is embedded with this library."""
-    file = pkg_resources.resource_stream('sr.tools.bom', 'component_lib.csv')
-    return Db(six.StringIO(file.read().decode('UTF-8')))
+    file = module_dir / 'component_lib.csv'
+    return Db(six.StringIO(file.read_text()))
 
 
 class Part(dict):

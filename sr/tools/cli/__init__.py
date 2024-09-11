@@ -2,9 +2,7 @@ import argparse
 import importlib
 import sys
 import traceback
-
-import pkg_resources
-
+from importlib.metadata import version as get_metadata_version
 from sr.tools import __description__
 from sr.tools.inventory.inventory import NotAnInventoryError
 
@@ -58,7 +56,7 @@ __all__ = [
 
 
 def get_version():
-    version = pkg_resources.get_distribution('sr.tools').version
+    version = get_metadata_version("sr.tools")
     return "Student Robotics Tools {} (Python {}.{}.{})".format(
         version,
         *sys.version_info[0:3],

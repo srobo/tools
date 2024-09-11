@@ -30,7 +30,9 @@ def command(args):
     import tempfile
     import zipfile
 
-    import pkg_resources
+    from pathlib import Path
+
+    module_dir = Path(__file__).resolve().parent
 
     source = args.source.read()
 
@@ -53,8 +55,8 @@ def command(args):
         r'\subsection*',
     )
 
-    prefix_file = pkg_resources.resource_stream('sr.tools.cli', 'document_prefix.tex')
-    suffix_file = pkg_resources.resource_stream('sr.tools.cli', 'document_suffix.tex')
+    prefix_file = (module_dir / 'document_prefix.tex').read_text()
+    suffix_file = (module_dir / 'document_suffix.tex').read_text()
     prefix = prefix_file.read().decode('UTF-8')
     suffix = suffix_file.read().decode('UTF-8')
 
@@ -83,10 +85,10 @@ def command(args):
     with open(main_file, 'w') as f:
         f.write(total)
 
-    file = pkg_resources.resource_stream('sr.tools.cli', 'latex-assets.zip')
-    with zipfile.ZipFile(file) as zf:
-        for name in ('ecs.png', 'moto.png', 'bitbox.png', 'sr-logo.pdf'):
-            zf.extract(name, temp_dir)
+    with (module_dir / 'latex-assets.zip').open(mode="rb") as file:
+        with zipfile.ZipFile(file) as zf:
+            for name in ('ecs.png', 'moto.png', 'bitbox.png', 'sr-logo.pdf'):
+                zf.extract(name, temp_dir)
 
     cmdline = ['pdflatex', '-interaction=nonstopmode', 'main.tex']
     pdflatex_proc = subprocess.Popen(

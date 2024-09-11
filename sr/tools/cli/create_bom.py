@@ -1,14 +1,17 @@
+from pathlib import Path
+
 res = 150  # Image resolution in DPI
+
+module_dir = Path(__file__).resolve().parent
 
 
 def html_header(f, names=None, image=None, xy=None):
     import base64
 
-    import pkg_resources
     from six.moves import reduce
 
-    header_file = pkg_resources.resource_stream('sr.tools.cli', 'bom_header.html')
-    header = header_file.read().decode('UTF-8')
+    header_file = module_dir / 'bom_header.html'
+    header = header_file.read_text()
 
     title = ""
     if names is not None:

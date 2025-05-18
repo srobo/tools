@@ -3,30 +3,16 @@ import importlib
 import sys
 import traceback
 
-import pkg_resources
-
-from sr.tools import __description__
+from sr.tools import __description__, __version__
 from sr.tools.inventory.inventory import NotAnInventoryError
 
 # make sure to update this with new tools if they are created
 __all__ = [
     'cam_serial',
     'check_my_git',
-    'clone_team',
     'clone',
     'comp_calculate_league_matches',
-    'create_bom',
-    'create_order',
-    'digikey',
-    'document',
-    'export_gerber',
-    'farnell',
-    'geda_hierpcb',
-    'got_mcf',
     'help',
-    'ide_list_repos',
-    'ide_list_teams',
-    'ide_version',
     'inv_edit',
     'inv_findpart',
     'inv_history',
@@ -44,23 +30,16 @@ __all__ = [
     'inv_validate',
     'list_commands',
     'mcv4b_part_code',
-    'mouser',
-    'pcb_lint',
-    'pcb_to_thou',
-    'price_graph',
     'repolist',
-    'rs',
     'schedule_knockout',
-    'stockcheck',
-    'symbol_correct',
     'update',
 ]
 
 
 def get_version():
-    version = pkg_resources.get_distribution('sr.tools').version
+    # importlib.metadata.version('sr.tools') only works with python >=3.10
     return "Student Robotics Tools {} (Python {}.{}.{})".format(
-        version,
+        __version__,
         *sys.version_info[0:3],
     )
 

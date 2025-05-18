@@ -4,7 +4,7 @@ import os
 from distutils.command.install_data import install_data
 from glob import glob
 
-from setuptools import find_packages, setup
+from setuptools import find_namespace_packages, setup
 
 from sr.tools import __description__, __version__
 
@@ -35,8 +35,7 @@ setup(
     },
     description=__description__,
     long_description=long_description,
-    namespace_packages=['sr'],
-    packages=find_packages(exclude=['tests', 'tests.*']),
+    packages=find_namespace_packages(exclude=['tests', 'tests.*']),
     entry_points={
         'console_scripts': ['sr = sr.tools.cli:main'],
     },
@@ -45,12 +44,7 @@ setup(
     install_requires=[
         'PyYAML >=5, <7',
         'pyparsing >=2.0, <3',
-        'BeautifulSoup4 >=4.3, <5',
-        'numpy >=1.9, <2',
-        'requests >=2.9, <3',
         'six >=1.9, <2',
-        'tabulate >=0.7, <1',
-        'xlwt-future >=0.8, <1',
     ],
     setup_requires=[
         # Note: Sphinx needs to be manually installed before running `setup.py`
@@ -60,7 +54,6 @@ setup(
     ],
     extras_require={
         'cam-serial, mcv4b-part-code': ['pyudev'],
-        'price-graph': ['matplotlib'],
         'save-passwords': ['keyring'],
     },
     include_package_data=True,

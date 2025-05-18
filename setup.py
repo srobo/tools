@@ -45,7 +45,6 @@ setup(
     install_requires=[
         'PyYAML >=5, <7',
         'pyparsing >=2.0, <3',
-        'requests >=2.9, <3',
         'six >=1.9, <2',
     ],
     setup_requires=[

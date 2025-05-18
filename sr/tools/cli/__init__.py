@@ -15,7 +15,6 @@ __all__ = [
     'clone',
     'comp_calculate_league_matches',
     'document',
-    'got_mcf',
     'help',
     'inv_edit',
     'inv_findpart',

@@ -4,7 +4,7 @@ import os
 from distutils.command.install_data import install_data
 from glob import glob
 
-from setuptools import find_packages, setup
+from setuptools import find_namespace_packages, setup
 
 from sr.tools import __description__, __version__
 
@@ -35,8 +35,7 @@ setup(
     },
     description=__description__,
     long_description=long_description,
-    namespace_packages=['sr'],
-    packages=find_packages(exclude=['tests', 'tests.*']),
+    packages=find_namespace_packages(exclude=['tests', 'tests.*']),
     entry_points={
         'console_scripts': ['sr = sr.tools.cli:main'],
     },

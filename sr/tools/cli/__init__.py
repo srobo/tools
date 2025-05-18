@@ -14,7 +14,6 @@ __all__ = [
     'check_my_git',
     'clone',
     'comp_calculate_league_matches',
-    'document',
     'help',
     'inv_edit',
     'inv_findpart',

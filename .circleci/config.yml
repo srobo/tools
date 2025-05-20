@@ -29,17 +29,18 @@ references:
   restore-dependencies-cache: &restore-dependencies-cache
     restore_cache:
       keys:
-        - deps-1-py<< parameters.version >>-{{ checksum ".checksum" }}
+        - deps-2-py<< parameters.version >>-{{ checksum ".checksum" }}
   install-dependencies: &install-dependencies
     run:
       name: Install Dependencies
       command: |
         python3 -m venv venv
         venv/bin/pip install -U pip setuptools wheel
+        venv/bin/pip install -U 'Sphinx <7'
         venv/bin/pip install -r all-requirements.txt
   save-dependencies-cache: &save-dependencies-cache
     save_cache:
-      key: deps-1-py<< parameters.version >>-{{ checksum ".checksum" }}
+      key: deps-2-py<< parameters.version >>-{{ checksum ".checksum" }}
       paths:
         - venv
   parametrised-python-executor: &parametrised-python-executor
@@ -52,11 +53,11 @@ references:
   python-full-version-matrix: &python-full-version-matrix
     matrix:
       parameters:
-        version: ["3.6", "3.7", "3.8", "3.9"]
+        version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
   python-top-and-bottom-version-matrix: &python-top-and-bottom-version-matrix
     matrix:
       parameters:
-        version: ["3.6", "3.9"]
+        version: ["3.7", "3.11"]
   filter-tags: &filter-tags
     filters:
       branches:
@@ -71,7 +72,7 @@ executors:
       version:
         type: string
     docker:
-      - image: circleci/python:<< parameters.version >>
+      - image: cimg/python:<< parameters.version >>
 
 jobs:
   test:
@@ -112,7 +113,7 @@ jobs:
 
   release:
     docker:
-      - image: circleci/python:3.9
+      - image: cimg/python:3.9
     steps:
       - checkout
 

@@ -41,7 +41,7 @@ def command(args):
         ins_order.append(v)
 
     matches = []
-    for n in range(n_matches):
+    for _ in range(n_matches):
         matches += [[]]
 
     for n in range(args.n_teams):

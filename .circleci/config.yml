@@ -159,7 +159,7 @@ jobs:
       - run:
           name: Install release requirements
           command: |
-            venv/bin/pip install -r script/release/requirements.txt
+            venv/bin/pip install -r script/release/requirements.txt -r all-requirements.txt
 
       - run:
           name: Push to PyPI

@@ -6,6 +6,7 @@ references:
       name: Build checksum file
       command: |
         declare -a FILES=(
+          "script/docs/requirements.txt"
           "script/linting/requirements.txt"
         )
         for f in ${FILES[@]}
@@ -29,18 +30,19 @@ references:
   restore-dependencies-cache: &restore-dependencies-cache
     restore_cache:
       keys:
-        - deps-2-py<< parameters.version >>-{{ checksum ".checksum" }}
+        - deps-3-py<< parameters.version >>-{{ checksum ".checksum" }}
   install-dependencies: &install-dependencies
     run:
       name: Install Dependencies
       command: |
         python3 -m venv venv
         venv/bin/pip install -U pip setuptools wheel
-        venv/bin/pip install -U 'Sphinx <7'
+        # Install docs separately, first, due to issues with Sphinx
+        venv/bin/pip install -r script/docs/requirements.txt
         venv/bin/pip install -r all-requirements.txt
   save-dependencies-cache: &save-dependencies-cache
     save_cache:
-      key: deps-2-py<< parameters.version >>-{{ checksum ".checksum" }}
+      key: deps-3-py<< parameters.version >>-{{ checksum ".checksum" }}
       paths:
         - venv
   parametrised-python-executor: &parametrised-python-executor
@@ -75,6 +77,23 @@ executors:
       - image: cimg/python:<< parameters.version >>
 
 jobs:
+  docs:
+    <<: *parametrised-python-executor
+
+    steps:
+      - checkout
+
+      - *build-checksum-file
+      - *restore-dependencies-cache
+      - *install-dependencies
+      - *save-dependencies-cache
+
+      - run:
+          name: Build the docs
+          command: |
+            source venv/bin/activate
+            ./script/docs/build.sh
+
   test:
     <<: *parametrised-python-executor
 
@@ -111,17 +130,36 @@ jobs:
             # highlighted in development.
             ./script/linting/lint --extend-ignore=T000
 
+  build:
+    <<: *parametrised-python-executor
+
+    steps:
+      - checkout
+
+      - *build-checksum-file
+      - *restore-dependencies-cache
+      - *install-dependencies
+      - *save-dependencies-cache
+
+      - run:
+          name: Build only
+          command: |
+            source venv/bin/activate
+            ./script/release/build.sh
+
   release:
     docker:
       - image: cimg/python:3.9
     steps:
       - checkout
 
+      - *build-checksum-file
+      - *install-dependencies
+
       - run:
-          name: Setup virtualenv
+          name: Install release requirements
           command: |
-            python3 -m venv venv
-            venv/bin/pip install -r script/release/requirements.txt
+            venv/bin/pip install -r script/release/requirements.txt -r all-requirements.txt
 
       - run:
           name: Push to PyPI
@@ -136,21 +174,32 @@ workflows:
 
   validate:
     jobs:
+      - docs:
+          <<: *python-top-and-bottom-version-matrix
       - test:
           <<: *python-full-version-matrix
       - lint:
           <<: *python-top-and-bottom-version-matrix
+      - build:
+          <<: *python-full-version-matrix
 
   release:
     jobs:
+      - docs:
+          <<: *python-top-and-bottom-version-matrix
+          <<: *filter-tags
       - test:
           <<: *python-full-version-matrix
           <<: *filter-tags
       - lint:
           <<: *python-top-and-bottom-version-matrix
+          <<: *filter-tags
+      - build:
+          <<: *python-full-version-matrix
           <<: *filter-tags
       - release:
           <<: *filter-tags
           requires:
+            - docs
             - test
             - lint

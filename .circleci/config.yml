@@ -37,6 +37,8 @@ references:
       command: |
         python3 -m venv venv
         venv/bin/pip install -U pip setuptools wheel
+        # Install docs separately, first, due to issues with Sphinx
+        venv/bin/pip install -r script/docs/requirements.txt
         venv/bin/pip install -r all-requirements.txt
   save-dependencies-cache: &save-dependencies-cache
     save_cache:

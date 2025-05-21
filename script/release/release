@@ -7,7 +7,7 @@ test "$TAG" == "v$VERSION"
 
 echo "Building $TAG"
 
-python setup.py sdist bdist_wheel
+./script/release/build
 
 echo "Uploading $TAG"
 

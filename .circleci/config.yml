@@ -1,6 +1,47 @@
 version: 2.1
 
 references:
+  build-docs-checksum-file: &build-docs-checksum-file
+    run:
+      name: Build docs checksum file
+      command: |
+        declare -a FILES=(
+          "docs/requirements.txt"
+        )
+        for f in ${FILES[@]}
+        do
+          echo "# $f" >> docs-requirements.txt
+          cat $f >> docs-requirements.txt
+        done
+
+        echo "# self" >> docs-requirements.txt
+        echo "." >> docs-requirements.txt
+
+        declare -a FILES=(
+          "setup.py"
+          "docs-requirements.txt"
+        )
+        python3 --version >> .docs-checksum
+        for f in ${FILES[@]}
+        do
+          echo "# $f" >> .docs-checksum
+          cat $f >> .docs-checksum
+        done
+  restore-docs-dependencies-cache: &restore-docs-dependencies-cache
+    restore_cache:
+      keys:
+        - deps-docs-1-py<< parameters.version >>-{{ checksum ".docs-checksum" }}
+  install-docs-dependencies: &install-docs-dependencies
+    run:
+      name: Install Dependencies
+      command: |
+        python3 -m venv venv
+        venv/bin/pip install -r docs-requirements.txt
+  save-docs-dependencies-cache: &save-docs-dependencies-cache
+    save_cache:
+      key: deps-docs-1-py<< parameters.version >>-{{ checksum ".docs-checksum" }}
+      paths:
+        - venv
   build-checksum-file: &build-checksum-file
     run:
       name: Build checksum file
@@ -75,6 +116,23 @@ executors:
       - image: cimg/python:<< parameters.version >>
 
 jobs:
+  docs:
+    <<: *parametrised-python-executor
+
+    steps:
+      - checkout
+
+      - *build-docs-checksum-file
+      - *restore-docs-dependencies-cache
+      - *install-docs-dependencies
+      - *save-docs-dependencies-cache
+
+      - run:
+          name: Build the docs
+          command: |
+            source venv/bin/activate
+            ./script/docs/build.sh
+
   test:
     <<: *parametrised-python-executor
 
@@ -136,6 +194,8 @@ workflows:
 
   validate:
     jobs:
+      - docs:
+          <<: *python-top-and-bottom-version-matrix
       - test:
           <<: *python-full-version-matrix
       - lint:
@@ -143,6 +203,9 @@ workflows:
 
   release:
     jobs:
+      - docs:
+          <<: *python-top-and-bottom-version-matrix
+          <<: *filter-tags
       - test:
           <<: *python-full-version-matrix
           <<: *filter-tags
@@ -152,5 +215,6 @@ workflows:
       - release:
           <<: *filter-tags
           requires:
+            - docs
             - test
             - lint

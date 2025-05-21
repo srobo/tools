@@ -140,12 +140,6 @@ jobs:
       - *save-dependencies-cache
 
       - run:
-          name: Setup virtualenv
-          command: |
-            python3 -m venv venv
-            venv/bin/pip install -r script/release/requirements.txt
-
-      - run:
           name: Build only
           command: |
             source venv/bin/activate
@@ -161,9 +155,8 @@ jobs:
       - *install-dependencies
 
       - run:
-          name: Setup virtualenv
+          name: Install release requirements
           command: |
-            python3 -m venv venv
             venv/bin/pip install -r script/release/requirements.txt
 
       - run:

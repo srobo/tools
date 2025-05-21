@@ -169,6 +169,24 @@ jobs:
             # highlighted in development.
             ./script/linting/lint --extend-ignore=T000
 
+  build:
+    <<: *parametrised-python-executor
+
+    steps:
+      - checkout
+
+      - run:
+          name: Setup virtualenv
+          command: |
+            python3 -m venv venv
+            venv/bin/pip install -r script/release/requirements.txt
+
+      - run:
+          name: Build only
+          command: |
+            source venv/bin/activate
+            ./script/release/build.sh
+
   release:
     docker:
       - image: cimg/python:3.9
@@ -200,6 +218,8 @@ workflows:
           <<: *python-full-version-matrix
       - lint:
           <<: *python-top-and-bottom-version-matrix
+      - build:
+          <<: *python-full-version-matrix
 
   release:
     jobs:
@@ -211,6 +231,9 @@ workflows:
           <<: *filter-tags
       - lint:
           <<: *python-top-and-bottom-version-matrix
+          <<: *filter-tags
+      - build:
+          <<: *python-full-version-matrix
           <<: *filter-tags
       - release:
           <<: *filter-tags

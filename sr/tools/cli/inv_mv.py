@@ -23,12 +23,16 @@ def command(args):
             assetcode.code_to_num(code)
         except ValueError:
             print(f"Error: {c} is an invalid asset code.", file=sys.stderr)
+            if args.ignore_invalid:
+                continue
             sys.exit(1)
 
         try:
             part = inv.root.parts[code]
         except KeyError:
             print(f"Error: There is no part with code {code}.", file=sys.stderr)
+            if args.ignore_invalid:
+                continue
             sys.exit(1)
 
         if part.parent.path == cwd:
@@ -72,6 +76,11 @@ def add_subparser(subparsers):
         "--ignore-assy",
         action="store_true",
         help="Don't print warnings about items being part of an assembly.",
+    )
+    parser.add_argument(
+        "--ignore-invalid",
+        action="store_true",
+        help="Continue with the move after encountering an invalid asset code.",
     )
 
     parser.add_argument(

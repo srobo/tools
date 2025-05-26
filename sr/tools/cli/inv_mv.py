@@ -10,8 +10,14 @@ def command(args):
     cwd = os.getcwd()
 
     parts = []
+    seen_codes = set()
     for c in args.assetcodes:
         code = assetcode.normalise(c)
+
+        if code in seen_codes:
+            # This asset was already in an earlier argument
+            continue
+        seen_codes.add(code)
 
         try:
             assetcode.code_to_num(code)

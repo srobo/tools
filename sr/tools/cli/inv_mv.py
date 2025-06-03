@@ -39,7 +39,7 @@ def command(args):
             print(f"Warning: Part {code} is already in {cwd}.")
             continue
 
-        if hasattr(part.parent, "code") and not args.ignore_assy:
+        if hasattr(part.parent, "code") and not args.no_warn_assy:
             if args.assy:
                 parts.append(part.parent)
             else:
@@ -73,7 +73,7 @@ def add_subparser(subparsers):
     )
     parser.add_argument(
         "-q",
-        "--ignore-assy",
+        "--no-warn-assy",
         action="store_true",
         help="Don't print warnings about items being part of an assembly.",
     )

@@ -10,26 +10,36 @@ def command(args):
     cwd = os.getcwd()
 
     parts = []
+    seen_codes = set()
     for c in args.assetcodes:
         code = assetcode.normalise(c)
+
+        if code in seen_codes:
+            # This asset was already in an earlier argument
+            continue
+        seen_codes.add(code)
 
         try:
             assetcode.code_to_num(code)
         except ValueError:
             print(f"Error: {c} is an invalid asset code.", file=sys.stderr)
+            if args.ignore_invalid:
+                continue
             sys.exit(1)
 
         try:
             part = inv.root.parts[code]
         except KeyError:
             print(f"Error: There is no part with code {code}.", file=sys.stderr)
+            if args.ignore_invalid:
+                continue
             sys.exit(1)
 
         if part.parent.path == cwd:
             print(f"Warning: Part {code} is already in {cwd}.")
             continue
 
-        if hasattr(part.parent, "code"):
+        if hasattr(part.parent, "code") and not args.no_warn_assy:
             if args.assy:
                 parts.append(part.parent)
             else:
@@ -61,6 +71,18 @@ def add_subparser(subparsers):
         help="If the asset codes are part of an assembly then "
         "move the whole assembly.",
     )
+    parser.add_argument(
+        "-q",
+        "--no-warn-assy",
+        action="store_true",
+        help="Don't print warnings about items being part of an assembly.",
+    )
+    parser.add_argument(
+        "--ignore-invalid",
+        action="store_true",
+        help="Continue with the move after encountering an invalid asset code.",
+    )
+
     parser.add_argument(
         "assetcodes",
         metavar="ASSET_CODE",
